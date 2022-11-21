@@ -1,0 +1,4230 @@
+\documentclass[]{ctexbook}
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\usepackage{xunicode}
+\usepackage[b5paper,tmargin=2.5cm,bmargin=2.5cm,lmargin=2.5cm,rmargin=2.5cm]{geometry}
+\usepackage[unicode=true]{hyperref}
+\PassOptionsToPackage{usenames,dvipsnames}{color} % color is loaded by hyperref
+\hypersetup{
+            pdftitle={像黑客一样使用命令行},
+            pdfauthor={徐小东},
+            colorlinks=true,
+            linkcolor=Maroon,
+            citecolor=Blue,
+            urlcolor=Blue,
+            breaklinks=true,
+            bookmarksnumbered=true,
+            pdfstartview=FitH}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{natbib}
+\bibliographystyle{apalike}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs}
+% Fix footnotes in tables (requires footnote package)
+\IfFileExists{footnote.sty}{\usepackage{footnote}\makesavenoteenv{long table}}{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{5}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+
+\usepackage{booktabs}
+\usepackage{longtable}
+
+\usepackage{framed,color}
+\definecolor{shadecolor}{RGB}{248,248,248}
+
+\renewcommand{\textfraction}{0.05}
+\renewcommand{\topfraction}{0.8}
+\renewcommand{\bottomfraction}{0.8}
+\renewcommand{\floatpagefraction}{0.75}
+
+\let\oldhref\href
+\renewcommand{\href}[2]{#2\footnote{\url{#1}}}
+
+\makeatletter
+\newenvironment{kframe}{%
+\medskip{}
+\setlength{\fboxsep}{.8em}
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\makeatletter
+\@ifundefined{Shaded}{
+}{\renewenvironment{Shaded}{\begin{kframe}}{\end{kframe}}}
+\makeatother
+% https://github.com/CTeX-org/ctex-kit/issues/331
+% \RecustomVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\},formatcom=\xeCJKVerbAddon}
+
+\newenvironment{rmdblock}[1]
+  {
+  \begin{itemize}
+  \renewcommand{\labelitemi}{
+    \raisebox{-.7\height}[0pt][0pt]{
+      {\setkeys{Gin}{width=3em,keepaspectratio}\includegraphics{images/#1}}
+    }
+  }
+  \setlength{\fboxsep}{1em}
+  \begin{kframe}
+  \item
+  }
+  {
+  \end{kframe}
+  \end{itemize}
+  }
+\newenvironment{rmdnote}
+  {\begin{rmdblock}{note}}
+  {\end{rmdblock}}
+\newenvironment{rmdcaution}
+  {\begin{rmdblock}{caution}}
+  {\end{rmdblock}}
+\newenvironment{rmdimportant}
+  {\begin{rmdblock}{important}}
+  {\end{rmdblock}}
+\newenvironment{rmdtip}
+  {\begin{rmdblock}{tip}}
+  {\end{rmdblock}}
+\newenvironment{rmdwarning}
+  {\begin{rmdblock}{warning}}
+  {\end{rmdblock}}
+
+\usepackage{makeidx}
+\makeindex
+
+\urlstyle{tt}
+
+\usepackage{amsthm}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=8pt plus 2pt minus 4pt
+  \thm@postskip=\thm@preskip
+}
+\makeatother
+
+\frontmatter
+
+\title{像黑客一样使用命令行}
+\author{徐小东}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\thispagestyle{empty}
+
+\begin{center}
+献给
+
+海燕和铭基
+\end{center}
+
+\setlength{\abovedisplayskip}{-5pt}
+\setlength{\abovedisplayshortskip}{-5pt}
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\listoftables
+\listoffigures
+\hypertarget{ux81f4ux8c22}{%
+\chapter*{致谢}\label{ux81f4ux8c22}}
+
+
+感谢 Bash 及 Zsh 开源社区，你们永远是最棒的家伙！
+
+\hypertarget{ux66f4ux65b0}{%
+\chapter*{更新}\label{ux66f4ux65b0}}
+
+
+你可以从 \url{https://selfhostedserver.com/usingcli-book} 获取本书的更新版本。另外，本书也包括视频版本，请通过 \url{https://selfhostedserver.com/usingcli} 了解详情。
+
+\begin{itemize}
+\tightlist
+\item
+  Version 2019.3.17：初版
+\item
+  Version 2019.8.24：修订版，增加``高效查询 Shell 历史：HSTR''小节。
+\end{itemize}
+
+\hypertarget{author}{%
+\chapter*{作者简介}\label{author}}
+
+
+徐小东，网名 \textasciitilde{}toy。GNU/Linux 爱好者，DevOps 践行者。喜技术，好分享。通过 \url{https://linuxtoy.org} 网站数年间原创及翻译文章达 3000 余篇。另著有\href{https://selfhostedserver.com/usingcli-book}{《像黑客一样使用命令行》}、\href{https://selfhostedserver.com/nextcontainer}{《容器化工具三剑客：Podman、Buildah 和 Skopeo》}、\href{https://selfhostedserver.com/terraform}{《Terraform：自动化管理云基础设施》}，译有\href{https://selfhostedserver.com/learngit}{《笨办法学 Git》}、《Perl 程序员应该知道的事》等图书。Twitter：\url{https://twitter.com/linuxtoy}，Mail：\href{mailto:xuxiaodong@pm.me}{\nolinkurl{xuxiaodong@pm.me}}。
+
+\mainmatter
+
+\hypertarget{ux5165ux95e8ux6307ux5f15}{%
+\chapter{入门指引}\label{ux5165ux95e8ux6307ux5f15}}
+
+虽然如今计算机图形化界面大行其道，然而在计算机诞生之初却是命令行界面的天下。在图形化界面中，我们惯常使用鼠标来操作图标或窗口，从而完成各种任务。对于命令行界面来说，情况则有很大的不同。要在命令行界面下执行操作，我们需要更多的依赖键盘。那么，什么是命令行界面呢？在回答这个问题之前，不妨让我们先来谈谈控制台、终端、终端模拟器、以及 Shell 这几个基本概念。
+
+\hypertarget{ux63a7ux5236ux53f0}{%
+\section{控制台}\label{ux63a7ux5236ux53f0}}
+
+控制台（Console），又称为系统控制台（System console）、计算机控制台（Computer console）、根控制台（Root console）、以及操作员控制台（Operator's console）。事实上，早先的控制台是一种用来操作计算机的硬件，如图 \ref{fig:ibm-1620-model-1} 所示。\footnote{\url{https://en.wikipedia.org/wiki/System_console\#/media/File:IBM_1620_Model_1.jpg}}从这幅图片中，我们可以看到 IBM 1620 计算机的控制台由左边的操作前面板（参考图 \ref{fig:ibm-1620-model-1-front-panel}）和右边的打字机组成。通过控制台，操作员将文本数据或待执行的指令录入到计算机，并最终通过计算机读取或执行。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/ibm_1620_model_1} \caption{IBM 1620 的控制台}\label{fig:ibm-1620-model-1}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/ibm_1620_model_1_front_panel} \caption{IBM 1620 控制台的操作前面板}\label{fig:ibm-1620-model-1-front-panel}
+\end{figure}
+
+随着计算机的发展，控制台从硬件概念变成了一个软件概念。于是，控制台有了新的称呼：虚拟控制台。虚拟控制台正好与物理的控制台硬件相对。通过观察 Linux 系统的启动过程，我们不难发现：在经过计算机硬件自检之后，一旦由引导载入程序接管，不一会儿便会进入系统控制台。在这个过程中，通常会显示如图 \ref{fig:linux-booting} 所示的 Linux 系统引导信息。\footnote{\url{https://en.wikipedia.org/wiki/Linux_console\#/media/File:Knoppix-3.8-boot.png}}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/linux_booting} \caption{Linux 系统虚拟控制台}\label{fig:linux-booting}
+\end{figure}
+
+\hypertarget{ux7ec8ux7aef}{%
+\section{终端}\label{ux7ec8ux7aef}}
+
+跟控制台一样，起初的终端（Terminal）也是一种计算机硬件设备。从外形上看，终端类似于我们今天所看到的显示器和键盘的结合体。通过终端，用户将指令和数据输入到计算机。同时，终端也将计算机执行的结果展示给用户。图 \ref{fig:dec-vt100} 中显示的是曾经广为流行的终端 DEC VT100。\footnote{\url{https://en.wikipedia.org/wiki/Computer_terminal\#/media/File:DEC_VT100_terminal.jpg}}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/dec_vt100} \caption{DEC VT100 终端}\label{fig:dec-vt100}
+\end{figure}
+
+或许你会产生疑问，为什么会出现终端这种硬件设备呢？以今天的眼光来看，显得似乎有些难以理解。诞生之初的计算机造价相当昂贵，可不像现在人人都能拥有一台那么简单。除了大型商业组织或大学研究机构，很难在别处看到计算机的身影。为了能够共享计算机资源，终端应运而生。然而，伴随着科技的进步，终端最终掉进了历史的黑洞。不过，它后来却以新的形式重生，这就是终端模拟器（Terminal emulator），或称之为虚拟终端。
+
+\hypertarget{term}{%
+\section{终端模拟器}\label{term}}
+
+终端模拟器，即用来模拟终端硬件设备的应用程序。在物理终端中存在的某些显示体系结构，比如用来控制色彩的转义序列、光标位置等在终端模拟器中也得到了支持。图 \ref{fig:xterm} 显示 Linux 中流行的终端程序之一 XTerm。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/xterm} \caption{XTerm 终端模拟器}\label{fig:xterm}
+\end{figure}
+
+不管是 Linux 操作系统，还是 macOS 操作系统，乃至 Windows 操作系统，今天都有许多终端模拟器可以选择。以下罗列的是这三个操作系统中比较流行的终端模拟器。
+
+\hypertarget{linux}{%
+\subsection{Linux}\label{linux}}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://invisible-island.net/xterm/}{XTerm}：XTerm 是 X 窗口环境的默认终端。它提供了与 DEC VT102 和 Tektronix 4014 终端兼容的特性。此外，它也支持 ISO/ANSI 彩色模式。
+\item
+  \href{https://gitlab.gnome.org/GNOME/gnome-terminal/}{GNOME Terminal}：GNOME Terminal 是 GNOME 桌面环境的默认终端。它提供了与 XTerm 相似的特性。除此之外，它也包括支持多配置、标签页、鼠标事件等其它功能。
+\item
+  \href{https://kde.org/applications/system/konsole/}{Konsole}：Konsole 是 KDE 桌面环境的默认终端。它包括标签页、多配置、书签支持、搜索等特性。
+\item
+  \href{http://software.schmorp.de/pkg/rxvt-unicode.html}{rxvt-unicode}：rxvt-unicode 原本克隆自 rxvt，但加入了 unicode 支持，具有很强的定制特性。另外，rxvt-unicode 还包含 Daemon 模式、嵌入了 Perl 编程语言等功能。本书作者使用的就是这款终端模拟器。
+\end{itemize}
+
+\hypertarget{macos}{%
+\subsection{macOS}\label{macos}}
+
+\begin{itemize}
+\tightlist
+\item
+  Terminal.app：Terminal.app 是 macOS 操作系统默认的终端。它的功能不多，除了提供设置 \texttt{TERM} 环境变量的选项外，还包括能够使用其搜索功能来查找 Man pages。
+\item
+  \href{https://www.iterm2.com/}{iTerm2}：iTerm2 是 macOS 系统上针对默认终端的开源替代品。它非常流行，包含许多很棒的功能，比如窗口分割、自动补全、无鼠拷贝、粘贴历史等等。如果你在 macOS 上工作，那么不妨使用 iTerm2 这款终端模拟器，相信它所具有的功能一定不会让你失望。
+\end{itemize}
+
+\hypertarget{windows}{%
+\subsection{Windows}\label{windows}}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://mintty.github.io/}{Mintty}：Mintty 是一个支持 Cygwin、MSYS、WSL 等多种环境的终端模拟器。它的功能与 XTerm 兼容，包括 256 色和真彩色、unicode、以及 Emoji 表情支持。
+\item
+  \href{https://conemu.github.io/}{ConEmu}：ConEmu 是 Windows 上一款相当流行的开源终端模拟器。它包含标签页、多种图形窗口模式、用户友好的文本块选择等功能。
+\end{itemize}
+
+\hypertarget{shell}{%
+\section{Shell}\label{shell}}
+
+Shell 是一种命令解释程序，它负责用户输入命令的读取、解析和执行。现代 Shell 除了具有与用户直接交互的特性之外，通常也包含编程功能，支持变量、数组、函数、循环、条件等编程基本要素。
+
+Shell 之所以如此称呼，是由于它相对 Unix 及 Linux 的核心------内核（Kernel）而言，处于整个操作系统的最外层，就像乌龟的壳一样。也正因为如此，Shell 提供用来访问系统服务的用户界面，扮演着与内核交互的角色，如图 \ref{fig:shell} 所示。
+
+\begin{figure}
+
+{\centering \includegraphics[width=0.5\linewidth]{images/shell} 
+
+}
+
+\caption{Shell 与内核}\label{fig:shell}
+\end{figure}
+
+在 Unix 及 Linux 的发展过程中，出现了许多种 Shell，其中比较知名的包括：sh、csh、ksh、bash、zsh 等等。
+
+\hypertarget{sh}{%
+\subsection{sh}\label{sh}}
+
+sh，即 Bourne shell，它是 Unix 第 7 版的默认 Shell。Bourne shell 由贝尔实验室的 Stephen Bourne 开发，于 1979 年发布。随着《Unix 编程环境》（Brian Kernighan 与 Rob Pike 著）一书的出版，sh 变得大为流行。
+
+Bourne shell 早已被后来的 Shell 所取代，现代 Linux 系统中的 sh 通常是符号链接的某个兼容 Shell。例如，本书作者所用的 Debian 9 里的 sh 为 dash。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{root@toydroid}\NormalTok{:~# ls -l /bin/sh}
+\ExtensionTok{lrwxrwxrwx}\NormalTok{ 1 root root 4 Jan 24  2017 /bin/sh -}\OperatorTok{>}\NormalTok{ dash}
+\end{Highlighting}
+\end{Shaded}
+
+而在作者的另一个系统 Arch Linux 上，sh 则为 bash。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{root@codeland}\NormalTok{:~# ls -l /bin/sh}
+\ExtensionTok{lrwxrwxrwx}\NormalTok{ 1 root root 4 Feb  7 15:15 /bin/sh -}\OperatorTok{>}\NormalTok{ bash}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{csh}{%
+\subsection{csh}\label{csh}}
+
+csh 是 C shell 的简称，它由 Bill Joy 开发，通过 BSD 得到了广泛的分发。在风格上，开发者将 csh 设计得像 C 编程语言一样，因而由此得名。同时，csh 具有很不错的交互使用体验。后来被其它 Shell 所吸收的诸如历史、别名、目录栈、文件名补全、作业控制等特性均出自 csh。
+
+csh 有一个改进版本叫 tcsh，目前是 FreeBSD 的默认 Shell。
+
+\hypertarget{ksh}{%
+\subsection{ksh}\label{ksh}}
+
+ksh 指 Korn Shell，其开发者为 David Korn，在 1983 年公布于世。ksh 遵循 POSIX 标准，能够向下兼容 Bourne shell，整合了来自 C shell 的诸多特性。ksh 的一大亮点是引入了 vi 和 Emacs 风格的命令行编辑模式，使用户完全可以按照自己的按键习惯操作。此外，在 ksh 中还增加了关联数组的特性。
+
+由于 ksh 最初以私有软件的形式进行分发，从而被限制了传播。代之以出现的替代品包括 pdksh（public domain ksh，公有域的 ksh）、mksh（后成为 Android 的默认 Shell）等。
+
+\hypertarget{bash}{%
+\subsection{bash}\label{bash}}
+
+bash 作为理查德·斯托曼 GNU 工程的一部分出现，从它诞生之初就是为了用来取代 Bourne shell（参考 \ref{sh} 节）。Brian Fox 开发了最初的 bash，首个版本发布于 1989 年。如今，bash 已变得十分流行，它是大多数 Linux 发行版以及 macOS 的默认 Shell。此外，通过 WSL（Windows Subsystem for Linux），在 Windows 10 中也可以安装并使用 bash。
+
+bash 的名称来自于 \textbf{B}ourne-\textbf{a}gain \textbf{sh}ell，它也遵循 POSIX 标准，其特性吸收自 sh、csh、ksh 等多种 Shell。
+
+\hypertarget{zsh}{%
+\subsection{zsh}\label{zsh}}
+
+zsh 是 Z shell 的简称，最初的版本由 Paul Falstad 所开发，发布于 1990 年。zsh 极大的扩展了 Bourne shell 的功能，并包含来自 tcsh、ksh、bash 等 Shell 的特性。
+
+在交互用户体验上，zsh 尤其出彩。比如，它支持对命令的选项进行补全、可以设置右提示符等，如图 \ref{fig:zsh-prompt} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/zsh_prompt} \caption{zsh 的右提示符}\label{fig:zsh-prompt}
+\end{figure}
+
+本书主要讨论 bash 和 zsh 这两种目前市面上最流行的 Shell。
+
+\hypertarget{ux547dux4ee4ux884cux754cux9762}{%
+\section{命令行界面}\label{ux547dux4ee4ux884cux754cux9762}}
+
+命令行界面（Command-line interface），经常缩写为 CLI，亦即用户输入命令的地方。一旦用户将命令输入完毕并加以提交后，后续对命令的解析以及执行的任务都由 Shell 来完成。
+
+与 CLI 相对的是 GUI，即 Graphical user interface，意为图形用户界面，它采用图形化的方式让用户与计算机进行交互。因其具有容易使用的优点，包括 Linux、macOS、Windows 等在内的现代操作系统无一例外都提供了图形用户界面。
+
+既然图形用户界面要比命令行界面更加易用，那么是否说明可以完全抛弃命令行界面呢？答案是并非如此。事实上，有经验的用户尤其擅长使用命令行界面，其理由至少包括以下几个方面。
+
+\hypertarget{ux529fux80fdux5f3aux5927}{%
+\subsection{功能强大}\label{ux529fux80fdux5f3aux5927}}
+
+让我们先来看一个例子：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ history }\KeywordTok{|}
+\FunctionTok{awk} \StringTok{'\{CMD[$2]++;count++;\}END \textbackslash{}}
+\StringTok{\{ for (a in CMD)print CMD[a] " " \textbackslash{}}
+\StringTok{CMD[a]/count*100 "% " a;\}'} \KeywordTok{|}
+\FunctionTok{grep}\NormalTok{ -v }\StringTok{"./"} \KeywordTok{|}
+\ExtensionTok{column}\NormalTok{ -c3 -s }\StringTok{" "}\NormalTok{ -t }\KeywordTok{|}
+\FunctionTok{sort}\NormalTok{ -nr }\KeywordTok{|}
+\FunctionTok{nl} \KeywordTok{|}
+\FunctionTok{head}\NormalTok{ -n10}
+\end{Highlighting}
+\end{Shaded}
+
+在作者的 macOS 系统上执行这条命令后，其输出结果如下：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+ \ExtensionTok{1}\NormalTok{  1348  14.3771%    cd}
+ \ExtensionTok{2}\NormalTok{  1034  11.0282%    l}
+ \ExtensionTok{3}\NormalTok{  838   8.93771%    git}
+ \ExtensionTok{4}\NormalTok{  569   6.06869%    ssh}
+ \ExtensionTok{5}\NormalTok{  513   5.47142%    cat}
+ \ExtensionTok{6}\NormalTok{  405   4.31954%    vim}
+ \ExtensionTok{7}\NormalTok{  372   3.96758%    brew}
+ \ExtensionTok{8}\NormalTok{  360   3.83959%    scp}
+ \ExtensionTok{9}\NormalTok{  265   2.82637%    rm}
+\ExtensionTok{10}\NormalTok{  264   2.8157%     grep}
+\end{Highlighting}
+\end{Shaded}
+
+这条命令虽然看起来似乎有些``吓人''，因为它由 history、awk、grep、column、sort、nl、head 等 7 个命令组成，并通过管道符（\textbar{}）串接在一起；然而其结果却颇为有趣。它将作者平时在命令行中执行的所有命令都进行了统计，最终展示出 10 个最常用的命令，并相应列出每个命令的使用次数和所占百分比。
+
+管道符将前一命令的输出作为后一命令的输入，使这些表面上不相干的命令进行协同工作，犹如搭积木一般。这是命令行的真正威力所在。
+
+\hypertarget{ux7075ux6d3bux9ad8ux6548}{%
+\subsection{灵活高效}\label{ux7075ux6d3bux9ad8ux6548}}
+
+再看另一个例子，假如我们打算从 photos 目录中找出今年三月份拍摄的照片，并将其文件名称保存到 mar\_photos.txt 这个文本文件中。在图形用户界面中，首先，我们可能会打开一个文件管理器（在 Linux 下也许是 GNOME Files，macOS 中则是 Finder）。接着，导航到 photos 这个目录，同时切换成详细视图模式。然后，我们睁大双眼逐一找出符合要求的照片。可是，现在怎么把照片的文件名称写到文本文件中呢？我们当然可以直接输入，或者想省点力使用复制和粘贴也行。要是找出的文件数量比较多，那可绝对是体力活。
+
+但是，如果在命令行下，那么我们只需通过执行一条命令即可达到目的：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd photos}\KeywordTok{;} \KeywordTok{\textbackslash{}}
+\FunctionTok{ls}\NormalTok{ -l }\KeywordTok{|} \FunctionTok{grep} \StringTok{'Mar'} \KeywordTok{|} \FunctionTok{awk} \StringTok{'\{ print $9 \}'} \OperatorTok{>}\NormalTok{ mar_photos.txt}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux80fdux81eaux52a8ux5316}{%
+\subsection{能自动化}\label{ux80fdux81eaux52a8ux5316}}
+
+使用命令行还有一个很棒的优势，那就是能够自动化各种操作。Shell 允许我们将所用的命令编写成函数（Function）或脚本（Script）。这样，我们不仅可以反复执行它们，而且函数或脚本比手动输入效率更高。由此，我们得以从重复的劳动中解放出来，从而能够腾出时间去做其它有意义的事情。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ./script.sh}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5982ux4f55ux8fdbux5165ux547dux4ee4ux884c}{%
+\section{如何进入命令行}\label{ux5982ux4f55ux8fdbux5165ux547dux4ee4ux884c}}
+
+通过前面的描述，现在你应当了解：我们想要输入命令的界面是由 Shell 提供的。那么，如何执行 Shell 呢？我们可以通过下面两种方法来进入命令行。
+
+\hypertarget{ux901aux8fc7ux63a7ux5236ux53f0ux8fdbux5165ux547dux4ee4ux884c}{%
+\subsection{通过控制台进入命令行}\label{ux901aux8fc7ux63a7ux5236ux53f0ux8fdbux5165ux547dux4ee4ux884c}}
+
+为了节省系统资源，Linux 服务器通常没有附带图形用户界面。当它启动完毕时，在控制台按照提示输入用户帐号及密码并登录后，所进入的即是命令行界面。以下为 Linux 服务器的登录提示：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{login}\NormalTok{:}
+\ExtensionTok{Password}\NormalTok{:}
+\end{Highlighting}
+\end{Shaded}
+
+作为普通用户来说，一般使用的是具有图形用户界面的 Linux 桌面系统。在它启动后就直接进入了桌面，那么此时想要进入控制台，可以按照下列步骤执行：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  按 Ctrl + Alt + F1 组合键，进入编号为 1 的控制台。
+\item
+  按 Ctrl + Alt + F2 组合键，进入编号为 2 的控制台。
+\item
+  依次类推，可以分别进入 3 号、4 号、5 号、以及 6 号控制台。在默认情况下，Linux 一般提供 6 个控制台。
+\item
+  如果要从控制台返回到桌面，则可以按 Ctrl + Alt + F7 组合键。
+\end{enumerate}
+
+\hypertarget{ux901aux8fc7ux7ec8ux7aefux6a21ux62dfux5668ux8fdbux5165ux547dux4ee4ux884c}{%
+\subsection{通过终端模拟器进入命令行}\label{ux901aux8fc7ux7ec8ux7aefux6a21ux62dfux5668ux8fdbux5165ux547dux4ee4ux884c}}
+
+另外一种进入命令行界面的方法是使用终端模拟器。在不同的操作系统中，可以选择的终端模拟器程序也有所不同（参考 \ref{term} 节）。本书作者在 Linux 下常用 rxvt-unicode，macOS 中则使用 iTerm2。
+
+一般而言，终端模拟器程序会跟系统的登录 Shell（或称默认 Shell）绑定在一起。有些终端模拟器程序提供了更改 Shell 的特性，从而使用户可以方便的选择自己惯用的 Shell。如果不能从终端程序中直接更改 Shell，那么也可以通过 \texttt{chsh} 命令来改变登录 Shell。假如我们想把默认 Shell 更改成 zsh，则可以执行以下命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ chsh -s /bin/zsh}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux4f60ux597dux547dux4ee4ux884c}{%
+\section{你好，命令行}\label{ux4f60ux597dux547dux4ee4ux884c}}
+
+在《C 程序设计语言》中，作者 Brian W. Kernighan 和 Dennis M. Ritchie 介绍的第一个程序是在屏幕上输出一行``Hello world''的消息。为了说明命令行的使用，我们也将在屏幕上输出类似的消息------``你好，命令行''。
+
+当我们进入控制台或打开终端模拟器时，通常会看到跟图 \ref{fig:cli-prompt} 相似的命令行界面。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/cli-hello} \caption{命令行界面}\label{fig:cli-prompt}
+\end{figure}
+
+从图 \ref{fig:cli-prompt} 中我们可以看到命令行一般由下面几个部分组成：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  当前登录的用户名称，在本例中是 \texttt{xiaodong}。
+\item
+  \texttt{codeland} 是主机名称，跟 \texttt{hostname\ -s} 的输出一致。
+\item
+  当前工作目录，\texttt{\textasciitilde{}} 代表用户的主目录，在 Linux 系统下也就是 \texttt{/home/\textless{}用户名\textgreater{}}，macOS 中则为 \texttt{/Users/\textless{}用户名\textgreater{}}。
+\item
+  \texttt{\$} 为命令提示符。通常普通用户的命令行提示符与超级用户（root）的不同，以 bash 为例，root 用户的命令行提示符为 \texttt{\#}。
+\item
+  待执行的命令，在本例中是 \texttt{echo\ -e\ "\textbackslash{}t你好，命令行"}，除 \texttt{echo} 命令本身外，还包括该命令的选项（\texttt{-e}）以及参数（\texttt{\textbackslash{}t你好，命令行}）等部分。命令的选项参数一般由引号（\texttt{"}）引起，以避免诸如空格之类的特殊字符所导致的岐义。可以使用单引号（\texttt{\textquotesingle{}}）或双引号（\texttt{"}），但语意会不同。
+\end{enumerate}
+
+除了这 5 个部分之外，在这个命令行中，我们还可以看到 \texttt{@}、\texttt{:}、以及 \texttt{\textasciigrave{}\ \textasciigrave{}}（空格）等字符。\texttt{@} 一般用来分隔用户名和主机名，其形式跟电子邮箱地址一样。\texttt{:} 在这里起到提示说明作用。空格则常常用来分隔命令的选项和参数。因为命令行提示符可以定制，所以你的命令行界面可能跟我们在这里介绍的不同。
+
+现在，请你跟我们一起，在命令行的提示符（\texttt{\$} 或 \texttt{\#}）后面输入 \texttt{echo\ -e\ "\textbackslash{}t你好，命令行"}。如果在输入过程中有错误，不必慌张，按\textbf{退格键}（BackSpace）或\textbf{删除键}（Delete）删除后重新输入即可。当所有字符全部输入完成后，按下\textbf{回车键}（Enter）。
+
+发现了什么？命令行向我们回显了一条``你好，命令行''的消息。而且 \texttt{echo} 命令参数中的 \texttt{\textbackslash{}t} 在输出中产生了一个制表符（Tab），从而让消息有了缩进效果。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo -e }\StringTok{"\textbackslash{}t你好，命令行"}
+\NormalTok{       你好，命令行}
+\end{Highlighting}
+\end{Shaded}
+
+恭喜！你刚刚在命令行成功执行了一条命令，是否感觉并没有想象中那么恐怖呢？在后面的章节中，我们将教你如何更加高效的使用命令行，从而提升你的工作效率。
+
+\hypertarget{ux795eux5947ux8865ux5168}{%
+\chapter{神奇补全}\label{ux795eux5947ux8865ux5168}}
+
+如果你编写过代码，那么一定听说过``代码补全''吧。在如今流行的代码编辑器和 IDE (集成开发环境) 中，这绝对是一项深受大家喜欢的功能。在此我要讲的 Shell 补全与它很相似。我相信，在学习了本章所讲的内容后，你肯定会爱上它。首先，我们会谈谈什么叫自动补全，然后看看如何触发自动补全，接着详细探讨诸如文件名或路径名、程序名或命令名、用户名、主机名、以及变量名等各种自动补全类型，最后再介绍可编程补全。
+
+\hypertarget{ux4f55ux8c13ux8865ux5168}{%
+\section{何谓补全}\label{ux4f55ux8c13ux8865ux5168}}
+
+现在回过头来看，在学习命令行时，我最想率先学习的功能一定是自动补全。为什么这么说呢？因为自动补全这项功能让我们只需输入开头的一个或几个字符便能通过 Shell 自动补全剩下的内容。对于痛恨输入长命令或文件名的朋友而言，自动补全绝对是福音。自动补全不仅减少了输入，而且节省了时间，从而极大的提高了我们的操作效率。
+
+让我们通过一个例子来说明何谓自动补全。首先，我通过在 bash 中直接输入完整的命令行
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l reallylongname.txt}
+\end{Highlighting}
+\end{Shaded}
+
+来查看 \texttt{reallylongname.txt} 这个文本文件的信息。
+
+然后，我在输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l r}
+\end{Highlighting}
+\end{Shaded}
+
+之后按 \textbf{Tab 键}，于是 bash 帮我自动补全了该文件名剩下的部分。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l reallylongname.txt}
+\end{Highlighting}
+\end{Shaded}
+
+比较两次输入，bash 帮我少输了 17 个字符。是不是感觉很爽呢？
+
+再看一个例子：这次，我在输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l f}
+\end{Highlighting}
+\end{Shaded}
+
+后按 \textbf{Tab}，bash 自动补全了 \texttt{file}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l file}
+\end{Highlighting}
+\end{Shaded}
+
+接着，我连按两下 \textbf{Tab}，这时 bash 向我们展示了可以自动补全的文件名列表，总共包括 5 个项目。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l file}
+\ExtensionTok{file1}\NormalTok{  file2  file3  file4  file5}
+\end{Highlighting}
+\end{Shaded}
+
+我输入 \texttt{1} 来完成 bash 自动补全过程。
+
+比较这两个例子，我们可以发现，如果我们输入的开头字符唯一，那么 bash 将直接自动补全余下的内容。反之，则提供一个可供补全的备选列表。不过，这时候需要我们连按两下 \textbf{Tab 键}。这样的话，经常操作起来感觉还是有点麻烦。
+
+下面我们对 bash 自动补全的配置进行一番优化，使之更加好用。利用文本编辑器打开 \texttt{\textasciitilde{}/.inputrc} 文件 (若不存在，则创建一个)，加入下列内容：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# completion}
+\KeywordTok{set} \ExtensionTok{show-all-if-ambiguous}\NormalTok{ on}
+\KeywordTok{set} \ExtensionTok{visible-stats}\NormalTok{ on}
+\KeywordTok{set} \ExtensionTok{colored-completion-prefix}\NormalTok{ on}
+\end{Highlighting}
+\end{Shaded}
+
+其中，开启 \texttt{show-all-if-ambiguous} 这个选项后，我们只需按一次 \textbf{Tab} 即可看到备选补全列表；\texttt{visible-stats} 选项通过在列表项目尾部添加指示符号来说明类型，例如：\texttt{@} 代表符号链接、\texttt{/} 代表目录等；最后的 \texttt{colored-completion-prefix} 选项则给补全的前缀字符加上颜色。如图 \ref{fig:bash-comp-conf} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/bash-comp-conf} \caption{bash 自动补全配置结果}\label{fig:bash-comp-conf}
+\end{figure}
+
+\hypertarget{ux8865ux5168ux89e6ux53d1ux6309ux952e}{%
+\section{补全触发按键}\label{ux8865ux5168ux89e6ux53d1ux6309ux952e}}
+
+通过这些例子，我们也可以知道，要触发自动补全，一般只要按 \textbf{Tab 键}即可。bash 和 zsh 都是这个默认设定。
+
+\hypertarget{ux6587ux4ef6ux540dux8defux5f84ux540dux8865ux5168}{%
+\section{文件名、路径名补全}\label{ux6587ux4ef6ux540dux8defux5f84ux540dux8865ux5168}}
+
+前面的例子显示的是在 bash 中文件名自动补全的情况。下面我们看一个在 zsh 中自动补全文件名的例子。当我输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l f}
+\end{Highlighting}
+\end{Shaded}
+
+后按 \textbf{Tab}，zsh 为我自动补全了 \texttt{file}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l file}
+\end{Highlighting}
+\end{Shaded}
+
+我接着再按 \textbf{Tab 键}，这时 zsh 提供了可以备选的自动补全菜单。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l file}
+\ExtensionTok{file1}\NormalTok{  file2  file3  file4  file5}
+\end{Highlighting}
+\end{Shaded}
+
+再次按 \textbf{Tab} 则可以选择具体的菜单项目。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l file2}
+\ExtensionTok{file1}\NormalTok{  **file2**  file3  file4  file5}
+\end{Highlighting}
+\end{Shaded}
+
+然后按\textbf{回车键}完成自动补全过程。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l file2}
+\end{Highlighting}
+\end{Shaded}
+
+最后再按一次\textbf{回车键}执行命令。
+
+不知大家有没有发现与 bash 补全的区别呢？bash 提供的备选补全列表不能选择具体的项目，而 zsh 则可以。这也说明与 bash 相比，zsh 具有更棒的用户交互功能。所以我平常也更喜欢使用 zsh 一些。如果你还没有用过 zsh，那么我在此建议你一定要试一试。
+
+说到备选补全列表，在 bash 中我喜欢使用的一组快捷键是 \textbf{Alt + ?}。当 bash 补全 \texttt{file} 后，我没有按 \textbf{Tab}，而是按 \textbf{Alt + ?}，bash 就立即呈现了备选补全列表。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls -l file}
+\ExtensionTok{file1}\NormalTok{  file2  file3  file4  file5}
+\end{Highlighting}
+\end{Shaded}
+
+还有一种情况，有时候我们希望 Shell 不要补全某些特别的文件类型。为了达到这种效果，我们可以使用 \texttt{FIGNORE} 变量。在下面的例子中，我想查看 \texttt{Welcome.java} 的内容，因此只想 Shell 补全 \texttt{.java} 文件，并排除 \texttt{.class} 文件。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat W}
+\ExtensionTok{Welcome.class}\NormalTok{  Welcome.java}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat Welcome.}
+\end{Highlighting}
+\end{Shaded}
+
+在将 \texttt{.class} 扩展名赋给 \texttt{FIGNORE} 变量后，Shell 就为我剔除掉了 \texttt{.class} 文件类型。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ FIGNORE=}\StringTok{'.class'}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat W}\OperatorTok{<}\NormalTok{Tab}\OperatorTok{>}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat Welcome.java}
+\end{Highlighting}
+\end{Shaded}
+
+如果想要排除多种文件类型，则只需用 \texttt{:} (冒号) 分隔即可。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ FIGNORE=}\StringTok{'.o:.class'}
+\end{Highlighting}
+\end{Shaded}
+
+这将让 Shell 在自动补全时排除 \texttt{.o} 和 \texttt{.class} 文件。无论是 bash，还是 zsh，当前都支持 \texttt{FIGNORE}。
+
+路径名补全和文件名补全很相似，只是在补全后自动追加上 \texttt{/} (斜杠)，便于我们输入下一级的路径名。在下例中，我在输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd g}
+\end{Highlighting}
+\end{Shaded}
+
+后按 \textbf{Tab}，Shell 补完了全名，并在其后添加了一个 \texttt{/}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd guessing_game/}
+\end{Highlighting}
+\end{Shaded}
+
+之后我接着输入 \texttt{s} 并按 \textbf{Tab}，这次 Shell 补全了下级目录 \texttt{src}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd guessing_game/src/}
+\end{Highlighting}
+\end{Shaded}
+
+对于开头字符不唯一的情况，跟文件名补全也是一样，bash 中只要按 \textbf{Tab} 即可看到备选补全列表。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd h}
+\ExtensionTok{hello/}\NormalTok{       hello_world/}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd hello}
+\end{Highlighting}
+\end{Shaded}
+
+顺便提一句，自动补全不光在命令行下使用，即便在有些图形化程序中也能使用。比如，在 GIMP 中，我也可以通过自动补全来打开文件。如图 \ref{fig:gimp-comp} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/gimp-comp} \caption{在 GIMP 中自动补全文件名}\label{fig:gimp-comp}
+\end{figure}
+
+\hypertarget{ux7a0bux5e8fux540dux547dux4ee4ux540dux8865ux5168}{%
+\section{程序名、命令名补全}\label{ux7a0bux5e8fux540dux547dux4ee4ux540dux8865ux5168}}
+
+不带选项的程序名、命令名补全几乎跟文件名补全一样，让我们来看一个例子。要是你看过《黑客帝国》这部电影，那么下面的画面你应该会很熟悉。当我输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cmat}
+\end{Highlighting}
+\end{Shaded}
+
+后按 \textbf{Tab}，bash 立即为我自动补全了 \texttt{cmatrix} 命令。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cmatrix}
+\end{Highlighting}
+\end{Shaded}
+
+而当我在输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cma}
+\end{Highlighting}
+\end{Shaded}
+
+后按 \textbf{Tab}，bash 为我提供了一个备选补全列表。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cma}
+\FunctionTok{cmake}\NormalTok{        cmake-gui    cmapcube     cmark        cmark-gfm    cmatrix}
+\end{Highlighting}
+\end{Shaded}
+
+此时，需要再输入 \texttt{t} 才能完成补全。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cmat}
+\end{Highlighting}
+\end{Shaded}
+
+如果我在仅仅输入 \texttt{c} (命令开头的第一个字符)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ c}
+\end{Highlighting}
+\end{Shaded}
+
+后便按 \textbf{Tab}，这时 bash 询问我：``Display all 474 possibilities? (y or n)'' (是否显示所有 474 个补全列表项目) 按 \textbf{y} 予以显示。按 \textbf{n} 则不显示。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ c}
+\ExtensionTok{Display}\NormalTok{ all 474 possibilities? (y or n)}
+\end{Highlighting}
+\end{Shaded}
+
+因为可供自动补全的列表项目太多，一屏已经显示不下了，所以 bash 使用 \texttt{more} 这个页面查看程序来呈现。现在按 \textbf{Space (空格键)} 可以翻页，如果想退出，那么按 \textbf{q} 即可。如图 \ref{fig:cmd-comp-more} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/cmd-comp-more} \caption{命令自动补全备选列表}\label{fig:cmd-comp-more}
+\end{figure}
+
+除了直接补全命令名之外，Shell 也能自动补全程序的子命令，例如：\texttt{git\ status} 中的 \texttt{status} 以及命令的选项。不过，bash 需要安装一个单独的 \texttt{bash-completion} 包；而 zsh 因为内置了对此功能的支持，所以不需要额外的包。
+
+\href{https://github.com/scop/bash-completion}{bash-completion 的源代码}位于 GitHub 上，在此可以了解如何对其安装和配置。例如：
+
+在 Debian 中，我们可以通过执行
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~# apt install bash-completion}
+\end{Highlighting}
+\end{Shaded}
+
+来安装它。
+
+在 CentOS 上，除了安装 \texttt{bash-completion} 外，我推荐把 \texttt{bash-completion-extras} 也装上。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~# yum install bash-completion bash-completion-extras}
+\end{Highlighting}
+\end{Shaded}
+
+而在 Arch Linux 上，则可以执行
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~# pacman -S bash-completion}
+\end{Highlighting}
+\end{Shaded}
+
+进行安装。
+
+要配置 \texttt{bash-completion}，则只需要将下面这行指令加入 \texttt{\textasciitilde{}/.bashrc} (个人) 或 \texttt{/etc/bash.bashrc} (全局) 即可。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{[} \OtherTok{-r}\NormalTok{ /usr/share/bash-completion/bash_completion}\BuiltInTok{ ]} \KeywordTok{\textbackslash{}}
+\KeywordTok{&&} \BuiltInTok{.} \ExtensionTok{/usr/share/bash-completion/bash_completion}
+\end{Highlighting}
+\end{Shaded}
+
+在正常使用 zsh 的命令补全功能之前，我们也需要将下列内容加入到 \texttt{\textasciitilde{}/.zshrc} 配置文件中：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# completion}
+\ExtensionTok{autoload}\NormalTok{ -U compinit}
+\ExtensionTok{compinit}\NormalTok{ -i}
+\end{Highlighting}
+\end{Shaded}
+
+让我们先来看一个自动补全命令选项的例子。我在输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ find -}
+\end{Highlighting}
+\end{Shaded}
+
+后便立即按 \textbf{Tab}，bash 马上列出了可以自动补全的选项列表。如图 \ref{fig:subcmd-comp} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/subcmd-comp} \caption{命令选项自动补全备选列表}\label{fig:subcmd-comp}
+\end{figure}
+
+我接着输入 \texttt{ina}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ find -ina}
+\end{Highlighting}
+\end{Shaded}
+
+并再次按下 \textbf{Tab}，此时 bash 自动补全了 \texttt{-iname} 选项。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ find -iname}
+\end{Highlighting}
+\end{Shaded}
+
+下面的例子演示了 bash 补全子命令的情形。在输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git in}
+\end{Highlighting}
+\end{Shaded}
+
+后，按 \textbf{Tab}，bash 提供可以自动补全的子命令列表。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git in}
+\ExtensionTok{info}\NormalTok{       init       instaweb}
+\end{Highlighting}
+\end{Shaded}
+
+跟着输入 \texttt{i}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git ini}
+\end{Highlighting}
+\end{Shaded}
+
+并再按 \textbf{Tab}，这次 bash 便自动补全了子命令 \texttt{init}。对于执行 \texttt{git\ status} 子命令的过程同样如此。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git init}
+\end{Highlighting}
+\end{Shaded}
+
+与 bash 比较而言，zsh 对于命令选项的补全提供更好的用户体验。在下面的例子中，你将看到，zsh 不仅列出了可供补全的选项列表，更有对该选项用途的解释。如图 \ref{fig:zsh-cmd-opt-comp} 所示。此外，正如前面提到的，你还可以选择这些列表项目。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/zsh-cmd-opt-comp} \caption{zsh 中的命令选项自动补全}\label{fig:zsh-cmd-opt-comp}
+\end{figure}
+
+对于子命令的补全，zsh 提供与命令选项补全相同的效果。
+
+此外，子命令以及选项补全也可以合用。在下例中，我先补全了子命令 \texttt{git\ status}，然后又补全了选项 \texttt{-\/-verbose}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git sta}
+\ExtensionTok{stash}\NormalTok{  -- stash away changes to dirty working directory}
+\ExtensionTok{status}\NormalTok{ -- show working-tree status}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git status --v}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git status --verbose}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{zsh-ux81eaux52a8ux5efaux8baeux63d2ux4ef6}{%
+\subsection{Zsh 自动建议插件}\label{zsh-ux81eaux52a8ux5efaux8baeux63d2ux4ef6}}
+
+对于使用 zsh 的朋友，我在此推荐一个好用的命令自动建议插件。这个插件叫做 \href{https://github.com/zsh-users/zsh-autosuggestions}{zsh-autosuggestions}。针对命令进行自动建议这项功能源自于 \texttt{fish} shell，现在，zsh 从其借鉴过来，使得我们这些 zsh 的忠实拥趸也能使用这项好功能。
+
+zsh-autosuggestions 的安装很简单，只需从 GitHub 将其克隆到本机，然后在 \texttt{.zshrc} 中引用 \texttt{zsh-autosuggestions.zsh} 并重新打开终端即可。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git clone \textbackslash{}}
+\NormalTok{https://github.com/zsh-users/zsh-autosuggestions.git \textbackslash{}}
+\NormalTok{~/.zsh-autosuggestions}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo source \textbackslash{}}
+\NormalTok{~/.zsh-autosuggestions/zsh-autosuggestions.zsh \textbackslash{}}
+\OperatorTok{>>}\NormalTok{ ~/.zshrc}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ source ~/.zshrc}
+\end{Highlighting}
+\end{Shaded}
+
+下面让我们来看看 \texttt{zsh-autosuggestions} 的用法，首先我在没有开启 \texttt{zsh-autosuggestions} 插件的情况下输入 \texttt{ls\ -l}、\texttt{cd\ hello\_world} 等命令，除了能够使用命令补全之外，这儿没有命令的自动建议。当 \texttt{zsh-autosuggestions} 插件开启后，我一旦输入 \texttt{ls}，其后便会出现灰色的自动建议 \texttt{-la}。这是因为 zsh 知道我先前曾输入过 \texttt{ls\ -la} 这条命令，所以它给出了自动建议。如图 \ref{fig:zsh-autosug} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/zsh-autosug} \caption{zsh 中的命令自动建议}\label{fig:zsh-autosug}
+\end{figure}
+
+这时，我们有两种选择：一是按 \textbf{→ (右方向箭)} 接受建议，二是继续输入新的内容，这样也就放弃建议了。对于输入 \texttt{cd\ h} 后，zsh 同样给出了自动建议 \texttt{ello\_world}。
+
+\hypertarget{ux7528ux6237ux540dux4e3bux673aux540dux53caux53d8ux91cfux540dux8865ux5168}{%
+\section{用户名、主机名及变量名补全}\label{ux7528ux6237ux540dux4e3bux673aux540dux53caux53d8ux91cfux540dux8865ux5168}}
+
+除了常见的文件名、命令名补全外，Shell 自动补全还支持其它补全类型。这充分展现了 Shell 自动补全多才多艺的一面。下面我们就来看一看 Shell 如何自动补全用户名。
+
+当我输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls ~}
+\end{Highlighting}
+\end{Shaded}
+
+之后按 \textbf{Tab}，此时 bash 为我呈现了系统中存在的用户名列表。如图 \ref{fig:user-comp} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/user-comp} \caption{bash 中的用户名自动补全备选列表}\label{fig:user-comp}
+\end{figure}
+
+我继续输入 \texttt{x} 并再次按 \textbf{Tab}，于是 bash 补全了 \texttt{xiaodong} 这个用户名。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls ~x}\OperatorTok{<}\NormalTok{Tab}\OperatorTok{>}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls ~xiaodong/}
+\end{Highlighting}
+\end{Shaded}
+
+在 zsh 中，我们可以看到，与 bash 相比，提供的补全用户名列表表现形式略有差异。bash 中包含 \texttt{\textasciitilde{}} 前缀，并在结尾带有 \texttt{/} (斜杠)。zsh 中则仅有用户名本身。如图 \ref{fig:zsh-user-comp} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/zsh-user-comp} \caption{zsh 中的用户名自动补全备选列表}\label{fig:zsh-user-comp}
+\end{figure}
+
+如果你经常使用 \texttt{ssh} 登录远程机器的话，那么主机名自动补全将助你一臂之力。同样，我们先来看一个例子。我在输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ssh xiaodong@l}
+\end{Highlighting}
+\end{Shaded}
+
+后按 \textbf{Tab}，这时 bash 展示了可以自动补全的主机名列表。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ssh xiaodong@l}
+\ExtensionTok{xiaodong@lab.github.com}\NormalTok{         xiaodong@localhost}
+\ExtensionTok{xiaodong@linuxtoy.org}\NormalTok{           xiaodong@localhost.localdomain}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ssh xiaodong@l}
+\end{Highlighting}
+\end{Shaded}
+
+我接着输入 \texttt{i} 并按 \textbf{Tab}，这次 bash 就自动补全了完整的主机名 \texttt{linuxtoy.org}。你也可以直接在 \texttt{@} 后按 \textbf{Tab}，这样的话就会显示全部主机名了。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ssh xiaodong@li}\OperatorTok{<}\NormalTok{Tab}\OperatorTok{>}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ssh xiaodong@linuxtoy.org}
+\end{Highlighting}
+\end{Shaded}
+
+不仅是主机名，而且 IP 地址也同样支持自动补全。另一种情况是，直接在输入 \texttt{ssh\ l} 后按 \textbf{Tab}，bash 也能对主机名进行自动补全。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ssh l}
+\ExtensionTok{lab.github.com}\NormalTok{         linuxtoy.org           localhost}
+\end{Highlighting}
+\end{Shaded}
+
+看到这里，你或许会想，bash 从哪里找到这些可以用来自动补全的主机名呢？一个是 \texttt{/etc/hosts} 文件的内容，另一个是 \texttt{ssh} 的配置文件，比如 \texttt{\textasciitilde{}/.ssh/config}。如图 \ref{fig:completion-hostname} 所示。所以，如果你打算让 bash 为你自动补全常用的主机名的话，那么不妨考虑将其添加到这两个文件中。此外，还包括 \texttt{\textasciitilde{}/.ssh/known\_hosts} 文件。凡是通过 \texttt{ssh} 登录过的主机，便会包含其中。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/completion-hostname} \caption{自动补全的主机名来源}\label{fig:completion-hostname}
+\end{figure}
+
+zsh 对主机名的自动补全与 bash 类似，此不赘述。
+
+最后，让我们来看看对变量名的自动补全情况。当我输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo $}
+\end{Highlighting}
+\end{Shaded}
+
+后按 \textbf{Tab} 并根据提示按 \textbf{y}，这时 bash 显示了全部可供补全的变量名。如图 \ref{fig:var-comp} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/var-comp} \caption{bash 中的变量名自动补全备选列表}\label{fig:var-comp}
+\end{figure}
+
+然后，我继续输入并搭配 \textbf{Tab} 按键，从而补全了变量 \texttt{BASH\_VERSION}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\VariableTok{$BASH_VERSION}
+\end{Highlighting}
+\end{Shaded}
+
+zsh 对变量的自动补全与 bash 相似，不过，在我的系统上比 bash 提供的补全列表更多一些。如图 \ref{fig:zsh-var-comp} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/zsh-var-comp} \caption{zsh 中的变量名自动补全备选列表}\label{fig:zsh-var-comp}
+\end{figure}
+
+综合来看，这几种补全类型跟前面我们所讲的文件名、命令名自动补全还是有一点差异，那就是它们带着一个特殊的前缀字符，参考表 \ref{tab:auto-comp-table}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:auto-comp-table} 用户名、主机名及变量名自动补全前缀字符}\tabularnewline
+\toprule
+前缀字符 & 自动补全类型\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+前缀字符 & 自动补全类型\tabularnewline
+\midrule
+\endhead
+\textasciitilde{} & 用户名\tabularnewline
+@ & 主机名\tabularnewline
+\$ & 变量名\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{ux53efux7f16ux7a0bux8865ux5168}{%
+\section{可编程补全}\label{ux53efux7f16ux7a0bux8865ux5168}}
+
+在熟悉了命令行自动补全的用法之后，如果你是一位开发人员的话，那么或许会问到这样的问题：``如何为自己所写的程序或脚本添加命令补全呢？''利用 bash 和 zsh 提供的可编程补全特性，我们可以方便地对命令补全加以定制。下面我们就从示例出发来一探究竟。
+
+\hypertarget{bash-ux793aux4f8b}{%
+\subsection{bash 示例}\label{bash-ux793aux4f8b}}
+
+假设我编写的程序名叫 \texttt{mycmd}，它具有 \texttt{-\/-help} 和 \texttt{-\/-version} 两个命令选项。让我们先来看看它的命令补全效果。当我输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ mycmd -}
+\end{Highlighting}
+\end{Shaded}
+
+并按 \textbf{Tab} 后，这时 bash 为我呈现了该命令的全部选项列表，同时补全成了 \texttt{mycmd\ -\/-}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ mycmd -}
+\ExtensionTok{--help}\NormalTok{     --version}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ mycmd --}
+\end{Highlighting}
+\end{Shaded}
+
+我接着输入 \texttt{h}，再按 \textbf{Tab}，bash 这次就自动补全了命令选项 \texttt{-\/-help}。啊哈，这正是我想要的命令补全。那么，如何实现可编程补全呢？
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ mycmd --h}\OperatorTok{<}\NormalTok{Tab}\OperatorTok{>}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ mycmd --help}
+\end{Highlighting}
+\end{Shaded}
+
+首先，我们需要在 \texttt{/etc/bash\_completion.d} 目录下创建 \texttt{mycmd} 文件（亦即 \texttt{/etc/bash\_completion.d/mycmd}）。这样，bash 就会自动加载我们在 \texttt{mycmd} 中编写的补全代码。
+
+其次，我们在 \texttt{mycmd} 中编写如下用于处理命令自动补全的代码。如图 \ref{fig:completion-prog-bash} 所示。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#}
+\CommentTok{# Completion for mycmd}
+\CommentTok{#}
+\FunctionTok{_mycmd()} \KeywordTok{\{}
+    \BuiltInTok{local} \VariableTok{cur} \VariableTok{opts}
+
+    \VariableTok{cur=}\StringTok{"}\VariableTok{$\{COMP_WORDS[COMP_CWORD]\}}\StringTok{"}
+    \VariableTok{opts=}\StringTok{"--help --version"}
+
+    \KeywordTok{if [[} \VariableTok{$\{cur\}} \OtherTok{==}\NormalTok{ -*}\KeywordTok{ ]]}\NormalTok{; }\KeywordTok{then}
+        \VariableTok{COMPREPLY=($(}\BuiltInTok{compgen}\NormalTok{ -W }\StringTok{"}\VariableTok{$\{opts\}}\StringTok{"}\NormalTok{ -- }\VariableTok{$\{cur\}))}
+        \BuiltInTok{return}\NormalTok{ 0}
+    \KeywordTok{fi}
+\KeywordTok{\}}
+
+\BuiltInTok{complete}\NormalTok{ -F _mycmd mycmd}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/completion-prog-bash} \caption{bash 可编程补全示例}\label{fig:completion-prog-bash}
+\end{figure}
+
+这是一个典型的 bash 脚本。开头的 \texttt{\#} 为注释，用于说明补全的用途。
+
+接着我们定义了一个名为 \texttt{\_mycmd} 的函数，该函数包含用来处理 \texttt{mycmd} 命令的选项的逻辑。
+
+\texttt{local} 声明了两个变量：\texttt{cur} 和 \texttt{opts}。其中，\texttt{cur} 存储当前在命令行正输入的字，它通过 bash 内置的变量 \texttt{COMP\_WORDS} 和 \texttt{COMP\_CWORD} 获取。
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{COMP\_WORDS}：数组变量，包含当前命令行中单独的字。
+\item
+  \texttt{COMP\_CWORD}：表示当前光标位置在 \texttt{\$\{COMP\_WORDS\}} 中的索引。
+\end{itemize}
+
+而 \texttt{opts} 则用来保存 \texttt{mycmd} 命令所有的命令选项。
+
+然后，我们判断 \texttt{\$cur} 是否为 \texttt{-} 打头，若为真，那么就用 \texttt{compgen} 命令来生成可供补全的选项列表。\texttt{-W} 选项后跟我们需要的 \texttt{mycmd} 命令选项。
+
+与此同时，我们将 \texttt{compgen} 产生的输出赋给又一个 bash 内置变量 \texttt{COMPREPLY}。这样，当需要补全时，bash 就会采用 \texttt{compgen} 生成的补全列表了。
+
+最后，我们用 \texttt{complete} 将补全函数 \texttt{\_mycmd}（\texttt{-F} 选项）与程序 \texttt{mycmd} 绑定在一起即可。
+
+\hypertarget{zsh-ux793aux4f8b}{%
+\subsection{zsh 示例}\label{zsh-ux793aux4f8b}}
+
+现在，让我们来看看在 zsh 中又怎么实现可编程补全吧。
+
+假如我们把 \texttt{mycmd} 的补全代码保存到 \texttt{\$HOME/.zsh/\_mycmd} 中的话，那么需要在 \texttt{\$HOME/.zshrc} 里设置 \texttt{\$fpath}，以便 zsh 能够加载我们的补全代码。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{fpath=($HOME}\NormalTok{/.zsh }\VariableTok{$fpath)}
+\end{Highlighting}
+\end{Shaded}
+
+下面就是我们针对 zsh 而改写的 \texttt{mycmd} 自动补全代码。如图 \ref{fig:completion-prog-zsh} 所示。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{#compdef mycmd}
+\CommentTok{#}
+\CommentTok{# Completion for mycmd}
+\CommentTok{#}
+\FunctionTok{_mycmd()} \KeywordTok{\{}
+    \BuiltInTok{local} \VariableTok{cur} \VariableTok{opts}
+
+    \VariableTok{cur=}\StringTok{"}\VariableTok{$\{words[CURRENT]\}}\StringTok{"}
+    \VariableTok{opts=(}\NormalTok{--help --version}\VariableTok{)}
+
+    \KeywordTok{if [[} \VariableTok{$\{cur\}} \OtherTok{==}\NormalTok{ -*}\KeywordTok{ ]]}\NormalTok{; }\KeywordTok{then}
+        \ExtensionTok{compadd}\NormalTok{ -- }\VariableTok{$\{opts\}}
+        \BuiltInTok{return}\NormalTok{ 0}
+    \KeywordTok{fi}
+\KeywordTok{\}}
+
+\ExtensionTok{_mycmd} \StringTok{"}\VariableTok{$@}\StringTok{"}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/completion-prog-zsh} \caption{zsh 可编程补全示例}\label{fig:completion-prog-zsh}
+\end{figure}
+
+第一行的注释并非普通注释（\texttt{\#compdef\ mycmd}），它允许 zsh 为我们自动载入补全代码。
+
+接下来定义的函数与变量跟 bash 示例相似，其中已经替换成 zsh 里等价的内容。
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{words} 相当于 bash 中的 \texttt{COMP\_WORDS}
+\item
+  \texttt{CURRENT} 与 bash 中的 \texttt{COMP\_CWORD} 类似
+\item
+  \texttt{COMPREPLY} 则和 \texttt{compadd} 这个内置的 zsh 命令相同
+\end{itemize}
+
+要试验 \texttt{mycmd} 在 zsh 中的补全效果，只需先执行一下 \texttt{source\ \textasciitilde{}/.zshrc}。从下面的例子中，你可以看到 \texttt{mycmd} 的命令补全跟 bash 中几乎一样，当然也带着 zsh 原本的补全功能。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ mycmd --}
+\ExtensionTok{--help}\NormalTok{     --version}
+\end{Highlighting}
+\end{Shaded}
+
+值得一提的是，zsh 本身还提供了一些辅助函数以用于补全，比如 \texttt{\_arguments}、\texttt{\_describe}、\texttt{\_message} 等等，各位读者诸君不妨参考 zsh 的官方文档详加了解，以便用到自己的补全代码中。
+
+\hypertarget{ux91cdux6e29ux5386ux53f2}{%
+\chapter{重温历史}\label{ux91cdux6e29ux5386ux53f2}}
+
+在编程领域有一个十分重要的原则，那就是如何想办法来重复利用代码。比如，通过把具有相同逻辑的代码抽象成函数，从而能够加以反复调用。与之类似，在使用命令行时，我们也可以贯彻这个原则------重复利用已经执行过的命令。如果想要达到这样的效果，那么就该轮到 Shell 的历史功能出场了。
+
+我们将先从设置历史变量谈起，接着讨论如何查看、搜索、以及前后移动历史命令，然后来看看怎样快速修改并执行历史命令，最后介绍快速引用历史命令的参数。
+
+为了更好的重温历史，让我们首先来了解历史命令的保存位置和记录大小吧。
+
+\hypertarget{ux8bbeux7f6eux5386ux53f2ux53d8ux91cf}{%
+\section{设置历史变量}\label{ux8bbeux7f6eux5386ux53f2ux53d8ux91cf}}
+
+无论是 bash 还是 zsh，都能够将我们已经执行过的命令存储到一个文件中。这样，便于我们以后对其加以重复使用。要查看 bash 或 zsh 的历史文件位置，不妨执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\VariableTok{$HISTFILE}
+\end{Highlighting}
+\end{Shaded}
+
+在 bash 中，我们可以看到，这个文件默认是存储到 \texttt{\textasciitilde{}/.bash\_history} 的。但是，因为 zsh 默认并没有设置该变量，所以内容为空。
+
+通过向 \texttt{\$HISTFILE} 变量赋予新值，从而能够更改历史文件的保存位置。下面，我们将 zsh 的历史文件设置为 \texttt{\textasciitilde{}/.zsh\_history}。先使用文本编辑器（比如 \texttt{nvim}）打开 \texttt{\textasciitilde{}/.zshrc}，然后添加下行内容：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{HISTFILE=}\NormalTok{~/.zsh_history}
+\end{Highlighting}
+\end{Shaded}
+
+对 bash 而言，另外两个重要的历史变量是 \texttt{\$HISTFILESIZE} 和 \texttt{\$HISTSIZE}。其中，前者为 \texttt{\$HISTFILE} 文件所能保存的最大行数，而后者则为 Shell 中记忆的最大历史命令数。这两个变量默认的设置都是 500，换句话说 \texttt{\textasciitilde{}/.bash\_history} 文件最多保留 500 行，且最多 500 个命令。为了最大限度的利用历史文件的价值，我们不妨考虑把这两个变量的值设得更大一些，比如 5000：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{HISTFILESIZE=}\NormalTok{5000}
+\VariableTok{HISTSIZE=}\NormalTok{5000}
+\end{Highlighting}
+\end{Shaded}
+
+将以上两行内容追加到 \texttt{\textasciitilde{}/.bashrc} 中以便永久保存设置。通常将这两个变量设置的值保持一致，否则在 \texttt{\$HISTFILE} 中保存的内容可能会被截断。比如，在 \texttt{\$HISTSIZE} 设为 1000 的情况下，而 \texttt{\$HISTFILESIZE} 却为 500。因为历史命令数大于文件的行数，所以有部分历史命令不能保存到历史文件中。
+
+\texttt{\$HISTSIZE} 变量在 zsh 中同样有效，但与 \texttt{\$HISTFILESIZE} 变量等价的却变成了 \texttt{\$SAVEHIST}。类似的，我们将 \texttt{\textasciitilde{}/.zsh\_history} 保留的最大行数和命令数也设为 5000：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{SAVEHIST=}\NormalTok{5000}
+\VariableTok{HISTSIZE=}\NormalTok{5000}
+\end{Highlighting}
+\end{Shaded}
+
+把上面两行内容添加到 \texttt{\textasciitilde{}/.zshrc} 中以便永久保存设置。
+
+既然存储的这些历史命令如此重要，那么就很有必要维护一个整洁、有价值的命令清单了。比如，剔除掉那些重复的命令、开头包含空格的命令、以及常用的简单命令等等。要实现这个目的，在 bash 中我们可以使用 \texttt{\$HISTCONTROL} 变量。
+
+\texttt{\$HISTCONTROL} 采用冒号分隔的列表来决定是否将命令保存到历史文件中。例如，\texttt{erasedups} 表示去掉重复的命令，而 \texttt{ignorespace} 则意为除去开头具有空格的命令。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{HISTCONTROL=}\StringTok{'erasedups:ignorespace'}
+\end{Highlighting}
+\end{Shaded}
+
+在 zsh 中没有与 bash 对应的内置变量 \texttt{\$HISTCONTROL}，不过可以通过设置选项来达到同样的效果：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{setopt}\NormalTok{ HIST_IGNORE_ALL_DUPS }\CommentTok{# 去掉重复的命令}
+\ExtensionTok{setopt}\NormalTok{ HIST_IGNORE_SPACE    }\CommentTok{# 去掉开头具有空格的命令}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux67e5ux770bux5386ux53f2ux547dux4ee4}{%
+\section{查看历史命令}\label{ux67e5ux770bux5386ux53f2ux547dux4ee4}}
+
+Shell 本身提供了 \texttt{history} 这个内置命令来让我们随时查看所记录的历史命令。当我们执行 \texttt{history} 后，Shell 记录的所有历史命令便被回显出来。如果历史命令太多，不妨将其管道给页面查看程序 \texttt{less}，这样可以分屏查看：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ history }\KeywordTok{|} \FunctionTok{less}
+    \ExtensionTok{1}\NormalTok{  echo }\VariableTok{$HISTSIZE}
+    \ExtensionTok{2}\NormalTok{  sudo -i}
+    \ExtensionTok{3}\NormalTok{  cat .bashrc}
+    \ExtensionTok{4}\NormalTok{  cat .bash_profile}
+    \ExtensionTok{5*}\NormalTok{ cat .bash_history}
+\end{Highlighting}
+\end{Shaded}
+
+每行命令前面的数字是该行命令的编号。数字后面带 \texttt{*} 号的行则说明已经被修改过。
+
+\texttt{history} 比较有用的一个选项是，它后面可以跟一个数字（比如 5）。这样，在 bash 中就可以看到倒数的 5 个历史命令。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ history 5}
+\end{Highlighting}
+\end{Shaded}
+
+值得注意的是，zsh 中需要在 5 前面加个 \texttt{-} 号：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ history -5}
+\end{Highlighting}
+\end{Shaded}
+
+另外，在 zsh 中，我们也可以给 \texttt{history} 两个负数，以便查看中间的一段历史命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ history -10 -5}
+\end{Highlighting}
+\end{Shaded}
+
+这表示从倒数第 10 个到倒数第 5 个之间的历史命令。
+
+对 zsh 来说，它还能向我们提供更多的历史命令细节，包括命令执行的日期和时间，以及每个命令持续运行的时间：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ history -i -D}
+\end{Highlighting}
+\end{Shaded}
+
+这里的 \texttt{-i} 选项向我们展示了命令执行的日期及时间，而 \texttt{-D} 选项则说明了命令运行了好久。
+
+除了 \texttt{history} 之外，另一个用来查看历史命令列表的是 \texttt{fc}。我们利用 \texttt{fc} 的 \texttt{-l} 选项可以将历史命令列出来。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ fc -l       }\CommentTok{# 列出最后 16 条命令}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ fc -l -5    }\CommentTok{# 列出倒数 5 条命令}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ fc -l 20 30 }\CommentTok{# 列出编号 20 到 30 的命令}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ fc -l 100   }\CommentTok{# 列出编号为 100 后的所有命令}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ fc -l cat   }\CommentTok{# 列出 cat 后的所有命令}
+\end{Highlighting}
+\end{Shaded}
+
+通过 \texttt{fc} 的 \texttt{-e} 选项，我们还能够编辑历史命令列表。比如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ fc -e vi 5 10}
+\end{Highlighting}
+\end{Shaded}
+
+这将打开 \texttt{vi} 来编辑 5 到 10 条历史命令。
+
+\hypertarget{ux641cux7d22ux5386ux53f2ux547dux4ee4}{%
+\section{搜索历史命令}\label{ux641cux7d22ux5386ux53f2ux547dux4ee4}}
+
+在搜索历史命令时，大家平时用得比较多的是将 \texttt{history} 与 \texttt{grep} 联用，从而过滤出需要的命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ history }\KeywordTok{|} \FunctionTok{grep} \StringTok{'xxx'}
+\end{Highlighting}
+\end{Shaded}
+
+我个人比较喜欢使用的方式是按 \textbf{Ctrl + r} 组合键，这样 Shell 会让我们逆向搜索历史命令，比用 \texttt{grep} 更加方便。
+
+当我在 bash 中按 \textbf{Ctrl + r} 后，Shell 给我提示 reverse-i-search（在 zsh 中这个提示略有不同，为 bck-i-search），然后我可以在冒号后面键入要搜索的字符串，比如 \texttt{hi}。此时，Shell 从历史命令中找到了 \texttt{history}，按\textbf{回车键}可以立即执行该命令。如果想要对命令加以修改，则只需按\textbf{→️ (右方向键)}。如图 \ref{fig:history-search} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/history-search} \caption{逆向搜索历史命令}\label{fig:history-search}
+\end{figure}
+
+这是一个增量搜索引擎，我们每键入一个字符，Shell 便对历史命令列表进行匹配。若是匹配成功，则显出结果。要是匹配失败，我们还可以按\textbf{退格键}删除字符，然后重新输入来继续搜索。
+
+\hypertarget{ux524dux540eux79fbux52a8ux5386ux53f2ux547dux4ee4}{%
+\section{前后移动历史命令}\label{ux524dux540eux79fbux52a8ux5386ux53f2ux547dux4ee4}}
+
+除 \textbf{Ctrl + r} 之外，我经常使用的另外两组快捷键是 \textbf{Ctrl + p} 和 \textbf{Ctrl + n}。这两组快捷键能够让我们在历史命令列表中前后移动。参考表 \ref{tab:move-history}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:move-history} 前后移动历史命令}\tabularnewline
+\toprule
+按键 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+按键 & 作用\tabularnewline
+\midrule
+\endhead
+Ctrl + p & 移到前一条命令\tabularnewline
+Ctrl + n & 移到后一条命令\tabularnewline
+\bottomrule
+\end{longtable}
+
+如果我们多次按这两组快捷键，则可以连续前移或后移。这些快捷键 bash 和 zsh 都支持。
+
+\hypertarget{ux5febux901fux4feeux6539ux5e76ux6267ux884cux4e0aux4e00ux6761ux547dux4ee4}{%
+\section{快速修改并执行上一条命令}\label{ux5febux901fux4feeux6539ux5e76ux6267ux884cux4e0aux4e00ux6761ux547dux4ee4}}
+
+平常在使用命令行时，我经常会遇到的情况是，要么不小心，要么手太快，总之命令没有输入正确就执行了。这时候，我可不想再次重新输入命令，只想对上一条命令稍微作一下修改。那么，Shell 有没有什么快速而简便的操作方法呢？回答是肯定的，且听我慢慢道来。
+
+\hypertarget{ux5220ux6389ux591aux4f59ux5185ux5bb9}{%
+\subsection{删掉多余内容}\label{ux5220ux6389ux591aux4f59ux5185ux5bb9}}
+
+例如，我在使用 \texttt{grep} 过滤日志时，不幸多输入了一个 \texttt{o}（原本是 lolcat）：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ grep loolcat /var/log/pacman.log}
+\end{Highlighting}
+\end{Shaded}
+
+我们没有必要重新输入这条命令，只需执行 \texttt{\^{}o} 即可将多余的 \texttt{o} 字符删除。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ^o}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ grep lolcat /var/log/pacman.log}
+\end{Highlighting}
+\end{Shaded}
+
+Shell 在回显出正确的命令后立即执行了它。这里的 \texttt{\^{}o} 将上一条命令中找到的第一个 \texttt{o} 字符删除，从而纠正了输错的命令。
+
+\hypertarget{ux66ffux6362ux5185ux5bb9}{%
+\subsection{替换内容}\label{ux66ffux6362ux5185ux5bb9}}
+
+让我们来看另一个例子，我在查看 \texttt{file1} 这个文件的内容时错输成了 \texttt{flie1}：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat flie1}
+\end{Highlighting}
+\end{Shaded}
+
+现在我们可以用 \texttt{\^{}li\^{}il} 来将输错的 \texttt{li} 替换为 \texttt{il}。同样，Shell 回显出正确的命令并予以执行。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ^li^il}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat file1}
+\end{Highlighting}
+\end{Shaded}
+
+即便在没有输错的情况下，\texttt{\^{}old\^{}new} 也是很实用的。假如我在查看 \texttt{file1} 后接着想查看 \texttt{file4}，那么只要执行 \texttt{\^{}1\^{}4}：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat file1}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ^1^4}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat file4}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5168ux5c40ux66ffux6362}{%
+\subsection{全局替换}\label{ux5168ux5c40ux66ffux6362}}
+
+还有一种情况，有时候我们想不只替换一处，而是把上一条命令中的每处内容都替换掉。要实现这种效果，可以使用 \texttt{!:gs/old/new}，其中，\texttt{!} 表示引用上一条命令（在后续的章节中我们将详细讲解），\texttt{:} (冒号) 后边的 \texttt{gs} 意为全局（\texttt{g}）替换（\texttt{s}），\texttt{/old/new} 则与 \texttt{\^{}old\^{}new} 相似。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ansible nginx -a }\StringTok{'which nginx'}
+\end{Highlighting}
+\end{Shaded}
+
+这条命令让我通过 Ansible 了解 nginx 分组的所有机器是否都包含 nginx 程序。接下来，我想看看 haproxy 分组的情况，于是我执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ !:gs/nginx/haproxy}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ansible haproxy -a }\StringTok{'which haproxy'}
+\end{Highlighting}
+\end{Shaded}
+
+顺便提一句，在 zsh 中除了支持上述方式外，也可以使用：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ansible nginx -a }\StringTok{'which nginx'}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ^nginx^haproxy^:G}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ansible haproxy -a }\StringTok{'which haproxy'}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5febux901fux6267ux884cux5386ux53f2ux547dux4ee4}{%
+\section{快速执行历史命令}\label{ux5febux901fux6267ux884cux5386ux53f2ux547dux4ee4}}
+
+既然我们把已经执行过的命令存储到 Shell 的历史文件中，那么自然想有一天能够再次用到它。正所谓``养兵千日，用兵一时''。下面，我们就来看一看如何快速的执行已有的历史命令。
+
+\hypertarget{ux91cdux590dux6267ux884cux4e0aux4e00ux6761ux547dux4ee4}{%
+\subsection{重复执行上一条命令}\label{ux91cdux590dux6267ux884cux4e0aux4e00ux6761ux547dux4ee4}}
+
+一种常见的使用场景是，我在使用 \texttt{htop} 查看系统状态并退出后，过一会儿想再次查看它。此时，我们无需重新输入 \texttt{htop} 命令，只需按两下 \texttt{!!} 并敲\textbf{回车}即可。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ htop}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ !!}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{!!} 被称为 bang bang，是我最喜欢使用，同时也是使用频率极高的历史命令调用表示。\texttt{!!} 让我们以最快的方式重复执行上一条命令。
+
+\texttt{!!} 经常与 \texttt{sudo} 联用，用来解决缺少权限的问题。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ pacman -S figlet}
+\ExtensionTok{error}\NormalTok{: you cannot perform this operation unless you are root.}
+\end{Highlighting}
+\end{Shaded}
+
+在此，我用 \texttt{pacman} 来安装 figlet，但由于是普通账户，所以没有权限操作。要解决这个问题，我们只要输入：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ sudo !!}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ sudo pacman -S figlet}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux6267ux884cux4ee5ux67d0ux4e9bux5b57ux7b26ux6253ux5934ux7684ux547dux4ee4}{%
+\subsection{执行以某些字符打头的命令}\label{ux6267ux884cux4ee5ux67d0ux4e9bux5b57ux7b26ux6253ux5934ux7684ux547dux4ee4}}
+
+利用 \texttt{!foo} 这种表示法允许我们执行以 \texttt{foo} 这三个字符打头的命令。Shell 将以逆序的方式搜索历史命令列表，一旦与给定的开头字符匹配到，便予以执行该条命令。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ !he}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ help}
+\end{Highlighting}
+\end{Shaded}
+
+该表示从历史命令列表中找到 \texttt{help} 后执行。
+
+\hypertarget{ux6267ux884cux5386ux53f2ux5217ux8868ux4e2dux7b2c-n-ux4e2aux547dux4ee4}{%
+\subsection{执行历史列表中第 n 个命令}\label{ux6267ux884cux5386ux53f2ux5217ux8868ux4e2dux7b2c-n-ux4e2aux547dux4ee4}}
+
+在 \texttt{!} 后面除了可以跟一个字符串之外，也可以跟一个数字。这个数字代表历史命令列表中的编号。当我们用 \texttt{history} 查看历史命令列表时，命令左边显示的即是该行命令的编号。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ history 5}
+\end{Highlighting}
+\end{Shaded}
+
+这里显示 \texttt{htop} 的编号为 52，如图 \ref{fig:history-five} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/history-five} \caption{history 5 执行结果}\label{fig:history-five}
+\end{figure}
+
+所以我们可以用：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ !52}
+\end{Highlighting}
+\end{Shaded}
+
+来再次执行 \texttt{htop}。
+
+利用 \texttt{!-2}，我经常使用的一个场景是，先用文本编辑器编辑源代码，接着再编译源代码。如果我需要再次编辑和编译，那么只要反复执行 \texttt{!-2} 即可。如此不断循环。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ nvim first.c}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ gcc -o first first.c}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ !-2 }\CommentTok{# 再编辑}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ !-2 }\CommentTok{# 再编译}
+\end{Highlighting}
+\end{Shaded}
+
+顺便说一句，因为 \texttt{!-1} 是如此常见，所以 Shell 提供了简写形式 \texttt{!!}。
+
+\hypertarget{ux5febux901fux5f15ux7528ux4e0aux4e00ux6761ux547dux4ee4ux7684ux53c2ux6570}{%
+\section{快速引用上一条命令的参数}\label{ux5febux901fux5f15ux7528ux4e0aux4e00ux6761ux547dux4ee4ux7684ux53c2ux6570}}
+
+很多时候，我们即将执行的命令与之前的命令具有相同的参数，比如同样的文件名、路径名等等。所以，我们在执行新的命令时无需重新输入这些同样的参数，只要直接从其引用过来即可。
+
+\hypertarget{ux5f15ux7528ux6700ux540eux4e00ux4f4dux53c2ux6570}{%
+\subsection{引用最后一位参数}\label{ux5f15ux7528ux6700ux540eux4e00ux4f4dux53c2ux6570}}
+
+我最常用的是 \texttt{!\$}，它允许我直接复用上一条命令的最后一位参数。当我用 \texttt{mkdir} 创建目录后，使用它来立即转到该目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ mkdir videos}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd !$}
+\end{Highlighting}
+\end{Shaded}
+
+这里，\texttt{cd} 命令后的 \texttt{!\$} 等同于上一条命令中的 \texttt{videos}。
+
+\hypertarget{ux5f15ux7528ux6700ux5f00ux5934ux7684ux53c2ux6570}{%
+\subsection{引用最开头的参数}\label{ux5f15ux7528ux6700ux5f00ux5934ux7684ux53c2ux6570}}
+
+与最后一位参数相反，\texttt{!\^{}} 能够让我们引用上一条命令中最开头的参数。这里的 \texttt{\^{}} 和 \texttt{\$} 与正则表达式中的锚点类似。请看例子：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls /usr/share/doc /usr/share/man}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd !^}
+\end{Highlighting}
+\end{Shaded}
+
+在该例中，\texttt{!\^{}} 相当于上一条命令中的路径 \texttt{/usr/share/doc}。
+
+\hypertarget{ux5f15ux7528ux6240ux6709ux53c2ux6570}{%
+\subsection{引用所有参数}\label{ux5f15ux7528ux6240ux6709ux53c2ux6570}}
+
+不光是开头或结尾的参数，有时候我们想要引用的是上一条命令的所有参数。此时，我们可以使用 \texttt{!*}，这里的 \texttt{*} 意为全部。比如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls src code}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cp -r !*}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{cp} 命令中的 \texttt{!*} 跟 \texttt{src\ code} 同样，它表示两个参数都要引用。
+
+\hypertarget{ux5f15ux7528ux7b2c-n-ux4e2aux53c2ux6570}{%
+\subsection{引用第 n 个参数}\label{ux5f15ux7528ux7b2c-n-ux4e2aux53c2ux6570}}
+
+对于引用上一条命令中的参数，我们甚至可以要求 Shell 精确到具体的第几个。因为 Shell 按照空白来解析命令行，所以它给命令本身编号为 0，后续的选项和参数按 1、2、3 等依次编号。如图 \ref{fig:history-word} 所示。这就好比程序中的数组一样。在下面的例子中，假如我们想要引用 \texttt{bar.txt}，除开 \texttt{touch}，按顺序它应该是第 2 个参数，因此可以像这样表示：
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/history-word} \caption{命令及选项参数编号}\label{fig:history-word}
+\end{figure}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ touch foo.txt bar.txt baz.txt}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ nvim !:2}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{nvim} 命令中的 \texttt{!:2} 就相当于上一条命令中的 \texttt{bar.txt} 文本文件。
+
+\hypertarget{ux5f15ux7528ux4ece-m-ux5230-n-ux7684ux53c2ux6570}{%
+\subsection{引用从 m 到 n 的参数}\label{ux5f15ux7528ux4ece-m-ux5230-n-ux7684ux53c2ux6570}}
+
+还有一种情况可能会遇到，即同时引用上一条命令的好几个参数。此时，我们可以使用 \texttt{!:m-n} 表示法，\texttt{m} 为开始端，\texttt{n} 为结束端。我们继续以上例来说明：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ touch foo.txt bar.txt baz.txt}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ nvim !:1-2}
+\end{Highlighting}
+\end{Shaded}
+
+这里的 \texttt{!:1-2} 让我们引用 \texttt{touch} 命令中的前两个参数。
+
+\hypertarget{ux5f15ux7528ux4ece-n-ux5230ux6700ux540eux7684ux53c2ux6570}{%
+\subsection{引用从 n 到最后的参数}\label{ux5f15ux7528ux4ece-n-ux5230ux6700ux540eux7684ux53c2ux6570}}
+
+我们最后再介绍一种情况，通过 \texttt{!:n*} 这种表示让我们能够从上一条命令中引用从第 n 个到最后的参数。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat /etc/resolv.conf /etc/hosts /etc/hostname}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ nvim !:2*}
+\end{Highlighting}
+\end{Shaded}
+
+此处的 \texttt{!:2*} 允许我将 \texttt{hosts} 和 \texttt{hostname} 同时打开进行编辑。
+
+值得提及的是，我们在此主要介绍的是如何引用上一条命令的参数，因为这是最为常见的使用场景。结合我们前面所讲的快速执行历史命令，我们也可以引用历史列表中其它命令的参数。比如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ !hi:2}
+\end{Highlighting}
+\end{Shaded}
+
+这将引用以 \texttt{hi} 打头的命令的第 2 个参数。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ !10:2-3}
+\end{Highlighting}
+\end{Shaded}
+
+而这将引用第 10 条命令的 2、3 两个参数。
+
+\hypertarget{ux5febux901fux5f15ux7528ux53c2ux6570ux7684ux90e8ux5206ux5185ux5bb9}{%
+\section{快速引用参数的部分内容}\label{ux5febux901fux5f15ux7528ux53c2ux6570ux7684ux90e8ux5206ux5185ux5bb9}}
+
+在上一节我们介绍了如何引用历史命令中的参数，除此之外，Shell 甚至比我们想要得到的做得更多。利用 Shell 提供的历史展开模式修饰符，使我们得以快速引用参数中的部分内容。
+
+\hypertarget{ux5f15ux7528ux8defux5f84ux5f00ux5934}{%
+\subsection{引用路径开头}\label{ux5f15ux7528ux8defux5f84ux5f00ux5934}}
+
+请看例子：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls /usr/share/fonts/truetype}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd !$:h}
+\end{Highlighting}
+\end{Shaded}
+
+在此，我想引用该路径的开头部分 \texttt{/usr/share/fonts}。为了达到这个目的，我在 \texttt{!\$}（最后一位参数）的基础上添加了 \texttt{:h}。此处的 \texttt{:h} 为修饰符，意味着截取路径的开头部分，正如 \texttt{dirname} 的效果一样。
+
+\hypertarget{ux5f15ux7528ux8defux5f84ux7ed3ux5c3e}{%
+\subsection{引用路径结尾}\label{ux5f15ux7528ux8defux5f84ux7ed3ux5c3e}}
+
+有头就有尾。通过 \texttt{:t} 修饰符，我们可以引用路径的结尾部分，其效果跟 \texttt{basename} 类似。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ wget http://nginx.org/download/nginx-1.15.8.tar.gz}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ tar zxvf !$:t}
+\end{Highlighting}
+\end{Shaded}
+
+经过 \texttt{!\$:t} 引用后，我们的命令变成了：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ tar zxvf nginx-1.15.8.tar.gz}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5f15ux7528ux6587ux4ef6ux540d}{%
+\subsection{引用文件名}\label{ux5f15ux7528ux6587ux4ef6ux540d}}
+
+对于存在文件名的情形，我们还可以利用 \texttt{:r} 修饰符来只引用文件名部分（这将排除掉扩展名）。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ unzip hello.zip}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd !$:r}
+\end{Highlighting}
+\end{Shaded}
+
+这里的 \texttt{!\$:r} 将 \texttt{hello.zip} 去掉扩展名，只保留 \texttt{hello} 部分。
+
+\hypertarget{ux5c06ux5f15ux7528ux90e8ux5206ux66f4ux6539ux4e3aux5927ux5199}{%
+\subsection{将引用部分更改为大写}\label{ux5c06ux5f15ux7528ux90e8ux5206ux66f4ux6539ux4e3aux5927ux5199}}
+
+下面介绍的两个修饰符为 zsh 所特有，bash 目前尚不支持。通过 \texttt{:u} 修饰符，我们能够将所引用的部分更改为大写字母。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo histchars}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo !$:u}
+\end{Highlighting}
+\end{Shaded}
+
+这里的 \texttt{!\$:u} 将 \texttt{histchars} 全部更改为大写字母。
+
+\hypertarget{ux5c06ux5f15ux7528ux90e8ux5206ux66f4ux6539ux4e3aux5c0fux5199}{%
+\subsection{将引用部分更改为小写}\label{ux5c06ux5f15ux7528ux90e8ux5206ux66f4ux6539ux4e3aux5c0fux5199}}
+
+与 \texttt{:u} 相对的是，\texttt{:l} 则使我们能够将所引用的参数全部更改为小写字母。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo SAVEHIST}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo !$:l}
+\end{Highlighting}
+\end{Shaded}
+
+这里的 \texttt{!\$:l} 将 \texttt{SAVEHIST} 全部更改为小写字母。
+
+需要特别指出的是，Shell 还支持将多个修饰符进行联用，在它们之间只需使用 \texttt{:} (冒号) 分隔即可。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls /usr/share/fonts/truetype}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo !$:t:u}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo TRUETYPE}
+\end{Highlighting}
+\end{Shaded}
+
+这里，我们先用 \texttt{:t} 引用了路径的结尾部分，然后又使用 \texttt{:u} 将其更改为了大写字母。
+
+\hypertarget{ux5386ux53f2ux547dux4ee4ux5c55ux5f00ux6a21ux5f0fux603bux7ed3}{%
+\section{历史命令展开模式总结}\label{ux5386ux53f2ux547dux4ee4ux5c55ux5f00ux6a21ux5f0fux603bux7ed3}}
+
+最后，我们来总结一下历史命令展开的模式。从前面我们所讲的内容来看，历史展开模式包括以下三个部分：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{!!\ !foo\ !n}：用来调用历史列表中的命令
+\item
+  \texttt{\$\ \^{}\ *\ n\ m-n\ n*}：引用命令参数的各个部分
+\item
+  \texttt{h\ t\ r\ u\ l}：修饰符，对所引用的内容进行修改
+\end{enumerate}
+
+如图 \ref{fig:history-mode-i} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/history-mode-i} \caption{历史命令展开模式}\label{fig:history-mode-i}
+\end{figure}
+
+模式的每个部分之间都用 \texttt{:}（冒号）进行分隔。让我们来看一个包含三个部分的例子：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ !ec:$:t}
+\end{Highlighting}
+\end{Shaded}
+
+这个模式的含义是，引用 \texttt{ec} 打头命令的最后一位参数，并只保留路径尾部。
+
+\hypertarget{ux7f16ux8f91ux5927ux6cd5}{%
+\chapter{编辑大法}\label{ux7f16ux8f91ux5927ux6cd5}}
+
+当我们在 Vim、Emacs、Sublime、VS Code 等熟悉的编辑器中编辑文本时，通常会有一种十分舒服的感觉。这是因为我们已经习惯了这些编辑器的操作方法。要是 Shell 命令行也能像文本编辑器一样编辑命令，那样的话我们的命令行编辑效率一定会大大提升。相信我，产生这种想法的人绝不止你我。无论是 bash，还是 zsh 的开发者，他们都同样想到了这个问题。正因为如此，所以我们今天才能沿用 Emacs 和 vi 这两个经典的文本编辑器的编辑习惯来编辑命令行。
+
+在本章内容中，我们将先介绍在 Shell 中如何选择 Emacs 或 vi 编辑模式。接着进入 Emacs 编辑模式实战，包括按字、``词''、行来移动和删除的操作方法。最后，我们再讲解怎样在 vi 编辑模式中移动操作、重复执行命令、添加文本、删除文本、替换文本、以及搜索字符等内容。在学完这些内容后，对于编辑命令行而言，你将变得更加游刃有余。
+
+\hypertarget{ux8bbeux7f6eux7f16ux8f91ux6a21ux5f0f}{%
+\section{设置编辑模式}\label{ux8bbeux7f6eux7f16ux8f91ux6a21ux5f0f}}
+
+既然 bash 与 zsh 都提供了 Emacs 和 vi 两种编辑模式，那么如何在这两种编辑模式之间进行选择呢？一般而言，在 Emacs 模式下，编辑操作显得更加自然，上手起来相对也更快一些。如果你从来没有使用过 vi 编辑器，那么选用 vi 编辑模式，一开始将会有找不到北的感觉。在 vi 模式下，按键要么能插入文本，要么能执行编辑指令，你需要在两种状态间不断来回切换。Emacs 模式跟 vi 模式相比更加简单，在使用上也会更容易一些。因此，推荐大家优先选择使用 Emacs 编辑模式。这也是 bash 和 zsh 都将 Emacs 作为默认的命令行编辑模式的原因。但是，假如你对 vi 的操作方法非常感兴趣的话，那么不妨选择使用 vi 编辑模式，去做那个敢于吃螃蟹的人。
+
+bash 和 zsh 两个都支持使用 \texttt{set} 指令来设置命令行编辑模式。例如，假如我们想要设为 vi 编辑模式，只需执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ set -o vi}
+\end{Highlighting}
+\end{Shaded}
+
+要重新设为 Emacs 编辑模式，则执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ set -o emacs}
+\end{Highlighting}
+\end{Shaded}
+
+在 zsh 中，我们也可以通过 \texttt{bindkey} 来设置 Emacs 或 vi 编辑模式。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bindkey -e}
+\end{Highlighting}
+\end{Shaded}
+
+该命令将 Emacs 作为编辑模式。如果打算设置为 vi 编辑模式，那么使用 \texttt{-v} 选项即可：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bindkey -v}
+\end{Highlighting}
+\end{Shaded}
+
+为了永久保存设置，我们需要将 bash 的设置选项添加到 \texttt{\textasciitilde{}/.bashrc} 配置文件。
+
+而 zsh 的设置选项则需添加到 \texttt{\textasciitilde{}/.zshrc} 配置文件。
+
+\hypertarget{emacs-ux7f16ux8f91ux6a21ux5f0fux5b9eux6218}{%
+\section{Emacs 编辑模式实战}\label{emacs-ux7f16ux8f91ux6a21ux5f0fux5b9eux6218}}
+
+\hypertarget{ux6309ux5b57ux79fbux52a8ux548cux5220ux9664}{%
+\subsection{按字移动和删除}\label{ux6309ux5b57ux79fbux52a8ux548cux5220ux9664}}
+
+让我们先在命令行输入一些字符，然后来看看如何一个一个的移动字符：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo 像骇客一样}
+\end{Highlighting}
+\end{Shaded}
+
+糟糕，我将``黑客''错输成了``骇客''，现在我要将光标向左移到``客''字，接着删除``骇''字，然后再重新输入正确的``黑''字。
+
+对于命令行新手来说，可能会使用\textbf{左方向键（←）}向左移动字符。好，我们来试一下。按 3 下\textbf{左方向键（←）}，于是光标停留在``客''字上。此时，我们再按\textbf{退格键}则删除光标左边的``骇''字。我们接着重新输入正确的``黑''字。因为我们还要继续输入新的内容，所以按 3 下\textbf{右方向键（→）}往右移动光标，直到行尾。之后，我们能够再输入新的内容``使用命令行''。
+
+在上面的操作中，我们通过分别按\textbf{左方向键（←）}和\textbf{右方向键（→）}来向左或往右移动一个字符。利用 Emacs 编辑模式，其实有比按\textbf{左右方向键}更好的操作方法。因为\textbf{左右方向键}通常远离键盘中心区域，所以与 Emacs 编辑模式提供的操作方法比起来在效率上会有所降低。
+
+下面，我们就用 Emacs 编辑模式所提供的操作方法来一个个的移动字符。在 Emacs 编辑模式中，向左移动一个字符可以按 \textbf{Ctrl + b}。因此，我们按 3 次 \textbf{Ctrl + b}，此时光标位于``客''字上。同样的，我们通过按\textbf{退格键}来删除``骇''字。在输入``黑''字后，我们需要将光标移到最右边。现在，我们可以按 \textbf{Ctrl + f}，以便往右移动一个字符。需要往右移动几个字符就按几下 \textbf{Ctrl + f}。顺便说一句，在后面的内容中，我们会讲到如何一下子就移到最右边的操作方法。此刻，就先让我们熟悉按字移动的操作吧。
+
+上述操作中我们使用\textbf{退格键}删除光标左边的字符。假如我们向左多移动了一个字符，那么此时光标将在``骇''字上。要想删除``骇''字，难道再往右移动吗？当然不必。Emacs 编辑模式为我们提供了 \textbf{Ctrl + d} 来删除光标下的字符。
+
+在此，我们再介绍一组快捷键：\textbf{Ctrl + t}。这组按键的作用是将光标左边的两个字符交换顺序。例如，当我在输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ sl}
+\end{Highlighting}
+\end{Shaded}
+
+后，通过按下 \textbf{Ctrl + t} 便能够将其变成 \texttt{ls}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls}
+\end{Highlighting}
+\end{Shaded}
+
+总结起来，按字移动和删除的操作方法参考表 \ref{tab:emacs-char}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:emacs-char} Emacs 模式按字移动和删除的操作方法}\tabularnewline
+\toprule
+按键 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+按键 & 作用\tabularnewline
+\midrule
+\endhead
+Ctrl + b & 向左移动一个字符\tabularnewline
+Ctrl + f & 往右移动一个字符\tabularnewline
+退格键 & 删除光标左边的字符\tabularnewline
+Ctrl + d & 删除光标下的字符\tabularnewline
+Ctrl + t & 将光标左边的两个字符交换顺序\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{ux6309ux8bcdux79fbux52a8ux548cux5220ux9664}{%
+\subsection{按``词''移动和删除}\label{ux6309ux8bcdux79fbux52a8ux548cux5220ux9664}}
+
+按字符移动和删除毕竟有些琐碎，为了完成某个操作，有时候需要我们按下很多次快捷键。有鉴于此，Emacs 编辑模式针对``词''这个更大的范围提供了移动和删除的操作方法。值得注意的是，我们在此给``词''添加了引号。换句话说，这里的``词''是 Shell 所理解的``词''的含义，与现实生活中所谓的词含义并不相同。在 bash 中，``词''即字母和数字的组合，例如 file1 这种，其中并不包含特殊字符在内。而在 zsh 中，对``词''的界定跟 bash 又有所不同，除了字母和数字之外，还包括比如 \texttt{*}、\texttt{?}、\texttt{\_}、\texttt{-} 等这样的符号。通过变量 \texttt{WORDCHARS}，我们可以看到这类字符到底有哪些。在我的系统中，执行
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\VariableTok{$WORDCHARS}
+\end{Highlighting}
+\end{Shaded}
+
+后，可以见到有如下字符：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{*?_-.}\NormalTok{[]~=/}\KeywordTok{&}\NormalTok{;!#$}\ExtensionTok{%}\NormalTok{^()\{\}}\OperatorTok{<>}
+\end{Highlighting}
+\end{Shaded}
+
+如果你想要让 zsh 判定``词''的行为跟 bash 一样的话，那么不妨将 \texttt{WORDCHARS} 变量的值设为空：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ WORDCHARS=}
+\end{Highlighting}
+\end{Shaded}
+
+下面我们来看一个按``词''移动和删除的操作例子：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ grep }\StringTok{'figlet'}\NormalTok{ /var/log/pacman.log}
+\end{Highlighting}
+\end{Shaded}
+
+在我输入该命令行后，忽然想到应该查询 \texttt{lolcat} 这个包。为了将 \texttt{figlet} 改成 \texttt{lolcat}，我按 \textbf{Alt + b} 向左一个``词''一个``词''的移动。按 5 下后，此时光标停留在 \texttt{figlet} 的 \texttt{f} 上。接着，我按 \textbf{Alt + d} 删除光标右边的``词''（也就是 \texttt{figlet}）。然后输入新的内容 \texttt{lolcat}。
+
+现在，如果不需要再输入内容的话，则可以直接按\textbf{回车键}执行命令。但因为我还想将标准输出的内容保存起来，所以继续按 \textbf{Alt + f} 来往右按``词''移动。当抵达最右边时，再输入新的内容 \texttt{\textgreater{}\ /tmp/output.log}。此刻，我们的命令行是：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ grep }\StringTok{'logcat'}\NormalTok{ /var/log/pacman.log \textbackslash{}}
+\OperatorTok{>}\NormalTok{ /tmp/output.log}
+\end{Highlighting}
+\end{Shaded}
+
+最后，我按 \textbf{Alt + 退格键}（或 \textbf{Ctrl + w}）删除光标左边的 \texttt{log}，并输入 \texttt{txt} 来完成该命令行的编辑。
+
+正如前面所述，在 zsh 中按``词''移动的行为跟 bash 略有不同。这是因为它们对``词''界定的含义不一样的缘故。我们仍旧以上面的例子来加以说明。在光标都位于该命令行最右边的情况下，bash 中按 \textbf{Alt + b} 向左移动到的是 \texttt{txt} 中开头的 \texttt{t} 上；而在 zsh 中同样的操作却移动到了 \texttt{/tmp/output.txt} 开头的 \texttt{/}。在此，我们可以发现 zsh 将 \texttt{/} 和 \texttt{.} 都看作``词''的一部分。两个 Shell 比较起来，zsh 移动更快，按键也更少，但是粒度却要粗一些。因为 zsh 对``词''的界定范围比 bash 更宽，所以对``词''的删除内容也更多。bash 中按 \textbf{Alt + d} 删除的是 \texttt{txt}，而 zsh 中删除的却是 \texttt{/tmp/output.txt}。
+
+需要特别指出的是，通过 \textbf{Alt + 退格键} 和 \textbf{Alt + d} 删除的内容，Shell 并没有丢弃，而是将其保存在 kill ring 中。你可以将 kill ring 看作一个特殊的剪贴板。当然，它里面的内容我们也是可以获取的。我们只需按 \textbf{Ctrl + y} 即可获取上次删除的内容。
+
+此外，与 \textbf{Ctrl + t} 交换光标左边的两个字符相似，\textbf{Alt + t} 能够用来交换光标左边两个``词''的顺序。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo bar foo}
+\end{Highlighting}
+\end{Shaded}
+
+当我们按 \textbf{Alt + t} 后，该命令行将变成：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo foo bar}
+\end{Highlighting}
+\end{Shaded}
+
+以下介绍的几组快捷键用于更改``词''的大小写。例如，我们在命令行输入
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo foo}
+\end{Highlighting}
+\end{Shaded}
+
+并按 \textbf{Alt + b} 将光标移到 \texttt{f} 上后，此时，按 \textbf{Esc + c} 把 \texttt{foo} 变成 \texttt{Foo}；若是按 \textbf{Esc + u}，则将变为 \texttt{FOO}；最后，按 \textbf{Esc + l}，又将成为 \texttt{foo}。
+
+按``词''移动和删除的操作方法参考表 \ref{tab:emacs-word}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:emacs-word} Emacs 模式按``词''移动和删除的操作方法}\tabularnewline
+\toprule
+按键 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+按键 & 作用\tabularnewline
+\midrule
+\endhead
+Alt + b & 向左移动一个``词''\tabularnewline
+Alt + f & 往右移动一个``词''\tabularnewline
+Alt + 退格键 & 删除光标左边的``词''\tabularnewline
+Ctrl + w & 同上\tabularnewline
+Alt + d & 删除光标右边的``词''\tabularnewline
+Ctrl + y & 获取上次删除的内容\tabularnewline
+Alt + t & 交换光标左边两个``词''的顺序\tabularnewline
+Esc + c & 将光标右边的``词''的开头字母变成大写\tabularnewline
+Esc + u & 将光标右边的``词''全部更改为大写字母\tabularnewline
+Esc + l & 将光标右边的``词''全部更改为小写字母\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{ux6309ux884cux79fbux52a8ux548cux5220ux9664}{%
+\subsection{按行移动和删除}\label{ux6309ux884cux79fbux52a8ux548cux5220ux9664}}
+
+比``词''范围更大的移动及删除操作是行。相对``词''而言，我们只需要更少的按键即可移到更广的区域。由此，也将删除更多的命令行内容。让我们通过一个例子来说明：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ grep }\StringTok{'set'}\NormalTok{ *.txt}
+\end{Highlighting}
+\end{Shaded}
+
+在此，我想找出当前目录中包含 \texttt{set} 的所有文件。假如我想将这行命令改成：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ egrep }\StringTok{'set'}\NormalTok{ *.md}
+\end{Highlighting}
+\end{Shaded}
+
+首先，我按 \textbf{Ctrl + a} 将光标移到该命令行的行首（也就是最左边）。接着输入 \texttt{e} 将命令改成 \texttt{egrep}。然后，我再按 \textbf{Ctrl + e} 将光标移到此行的结尾处（也就是最右边）。在通过 \textbf{Alt + 退格键} 删除 \texttt{txt} 后，重新输入 \texttt{md} 即可完成对该命令行的修改。
+
+下面，我们来看看针对行的删除操作。依然请出我们的老朋友 \texttt{foo}、\texttt{bar}、\texttt{baz}：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo foo bar baz}
+\end{Highlighting}
+\end{Shaded}
+
+我们先按两下 \textbf{Alt + b} 将光标移到 \texttt{bar} 的 \texttt{b} 上。现在，如果我们打算删除 \texttt{bar} 和 \texttt{baz}，那么只要按 \textbf{Ctrl + k}；反之，但假设我们想要删除 \texttt{echo} 及 \texttt{foo} 的话，则需按 \textbf{Ctrl + u}。值得说明的是，在 zsh 中，\textbf{Ctrl + u} 的行为与 bash 中并不相同，它是删除整行的全部内容。
+
+按行移动和删除的操作方法参考表 \ref{tab:emacs-line}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:emacs-line} Emacs 模式按行移动和删除的操作方法}\tabularnewline
+\toprule
+按键 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+按键 & 作用\tabularnewline
+\midrule
+\endhead
+Ctrl + a & 将光标移到行首（最左边）\tabularnewline
+Ctrl + e & 将光标移到行尾（最右边）\tabularnewline
+Ctrl + k & 从光标处往右删除至行尾\tabularnewline
+Ctrl + u & 从光标处向左删除至行首\tabularnewline
+\bottomrule
+\end{longtable}
+
+\hypertarget{emacs-ux7f16ux8f91ux6a21ux5f0fux603bux7ed3}{%
+\subsection{Emacs 编辑模式总结}\label{emacs-ux7f16ux8f91ux6a21ux5f0fux603bux7ed3}}
+
+从前面我们所讲的内容来看，Emacs 编辑模式的内容编辑范围主要包括下列 3 种：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  字
+\item
+  ``词''
+\item
+  行
+\end{enumerate}
+
+针对每一种范围，又包含两种编辑操作，分别为移动和删除。如图 \ref{fig:emacs-mode} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/editor-emacs-view-body} \caption{Emacs 编辑模式图解}\label{fig:emacs-mode}
+\end{figure}
+
+\hypertarget{vi-ux7f16ux8f91ux6a21ux5f0fux5b9eux6218}{%
+\section{vi 编辑模式实战}\label{vi-ux7f16ux8f91ux6a21ux5f0fux5b9eux6218}}
+
+与 Emacs 编辑模式相比，vi 编辑模式为我们提供了更多的控制命令。相应地，在 vi 编辑模式下，我们能够操作的粒度也将更细。如果你以前从未使用过 vi 编辑模式的话，那么不妨在亲自体验一番之后再来作决定是否要继续用它。跟 vi 文本编辑器一样，Shell 的 vi 编辑模式也包含两种模式：插入模式和命令模式。在插入模式下，我们输入的字符为字符本身，并没有什么特殊含义，如：h 就是 h；而在命令模式中，我们所输入的字符则为用来执行编辑过程的命令，如：\textbf{h} 用来向左移动一个字符。默认情况下，我们进入的是插入模式。若是要进入命令模式，则需要我们按 \textbf{Esc 键}。在使用 vi 编辑模式时，我们有时候可能会感到迷糊，此刻到底处于哪种模式呢？遇到这种情况，不妨先按 \textbf{Esc 键} 回到命令模式再作进一步的操作。或许这算是选择 vi 编辑模式的小小代价吧。
+
+\hypertarget{ux79fbux52a8ux547dux4ee4}{%
+\subsection{移动命令}\label{ux79fbux52a8ux547dux4ee4}}
+
+在 vi 编辑模式中，我们可以使用的光标移动命令参考表 \ref{tab:vi-move}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:vi-move} vi 模式移动命令}\tabularnewline
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endhead
+h & 向左移动一个字符\tabularnewline
+l & 往右移动一个字符\tabularnewline
+b & 向左移动一个单词\tabularnewline
+w & 往右移动一个单词\tabularnewline
+e & 移到单词结尾\tabularnewline
+B、W、E & 与 \texttt{b}、\texttt{w}、\texttt{e} 类似，按不同的单词定义进行移动\tabularnewline
+0 & 移到行首\tabularnewline
+\^{} & 移到行首，但第一个字符为非空白字符\tabularnewline
+\$ & 移到行尾\tabularnewline
+\bottomrule
+\end{longtable}
+
+让我们输入一行命令来试试这些 vi 编辑模式中的移动命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo hello, this is a command}
+\end{Highlighting}
+\end{Shaded}
+
+首先，按 \textbf{Esc 键}进入命令模式，此时光标位于 \texttt{command} 结尾的 \texttt{d} 上。
+
+其次，通过 \textbf{h} 和 \textbf{l} 按一个个字符左右移动很直白，无需我们多言。值得讨论的是 \textbf{b}、\textbf{w}、\textbf{e} 跟它们对应的大写形式的区别：简而言之，\textbf{b}、\textbf{w}、\textbf{e} 将停留在空白或标点符号处（如该命令行中的 \texttt{,}（逗号）），而 \textbf{B}、\textbf{W}、\textbf{E} 则仅仅停留在空白处。例如，我们按 \textbf{b} 会经过 \texttt{,}，而按 \textbf{B} 将跳过 \texttt{,}。假如你想要移动更快的话，那么可以用大写字母的命令。而小写字母命令则对于更细粒度的移动有用，比如路径名这种情形。
+
+最后，\textbf{0} 和 \textbf{\^{}} 都是移到命令行的开头，不过其差异是 \textbf{0} 的开头可以为空白，而 \textbf{\^{}} 的开头则不允许。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$  cd /var/log/nginx}
+\end{Highlighting}
+\end{Shaded}
+
+按 \textbf{0} 移到开头的空格，按 \textbf{\^{}} 移到 \texttt{cd} 的 \texttt{c} 上，按 \textbf{\$} 移到行尾的 \texttt{x}。
+
+\hypertarget{ux91cdux590dux547dux4ee4}{%
+\subsection{重复命令}\label{ux91cdux590dux547dux4ee4}}
+
+在 vi 命令模式下，每个移动命令之前可以跟一个数字，用来将该命令重复执行多次。例如，\textbf{3b} 表示向左移动 3 个单词，\textbf{5l} 则表示往右移动 5 个字符。值得注意的是，因为 \textbf{0} 本身也是一个命令，所以将它放在命令前面是无效的重复计数。
+
+\hypertarget{ux6dfbux52a0ux6587ux672c}{%
+\subsection{添加文本}\label{ux6dfbux52a0ux6587ux672c}}
+
+我们已经知道通过按 \textbf{Esc 键}可以进入 vi 命令模式，但是，在命令模式下又如何回到插入模式呢？你只需参考表 \ref{tab:vi-add} 中的命令来执行即可。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:vi-add} vi 模式添加文本的命令}\tabularnewline
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endhead
+i & 在光标左边插入新的文本内容\tabularnewline
+a & 在光标右边追加新的文本内容\tabularnewline
+I & 在行开头插入新的文本内容\tabularnewline
+A & 在行结尾追加新的文本内容\tabularnewline
+\bottomrule
+\end{longtable}
+
+请看例子：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ hello vi}
+\end{Highlighting}
+\end{Shaded}
+
+假如我打算将该命令改为
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo hello, vi editing mode}
+\end{Highlighting}
+\end{Shaded}
+
+那么可按以下方式执行编辑操作：
+
+按 \textbf{2h} 将光标移到空格处，接着按 \textbf{i} 进入插入模式，然后输入新的 \texttt{,}。按 \textbf{Esc 键}回到命令模式后，继续按 \textbf{I} 以便在命令行开头插入 \texttt{echo}。再次按 \textbf{Esc 键}进入命令模式，最后按 \textbf{A} 在命令行的尾部追加 \texttt{editing\ mode}。
+
+\hypertarget{ux5220ux9664ux6587ux672c}{%
+\subsection{删除文本}\label{ux5220ux9664ux6587ux672c}}
+
+利用 vi 模式提供的删除命令，我们不仅可以删除字符，而且也能删除单词，甚至整个命令行。这些删除命令参考表 \ref{tab:vi-del}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:vi-del} vi 模式删除文本的命令}\tabularnewline
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endhead
+x & 删除光标下的字符\tabularnewline
+X & 删除光标左边的字符\tabularnewline
+dm & \textbf{m} 为某个移动指令，如 \textbf{db} 删除光标左边的单词\tabularnewline
+D & 从光标处删除到行尾\tabularnewline
+dd & 删除整行内容\tabularnewline
+\bottomrule
+\end{longtable}
+
+跟移动命令一样，在上述删除命令之前也可以带一个数字，以便多次执行该命令。例如，\textbf{5x} 将删除 5 个字符，而 \textbf{3dw} 将删除 3 个单词，这里 3 的顺序并不重要，\textbf{d3w} 仍然同样有效。
+
+通过删除命令删除的内容，Shell 并没有丢弃，而是将其保留在了删除缓冲器中。稍后，我们可以执行 \textbf{u} 命令来恢复这些删除的内容。如果想要恢复更早时间删除的内容，则只需按 \textbf{u 键}多次即可。
+
+另外一种更有用的方式是复制和粘贴。这样，我们能够在保留原有内容的同时，再储存一份拷贝，以便后续使用。vi 模式中复制及粘贴的命令参考表 \ref{tab:vi-copy}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:vi-copy} vi 模式复制及粘贴命令}\tabularnewline
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endhead
+ym & \textbf{m} 为某个移动命令，如\textbf{yw} 用来复制光标右边的单词\tabularnewline
+p & 在光标右边粘贴文本\tabularnewline
+P & \textbf{p} 的大写形式，在光标左边粘贴文本\tabularnewline
+\bottomrule
+\end{longtable}
+
+在下面的例子中，我们将看到上述命令的用法：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo command-line interface}
+\end{Highlighting}
+\end{Shaded}
+
+先按 \textbf{Esc 键}进入命令模式，此时光标位于结尾的 e 上。按 \textbf{x} 将删除 e，按 \textbf{X} 将删除 a，按 \textbf{db} 将删除 interface 剩下的部分（只剩下字符 c），按 \textbf{dd} 则把整行内容都删掉。按 \textbf{u} 又还原刚删除的内容。
+
+\hypertarget{ux66ffux6362ux6587ux672c}{%
+\subsection{替换文本}\label{ux66ffux6362ux6587ux672c}}
+
+当我们需要替换命令行中的内容时，除了在删除该内容后再进入插入模式重新输入外，也可以使用 vi 编辑模式所提供的文本替换命令。这些命令组合了删除与插入操作，用起来将更加直接。vi 编辑模式提供的文本替换命令参考表 \ref{tab:vi-replace}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:vi-replace} vi 模式替换文本的命令}\tabularnewline
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endhead
+cm & \textbf{m} 为某个移动命令，如 \texttt{cw}\tabularnewline
+C & 从光标处删除到行尾，并进入插入模式\tabularnewline
+cc & 删除整行，并进入插入模式\tabularnewline
+r & 替换光标下的字符\tabularnewline
+R & 进入替换文本模式\tabularnewline
+s & 利用输入的字符来替换光标下的字符\tabularnewline
+\bottomrule
+\end{longtable}
+
+要想搞明白这些替换命令如何工作，不妨来试试以下编辑练习：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo talk is cheap. show me the kode.}
+\end{Highlighting}
+\end{Shaded}
+
+同样的，我们按 \textbf{Esc 键}先进入命令模式，按 \textbf{cb} 将 kode 删除后进入了插入模式，我们输入新的内容 code。再次按 \textbf{Esc}，接着按 \textbf{4b} 左移到 show，按 \textbf{r} 将 s 替换成 S。
+
+\hypertarget{ux641cux7d22ux5b57ux7b26}{%
+\subsection{搜索字符}\label{ux641cux7d22ux5b57ux7b26}}
+
+vi 编辑模式还提供了一组命令用于搜索命令行中的字符。利用这些命令，我们可以移动光标到特定的字符上。此外，将其跟 \textbf{d} 和 \textbf{c} 命令组合使用，还能够删除或更改从光标处到该字符的这一段文本。这些用于搜索字符的命令参考表 \ref{tab:vi-search}。
+
+\begin{longtable}[]{@{}ll@{}}
+\caption{\label{tab:vi-search} vi 模式搜索字符的命令}\tabularnewline
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endfirsthead
+\toprule
+命令 & 作用\tabularnewline
+\midrule
+\endhead
+fc & 移动光标到 \textbf{c} 的下一处\tabularnewline
+Fc & 与 \textbf{f} 相反方向搜索，移动光标到 \textbf{c} 的上一处\tabularnewline
+tc & 移动光标到 \textbf{c} 左边的字符\tabularnewline
+Tc & 移动光标到 \textbf{c} 右边的字符\tabularnewline
+; & 重复上次的 \textbf{f} 或 \textbf{F} 命令\tabularnewline
+, & 以相反的方向重复上次的 \textbf{f} 或 \textbf{F} 命令\tabularnewline
+\bottomrule
+\end{longtable}
+
+在下面的练习中，我们可以尝试上述字符搜索命令的用法：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo A program which handles the interface}
+\end{Highlighting}
+\end{Shaded}
+
+在按 \textbf{Esc 键}进入命令模式后，按 \textbf{fp} 光标移到了 p 上，按 \textbf{th} 移到了 h 左边的 w。按 \textbf{Fm} 光标左移到 m 上。我们还可以试试其它的命令，以便熟悉这些命令的用途。
+
+\hypertarget{vi-ux7f16ux8f91ux6a21ux5f0fux603bux7ed3}{%
+\subsection{vi 编辑模式总结}\label{vi-ux7f16ux8f91ux6a21ux5f0fux603bux7ed3}}
+
+从前面我们所讲的内容来看，vi 编辑模式比 Emacs 编辑模式提供了更多的编辑命令。乍一看，似乎很复杂。我们除了勤加练习以期熟悉这些编辑命令之外，还可以总结出以下规律，从而帮助我们更好的加深理解。如图 \ref{fig:vi-mode-i} 所示。
+
+\begin{itemize}
+\tightlist
+\item
+  跟 Emacs 编辑模式一样，我们同样可以按照字、``词''、行这 3 个维度来梳理操作命令
+\item
+  删除命令 \textbf{d} 和更改命令 \textbf{c} 能够与移动命令组合使用
+\item
+  移动命令、删除命令、更改命令之前可以加数字用来多次执行
+\end{itemize}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/editor-vi-view-body} \caption{vi 编辑模式图解}\label{fig:vi-mode-i}
+\end{figure}
+
+\hypertarget{ux5fc5ux5907ux9526ux56ca}{%
+\chapter{必备锦囊}\label{ux5fc5ux5907ux9526ux56ca}}
+
+在本章内容中，我们将向大家介绍几个实用的命令行使用妙招，包括如何快速导航文件系统、使用别名来省时省力、通过 \texttt{\{\}} (花括号) 构造命令参数、使用命令替换和变量减少操作步骤、以及重复执行命令等内容。学完本章内容后，我们希望大家在使用命令行时都能够做到常备锦囊，心中不慌。
+
+\hypertarget{ux5febux901fux5bfcux822a}{%
+\section{快速导航}\label{ux5febux901fux5bfcux822a}}
+
+在命令行下，你如何穿越文件系统的``丛林''而不致迷路？你又如何快速定位所需的文件和目录？如果你仅仅了解导航的基本用法，那么恐怕是不够的。在本节，我将教你几个必备的技能，使你能够轻车熟路的驾驭命令行导航。
+
+\hypertarget{ux56deux5230ux7528ux6237ux4e3bux76eeux5f55}{%
+\subsection{回到用户主目录}\label{ux56deux5230ux7528ux6237ux4e3bux76eeux5f55}}
+
+也许你已经知道 \texttt{\textasciitilde{}} (波浪线) 这个特殊字符代表用户的主目录，若是想要回到自己的主目录，那么我们可以执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~}
+\end{Highlighting}
+\end{Shaded}
+
+但是且慢，我想在此告诉你的是，不带任何参数的 \texttt{cd} 命令同样能够将你带回主目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd}
+\end{Highlighting}
+\end{Shaded}
+
+换句话说，这两个命令行所达到的效果是相同的。然而，两相比较起来，后者比前者可以少输两个字符，和乐而不为呢？
+
+说到 \texttt{\textasciitilde{}} (波浪线)，你还应该了解的一个技巧是，我们可以利用它来转到别的用户的主目录。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~mingji}
+\end{Highlighting}
+\end{Shaded}
+
+我们在 \texttt{\textasciitilde{}} (波浪线) 后面直接跟上 \texttt{mingji} 这个用户名，于是 \texttt{cd} 将我们带到了该用户的主目录。值得注意的是，以下命令行与它并不相同：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~/mingji}
+\end{Highlighting}
+\end{Shaded}
+
+请注意 \texttt{\textasciitilde{}} (波浪线) 后的 \texttt{/} (斜杠)，这行命令的作用是转到当前用户主目录下的子目录 \texttt{mingji}。
+
+\hypertarget{ux56deux5230ux4e0aux6b21ux5de5ux4f5cux7684ux76eeux5f55}{%
+\subsection{回到上次工作的目录}\label{ux56deux5230ux4e0aux6b21ux5de5ux4f5cux7684ux76eeux5f55}}
+
+我经常使用的一个导航场景是，在目录 A 中处理了任务之后，接着转到目录 B 中处理任务，一旦完成，我需要再次回到目录 A 继续工作。此时，我们可以执行下面的命令来回到上次工作的目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~/prj/usingcli}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj/usingcli$ pwd}
+\ExtensionTok{/home/xiaodong/prj/usingcli}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj/usingcli$ cd ~/cli}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ pwd}
+\ExtensionTok{/home/xiaodong/cli}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ cd -}
+\ExtensionTok{/home/xiaodong/prj/usingcli}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj/usingcli$ pwd}
+\ExtensionTok{/home/xiaodong/prj/usingcli}
+\end{Highlighting}
+\end{Shaded}
+
+在此，我第一次工作的目录是 \texttt{\textasciitilde{}/prj/usingcli}，第二次工作的目录是 \texttt{\textasciitilde{}/cli}。通过执行 \texttt{cd} 后跟一个 \texttt{-} (减号)，我们快速的回到了第一次工作的目录。\texttt{cd\ -} 命令相当于执行 \texttt{cd\ "\$OLDPWD"} 及 \texttt{pwd} 两条命令。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd }\StringTok{"}\VariableTok{$OLDPWD}\StringTok{"} \KeywordTok{&&} \BuiltInTok{pwd}
+\end{Highlighting}
+\end{Shaded}
+
+我们还可以继续重复执行 \texttt{cd\ -}，这样就会在 \texttt{\textasciitilde{}/prj/usingcli} 和 \texttt{\textasciitilde{}/cli} 两个目录之间反复切换。
+
+\hypertarget{ux8bbfux95eeux5e38ux7528ux76eeux5f55}{%
+\subsection{访问常用目录}\label{ux8bbfux95eeux5e38ux7528ux76eeux5f55}}
+
+对于需要频繁访问的深层次目录，直接导航起来感觉还是比较麻烦。幸运的是，bash 和 zsh 两个都为我们提供了 \texttt{\$CDPATH} 变量。这是一个与 \texttt{\$PATH} 类似的变量，它由 \texttt{:} (冒号) 分隔的路径列表组成。利用 \texttt{\$CDPATH}，我们能够将常用的目录保存起来，以便 \texttt{cd} 为我们直接转到这些目录。比如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ CDPATH=:~:~/src:~/prj/usingcli}
+\end{Highlighting}
+\end{Shaded}
+
+在这里，我们将 \texttt{\textasciitilde{}} (用户主目录)、\texttt{\textasciitilde{}/src}、以及 \texttt{\textasciitilde{}/prj/usingcli} 等目录加到了 \texttt{\$CDPATH} 中。注意 \texttt{=} (等号) 后面 \texttt{:} (冒号) 的左边为空，它表示当前目录，你应当予以保留。否则，在相对路径的情况下 ，\texttt{cd} 就不能转到当前目录下的子目录了。
+
+现在，假如我们打算转到 \texttt{\textasciitilde{}/prj/usingcli/build} 目录下的话，那么只要执行下列命令即可：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd build}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj/usingcli/build$}
+\end{Highlighting}
+\end{Shaded}
+
+这个例子同时也告诉我们，加到 \texttt{\$CDPATH} 路径列表的目录为待导航的目标目录的父目录。
+
+除了 \texttt{\$CDPATH} 变量，zsh 也支持 \texttt{\$cdpath} 变量。
+
+\hypertarget{ux81eaux52a8ux7ea0ux6b63ux9519ux8bef}{%
+\subsection{自动纠正错误}\label{ux81eaux52a8ux7ea0ux6b63ux9519ux8bef}}
+
+在用 \texttt{cd} 导航目录时，我们免不了偶尔会输错目录的名称。bash 有一个名为 \texttt{cdspell} 的选项可以帮助我们自动纠正拼写错误，并导航到正确的目录。像是不正确的字母顺序、缺少或者多余的字符等错误，\texttt{cdspell} 都能纠正。
+
+我们在享用如此好的功能之前，需要首先开启 bash 的控制选项：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ shopt -s cdspell}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{shopt} 命令的 \texttt{-s} 用于启用 \texttt{cdspell} 选项。
+
+现在我们来试一下 \texttt{cdspell} 的效果，我们原本是想要导航到 \texttt{/etc} 目录，但是我们却错输成了 \texttt{/ect}。不过没有关系，bash 已经帮我们自动纠正了错误，并且转到了正确的目录。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd /ect}
+\ExtensionTok{/etc}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:/etc$ cd -}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd /et}
+\ExtensionTok{/etc}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:/etc$ cd -}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd /etcd}
+\ExtensionTok{/etc}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:/etc$}
+\end{Highlighting}
+\end{Shaded}
+
+在 zsh 中，我们可以给 \texttt{cd} 命令两个参数，它们分别是搜索与替换字符串。zsh 将根据搜索字符串来查看当前工作目录，然后使用第二个字符串替换它，并转到替换后的目录。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli/1.15.8/src$ pwd}
+\ExtensionTok{/home/xiaodong/cli/1.15.8/src}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli/1.15.8/src$ cd 1.15.8 1.15.9}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli/1.15.9/src$ pwd}
+\ExtensionTok{/home/xiaodong/cli/1.15.9/src}
+\end{Highlighting}
+\end{Shaded}
+
+本例中，我们的当前工作目录为 \texttt{/home/xiaodong/cli/1.15.8/src}，\texttt{cd} 命令的第一个参数 \texttt{1.15.8} 跟当前工作目录相匹配。zsh 用 \texttt{1.15.9} 替换了 \texttt{1.15.8}，然后转到了新的目录 \texttt{/home/xiaodong/cli/1.15.9/src}。
+
+\hypertarget{ux81eaux52a8ux5bfcux822a}{%
+\subsection{自动导航}\label{ux81eaux52a8ux5bfcux822a}}
+
+因为 \texttt{cd} 命令是如此常用，我们使用它的频率又那么高，所以 bash 和 zsh 两个都为 \texttt{cd} 命令提供了一个捷径，对像我一样的``懒人''来说，\texttt{autocd} 选项极其有用。
+
+在 bash 中，我们可以通过下面的命令来启用 \texttt{autocd} 选项：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ shopt -s autocd}
+\end{Highlighting}
+\end{Shaded}
+
+与此对应的 zsh 指令为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ setopt autocd}
+\end{Highlighting}
+\end{Shaded}
+
+现在假设我们想导航到 \texttt{\textasciitilde{}/prj} 目录，代替执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd prj}
+\end{Highlighting}
+\end{Shaded}
+
+我们可以省略 \texttt{cd} 命令，直接执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ prj}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj$ pwd}
+\ExtensionTok{/home/xiaodong/prj}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux4f7fux7528ux76eeux5f55ux6808}{%
+\subsection{使用目录栈}\label{ux4f7fux7528ux76eeux5f55ux6808}}
+
+前面我们讲到的 \texttt{cd\ -} 允许我们在两个目录之间进行切换，如果我们想要在更多个目录之间切换，那么它就无能为力了。不过，为了帮助我们解决这个问题，bash 和 zsh 提供了目录栈功能。
+
+两个最基本的目录栈命令是 \texttt{pushd} 和 \texttt{popd}。其中，\texttt{pushd} 命令将一个目录添加到目录栈中，而 \texttt{popd} 命令则从目录栈中移除上次添加的目录。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ pwd}
+\ExtensionTok{/home/xiaodong}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ pushd ~/cli}
+\ExtensionTok{~/cli}\NormalTok{ ~}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ pushd ~/prj}
+\ExtensionTok{~/prj}\NormalTok{ ~/cli ~}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj$ popd}
+\ExtensionTok{~/cli}\NormalTok{ ~}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ popd}
+\ExtensionTok{~}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$}
+\end{Highlighting}
+\end{Shaded}
+
+在这个例子中，我们第一次执行 \texttt{pushd\ \textasciitilde{}/cli} 后，将 \texttt{\textasciitilde{}/cli} 添加到目录栈的同时，并且转到了该目录。接着，我们继续执行 \texttt{pushd\ \textasciitilde{}/prj}，又将 \texttt{\textasciitilde{}/prj} 目录添加到了目录栈。此刻，我们位于 \texttt{\textasciitilde{}/prj} 目录，目录栈中包括 3 个条目：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{~/prj}\NormalTok{ ~/cli ~}
+\end{Highlighting}
+\end{Shaded}
+
+出栈的顺序跟入栈的顺序相反，第一次执行 \texttt{popd} 命令后，移除了目录栈中的最左边的条目 \texttt{\textasciitilde{}/prj}，并转到了相邻的 \texttt{\textasciitilde{}/cli} 目录。再次执行 \texttt{popd} 命令，则又移除 \texttt{\textasciitilde{}/cli} 条目，然后转到 \texttt{\textasciitilde{}} 目录。
+
+如果你在执行多次入栈与出栈后忘了目录栈中还有哪些条目的话，那么可以执行 \texttt{dirs\ -v} 命令来查看：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ dirs -v}
+ \ExtensionTok{0}\NormalTok{  ~/prj}
+ \ExtensionTok{1}\NormalTok{  ~/cli}
+ \ExtensionTok{2}\NormalTok{  ~}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{dirs\ -v} 为我们列出了目录栈中的所有条目，每行一条，而且开头具有编号，以便我们引用。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj$ pushd +1}
+\ExtensionTok{~/cli}\NormalTok{ ~ ~/prj}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$}
+\end{Highlighting}
+\end{Shaded}
+
+执行 \texttt{pushd\ +1} 将使 \texttt{\textasciitilde{}/cli} 成为目录栈的顶端，并变成当前工作目录。我们可以通过再次执行 \texttt{dirs\ -v} 命令来确认这一点：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ dirs -v}
+ \ExtensionTok{0}\NormalTok{  ~/cli}
+ \ExtensionTok{1}\NormalTok{  ~}
+ \ExtensionTok{2}\NormalTok{  ~/prj}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ pwd}
+\ExtensionTok{/home/xiaodong/cli}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{pushd} 命令中的 \texttt{+} (加号) 用于从上往下计数。我们也可以使用 \texttt{-} (减号) 来从下往上计数。比如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ popd -1}
+\ExtensionTok{~/cli}\NormalTok{ ~/prj}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ dirs -v}
+ \ExtensionTok{0}\NormalTok{  ~/cli}
+ \ExtensionTok{1}\NormalTok{  ~/prj}
+\end{Highlighting}
+\end{Shaded}
+
+执行 \texttt{popd\ -1} 命令后从目录栈中移除了倒数第二个条目 \texttt{\textasciitilde{}}。
+
+\hypertarget{ux4f7fux7528ux522bux540d}{%
+\section{使用别名}\label{ux4f7fux7528ux522bux540d}}
+
+别名是命令行下最常用的省时技巧之一。它通过对频繁使用的命令及选项重新定义一个较短的名称，从而使我们能够减少输入，最终达到提高操作效率的目的。让我们先来看看如何定义别名。
+
+\hypertarget{ux5b9aux4e49ux522bux540d}{%
+\subsection{定义别名}\label{ux5b9aux4e49ux522bux540d}}
+
+不管是 bash，还是 zsh，它们都能使用 \texttt{alias} 命令来定义别名。例如，假如我们要将 \texttt{ls\ -lah\ -\/-color=auto} 定义成 \texttt{l} 的话，那么可以执行下列命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ alias l=}\StringTok{'ls -lah --color=auto'}
+\end{Highlighting}
+\end{Shaded}
+
+代替输入长长的 \texttt{ls\ -lsh} 命令，现在我们只需直接执行 \texttt{l} 即可。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ l}
+\end{Highlighting}
+\end{Shaded}
+
+比较常见的别名定义包括下面这些：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{alias}\NormalTok{ ..=}\StringTok{'cd ..'}
+\BuiltInTok{alias}\NormalTok{ ...=}\StringTok{'cd ../..'}
+\BuiltInTok{alias}\NormalTok{ ....=}\StringTok{'cd ../../..'}
+\BuiltInTok{alias}\NormalTok{ ls=}\StringTok{'ls --color=auto'}
+\BuiltInTok{alias}\NormalTok{ l=}\StringTok{'ls -lah --color=auto'}
+\BuiltInTok{alias}\NormalTok{ la=}\StringTok{'ls -AF --color=auto'}
+\BuiltInTok{alias}\NormalTok{ ll=}\StringTok{'ls -lFh --color=auto'}
+\end{Highlighting}
+\end{Shaded}
+
+除了节省时间，利用别名我们也可以避免经常性的输入错误。如果你常常将 \texttt{ls} 错输成 \texttt{sl}，那么不妨为它定义一个别名：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ alias sl=}\StringTok{'ls'}
+\end{Highlighting}
+\end{Shaded}
+
+在 zsh 中，\texttt{alias} 命令还能用 \texttt{-s} 选项来定义后缀别名。例如，当我们将文件扩展名 \texttt{pdf} 定义成 \texttt{zathura} 后缀别名后，直接执行 \texttt{pdf} 文件名，就会调用 \texttt{zathura} 打开该 \texttt{pdf} 文件。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ alias -s pdf=zathura}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cheat_sheet_ssh_v4.pdf}
+\end{Highlighting}
+\end{Shaded}
+
+在这个例子中，我们通过执行 \texttt{cheat\_sheet\_ssh\_v4.pdf} 来代替执行 \texttt{zathura\ cheat\_sheet\_ssh\_v4.pdf} 命令。
+
+\hypertarget{ux67e5ux770bux522bux540d}{%
+\subsection{查看别名}\label{ux67e5ux770bux522bux540d}}
+
+时间久了，也许你将忘记所定义别名的具体内容。为了查看别名 \texttt{sd} 的内容，我们将它作为参数传递给 \texttt{alias} 命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ alias sd}
+\BuiltInTok{alias}\NormalTok{ sd=}\StringTok{'shutdown -h now'}
+\end{Highlighting}
+\end{Shaded}
+
+从 \texttt{alias} 列出的内容，我们知道 \texttt{sd} 是 \texttt{shutdown\ -h\ now} 的别名。
+
+\texttt{alias} 命令也可以不带任何参数，直接予以执行则会列出当前 Shell 中的所有别名。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ alias}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux53d6ux6d88ux522bux540d}{%
+\subsection{取消别名}\label{ux53d6ux6d88ux522bux540d}}
+
+如果某个别名不再适用，那么我们可以使用 \texttt{unalias} 命令来取消它。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ unalias sl}
+\end{Highlighting}
+\end{Shaded}
+
+执行 \texttt{unalias\ sl} 命令后，将取消我们先前定义的 \texttt{sl} 别名。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ sl}
+\end{Highlighting}
+\end{Shaded}
+
+此时我们再执行 \texttt{sl} 就不是列出当前工作目录的内容了。
+
+比永久取消别名更加有用的一个技巧是临时取消别名。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ ls}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ \textbackslash{}ls}
+\end{Highlighting}
+\end{Shaded}
+
+第一次 \texttt{ls} 执行的是别名，第二次我们在 \texttt{ls} 前面放了一个 \texttt{\textbackslash{}} (反斜杠)，用来临时取消别名。请比较两个命令先后执行的输出结果。
+
+此外，\texttt{unalias} 命令还支持 \texttt{-a} 选项，利用这个选项可以移除所有定义的别名。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ unalias -a}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux522bux540dux7684ux7f3aux61be}{%
+\subsection{别名的缺憾}\label{ux522bux540dux7684ux7f3aux61be}}
+
+使用别名固然好，但它也有一些缺憾。一方面，别名无法参数化，打算实现一个参数化别名的想法注定会失败。这时候，你应当考虑使用的是函数。另一方面，别名可能覆盖真实的命令，从而误导你原本想要执行命令的意图。
+
+通过 \texttt{type\ -a} 我们可以确定别名极其真实的命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ type -a sl}
+\ExtensionTok{sl}\NormalTok{ is aliased to }\KeywordTok{`}\ExtensionTok{ls}\StringTok{'}
+\StringTok{sl is /usr/bin/sl}
+\StringTok{sl is /sbin/sl}
+\StringTok{sl is /usr/sbin/sl}
+\end{Highlighting}
+\end{Shaded}
+
+这里，我们既能看到 \texttt{sl} 是 \texttt{ls} 的别名，也能看到它有一个真实的命令。
+
+\hypertarget{ux5229ux7528-ux6784ux9020ux53c2ux6570}{%
+\section{\texorpdfstring{利用 \texttt{\{\}} 构造参数}{利用 \{\} 构造参数}}\label{ux5229ux7528-ux6784ux9020ux53c2ux6570}}
+
+在命令行下，我们经常会遇到针对多个参数条目执行操作的使用场景，其中文件名算得上是最常见的情形。为了应对这种情况，bash 和 zsh 都提供了逗号分隔的花括号列表，例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\DataTypeTok{\{one,two,three\}}
+\end{Highlighting}
+\end{Shaded}
+
+将参数传递给 \texttt{echo} 命令之前，Shell 会首先展开花括号列表，并生成以下 3 个参数条目：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{one}\NormalTok{ two three}
+\end{Highlighting}
+\end{Shaded}
+
+利用 \texttt{\{\}} (花括号)，我们可以实现许多有意思的功能，下面是我常用的几个。大家在学习时不妨举一反三，以便灵活运用。
+
+\hypertarget{ux5907ux4efdux6587ux4ef6}{%
+\subsection{备份文件}\label{ux5907ux4efdux6587ux4ef6}}
+
+我发现很多朋友在备份文件时执行的命令是：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cp file file.bak}
+\end{Highlighting}
+\end{Shaded}
+
+这条命令将 \texttt{file} 备份为 \texttt{file.bak}。通过 \texttt{\{\}} (花括号)，我们可以将该命令改写成：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cp file}\DataTypeTok{\{,.bak\}}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{cp} 命令的参数 \texttt{file\{,.bak\}} 展开后将变成 \texttt{file\ file.bak}。这里的 \texttt{,} (逗号) 必不可少，否则 Shell 就不会将其展开了。
+
+类似的，我们也可以利用 \texttt{tar} 结合 \texttt{\{\}} (花括号) 来创建存档：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ tar cf docs}\DataTypeTok{\{.tar,\}}
+\end{Highlighting}
+\end{Shaded}
+
+这里，\texttt{tar} 命令将 \texttt{docs} 目录存档为 \texttt{docs.tar}。
+
+\hypertarget{ux751fux6210ux5e8fux5217}{%
+\subsection{生成序列}\label{ux751fux6210ux5e8fux5217}}
+
+对于按照一定顺序排列的条目，代替 \texttt{,} (逗号)，Shell 也支持通过 \texttt{..} (两点) 来指定一个区间。比如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\DataTypeTok{\{a..z\}}
+\ExtensionTok{a}\NormalTok{ b c d e f g h i j k l m n o p q r s t u v w x y z}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{echo} 将回显从 a 到 z 所有的小写字母。
+
+又如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\DataTypeTok{\{0..9\}}
+\ExtensionTok{0}\NormalTok{ 1 2 3 4 5 6 7 8 9}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{echo} 将回显 0 到 9 的数字。
+
+在区间开头数字的前面也可以添加前导的 0，比如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\DataTypeTok{\{01..10\}}
+\end{Highlighting}
+\end{Shaded}
+
+这将罗列出以下数字序列：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{01}\NormalTok{ 02 03 04 05 06 07 08 09 10}
+\end{Highlighting}
+\end{Shaded}
+
+我们甚至还可以在区间的尾端添加一个步进值：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\DataTypeTok{\{1..9..2\}}
+\end{Highlighting}
+\end{Shaded}
+
+末尾的 \texttt{2} 为步进值，这样就只会罗列奇数：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{1}\NormalTok{ 3 5 7 9}
+\end{Highlighting}
+\end{Shaded}
+
+在 zsh 中，步进值可以为负数，这种情况下将按倒序罗列数字，例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\DataTypeTok{\{1..9..-2\}}
+\ExtensionTok{9}\NormalTok{ 7 5 3 1}
+\end{Highlighting}
+\end{Shaded}
+
+bash 中想要达到同样的效果需要将区间的首尾端对调，比如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\DataTypeTok{\{9..1..2\}}
+\ExtensionTok{9}\NormalTok{ 7 5 3 1}
+\end{Highlighting}
+\end{Shaded}
+
+最后，让我们来看一个实际使用序列的例子。通过生成的序列，将其与路径组合，在下载多个文件时尤其有用。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ wget https://linuxtoy.org/img/}\DataTypeTok{\{1..5\}}\NormalTok{.png}
+\end{Highlighting}
+\end{Shaded}
+
+上述命令中，\texttt{wget} 将从 \url{https://linuxtoy.org} 依次下载 1.png、2.png、3.png \ldots{} 等图片文件。
+
+值得一提的是，除了 \texttt{..} (两点) 的区间表示法，zsh 也支持 \texttt{-} (减号) 这种区间表示，不过需要启用 \texttt{braceccl} 选项。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ setopt braceccl}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\DataTypeTok{\{A-Za-z\}}
+\ExtensionTok{A}\NormalTok{ B C D E F G H I J K L M N O P Q R S T U V W X Y Z}
+\ExtensionTok{a}\NormalTok{ b c d e f g h i j k l m n o p q r s t u v w x y z}
+\end{Highlighting}
+\end{Shaded}
+
+我们在使用 \texttt{setopt} 开启 \texttt{braceccl} 选项后，执行 \texttt{echo\ \{A-Za-z\}} 罗列出了所有大写和小写字母。
+
+\hypertarget{ux8fdeux7528ux4e0eux5d4cux5957}{%
+\subsection{连用与嵌套}\label{ux8fdeux7528ux4e0eux5d4cux5957}}
+
+Shell 的 \texttt{\{\}} (花括号) 结构非常灵活和强大，特别是在连用和嵌套时更是威力无穷。先来让我们看一个 \texttt{\{\}} (花括号) 连用的例子。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ mkdir -p 2019/}\DataTypeTok{\{01..12\}}\NormalTok{/}\DataTypeTok{\{baby,photo\}}
+\end{Highlighting}
+\end{Shaded}
+
+在本例中，我们连用两个 \texttt{\{\}} (花括号)，这样在每个月份的目录下又分别创建了 \texttt{baby} 和 \texttt{photo} 两个子目录。这条命令实际上执行的是以下命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ mkdir -p 2019/01/baby 2019/01/photo \textbackslash{}}
+\NormalTok{2019/02/baby 2019/02/photo \textbackslash{}}
+\NormalTok{2019/03/baby 2019/03/photo \textbackslash{}}
+\NormalTok{2019/04/baby 2019/04/photo \textbackslash{}}
+\NormalTok{2019/05/baby 2019/05/photo \textbackslash{}}
+\NormalTok{2019/06/baby 2019/06/photo \textbackslash{}}
+\NormalTok{2019/07/baby 2019/07/photo \textbackslash{}}
+\NormalTok{2019/08/baby 2019/08/photo \textbackslash{}}
+\NormalTok{2019/09/baby 2019/09/photo \textbackslash{}}
+\NormalTok{2019/10/baby 2019/10/photo \textbackslash{}}
+\NormalTok{2019/11/baby 2019/11/photo \textbackslash{}}
+\NormalTok{2019/12/baby 2019/12/photo}
+\end{Highlighting}
+\end{Shaded}
+
+我们不妨将两个命令比较一下，如果直接手动输入后者该是多么枯燥和乏味的事情。但是，有了 \texttt{\{\}} (花括号) 的帮助，我们就变轻松了不少。
+
+\texttt{\{\}} (花括号) 结构不仅可以连用，而且能够嵌套。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\DataTypeTok{\{\{A..Z\},\{a..z\},\{0..9\}\}}
+\ExtensionTok{A}\NormalTok{ B C D E F G H I J K L M N O P Q R S T U V W X Y Z}
+\ExtensionTok{a}\NormalTok{ b c d e f g h i j k l m n o p q r s t u v w x y z}
+\ExtensionTok{0}\NormalTok{ 1 2 3 4 5 6 7 8 9}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{echo} 命令的外层 \texttt{\{\}} (花括号) 中包含 3 个内层 \texttt{\{\}} (花括号)，这样就将所有的大写字母、小写字母以及从 0 到 9 的数字都罗列出来了。
+
+\hypertarget{ux5176ux5b83ux5999ux62db}{%
+\section{其它妙招}\label{ux5176ux5b83ux5999ux62db}}
+
+在本节中，我们介绍其它几个必备的命令行使用妙招。
+
+\hypertarget{ux547dux4ee4ux66ffux6362}{%
+\subsection{命令替换}\label{ux547dux4ee4ux66ffux6362}}
+
+假设我们想要编辑包含 \texttt{error} 的 Python 源代码文件 (\texttt{*.py})，在此之前，我们首先需要确定哪些 Python 文件具有这些字符串。为此，我们可以使用下面的命令将其找出来：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ grep -l error *.py}
+\end{Highlighting}
+\end{Shaded}
+
+这里的 \texttt{-l} 选项让 \texttt{grep} 命令将找出的文件名输出到终端，然后我们就可以用文本编辑器 (如 \texttt{nvim}) 来编辑这些文件：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ nvim godns.py}
+\end{Highlighting}
+\end{Shaded}
+
+代替这种需要两步才能完成的操作，我们也可以要求 Shell 在执行 \texttt{grep} 命令后直接将文件名传递给文本编辑器 (如 \texttt{nvim})：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ nvim }\KeywordTok{`}\FunctionTok{grep}\NormalTok{ -l error *.py}\KeywordTok{`}
+\end{Highlighting}
+\end{Shaded}
+
+Shell 对上述命令 \texttt{\textasciigrave{}\textasciigrave{}} (反引号) 中的内容执行命令替换，也就是说，把 \texttt{grep} 命令的输出作为 \texttt{nvim} 命令的参数。我们从而将两步操作得以合并成一步操作来完成。
+
+使用 \texttt{\textasciigrave{}\textasciigrave{}} (反引号) 算是老式的命令替换用法，更新式的用法是 \texttt{\$()}。所以上面的命令也能改写成如下形式：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ nvim }\VariableTok{$(}\FunctionTok{grep}\NormalTok{ -l error *.py}\VariableTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+我们推荐使用 \texttt{\$()} 这种新用法，因为在嵌套命令替换时具有更好的可读性。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ nvim }\VariableTok{$(}\FunctionTok{grep}\NormalTok{ -l failed }\VariableTok{$(}\FunctionTok{date}\NormalTok{ +}\StringTok{'%Y%m%d'}\VariableTok{)}\NormalTok{.log}\VariableTok{)}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ nvim }\KeywordTok{`}\FunctionTok{grep}\NormalTok{ -l failed }\DataTypeTok{\textbackslash{}`}\NormalTok{date +}\StringTok{'%Y%m%d'}\DataTypeTok{\textbackslash{}`}\NormalTok{.log}\KeywordTok{`}
+\end{Highlighting}
+\end{Shaded}
+
+在嵌套时，\texttt{\$()} 看起来一目了然，而 \texttt{\textasciigrave{}\textasciigrave{}} (反引号) 则需要转义，其可读性较差。
+
+\hypertarget{ux4f7fux7528ux53d8ux91cf}{%
+\subsection{使用变量}\label{ux4f7fux7528ux53d8ux91cf}}
+
+虽然 Shell 本身具有内置变量，而且我们在执行程序时还会碰到环境变量，但是我们在此要讲的却是另一种变量，即用户变量。
+
+用户变量是由我们自己所设置的变量，其目的在于临时保存需要多次使用的数据。这样，当我们需要使用数据时就可以通过变量名来引用它了。因为通常变量名比我们要引用的数据要短很多，所以也让我们减少了不必要的重复输入。
+
+让我们看一个例子：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ LOG=/var/log/pacman.log}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ head }\VariableTok{$LOG}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ grep -i error }\VariableTok{$LOG}
+\end{Highlighting}
+\end{Shaded}
+
+我们将变量 \texttt{LOG} 的值设置为 \texttt{/var/log/pacman.log}，接着通过 \texttt{\$LOG} 的形式分别在 \texttt{head} 和 \texttt{grep} 命令中引用它。
+
+\hypertarget{ux91cdux590dux6267ux884cux547dux4ee4}{%
+\subsection{重复执行命令}\label{ux91cdux590dux6267ux884cux547dux4ee4}}
+
+当我为演讲主题准备材料时，我想用 \texttt{figlet} 这个工具来制作一些有趣的 ASCII 艺术字。虽然 \texttt{figlet} 提供了很多艺术样式，但是我并没有见过每一种。要想选择最酷的 ASCII 艺术字，所以我必须把每种样式都浏览一遍。于是，我执行了下面的命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ figlet -f ascii9 Linux}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ figlet -f bigmono9 Linux}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ figlet -f emboss Linux}
+\ExtensionTok{...}
+\end{Highlighting}
+\end{Shaded}
+
+可是，\texttt{figlet} 还有很多样式，这样一个一个的查看实在枯燥乏味。Shell 有没有什么重复执行命令的快捷方法呢？回答是肯定的。利用 Shell 提供的 \texttt{for} 循环，我们可以一遍又一遍的重复执行命令。下面让我们来一次性查看 \texttt{figlet} 的所有样式。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd /usr/share/figlet}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ for font in *.tlf}
+\OperatorTok{>} \KeywordTok{do}
+\OperatorTok{>}     \BuiltInTok{echo} \StringTok{"Font: }\VariableTok{$font}\StringTok{"}
+\OperatorTok{>}     \ExtensionTok{figlet}\NormalTok{ -f }\VariableTok{$(}\FunctionTok{basename} \VariableTok{$font}\NormalTok{ .tlf}\VariableTok{)}\NormalTok{ Linux}
+\OperatorTok{>} \KeywordTok{done}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{for} 和 \texttt{in} 中间的 \texttt{font} 为循环的变量，\texttt{*.tlf} 表示扩展名为 \texttt{tlf} 的所有文件。\texttt{do} 与 \texttt{done} 之间的内容为循环体，针对当前目录下的每个 \texttt{tlf} 文件都会执行这两条命令。
+
+除了上面多行形式的 \texttt{for\ ...\ in} 循环结构外，我们也可以使用其单行形式，例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{for} \ExtensionTok{font}\NormalTok{ in *.tlf}\KeywordTok{;} \KeywordTok{do} \ExtensionTok{figlet}\NormalTok{ -f }\VariableTok{$(}\FunctionTok{basename} \VariableTok{$font}\NormalTok{ .tlf}\VariableTok{)}\NormalTok{ Linux}\KeywordTok{;} \KeywordTok{done}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5468ux8fb9ux597dux54c1}{%
+\chapter{周边好品}\label{ux5468ux8fb9ux597dux54c1}}
+
+在前面的章节中，我们主要讨论的是 Shell 本身自带的特性。因为 bash 和 zsh 都是开源软件，所以有许多热心的用户为其添砖加瓦，以便增强它们的功能，使其变得更加好用。本章我们将眼光从 Shell 自身移到周边，来看看由社区贡献的一些好工具。
+
+\hypertarget{ux914dux7f6eux6846ux67b6}{%
+\section{配置框架}\label{ux914dux7f6eux6846ux67b6}}
+
+无论是 bash，还是 zsh，我们都能根据自己的好恶来进行配置。这样的好处是配置完全由自己所掌控。但其缺点也很明显，那就是不便于公开分享和贡献。正因为如此，一些 Shell 配置框架应运而生。所谓``众人拾柴火焰高''，积社区之力，Shell 配置框架的内容极其丰富。这使我们得以能够直接将其拿来享用。
+
+虽然现在有很多 Shell 配置框架可以选择，有的宣称很轻量，也有的号称速度快，但是我们将根据流行度和活跃性来进行选择。经过综合比较，我们选择的 bash 配置框架是 Bash-it，zsh 配置框架是 Oh My Zsh。下面，我们将分别进行介绍。
+
+\hypertarget{bash-ux914dux7f6eux6846ux67b6}{%
+\subsection{bash 配置框架}\label{bash-ux914dux7f6eux6846ux67b6}}
+
+Bash-it 配置框架从社区收集了许多实用的命令和脚本，主要包括别名、自动补全代码、定制函数、以及提示符主题等四大类型。得益于 Bash-it 良好的模块化架构，我们也可以添加自己的定制内容。
+
+\hypertarget{ux5b89ux88c5}{%
+\subsubsection{安装}\label{ux5b89ux88c5}}
+
+因为 \href{https://github.com/Bash-it/bash-it}{Bash-it 位于 GitHub} 上，所以在安装 Bash-it 之前，首先需要确认的是系统中是否含有 \texttt{git} 命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ which git}
+\end{Highlighting}
+\end{Shaded}
+
+如果输出内容为：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{/usr/bin/git}
+\end{Highlighting}
+\end{Shaded}
+
+则可进行下一个安装步骤。否则，可通过所用操作系统的软件包管理器（如 \texttt{apt}、\texttt{yum}、\texttt{pacman}、\texttt{emerge} 等）来安装。
+
+接着，使用 \texttt{git} 命令将 Bash-it 克隆到用户主目录下的 \texttt{.bash\_it} 子目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git clone --depth=1 \textbackslash{}}
+\NormalTok{https://github.com/Bash-it/bash-it.git \textbackslash{}}
+\NormalTok{~/.bash_it}
+\end{Highlighting}
+\end{Shaded}
+
+然后，执行 \texttt{install.sh} 安装脚本来安装 Bash-it：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~/.bash_it}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/.bash_it$ ./install.sh -h}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/.bash_it$ ./install.sh}
+\end{Highlighting}
+\end{Shaded}
+
+\texttt{install.sh} 脚本包括下列 3 个选项，大家可根据需要使用：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \texttt{interactive\ (-i)}：这个选项允许我们交互式选择要启用哪些别名、自动补全和插件。
+\item
+  \texttt{-\/-silent\ (-s)}：静默安装，没有任何输入提示。
+\item
+  \texttt{-\/-no-modify-config\ (-n)}：不修改现有的 bash 配置文件 \texttt{.bashrc} 或 \texttt{.bash\_profile}。
+\end{enumerate}
+
+我们不加任何选项，采用默认安装。在安装脚本询问是否保留 \texttt{.bashrc} 并追加 Bash-it 模板内容时，回答``N''。这样，我们原有的 \texttt{.bashrc} 配置文件将备份为 \texttt{.bashrc.bak}。
+
+当看到``安装成功完成''的消息时，则说明 Bash-it 安装成功。如图 \ref{fig:bashit-install} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/bash-it-install} \caption{Bash-it 安装过程}\label{fig:bashit-install}
+\end{figure}
+
+最后，我们关闭并重新打开终端（远端机器则注销并重新登录）或者执行下面的命令就可以开始使用 Bash-it 了：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/.bash_it$ source ~/.bashrc}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux67e5ux770bux522bux540dux8865ux5168ux548cux63d2ux4ef6}{%
+\subsubsection{查看别名、补全和插件}\label{ux67e5ux770bux522bux540dux8865ux5168ux548cux63d2ux4ef6}}
+
+Bash-it 的 \texttt{install.sh} 脚本在默认情况下只会启用少量的别名、自动补全和插件，下面就让我们找出来。
+
+首先，我们来看看启用了哪些别名：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it show aliases }\KeywordTok{|} \FunctionTok{less}
+\end{Highlighting}
+\end{Shaded}
+
+该命令的输出分为 3 列，第一列为别名的名称，第二列显示该别名是否启用（启用的别名在 {[}{]} 中有 X），最后一列是有关别名的说明。如图 \ref{fig:bashit-show-alias} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/bashit-show-alias} \caption{在 Bash-it 中查看别名}\label{fig:bashit-show-alias}
+\end{figure}
+
+在此我们可以看到 Bash-it 启用了 general、apt、ansible 等别名。
+
+接着，我们看看启用了哪些自动补全：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it show completions }\KeywordTok{|} \FunctionTok{less}
+\end{Highlighting}
+\end{Shaded}
+
+我们发现 system、bash-it 等自动补全已经启用了。如图 \ref{fig:bashit-show-comp} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/bashit-show-comp} \caption{在 Bash-it 中查看补全}\label{fig:bashit-show-comp}
+\end{figure}
+
+最后，我们再看看启用了哪些插件：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it show plugins }\KeywordTok{|} \FunctionTok{less}
+\end{Highlighting}
+\end{Shaded}
+
+在输出中显示 base、alias-completion 等插件已经启用。如图 \ref{fig:bashit-show-plug} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/bashit-show-plug} \caption{在 Bash-it 中查看插件}\label{fig:bashit-show-plug}
+\end{figure}
+
+\hypertarget{ux641cux7d22ux5185ux5bb9}{%
+\subsubsection{搜索内容}\label{ux641cux7d22ux5185ux5bb9}}
+
+除了直接列出所有的别名、自动补全和插件之外，Bash-it 还提供了一个非常快捷的方式来查找所需的内容。比如，我们想要看看有关 tmux 和 ansible 的情况，不妨执行以下命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it search tmux ansible}
+    \ExtensionTok{aliases}\NormalTok{:  ansible tmux}
+    \ExtensionTok{plugins}\NormalTok{:  tmux tmuxinator}
+\ExtensionTok{completions}\NormalTok{:  tmux}
+\end{Highlighting}
+\end{Shaded}
+
+从命令输出中我们看到 tmux 的别名、补全和插件都没有启用，而 ansible 的别名已经启用，因为其颜色为绿色。
+
+\hypertarget{ux542fux7528ux522bux540dux8865ux5168ux548cux63d2ux4ef6}{%
+\subsubsection{启用别名、补全和插件}\label{ux542fux7528ux522bux540dux8865ux5168ux548cux63d2ux4ef6}}
+
+既然 Bash-it 为我们提供了如此丰富的别名、自动补全和插件，那么不用的话就太可惜了。下面，我们就来分别看看如何启用别名、自动补全和插件。
+
+时下非常流行的版本控制系统 Git，相信大家都有过接触和使用。让我们先启用 git 别名：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it enable alias git}
+\FunctionTok{git}\NormalTok{ enabled with priority 150.}
+\end{Highlighting}
+\end{Shaded}
+
+Bash-it 为我们回显出启用的结果，并设置优先级 150。
+
+接着，我们执行以下命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it reload}
+\end{Highlighting}
+\end{Shaded}
+
+以便让 Bash-it 自动为我们重新载入配置。这样，我们就能够立即开始使用刚才启用的 git 别名。但是，到底有哪些 git 别名呢？别着急，我们可以通过下面的命令了解：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it help aliases git }\KeywordTok{|} \FunctionTok{less}
+\end{Highlighting}
+\end{Shaded}
+
+大致估算一下，Bash-it 提供的 git 别名差不多有近 80 个，实在是非常多。如图 \ref{fig:bashit-alias-git} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/bashit-alias-git} \caption{Bash-it 提供的 git 别名}\label{fig:bashit-alias-git}
+\end{figure}
+
+最后，我们拿 Bash-it 的源代码目录来验证 git 别名是否生效：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~/.bash_it}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/.bash_it$ gs}
+\ExtensionTok{On}\NormalTok{ branch master}
+\ExtensionTok{Your}\NormalTok{ branch is up-to-date with }\StringTok{'origin/master'}\NormalTok{.}
+\ExtensionTok{nothing}\NormalTok{ to commit, working tree clean}
+\end{Highlighting}
+\end{Shaded}
+
+从 \texttt{gs} 所显示出的 git 仓库状态，我们可以确信 git 别名一切正常。
+
+再来让我们启用 git 自动补全：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it enable completion git}
+\FunctionTok{git}\NormalTok{ enabled with priority 350.}
+\end{Highlighting}
+\end{Shaded}
+
+与启用 git 别名类似，在启用 git 自动补全时，Bash-it 也为其分配了一个优先级 350。
+
+还有 git 插件，我们也将其启用：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it enable plugin git}
+\FunctionTok{git}\NormalTok{ enabled with priority 250.}
+\end{Highlighting}
+\end{Shaded}
+
+Bash-it 命令的输出仍然与启用别名和自动补全时相似。
+
+除了通过 \texttt{bash-it\ enable} 命令来启用别名、自动补全和插件外，我们也可以在搜索模块和组件时加以启用。例如：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it search git --enable}
+    \ExtensionTok{aliases}\NormalTok{:  git gitsvn}
+    \ExtensionTok{plugins}\NormalTok{:  autojump fasd git git-subrepo jgitflow jump}
+\ExtensionTok{completions}\NormalTok{:  git git_flow git_flow_avh}
+\end{Highlighting}
+\end{Shaded}
+
+这样，将把包含 git 关键字的所有别名、自动补全和插件全都启用。本例中的 gitsvn、jgitflow、git\_flow 也一并启用了。
+
+此外，我们也可以通过下列命令来分别启用所有的别名、自动补全和插件：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it enable alias all}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it enable completion all}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it enable plugin all}
+\end{Highlighting}
+\end{Shaded}
+
+禁用别名、自动补全和插件跟启用时类似，只是把 enable 换成 disable 即可。比如，假设我们想要禁用 gitsvn 别名，则可以执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it disable alias gitsvn}
+\end{Highlighting}
+\end{Shaded}
+
+如果禁用成功，Bash-it 命令输出如下结果：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{gitsvn}\NormalTok{ disabled.}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux66f4ux6539ux4e3bux9898}{%
+\subsubsection{更改主题}\label{ux66f4ux6539ux4e3bux9898}}
+
+Bash-it 随附了大约 50 多个提示符主题样式，如果想要看看这些主题的真实外观，那么我们可以执行下面的命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ BASH_PREVIEW=true bash-it reload}
+\end{Highlighting}
+\end{Shaded}
+
+Bash-it 的默认主题为 bobby。要是你不喜欢的话，那么可以将其更改为别的主题。不过，Bash-it 并没有提供相关的更改命令，我们需要直接编辑 \texttt{.bashrc} 配置文件。
+
+使用文本编辑器（如 vim）打开 \texttt{\textasciitilde{}/.bashrc}：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ vim ~/.bashrc}
+\end{Highlighting}
+\end{Shaded}
+
+然后找到下行内容：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{export} \VariableTok{BASH_IT_THEME=}\StringTok{'bobby'}
+\end{Highlighting}
+\end{Shaded}
+
+将单引号中的内容（bobby）替换成别的主题名称（如 powerline），并保存即可。
+
+为了使新设置的提示符主题生效，你需要关闭并重新打开终端，或者注销并重新登录。如图 \ref{fig:bashit-theme} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/bashit-theme} \caption{Bash-it 提示符主题}\label{fig:bashit-theme}
+\end{figure}
+
+\hypertarget{ux5b9aux5236ux522bux540dux63d2ux4ef6ux548cux4e3bux9898}{%
+\subsubsection{定制别名、插件和主题}\label{ux5b9aux5236ux522bux540dux63d2ux4ef6ux548cux4e3bux9898}}
+
+Bash-it 的确为我们提供了不少好用的别名、自动补全和插件，然而，我们还是有不能满足的时候。为此，Bash-it 提供了一种方便我们进行定制的机制，可以定制的内容包括别名、自动补全、插件、主题样式等等，它们的路径和名称如下：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{aliases/custom.aliases.bash}：别名
+\item
+  \texttt{completion/custom.completion.bash}：自动补全
+\item
+  \texttt{lib/custom.bash}：库
+\item
+  \texttt{plugins/custom.plugins.bash}：插件
+\item
+  \texttt{custom/themes/\textless{}theme\ name\textgreater{}/\textless{}theme\ name\textgreater{}.theme.bash}：主题样式
+\end{itemize}
+
+在此，我们以如何定制别名为例来说明，其它类型的定制方法类似，无非就是以特定的名称命名并放在确定的目录。
+
+首先，我们在 \texttt{aliases} 目录下使用文本编辑器（如 vim）创建 \texttt{custom.aliases.bash} 文件：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~/.bash_it/aliases}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ vim custom.aliases.bash}
+\end{Highlighting}
+\end{Shaded}
+
+接着，添加具体的别名内容：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{alias}\NormalTok{ sd=}\StringTok{'shutdown -h now'}
+\BuiltInTok{alias}\NormalTok{ up=}\StringTok{'uptime'}
+\end{Highlighting}
+\end{Shaded}
+
+编辑完成后保存。
+
+然后，我们可以利用以下命令来查看：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it help aliases}
+\ExtensionTok{custom}\NormalTok{:}
+\VariableTok{sd=}\StringTok{'shutdown -h now'}
+\VariableTok{up=}\StringTok{'uptime'}
+\end{Highlighting}
+\end{Shaded}
+
+末尾显示的 custom 正是我们添加的内容。
+
+我们再重新加载一下配置：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it reload}
+\end{Highlighting}
+\end{Shaded}
+
+现在，我们刚刚添加的定制别名就可以开始使用了：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ up}
+\ExtensionTok{07}\NormalTok{:54:08 up  5:23,  1 user,  load average: 0.00, 0.00, 0.00}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux66f4ux65b0-bash-it}{%
+\subsubsection{更新 Bash-it}\label{ux66f4ux65b0-bash-it}}
+
+Bash-it 是社区化项目，隔段时间便会增添新的模块和组件，或是修正过往版本中的缺陷。我们可以通过将 Bash-it 更新到最新版本，以保持同步。为了更新 Bash-it，我们可执行以下命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ bash-it update}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{zsh-ux914dux7f6eux6846ux67b6}{%
+\subsection{zsh 配置框架}\label{zsh-ux914dux7f6eux6846ux67b6}}
+
+与 Bash-it 一样，\href{https://github.com/robbyrussell/oh-my-zsh}{Oh My Zsh} 也是开源的社区性项目。在所有的 zsh 配置框架中，Oh My Zsh 算得上是最流行的。Oh My Zsh 包含了许多来自 zsh 社区的好东东，它主要体现在插件、实用的函数、辅助例程、提示符主题样式等方面。
+
+\hypertarget{ux5b89ux88c5-oh-my-zsh}{%
+\subsubsection{安装 Oh My Zsh}\label{ux5b89ux88c5-oh-my-zsh}}
+
+因为 Oh My Zsh 的安装依赖 git 和 curl（或 wget），所以在安装它之前，我们先检查一下系统中是否存在它们：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ which git curl wget}
+\end{Highlighting}
+\end{Shaded}
+
+如果以上命令没有返回结果，那么我们需要先把它们安装到系统中。
+
+好了，若是一切准备就绪，现在就可以执行下面的命令来安装 Oh My Zsh：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ sh -c \textbackslash{}}
+\StringTok{"}\VariableTok{$(}\ExtensionTok{curl}\NormalTok{ -fsSL}
+\ExtensionTok{https}\NormalTok{://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh}\VariableTok{)}\StringTok{"}
+\end{Highlighting}
+\end{Shaded}
+
+安装过程要花一会儿功夫，我们需耐心等待。Oh My Zsh 在安装时将对原来的 \texttt{.zshrc} 配置文件备份，若是出现``\ldots{}.is now installed!''的字样时，就说明 Oh My Zsh 安装成功了。如图 \ref{fig:ohmyzsh-install} 所示。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/ohmyzsh-install} \caption{Oh My Zsh 安装过程}\label{fig:ohmyzsh-install}
+\end{figure}
+
+\hypertarget{ux542fux7528ux63d2ux4ef6}{%
+\subsubsection{启用插件}\label{ux542fux7528ux63d2ux4ef6}}
+
+在安装时，Oh My Zsh 只启用了一个 git 插件。若想用得更舒服，我们就得启用其它插件。对 Oh My Zsh 而言，所谓插件通常包括别名、实用函数、自动补全等内容。在启用其它插件之前，也许你想要了解一下 Oh My Zsh 到底有哪些插件？为此，我们可以转到 Oh My Zsh 安装目录下的 \texttt{plugins} 子目录查看：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~/.oh-my-zsh/plugins}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/.oh-my-zsh/plugins$ ls}
+\end{Highlighting}
+\end{Shaded}
+
+我们可以看到，在 Oh My Zsh 中，每个插件都有一个单独的目录。例如，我们继续进入 \texttt{systemd} 目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/.oh-my-zsh/plugins$ cd systemd}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/.oh-my-zsh/plugins/systemd$ ls}
+\end{Highlighting}
+\end{Shaded}
+
+其下包含 \texttt{README.md} 和 \texttt{systemd.plugin.zsh} 两个文件。前者为有关该插件的使用说明，而后者为 \texttt{systemd} 插件的源代码。如图 \ref{fig:ohmyzsh-view-plug}。
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/ohmyzsh-view-plug} \caption{Oh My Zsh 插件目录}\label{fig:ohmyzsh-view-plug}
+\end{figure}
+
+另外，我们也可以通过浏览器查看 \href{https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins}{Oh My Zsh 的 Wiki 页面}来了解它有哪些插件。
+
+在知晓了有哪些插件及其插件的用途后，现在我们就来启用插件。我们先使用文本编辑器打开 \texttt{.zshrc} 配置文件：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ vim ~/.zshrc}
+\end{Highlighting}
+\end{Shaded}
+
+然后找到下行内容：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{plugins=(}\NormalTok{git}\VariableTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+将需要启用的插件追加到 \texttt{git} 后面即可。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{plugins=(}\NormalTok{git colored-man-pages systemd}\VariableTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+我们在此启用了 \texttt{colored-man-pages} 和 \texttt{systemd} 插件。
+
+为了使启用的插件生效，我们还需要执行下面的命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ source ~/.zshrc}
+\end{Highlighting}
+\end{Shaded}
+
+现在让我们来验证一下启用的插件，如图 \ref{fig:man} 和 \ref{fig:systemd} 所示。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ man zsh}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ sc-status sshd}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ sc-list-units}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/man} \caption{执行 man zsh 的输出结果}\label{fig:man}
+\end{figure}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/systemd} \caption{执行 sc-status sshd 的输出结果}\label{fig:systemd}
+\end{figure}
+
+\hypertarget{ux66f4ux6362ux4e3bux9898}{%
+\subsubsection{更换主题}\label{ux66f4ux6362ux4e3bux9898}}
+
+Oh My Zsh 的默认提示符主题样式是 robbyrussell，若是你不喜欢，那么可以更换成别的主题样式。在 Oh My Zsh 中包含有上百个主题样式，每种主题样式的外观可通过其 \href{https://github.com/robbyrussell/oh-my-zsh/wiki/Themes}{Wiki 页面}查看。
+
+一旦选定了 Oh My Zsh 的主题样式，便可通过编辑 \texttt{.zshrc} 配置文件的方式来更换。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ vim ~/.zshrc}
+\end{Highlighting}
+\end{Shaded}
+
+在 \texttt{zshrc} 文件中找到下面这行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{ZSH_THEME=}\StringTok{"robbyrussell"}
+\end{Highlighting}
+\end{Shaded}
+
+将双引号中的内容替换成另外的主题样式名称（如 simple）。如果你拿不定主意选哪个主题样式，那么不妨将其设置为 \texttt{random}。这样，Oh My Zsh 就会为你随机选择一种主题样式。
+
+保存编辑后执行以下命令以便使更改生效，如图 \ref{fig:ohmyzsh-theme} 所示。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ source ~/.zshrc}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/ohmyzsh-theme} \caption{Oh My Zsh 的 simple 主题样式}\label{fig:ohmyzsh-theme}
+\end{figure}
+
+\hypertarget{ux5b9aux5236ux63d2ux4ef6ux548cux4e3bux9898}{%
+\subsubsection{定制插件和主题}\label{ux5b9aux5236ux63d2ux4ef6ux548cux4e3bux9898}}
+
+虽然 Oh My Zsh 已经涵盖了不少插件和主题，但是我们还是有可能去添加一些个性化的东西。直接修改原有内容的方法明显不可取。为了解决这个问题，Oh My Zsh 提供了一个名为 \texttt{custom} 的目录。我们只需把要定制的内容保存到 \texttt{.zsh} 结尾的文件即可。例如，如果我们打算添加一些新的别名，那么在创建 \texttt{myaliases.zsh} 文件后，再加入下列内容：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~/.oh-my-zsh/custom}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ vim myaliases.zsh}
+\BuiltInTok{alias}\NormalTok{ sd=}\StringTok{'shutdown -h now'}
+\BuiltInTok{alias}\NormalTok{ up=}\StringTok{'uptime'}
+\end{Highlighting}
+\end{Shaded}
+
+然后保存编辑结果，并执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ source ~/.zshrc}
+\end{Highlighting}
+\end{Shaded}
+
+现在我们就可以使用新加的别名了：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ up}
+\end{Highlighting}
+\end{Shaded}
+
+类似的，如果要定制插件和主题，它们有专门存放的目录。定制的插件代码需放在以下目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{~/.oh-my-zsh/custom/plugins}
+\end{Highlighting}
+\end{Shaded}
+
+除了我们自己的插件外，这个目录也可以用来安装外部插件。\href{https://github.com/zsh-users/zsh-syntax-highlighting}{zsh-syntax-highlighting} 是一个为 zsh 提供语法加亮的插件，其实现灵感来自于 fish shell。遗憾的是，该插件并没有包含到 Oh My Zsh 中。为了使用它，我们可以把它安装到上述目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~/.oh-my-zsh/custom/plugins}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/.oh-my-zsh/custom/plugins$ git clone \textbackslash{}}
+\NormalTok{https://github.com/zsh-users/zsh-syntax-highlighting.git}
+\end{Highlighting}
+\end{Shaded}
+
+然后在 \texttt{.zshrc} 配置文件中启用：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{plugins=(}\NormalTok{<原有插件> zsh-syntax-highlighting}\VariableTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+添加 zsh-syntax-highlighting 前，如图 \ref{fig:synhigh-b} 所示。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\StringTok{$'hello, world}\DataTypeTok{\textbackslash{}x21}\StringTok{'}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/synhigh-b} \caption{未启用 zsh-syntax-highlighting 时}\label{fig:synhigh-b}
+\end{figure}
+
+启用 zsh-syntax-highlighting 后，如图 \ref{fig:synhigh-a} 所示。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ source ~/.zshrc}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ echo }\StringTok{$'hello, world}\DataTypeTok{\textbackslash{}x21}\StringTok{'}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/synhigh-a} \caption{启用 zsh-syntax-highlighting 后}\label{fig:synhigh-a}
+\end{figure}
+
+此外，要把定制的主题代码放在下面的目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{~/.oh-my-zsh/custom/themes}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux5176ux5b83ux547dux4ee4ux548cux914dux7f6e}{%
+\subsubsection{其它命令和配置}\label{ux5176ux5b83ux547dux4ee4ux548cux914dux7f6e}}
+
+Oh My Zsh 还带了其它几个有趣而实用的命令。下面简单对其作个介绍：
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{take}：创建新目录，并转到该目录，而且支持多级目录，如：\texttt{take\ www/oops}
+\item
+  \texttt{zsh\_stats}：列出使用次数最多的 20 个命令，包含使用次数和所占百分比统计，如图 \ref{fig:zsh-stats} 所示。
+\end{itemize}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/zsh-stats} \caption{zsh stats}\label{fig:zsh-stats}
+\end{figure}
+
+此外，Oh My Zsh 也包含其它一些有用的配置，我们可根据自己的需要设置：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ vim ~/.zshrc}
+
+\VariableTok{ENABLE_CORRECTION=}\StringTok{"true"} \CommentTok{# 启用命令自动纠正}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux83b7ux53d6ux66f4ux65b0}{%
+\subsubsection{获取更新}\label{ux83b7ux53d6ux66f4ux65b0}}
+
+Oh My Zsh 在默认情况下将每隔几周检查是否有更新。若有更新，则予以提示并进行升级。如果你觉得提示烦人的话，那么可以将其关闭。关闭提示更新的方法是，把下行内容追加到 \texttt{\textasciitilde{}/.zshrc} 配置文件中：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\VariableTok{DISABLE_UPDATE_PROMPT=}\NormalTok{true}
+\end{Highlighting}
+\end{Shaded}
+
+我们也可以手动更新 Oh My Zsh，为此，可以执行以下命令，结果如图 \ref{fig:upgrade-zsh} 所示。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ upgrade_oh_my_zsh}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/upgrade-zsh} \caption{更新 Oh My Zsh}\label{fig:upgrade-zsh}
+\end{figure}
+
+\hypertarget{ux589eux5f3aux5de5ux5177}{%
+\section{增强工具}\label{ux589eux5f3aux5de5ux5177}}
+
+除了像 Bash-it 和 Oh My Zsh 这种大而全的 Shell 配置框架外，市面上也包括一些单独的工具。利用这些工具，我们不仅能够增强 Shell 的功能，而且可以达到更加愉悦的 Shell 使用体验。下面，我们就来介绍既实用又有意思的第三方增强工具。
+
+\hypertarget{ux5febux901fux8defux5f84ux5207ux6362z.lua}{%
+\subsection{快速路径切换：z.lua}\label{ux5febux901fux8defux5f84ux5207ux6362z.lua}}
+
+\href{https://github.com/skywind3000/z.lua}{z.lua} 是一个使用 Lua 编程语言实现的类似 z.sh、autojump、fasd 等功能的快速路径切换工具。其特点包括：
+
+\begin{itemize}
+\tightlist
+\item
+  对所有访问路径进行跟踪，具备学习功能，使用正则匹配从而能够更加准确的带你到想去的地方；
+\item
+  与 z.sh、autojump、fasd 相比，速度更快；
+\item
+  支持广泛的 shell，包含 bash、zsh、fish 等等。
+\end{itemize}
+
+\hypertarget{ux5b89ux88c5-z.lua}{%
+\subsubsection{安装 z.lua}\label{ux5b89ux88c5-z.lua}}
+
+因为 z.lua 是通过 Lua 编程语言实现的，所以在安装它之前，确保我们的系统中已经包含 \texttt{lua}。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ which lua lua5.1 lua5.2 lua5.3}
+\end{Highlighting}
+\end{Shaded}
+
+z.lua 支持 Lua 5.1、5.2、5.3 以上版本，上述命令只要有一个正确输出便可。
+
+接下来，我们将 z.lua 的源代码克隆到用户主目录的 \texttt{\textasciitilde{}/.z.lua} 子目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ git clone \textbackslash{}}
+\NormalTok{https://github.com/skywind3000/z.lua.git \textbackslash{}}
+\NormalTok{~/.z.lua}
+\end{Highlighting}
+\end{Shaded}
+
+待克隆完毕，我们将 z.lua 的初始化语句添加到相应的 Shell 配置文件。
+
+对 bash 来说，将下面这行追加到 \texttt{\textasciitilde{}/.bashrc} 配置文件中：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{eval} \StringTok{"}\VariableTok{$(}\ExtensionTok{lua}\NormalTok{ ~/.z.lua/z.lua --init bash}\VariableTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+若是 zsh，则添加以下内容到 \texttt{\textasciitilde{}/.zshrc} 配置文件：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\BuiltInTok{eval} \StringTok{"}\VariableTok{$(}\ExtensionTok{lua}\NormalTok{ ~/.z.lua/z.lua --init zsh}\VariableTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+另外，我们也可以在 \texttt{-\/-init} 选项后面添加 \texttt{once\ enhanced} 参数，以便执行增强匹配模式。我们推荐使用这种匹配模式，从而让 z.lua 更准确的切换到我们想去的路径。
+
+保存编辑后，分别执行下列命令以便使 z.lua 即时生效：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ source ~/.bashrc }\CommentTok{# bash}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ source ~/.zshrc  }\CommentTok{# zsh}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{ux4f7fux7528-z.lua}{%
+\subsubsection{使用 z.lua}\label{ux4f7fux7528-z.lua}}
+
+z.lua 在安装成功后会创建一个名为 \texttt{z} 的别名。让我们先用 \texttt{z} 来切换一些目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ z cli}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ z ~/prj}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj$ z usingcli}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj/usingcli$ z ~/tmp}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/tmp$ z ~/.z.lua}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/.z.lua$}
+\end{Highlighting}
+\end{Shaded}
+
+在默认设置下，z.lua 将所有访问的路径都保存到了 \texttt{\textasciitilde{}/.zlua} 文件中。我们可以用 \texttt{cat} 来查看它的内容：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cat ~/.zlua}
+\ExtensionTok{/home/xiaodong}\NormalTok{/}\ExtensionTok{cli}\KeywordTok{|}\ExtensionTok{6}\KeywordTok{|}\ExtensionTok{1551946470}
+\ExtensionTok{/home/xiaodong}\NormalTok{/}\ExtensionTok{.z.lua}\KeywordTok{|}\ExtensionTok{3}\KeywordTok{|}\ExtensionTok{1551946500}
+\ExtensionTok{/home/xiaodong}\NormalTok{/}\ExtensionTok{prj}\KeywordTok{|}\ExtensionTok{8}\KeywordTok{|}\ExtensionTok{1551944681}
+\ExtensionTok{/home/xiaodong}\NormalTok{/}\ExtensionTok{tmp}\KeywordTok{|}\ExtensionTok{3}\KeywordTok{|}\ExtensionTok{1551944599}
+\ExtensionTok{/home/xiaodong/prj}\NormalTok{/}\ExtensionTok{usingcli}\KeywordTok{|}\ExtensionTok{1}\KeywordTok{|}\ExtensionTok{1551944549}
+\end{Highlighting}
+\end{Shaded}
+
+从上面命令的输出中，我们可以看到每个访问路径的次数和时间都有记录。它们使用 \texttt{\textbar{}} 分隔。z.lua 正是通过这个访问路径数据库来帮助我们快速切换到想去的目录。
+
+另外，我们也可以直接执行 \texttt{z}，这将使 z.lua 列出所访问的路径条目：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ z}
+\ExtensionTok{6}\NormalTok{          /home/xiaodong/.z.lua}
+\ExtensionTok{12}\NormalTok{         /home/xiaodong/cli/1.15.8/src/event/modules}
+\ExtensionTok{12}\NormalTok{         /home/xiaodong/cli/1.15.8/src/event}
+\ExtensionTok{16}\NormalTok{         /home/xiaodong/prj/usingcli}
+\ExtensionTok{20}\NormalTok{         /home/xiaodong/cli/1.15.8/src}
+\ExtensionTok{28}\NormalTok{         /home/xiaodong/tmp}
+\ExtensionTok{32}\NormalTok{         /home/xiaodong/cli}
+\ExtensionTok{52}\NormalTok{         /home/xiaodong/prj}
+\end{Highlighting}
+\end{Shaded}
+
+其中，开头的数字为每个访问路径的权重，该权重由 z.lua 根据算法计算得到。
+
+了解了 z.lua 的基本原理，下面我们就来进行实战：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ z p}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj$}
+\end{Highlighting}
+\end{Shaded}
+
+在执行该命令后，z.lua 通过参数 \texttt{p} 匹配到了我们先前访问的路径：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{/home/xiaodong/prj}
+\end{Highlighting}
+\end{Shaded}
+
+并转到了该目录。
+
+我们再来试试：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj$ z p us}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/prj/usingcli$}
+\end{Highlighting}
+\end{Shaded}
+
+这次，z.lua 将我们带到了下面的目录：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{/home/xiaodong/prj/usingcli}
+\end{Highlighting}
+\end{Shaded}
+
+在这种情况下，z.lua 必须同时匹配 \texttt{p}（匹配 prj）和 \texttt{us}（匹配 usingcli），只有两个条件都满足，才会转到相应的目录。
+
+此外，\texttt{z} 命令还包含一些选项以实现其它的功能。比如：
+
+\begin{itemize}
+\item
+  \texttt{-i}：交互模式，如果有多个匹配结果的话，那么 z.lua 将展示一个列表：
+
+\begin{verbatim}
+  xiaodong@codeland:~$ z -i p
+  2:  24         /home/xiaodong/tmp
+  1:  48         /home/xiaodong/prj
+  >
+\end{verbatim}
+
+  从列表中，我们可以看到有两个路径条目，中间列为权重。在提示符 \texttt{\textgreater{}} 后输入编号，z.lua 将带我们到相应的目录。直接按\textbf{回车键}将不进行跳转。
+\item
+  \texttt{-b}：这个选项在深层次目录中跳转特别有用，它可以将我们快速带回某一级的父目录：
+
+\begin{verbatim}
+  xiaodong@codeland:~$ z mod
+  xiaodong@codeland:~/cli/1.15.8/src/event/modules$ z -b sr
+  xiaodong@codeland:~/cli/1.15.8/src$
+\end{verbatim}
+
+  第一次，z.lua 跳转到了以下目录：
+
+\begin{verbatim}
+  ~/cli/1.15.8/src/event/modules
+\end{verbatim}
+
+  在添加 \texttt{-b} 选项后，z.lua 根据给定的匹配关键字 \texttt{sr} 匹配到了 \texttt{src} 这级父目录，并跳转到了该目录：
+
+\begin{verbatim}
+  ~/cli/1.15.8/src
+\end{verbatim}
+\end{itemize}
+
+值得一提的是，z.lua 还支持自动补全。如果我们在执行 \texttt{z\ p} 时按 \textbf{Tab 键}，z.lua 则会显示一个列表：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ z p}\OperatorTok{<}\NormalTok{Tab}\OperatorTok{>}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ z /home/xiaodong/prj}
+\ExtensionTok{/home/xiaodong/prj}\NormalTok{  /home/xiaodong/tmp}
+\end{Highlighting}
+\end{Shaded}
+
+经过一段时间的使用，我们认为 z.lua 确实是相当不错的路径切换工具，每一个使用命令行的用户都应当将其纳入自己的工具箱。
+
+\hypertarget{ux9ad8ux6548ux67e5ux8be2-shell-ux5386ux53f2hstr}{%
+\subsection{高效查询 Shell 历史：HSTR}\label{ux9ad8ux6548ux67e5ux8be2-shell-ux5386ux53f2hstr}}
+
+虽然在 bash 和 zsh 中，我们可以使用 \textbf{Ctrl + r} 来搜索历史命令列表，但是它还不够高效。为此，程序员又开发出了比 \textbf{Ctrl + r} 更好用的工具：\href{https://github.com/dvorka/hstr}{HSTR}。我们可以把 HSTR 看作 \textbf{Ctrl + r} 的增强版本，它使用起来也更加方便。
+
+\hypertarget{ux5b89ux88c5-hstr}{%
+\subsubsection{安装 HSTR}\label{ux5b89ux88c5-hstr}}
+
+HSTR 支持 bash 和 zsh，其本身是使用 C 编写而成，在使用它之前，我们必须先安装它。HSTR 为常见的 Linux 发行版都提供有二进制包，包括 Debian、Ubuntu、Fedora、CentOS 等等。
+
+在 Debian 和 Ubuntu 中，可按如下方式安装：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ sudo -i}
+\ExtensionTok{root@codeland}\NormalTok{:~# echo -e }\StringTok{"\textbackslash{}ndeb https://www.mindforger.com/debian \textbackslash{}}
+\StringTok{      stretch main"} \OperatorTok{>>}\NormalTok{ /etc/apt/sources.list}
+\ExtensionTok{root@codeland}\NormalTok{:~# wget -qO - https://www.mindforger.com/gpgpubkey.txt \textbackslash{}}
+      \KeywordTok{|} \ExtensionTok{apt-key}\NormalTok{ add -}
+\ExtensionTok{root@codeland}\NormalTok{:~# apt update }\KeywordTok{&&} \ExtensionTok{apt}\NormalTok{ install hstr}
+\end{Highlighting}
+\end{Shaded}
+
+如果要在 Fedora 和 CentOS 中安装 HSTR，那么可以执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ sudo yum install hstr}
+\end{Highlighting}
+\end{Shaded}
+
+Arch Linux 可从 \href{https://aur.archlinux.org/packages/hstr/}{AUR} 安装 HSTR。
+
+\hypertarget{ux914dux7f6e-hstr}{%
+\subsubsection{配置 HSTR}\label{ux914dux7f6e-hstr}}
+
+一旦安装完毕 HSTR，我们便可通过 \texttt{hstr} 命令来调用它。不过，在此之前，我们需要先对其进行配置。
+
+对 bash 来说，执行以下命令：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ hstr -s}
+\BuiltInTok{alias}\NormalTok{ hh=hstr                    }\CommentTok{# hh to be alias for hstr}
+\BuiltInTok{export} \VariableTok{HSTR_CONFIG=}\NormalTok{hicolor       }\CommentTok{# get more colors}
+\BuiltInTok{shopt}\NormalTok{ -s histappend              }\CommentTok{# append new history items to}
+                                 \CommentTok{# .bash_history}
+\BuiltInTok{export} \VariableTok{HISTCONTROL=}\NormalTok{ignorespace   }\CommentTok{# leading space hides commands}
+                                 \CommentTok{# from history}
+\BuiltInTok{export} \VariableTok{HISTFILESIZE=}\NormalTok{10000        }\CommentTok{# increase history file size}
+                                 \CommentTok{# (default is 500)}
+\BuiltInTok{export} \VariableTok{HISTSIZE=$\{HISTFILESIZE\}}  \CommentTok{# increase history size}
+                                 \CommentTok{# (default is 500)}
+\CommentTok{# ensure synchronization between Bash memory and history file}
+\BuiltInTok{export} \VariableTok{PROMPT_COMMAND=}\StringTok{"history -a; history -n; }\VariableTok{$\{PROMPT_COMMAND\}}\StringTok{"}
+\CommentTok{# if this is interactive shell, then bind hstr to Ctrl-r}
+\CommentTok{# (for Vi mode check doc)}
+\KeywordTok{if [[} \VariableTok{$-}\NormalTok{ =~ .*i.*}\KeywordTok{ ]]}\NormalTok{; }\KeywordTok{then} \BuiltInTok{bind} \StringTok{'"\textbackslash{}C-r": "\textbackslash{}C-a hstr -- \textbackslash{}C-j"'}\KeywordTok{;} \KeywordTok{fi}
+\CommentTok{# if this is interactive shell, then bind 'kill last command' to}
+\CommentTok{# Ctrl-x k}
+\KeywordTok{if [[} \VariableTok{$-}\NormalTok{ =~ .*i.*}\KeywordTok{ ]]}\NormalTok{; }\KeywordTok{then} \BuiltInTok{bind} \StringTok{'"\textbackslash{}C-xk": "\textbackslash{}C-a hstr -k \textbackslash{}C-j"'}\KeywordTok{;} \KeywordTok{fi}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ hstr -s }\OperatorTok{>>}\NormalTok{ ~/.bashrc}
+\end{Highlighting}
+\end{Shaded}
+
+如果是 zsh，则执行：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ hstr -z}
+\BuiltInTok{alias}\NormalTok{ hh=hstr                  }\CommentTok{# hh to be alias for hstr}
+\BuiltInTok{export} \VariableTok{HISTFILE=}\NormalTok{~/.zsh_history }\CommentTok{# ensure history file visibility}
+\BuiltInTok{export} \VariableTok{HSTR_CONFIG=}\NormalTok{hicolor     }\CommentTok{# get more colors}
+\ExtensionTok{bindkey}\NormalTok{ -s }\StringTok{"\textbackslash{}C-r"} \StringTok{"\textbackslash{}eqhstr\textbackslash{}n"}  \CommentTok{# bind hstr to Ctrl-r}
+                               \CommentTok{# (for Vi mode check doc)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ hstr -z }\OperatorTok{>>}\NormalTok{ ~/.zshrc}
+\end{Highlighting}
+\end{Shaded}
+
+这段配置不仅为 HSTR 定义了别名 \texttt{hh}，而且为其绑定了快捷键 \textbf{Ctrl + r}。为了使其生效，分别重新载入 bash 和 zsh 的配置文件：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ source ~/.bashrc}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ source ~/.zshrc}
+\end{Highlighting}
+\end{Shaded}
+
+\hypertarget{hstr-ux7684ux7528ux6cd5}{%
+\subsubsection{HSTR 的用法}\label{hstr-ux7684ux7528ux6cd5}}
+
+HSTR 已经准备就绪，现在我们可以开始使用它了。有两种启动 HSTR 的方式，一种是执行命令，另一种是按快捷键。下面，我们分别对其进行介绍。
+
+首先，我们来看看如何通过命令的方式来启动 HSTR。前面在配置 HSTR 时，我们为其定义了别名 \texttt{hh}。所以我们在命令行直接输入 \texttt{hh} 并按\textbf{回车键}：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~$ cd ~/cli}
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ hh}
+\end{Highlighting}
+\end{Shaded}
+
+HSTR 为我们呈现了一个可以交互的文本界面，如图 \ref{fig:hstr} 所示。该界面大致可以分为 4 个部分，从上往下依次为：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  命令输入行：我们输入命令，或者查询关键字的地方。
+\item
+  使用提示行：包含如何使用的说明以及按键的作用。
+\item
+  当前状态行：显示当前视图的排列方式、关键字的匹配方法、以及是否区分大小写等信息。
+\item
+  历史命令列表：根据视图的排列方式展示历史命令。
+\end{enumerate}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/hstr} \caption{HSTR 的界面}\label{fig:hstr}
+\end{figure}
+
+让我们在命令输入行输入一些字符看看：
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{$ vag }\CommentTok{# vagrant}
+\end{Highlighting}
+\end{Shaded}
+
+我们每输入一个字符，HSTR 都会进行搜索，并将列表中匹配的命令用高亮颜色显示。如果输错了，则按\textbf{退格键}或\textbf{Ctrl + u}删除。然后，再重新输入。
+
+现在，根据我们的需要，我们可以进行如下选择：
+
+\begin{itemize}
+\tightlist
+\item
+  直接按\textbf{回车键}，这将执行列表中的第一行命令。
+\item
+  如果想要对命令进行编辑，那么我们可以按\textbf{Tab 键}。
+\item
+  或者，按\textbf{Ctrl + g}取消本次操作。
+\end{itemize}
+
+在执行 \texttt{hh} 的时候，我们也可以带一个查询关键字参数。这样，HSTR 启动时就会直接将过滤结果展示给我们，如图 \ref{fig:hstr-arg} 所示。
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ExtensionTok{xiaodong@codeland}\NormalTok{:~/cli$ hh nvim}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}
+\includegraphics[width=1\linewidth]{images/hstr-arg} \caption{执行 hh nvim 的结果}\label{fig:hstr-arg}
+\end{figure}
+
+除了执行命令外，HSTR 还支持通过快捷键启动。我们只需要按\textbf{Ctrl + r}即可。
+
+\hypertarget{ux5217ux8868ux64cdux4f5c}{%
+\paragraph{列表操作}\label{ux5217ux8868ux64cdux4f5c}}
+
+前面我们只提到了如何使用列表中的第一条命令，如果我们想要使用其它命令，那么又该如何操作呢？
+
+首先，在 HSTR 的交互文本界面中，我们可以通过下面的快捷键来上下移动：
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{下方向键}或\textbf{Ctrl + n}：向下移动一行
+\item
+  \textbf{上方向键}或\textbf{Ctrl + p}：往上移动一行
+\end{itemize}
+
+一旦选定某行命令，除了执行我们先前介绍的操作之外，我们还能够将其加入收藏夹，或者删除不再需要的命令。
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Ctrl + f}：将命令添加到收藏夹
+\item
+  \textbf{Delete 键}：删除命令，根据提示按\textbf{y}将确认删除
+\end{itemize}
+
+\hypertarget{ux63a7ux5236ux9009ux9879}{%
+\paragraph{控制选项}\label{ux63a7ux5236ux9009ux9879}}
+
+在 HSTR 的交互文本界面中，我们可以通过更改它的控制选项，从而改变其行为。HSTR 的控制选项主要包括以下 3 种：
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  视图排序方式：包含按 HSTR 的排名算法排序、历史顺序、以及收藏夹。按\textbf{Ctrl + /}可以在这 3 中视图方式中循环。
+\item
+  匹配方法：包括关键字匹配、精确匹配、以及正则匹配。按\textbf{Ctrl + e}可以在 3 中匹配方法中切换。
+\item
+  是否区分大小写：按\textbf{Ctrl + t}进行切换。
+\end{enumerate}
+
+随着对 HSTR 的使用次数越多，我们越感觉 HSTR 确实是很棒的工具。对于想要追求操作效率的各位读者来说，一定不要错过。
+
+\hypertarget{ux7ed3ux8bed}{%
+\chapter{结语}\label{ux7ed3ux8bed}}
+
+在本书所讲的内容中，其实自始至终是贯穿着一些基本原则的。正是因为有了这些原则的指引，我们才能万变不离其终。举一反三，方能灵活运用。我们认为最重要的原则包括：
+
+\begin{itemize}
+\item
+  \textbf{少打多做}：所谓``少打''就是说要尽量少打字。我们输入越少，越能省时。那么，我们出错的机会也将随之变少，自然效率便会升高。我们使用自动补全，我们重用历史命令，其背后都是这个道理。另一方面，不要害怕做试验，要多练，只有通过实践才能了解事物的原理。熟能生巧，练习最终会转化成生产力。
+\item
+  \textbf{不要重复自己}：这条原则又称为 DRY，也就是 Don't repeat yourself，我从很喜欢的一本书《程序员修炼之道：从小工到专家》上学到的。人是创造性的动物，对于重复性的任务往往会感到厌烦。我们最好把这类任务交给计算机去做。计算机不仅比我们做的效率更高，一般也更少出错。举个例子，我们用 \texttt{for} 循环重复执行命令便是应用的该原则。
+\item
+  \textbf{关心你的工具}：有句俗话叫``磨刀不误砍柴工''，如果工具不拿来时不时的打磨一番，那么再好的工具久而久之也会变得不那么好用了。我们不断打磨 bash 和 zsh，将它们调配到最适合我们操作的状态，用起来自然得心应手。
+\end{itemize}
+
+到此为止，我们的命令行旅程就算结束了。通过学习，我相信你已经具有了独自前行的能力和勇气。最后，我们向大家推荐一些深入的学习材料。虽然``RTFM''充满戏谑的成分，但是我们认为手册还是应当读的。
+
+\begin{itemize}
+\item
+  \href{https://www.gnu.org/software/bash/manual/html_node/index.html}{Bash Reference Manual}：这份《Bash 参考手册》是 bash 的权威指南，如果你立志将其作为自己的主力 Shell 使用，那么每年都应该温习一遍。
+\item
+  \href{http://zsh.sourceforge.net/Guide/zshguide.html}{A User's Guide to Zsh}：《Zsh 用户指南》，这份文档由 zsh 的作者所写，全面的介绍了 zsh 的用法。
+\item
+  《Unix Power Tools》：我非常喜欢的一本书，Unix 工具和技巧的集大成者。虽然这本书是面向 Unix 进行的讲解，但是可以同样应用于 Linux。
+\end{itemize}
+
+\backmatter
+\printindex
+
+\end{document}

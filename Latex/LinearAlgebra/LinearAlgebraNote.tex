@@ -1,0 +1,36 @@
+\documentclass{beamer}
+
+\title{Linear Algebra Note}
+\author{Zheng Haoren}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Contents}
+    \tableofcontents
+\end{frame}
+
+\begin{frame}{Special Matrices}
+    $$A = \begin{pmatrix}
+        0   & a_{12}& a_{13}& \cdots& a_{1,n-1} & a_{1n} \\
+            & 0     & a_{23}& \cdots& a_{2,n-1} & a_{2n} \\
+            &       & 0     & \cdots& \vdots    & \vdots \\
+            &       &       & \ddots& a_{n-1,n} & a_{n-2,n}\\
+            &       &       &       & 0         & a_{n-1,n}\\
+            &       &       &       &           & 0
+    \end{pmatrix}$$
+    $$\Rightarrow A^2 = \begin{pmatrix}
+        0   & 0     & a_{13}& \cdots& a_{1,n-1} & a_{1n} \\
+            & 0     & 0     & \cdots& a_{2,n-1} & a_{2n} \\
+            &       & 0     & \cdots& \vdots    & \vdots \\
+            &       &       & \ddots& 0         & a_{n-2,n}\\
+            &       &       &       & 0         & 0\\
+            &       &       &       &           & 0
+    \end{pmatrix}$$
+    
+\end{frame}
+
+\end{document}

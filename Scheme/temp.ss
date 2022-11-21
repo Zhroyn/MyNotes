@@ -1,0 +1,2 @@
+(display "hello world")
+(exit)
