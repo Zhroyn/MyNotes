@@ -118,13 +118,16 @@
 - `git branch (-c|-C) [<oldbranch>] <newbranch>` 拷贝分支
 - `git branch (-d|-D) [-r] <branchname>…​` 删除分支
 - `git branch -r|--remote` 显示远程仓库分支信息
+- `git branch -u|--set-upstream-to=<upstream> [<branchname>]` 设置上游分支，将本地分支与远程分支进行关联，本地分支默认为当前分支
 
 #### git checkout
-- `git checkout [<branch>]` HEAD指向指定分支，并改变工作区和暂存区文件，工作区的修改会保持
-- `git checkout --detach [<branch>]` HEAD指向指定分支并分离
-- `git checkout [--detach] <commit>` HEAD指向指定提交并分离
-- `git checkout (-b|-B) <new-branch> [<start-point>]` 在起始点新建分支并使HEAD指向该分支
+- `git checkout <branch>` HEAD指向指定分支，并改变工作区和暂存区文件，工作区的修改会保持。如果`<branch>`本地不存在，但在一个远程仓库中存在，则相当于`git checkout -b <branch> --track <remote>/<branch>`
+- `git checkout -b <new-branch> [<start-point>]` 若直接指明本地分支，则在其上新建分支，并切换到新建分支上
 - `git checkout [-f] [<tree-ish>] <pathspec>…​` 未提供树时，用暂存区文件重写工作区文件，否则用树中文件重写工作区和暂存区文件
+- 在本地新建分支关联到远程分支
+  - `git checkout -b <new-branch> <remote>/<branch>` 若指明远程仓库/远程分支，则会新建分支关联到远程分支，并切换到远程分支的文件
+  - `git checkout -b <new-branch> --track <remote>/<branch>`
+  - `git checkout --track <remote>/<branch>` 会新建与远程分支同名的分支
 
 #### git switch
 - `git switch <branch>` 切换分支
@@ -167,7 +170,10 @@
 - `git fetch <remote>`
 
 #### git push
+- `git push` 推送到关联的远程仓库，默认为`origin`
+- `git push <remote>` 若远程仓库存在同名分支则推送至远程
 - `git push <remote> master` 将本地的master分支推送到到远程主机的master分支，如果远程主机的的master分支不存在则会新建
+- `git push -u|--set-upstream <remote-repo> <remote-branch>` 将当前分支与指定远程分支关联，若不存在则新建，
 - `git push <remote> <tagname>` 将本地标签上传到远程
 - `git push <remote> --tags` 将本地所有轻量标签和附注标签上传到远程
 
