@@ -1,1 +1,0 @@
-memberSearchIndex = [{"p":"<Unnamed>","c":"test","l":"main(String[])","u":"main(java.lang.String[])"},{"p":"<Unnamed>","c":"test","l":"n"},{"p":"<Unnamed>","c":"test","l":"test(int)","u":"%3Cinit%3E(int)"},{"p":"<Unnamed>","c":"test","l":"windowPosSum(int[], int)","u":"windowPosSum(int[],int)"}];updateSearchResults();

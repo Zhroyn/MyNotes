@@ -175,7 +175,7 @@
 - `git push <remote> master` 将本地的master分支推送到到远程主机的master分支，如果远程主机的的master分支不存在则会新建
 - `git push -u|--set-upstream <remote-repo> <remote-branch>` 将当前分支与指定远程分支关联，若不存在则新建，
 - `git push <remote> <tagname>` 将本地标签上传到远程
-- `git push <remote> --tags` 将本地所有轻量标签和附注标签上传到远程
+- `git push <remote> --tags` 将本地所有轻量标签和附注标签上传到远 程
 
 
 
