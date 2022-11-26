@@ -127,10 +127,6 @@
   - `g` globally in scope
   - `c` prompt for each substitution
   - `i/I` case insensitive / sensitive
-- `:s/{old}/{new}` 替换当前行第一个`old`为`new`
-- `:s/{old}/{new}/g` 替换当前行所有`old`为`new`
-- `:#,#s/{old}/{new}/g` 替换两行内所有`old`为`new`
-- `:%s/{old}/{new}/g` 替换文件内所有`old`为`new`
 
 ##### Mark
 - `m{a-z/A-Z}` Set mark at cursor position
@@ -146,17 +142,12 @@
 - `q` stop recording
 - `{count}@{a-z}` replay a macro {count} times
 
-##### Goto
-- `gt or T` 切换标签页
-- `ngt` 切换至第n个标签页
-- `ngT` 向前n个标签页
-- `^0` 跳转至文件栏，而后`l`在右侧打开光标所在文件
-- `^n` 跳转至第n组，若无且n刚好大一则创建
-- `%` 跳转至另一个配对括号，若不处于括号内则跳转至后一对括号的后一个
-
-##### Others
-- `gh` 显示悬浮信息
-- `^G` 显示当前编辑文件中当前光标所在行位置以及文件状态信息
+##### Navigation
+- `gt/T` switch tab forward / backward
+- `{num}gt` switch to {num}'th tab
+- `{num}gT` switch num tabs backward
+- `<C-0>` Focus on Side Bar, and `L` to open selected file
+- `<C-{num}>` Focus on {num}'th Group
 
 
 
