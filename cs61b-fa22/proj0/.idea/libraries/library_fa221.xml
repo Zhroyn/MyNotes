@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="library-fa221">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../GitHub/library-fa22" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../GitHub/library-fa22" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../../../GitHub/library-fa22" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/../../../GitHub/library-fa22" recursive="false" type="SOURCES" />
+  </library>
+</component>
