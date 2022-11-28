@@ -399,7 +399,13 @@ X=-kA_1^{-1}B，Y=-kCA_1^{-1}
 $$
 ##### 伴随矩阵法
 $$
-A^{-1} = \frac{A^*}{|A|}
+A^{-1} = \frac{A^*}{|A|}，其中\\~\\
+A*=\begin{pmatrix}
+    A_{11} & A_{21} & \cdots & A_{n1} \\
+    A_{12} & A_{22} & \cdots & A_{n2} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    A_{1n} & A_{2n} & \cdots & A_{nn} \\
+\end{pmatrix}
 $$
 ##### 例题
 $$
@@ -423,6 +429,37 @@ Proof:\rightarrow
 
 
 ## 行列式
+#### 行列式的性质
+$
+性质1：若有一列为零向量，则行列式等于0 \\
+性质2：若有两列元素相同，则行列式等于0 \\
+性质3：若有两列元素成比例，则行列式等于0 \\
+性质4：对行列式作倍加列变换，行列式的值不变 \\
+性质5：若行列式列向量线性相关，则行列式等于0 \\
+性质6：|A^T|=|A| \\
+~\\
+M_{ij}为余子式，A_{ij}为代数余子式 \\
+引理：D=|A|=a_{nn}A_{nn} \\
+定理5.1：D=\sum_{k=1}^n a_{kj}A_{kj} = \sum_{k=1}^n a_{ik}A_{ik} \\
+定理5.2：\sum_{k=1}^n a_{kj}A_{ki} = \sum_{k=1}^n a_{jk}A_{ik} = 0， i\neq j$
+$$
+\sum_{k=1}^n a_{kj}A_{ki} = \sum_{k=1}^n a_{jk}A_{ik} = \delta_{ij}D,\\
+~\\
+Kronecker符号：\delta_{ij} = \left\{\begin{matrix}
+    1，i=j \\ 0，i\neq j
+\end{matrix}\right.
+$$
+$~\\
+定理5.3：若A,B\in M_n(F)，则|AB|=|A||B| \\
+定理5.4：n阶矩阵A可逆的充要条件是|A|\neq 0 \\
+三角块矩阵A=\begin{pmatrix} B & * \\ O & C\end{pmatrix}可逆的充要条件为|A|=|B||C|\neq 0 \\
+奇数阶反对称矩阵不可逆\\
+$
+$~\\
+A的非零子式的最高阶数r称为A的行列式秩\\
+定理5.5：r(A) = r的充要条件是A的行列式秩为r
+$
+
 #### 常见计算
 $$D_n = \begin{vmatrix}
     a & b & \cdots & b \\
@@ -433,8 +470,11 @@ $$D_n = \begin{vmatrix}
 
 $$~\\~\\
 \begin{vmatrix}
-    A & C \\ O & B
-\end{vmatrix} = |A||B|$$
+    A & O \\ C & B
+\end{vmatrix} = |A||B|，
+\begin{vmatrix}
+    O & A \\ B & C
+\end{vmatrix} = (-1)^{km}|A||B|$$
 
 ###### n阶三对角行列式
 $$D_n = \begin{vmatrix}
@@ -443,7 +483,7 @@ $$D_n = \begin{vmatrix}
     & c & a & \ddots & & \\
     & & \ddots & \ddots & \ddots & \\
     & & & \ddots & a & b \\
-    & & & & c & 
+    & & & & c & a
 \end{vmatrix} = aD_{n-1} - bcD_{n-2} \\ ~\\
 设\alpha+\beta=a, \alpha\beta = bc,
 则D_n - \beta D_{n-1} = \alpha(D_{n-1} - \beta D_{n-2}),\\
@@ -451,10 +491,10 @@ $$D_n = \begin{vmatrix}
 $即D_n = \alpha^n + \beta D_{n-1}\\
 = \alpha^n+\alpha^{n-1}\beta+\beta^2D_{n-2}\\
 = \alpha^n+\alpha^{n-1}\beta+\cdots+\alpha^2\beta^{n-2}+\beta^{n-1}D_1\\
-= \alpha^n+\alpha^{n-1}\beta+\cdots+\alpha^2\beta^{n-2}+\alpha\beta^{n-1}+\beta^n \\
+= \alpha^n+\alpha^{n-1}\beta+\cdots+\alpha^2\beta^{n-2}+\alpha\beta^{n-1}+\beta^n \\~\\
 = \left\{\begin{matrix}
-    \frac{\alpha^{n+1}-\beta^{n+1}}{\alpha-\beta}, \alpha \neq \beta\\
-    (n+1)\alpha^n, \alpha = \beta
+    (n+1)\alpha^n, \alpha = \beta \\~\\
+    \frac{\alpha^{n+1}-\beta^{n+1}}{\alpha-\beta}, \alpha \neq \beta
 \end{matrix}\right.$
 
 ###### 范德蒙(Vandermonde)行列式

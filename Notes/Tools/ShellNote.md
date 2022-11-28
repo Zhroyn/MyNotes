@@ -2,8 +2,15 @@
 
 
 
+## Syntax
+#### Quoting
+- A non-quoted backslash is the Bash escape character. It preserves the literal value of the next character that follows, with the exception of newline
+- Within single quotes, each character preserves its literal value. A single quote may not occur between single quotes, even when preceded by a backslash.
+- Within double quotes, the backslash retains its special meaning only when followed by ``$, `, ", \, or newline``.
+- Character sequences of the form `$'string'` are treated as a special kind of single quotes. The sequence expands to string, with backslash-escaped characters in string replaced as specified by the ANSI C standard. 
 
-## Variable and Substitution
+
+#### Variable and Substitution
 ```shell
 $PATH   #environment variable
 $PWD    #Print working directory
@@ -23,8 +30,8 @@ $(command)  #command substitution
 #its filename is passed as an argument to the current command
 ```
 
-## Control Flow
-#### if
+#### Control Flow
+**if**
 ```shell
 if [ expression ];then     #the whitespace are necessary
     statement
@@ -61,14 +68,14 @@ Conditional Evaluation
 [ EXPR1 -a EXPR2 ], [ ] && [ ]
 [ EXPR1 -o EXPR2 ], [ ] || [ ]
 ```
-#### for
+**for**
 ```shell
 for var in list
 do
     commands
 done
 ```
-#### while
+**while**
 ```shell
 while conditon
 do
@@ -81,20 +88,8 @@ done
 
 
 ## Files and Directory
-#### ls
-```shell
-ls -1   # List files one per line
-ls -a   # List all files, including hidden files
-ls -F   # List all files, with trailing / added to directory names
-ls -R   # List subdirectories recursively
-
--l      #use a long listing format
--t      #sort by modification time, newest first
--S      #sort by file size, largest first
--X      #sort alphabetically by entry extension
--r      #reverse order while sorting
-```
-#### mv
+#### mv, cp, rm
+**mv**
 ```shell
 # Move or rename files and directories
 
@@ -109,7 +104,7 @@ mv -n source target
 # Move files in verbose mode, showing files after they are moved
 mv -v source target
 ```
-#### cp
+**cp**
 ```shell
 # Copy files and directories
 # will overwrite target if existed
@@ -124,7 +119,7 @@ cp path/to/source_file.ext path/to/target_parent_directory
 # if the destination exists, the directory is copied inside it
 cp -r path/to/source_directory path/to/target_directory
 ```
-#### rm
+**rm**
 ```shell
 # Remove a file or files from arbitrary locations
 rm path/to/file ...
@@ -135,14 +130,28 @@ rm -rf path/to/directory
 # Remove files in verbose mode, printing a message for each removed file
 rm -v path/to/directory/*
 ```
-#### mkdir
+#### ls, mkdir, touch, chmod
+**ls**
+```shell
+ls -1   # List files one per line
+ls -a   # List all files, including hidden files
+ls -F   # List all files, with trailing / added to directory names
+ls -R   # List subdirectories recursively
+
+-l      #use a long listing format
+-t      #sort by modification time, newest first
+-S      #sort by file size, largest first
+-X      #sort alphabetically by entry extension
+-r      #reverse order while sorting
+```
+**mkdir**
 ```shell
 # Create multiple directories in the current directory
 mkdir directory_1 directory_2 ...
 # Create directories recursively (useful for creating nested dirs)
 mkdir -p path/to/directory
 ```
-#### touch
+**touch**
 ```shell
 # Change a file access and modification times
 
@@ -155,7 +164,7 @@ touch -d "-1 hour" path/to/file
 # Use the times from a file to set the times on a second file:
 touch -r path/to/file1 path/to/file2
 ```
-#### chmod
+**chmod**
 ```shell
 # Change the access permissions of a file or directory.
 
@@ -174,16 +183,15 @@ chmod a+rx path/to/file
 
 
 ## Print like
-#### echo
+#### echo, cat, tee
+**echo**
 ```shell
-# Print given arguments
-
 # Print a message with environment variables, must with double quotation marks
 echo "My path is $PATH"
 # Append a message to the file
 echo "Hello World" >> file.txt
 ```
-#### cat
+**cat**
 ```shell
 # Print and concatenate files
 # With no FILE, or when FILE is -, read standard input
@@ -197,7 +205,19 @@ cat path/to/file1 path/to/file2 >> path/to/output_file
 # Number all output lines:
 cat -n path/to/file
 ```
-#### cut
+**tee**
+```shell
+# Copy standard input to each FILE, and also to standard output
+
+# Copy standard input to each file, and also to standard output:
+echo "example" | tee path/to/file
+# Append to the given files, do not overwrite:
+echo "example" | tee -a path/to/file
+# Print standard input to the terminal, and also pipe it into another program:
+echo "example" | tee /dev/tty | xargs printf "[%s]"
+```
+#### cut, head, tail
+**cut**
 ```shell
 # Print selected parts of lines from each FILE to standard output
 # With no FILE, or when FILE is -, read standard input
@@ -216,7 +236,7 @@ command | cut -c 1,3-5,7-
 # Select the first two fields from each line
 command | cut -d : -f -2
 ```
-#### head
+**head**
 ```shell
 # Print the first 10 lines of each FILE to standard output
 
@@ -229,7 +249,7 @@ head -c/--bytes count path/to/file
 # Output everything but the last few bytes of a file:
 head -c/--bytes -count path/to/file
 ```
-#### tail
+**tail**
 ```shell
 # Print the last 10 lines of each FILE to standard output
 
@@ -240,18 +260,8 @@ tail -n/--lines +count path/to/file
 # Print a specific count of bytes from the end of a given file:
 tail -c/--bytes count path/to/file
 ```
-#### tee
-```shell
-# Copy standard input to each FILE, and also to standard output
-
-# Copy standard input to each file, and also to standard output:
-echo "example" | tee path/to/file
-# Append to the given files, do not overwrite:
-echo "example" | tee -a path/to/file
-# Print standard input to the terminal, and also pipe it into another program:
-echo "example" | tee /dev/tty | xargs printf "[%s]"
-```
 #### wc
+**wc**
 ```shell
 # Print newline, word, and byte counts for each FILE
 wc -l/--lines path/to/file
@@ -264,7 +274,7 @@ wc -m/--chars path/to/file
 
 
 
-## Find like
+## Data Wrangling
 #### find
 ```shell
 # Find files by extension:
@@ -282,23 +292,121 @@ find root_path -name '*.tmp' -exec rm {} \;
 ```
 #### grep
 ```shell
+# When FILE is '-', read standard input.  With no FILE, read '.'
+
 # Search for a pattern within a file(default is STDIN):
 grep "search_pattern" path/to/file
 # Search for a pattern in all files recursively in a directory:
 grep -r/--recursive "search_pattern" path/to/directory
-# Print NUM lines of context before and after each match:
-grep -C/--context NUM "search_pattern" path/to/file
-# Print file name and line number ahead of each match:
-grep -H/--with-filename -n/--line-number "search_pattern" path/to/file
-# Ignore case distinctions in patterns and data
-grep -i/--ignore-case "search_pattern" path/to/file
+
+-E, --extended-regexp     #PATTERNS are extended regular expressions
+-F, --fixed-strings       #PATTERNS are strings
+-G, --basic-regexp        #PATTERNS are basic regular expressions
+-P, --perl-regexp         #PATTERNS are Perl regular expressions
+-e, --regexp=PATTERNS     #use PATTERNS for matching
+-f, --file=FILE           #take PATTERNS from FILE
+
+-i, --ignore-case         #ignore case distinctions in patterns and data
+-w, --word-regexp         #match only whole words
+-x, --line-regexp         #match only whole lines
+-v, --invert-match        #select non-matching lines
+
+-n, --line-number         #print line number with output lines
+-H, --with-filename       #print file name with output lines
+-B, --before-context=NUM  #print NUM lines of leading context
+-A, --after-context=NUM   #print NUM lines of trailing context
+-C, --context=NUM         #print NUM lines of output context
+```
+#### sed
+- If no addresses are given, the command is performed on all lines.
+- `NUM` matchs the `NUM'th` line
+- `$` matches the last line of input
+- `FIRST~STEP` matches every `STEP'th` line starting with line `FIRST`, such as `0~2` for even-numbered lines
+- `/REGEXP/` will select any line which matches the regular expression. If `REGEXP` itself includes any '/' characters, each must be escaped by a backslash
+- `\%REGEXP%` (The `%` may be replaced by any other single character) This allows one to use a different delimiter than `/`. If `REGEXP` itself includes any delimiter characters, each must be escaped by a backslash
+- `/REGEXP/I` `\%REGEXP%I`: The 'I' modifier causes the `REGEXP` to be matched in a case-insensitive manner
+<br>
+
+- An address range is specified with two addresses separated by a comma,which can be numeric, regular expressions, or a mix of both
+- If the second address is a NUMBER less than (or equal to) the line matching the first address, then only the one line is matched
+- If the first address is a `REGEXP`, then the address range will start with all the lines matched the `REGEXP`
+- If the second address is a `REGEXP`, then checking for the ending match will start with the line following the line matched the first address, for example, `/[2,6]/,/[0-9]/` is equal to `2,3` and `6,7`
+- `ADDR1,+N` matches `ADDR1` and the N lines following
+- `ADDR1,~N` matches `ADDR1` and the following until the line whose input line number is a multiple of N
+- If the `!` character follows an address or an address range(before the command letter), then only lines which do not match the addresses will be selected.
+
+```shell
+# If no -e, --expression, -f, or --file option is given, then the first
+# non-option argument is taken as the sed script to interpret.
+
+# If no input files are specified, or input files is '-',
+# then the standard input is read.
+
+# Commands
+-e script       #add the script to the commands to be executed
+-f script-file  #add the contents of script-file to the commands to be executed
+-i, --in-place  #edit files in place
+-E, -r, --regexp-extended   #use extended regular expressions in the script
+-n, --quiet, --silent       #suppress automatic printing of pattern space
+
+'a\TEXT'or'a TEXT'    # Append TEXT after a line
+'i\TEXT'or'i TEXT'    # Insert TEXT before a line
+'c\TEXT'or'c TEXT'    # Change lines with TEXT
+'d'     # Delete the pattern space
+'p'     # Print the pattern space
+'w filename'  # Write the pattern space to FILENAME
+```
+```shell
+'s/REGEXP/replacement/flags'    #'/' can be replaced by other character
+
+# Regexp
+'.' means “any single character” except newline
+'*' zero or more of the preceding match
+'+' one or more of the preceding match
+'[abc]' any one character of a, b, and c
+'(RX1|RX2)' either something that matches RX1 or RX2
+'^' the start of the line
+'$' the end of the line
+
+# Replacement
+'\N(0-9)' refers to the portion of the match between the Nth '\(' and '\)'
+'&' refers to the whole matched portion of the pattern space.
+'\L' Turn the replacement to lowercase until a '\U' or '\E' is found,
+'\l' Turn the next character to lowercase,
+'\U' Turn the replacement to uppercase until a '\L' or '\E' is found,
+'\u' Turn the next character to uppercase,
+'\E' Stop case conversion started by '\L' or '\U'.
+
+# Flags
+'g' Apply the replacement to all matches to the REGEXP
+'NUMBER' Only replace the NUMBERth match of the REGEXP each line
+'NUMBERg' Ignore matches before the NUMBERth, and then replace all matches after
+'w FILENAME' Write out the result to the named file
+'I' Match REGEXP in a case-insensitive manner.
+```
+#### awk
+```shell
+NR  #Number of Record
+NF  #Number of Field
+FS  #Field Separator
+RS  #Record Separator
+OFS #Output Field Separator
+ORS #Output Record Separator
+
+# Print the fifth field
+awk '{print $5}' filename
+# Print the last field of each line, using a comma as a field separator
+awk -F, '{print $NF}' filename
+# Print different values based on conditions:
+awk '{if ($1 == "foo") print "Exact match foo"; else print "Baz"}' filename
 ```
 
 
 
 
 
-## Other Programs
+
+## Info
 #### date
 ```shell
 # Print the current date and time
@@ -329,6 +437,24 @@ who am i
 # Display all available information:
 who -a
 ```
+#### ps
+```shell
+# Information about running processes.
+
+# List all running processes:
+ps aux
+# List all running processes including the full command string:
+ps auxww
+# Sort processes by memory consumption:
+ps --sort size
+```
+
+
+
+
+
+
+## Other Programs
 #### curl
 ```shell
 # Transfers data from or to a server.
