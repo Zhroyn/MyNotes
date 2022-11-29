@@ -393,6 +393,8 @@ RS  #Record Separator
 OFS #Output Field Separator
 ORS #Output Record Separator
 
+-v var=val  #Assign val to the variable var, before execution of the program
+
 # Print the fifth field
 awk '{print $5}' filename
 # Print the last field of each line, using a comma as a field separator
