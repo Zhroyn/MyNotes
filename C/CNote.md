@@ -99,8 +99,8 @@ printf()
 - *修饰符：%\*d可指定字段宽度，%\*.\*f可指定字段宽度和精度
 - 浮点数的字段宽度包括小数点
 - 返回成功打印的字符数，包括空格和转义字符（比如‘\n’就属于一个字符），但不包括‘\0'。发生错误时，返回负值（-1）
-![Graph4-4](../../Pictures/Graph4-4.png)
-![Graph4-5](../../Pictures/Graph4-5.png)
+![Graph4-4](../Pictures/Graph4-4.png)
+![Graph4-5](../Pictures/Graph4-5.png)
 
 ```C
 scanf()

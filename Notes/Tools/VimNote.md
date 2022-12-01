@@ -141,6 +141,18 @@
 - `q{a-z}` record a macro into register
 - `q` stop recording
 - `{count}@{a-z}` replay a macro {count} times
+```shell
+# My Macro
+
+@l:insert list
+### 0i-<Esc>j
+
+@s:insert list and space
+### 0i- <Esc>j
+
+@p:chang list to pound, often used when paste commands from command-line manual
+### 0r#jjdd
+```
 
 ##### Navigation
 - `gt/T` switch tab forward / backward

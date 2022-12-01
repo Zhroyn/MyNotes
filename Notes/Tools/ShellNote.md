@@ -275,6 +275,36 @@ wc -m/--chars path/to/file
 
 
 ## Data Wrangling
+#### sort
+```shell
+# Sort a file in ascending order
+sort path/to/file
+# Sort a file in descending order
+sort -r/--reverse path/to/file
+# Sort a file in case-insensitive way
+sort -f/--ignore-case path/to/file
+# Sort a file using numeric rather than alphabetic order
+sort -n/--numeric-sort path/to/file
+# Sort a file by the 3rd field of each line numerically, using ":" as a field separator
+sort -t/--field-separator=: --key=3n path/to/file
+# Sort a file preserving only unique lines
+sort -u/--unique path/to/file
+# Sort a file, printing the output to the specified output file (can be in-place)
+sort -o/--output=path/to/file path/to/file
+```
+#### uniq
+```shell
+# Display each line once:
+sort file | uniq
+# Display only unique lines:
+sort file | uniq -u
+# Display only duplicate lines:
+sort file | uniq -d
+# Display number of occurrences of each line along with that line:
+sort file | uniq -c
+# Display number of occurrences of each line, sorted by the most frequent:
+sort file | uniq -c | sort -nr
+```
 #### find
 ```shell
 # Find files by extension:
@@ -290,7 +320,53 @@ find root_path -maxdepth 1 -size +500k -size -10M
 # Delete all files with .tmp extension
 find root_path -name '*.tmp' -exec rm {} \;
 ```
+
 #### grep
+**Anchoring**
+- The caret `^` matchs the empty string at the beginning of a line
+- The dollar sign `$` matchs the empty string at end of a line
+
+**Character Classes and Bracket Expressions**
+- Most meta-characters lose their special meaning inside bracket expressions
+- A list starting wirh caret `^` matches any character not in the list
+- To include a literal `]` place it first in the list
+- To include a literal `^` place it anywhere but first
+- To include a literal `-` place it last
+```shell
+[:alnum:], [:alpha:], [:digit:],
+[:blank:], [:space:], [:punct:],
+[:cntrl:], [:lower:], [:upper:],
+# [0-9A-Za-z] is the same as [[:alnum:]]
+# \w is the same as [[:alnum:]_]
+# \W is the same as [^[:alnum:]_]
+# \s is the same as [[:space:]]
+# \S is the same as [^[:space:]]
+```
+**Repetition**
+```shell
+?      # The preceding item is optional and matched at most once.
+*      # The preceding item will be matched zero or more times.
++      # The preceding item will be matched one or more times.
+{n}    # The preceding item is matched exactly n times.
+{n,}   # The preceding item is matched n or more times.
+{,m}   # The preceding item is matched at most m times. This is a GNU extension.
+{n,m}  # The preceding item is matched at least n but not more than m times.
+```
+**Alternation**
+- Two regular expressions may be joined by the infix operator `|`
+
+**Precedence**
+- Repetition takes precedence over concatenation, which in turn takes precedence over alternation.
+- A whole expression may be enclosed in parentheses to override these precedence rules and form a subexpression.
+
+**Back-references and Subexpressions**
+- The back-reference `\n`(0-9) matches the substring previously matched by the `n'th` parenthesized subexpression of the regular expression
+
+**Basic vs Extended Regular Expressions**
+- In basic regular expressions, `?, +, {, |, (, )` lose their special meaning
+- In extended expressions, `\?, \+, \{, \|, \(, \)` lose their special meaning
+
+**Commands**
 ```shell
 # When FILE is '-', read standard input.  With no FILE, read '.'
 
@@ -300,11 +376,11 @@ grep "search_pattern" path/to/file
 grep -r/--recursive "search_pattern" path/to/directory
 
 -E, --extended-regexp     #PATTERNS are extended regular expressions
--F, --fixed-strings       #PATTERNS are strings
 -G, --basic-regexp        #PATTERNS are basic regular expressions
 -P, --perl-regexp         #PATTERNS are Perl regular expressions
--e, --regexp=PATTERNS     #use PATTERNS for matching
+-F, --fixed-strings       #PATTERNS are strings
 -f, --file=FILE           #take PATTERNS from FILE
+-e, --regexp=PATTERNS     #use PATTERNS for matching
 
 -i, --ignore-case         #ignore case distinctions in patterns and data
 -w, --word-regexp         #match only whole words
@@ -313,10 +389,13 @@ grep -r/--recursive "search_pattern" path/to/directory
 
 -n, --line-number         #print line number with output lines
 -H, --with-filename       #print file name with output lines
+-o, --only-matching       #show only nonempty parts of lines that match
 -B, --before-context=NUM  #print NUM lines of leading context
 -A, --after-context=NUM   #print NUM lines of trailing context
 -C, --context=NUM         #print NUM lines of output context
 ```
+
+
 #### sed
 - If no addresses are given, the command is performed on all lines.
 - `NUM` matchs the `NUM'th` line
@@ -384,6 +463,7 @@ grep -r/--recursive "search_pattern" path/to/directory
 'w FILENAME' Write out the result to the named file
 'I' Match REGEXP in a case-insensitive manner.
 ```
+
 #### awk
 ```shell
 NR  #Number of Record
@@ -397,10 +477,16 @@ ORS #Output Record Separator
 
 # Print the fifth field
 awk '{print $5}' filename
-# Print the last field of each line, using a comma as a field separator
-awk -F, '{print $NF}' filename
+# Print the last field of each line, using comma and space as field separators
+awk -F '[, ]' '{print $NF}' filename
+# Print the fifth line
+awk '{if(NR==5) print}'
 # Print different values based on conditions:
 awk '{if ($1 == "foo") print "Exact match foo"; else print "Baz"}' filename
+# Print the sum of each line
+awk 'BEGIN{sum = 0} { for(i=1;i<=NF;i++) sum += $i; print sum; sum=0 }' filename
+# Print the average of each column
+awk '{ for(i=1;i<=NF;i++) a[i]+=$i } END{ for(j=1;j<=NF;j++) printf a[j]/NR"\t"; print"" }'
 ```
 
 

@@ -9,4 +9,4 @@ def control_mouse(times):
         time.sleep(0.02)
         i += 1
 
-control_mouse(1000)
+control_mouse(2100)
