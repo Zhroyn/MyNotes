@@ -34,7 +34,8 @@ Reopen Closed Editor: `Ctrl + Shift + T`
 Open Previous Recently Used Editor In Group: `Ctrl + Tab`
 Open Least Recently Used Editor In Group: `Ctrl + Shift + Tab`
 
-Reload Window: `Ctrl + R`?
+Open Active File in New Window: `Ctrl + K and O`
+Open Folder: `Ctrl + K and Ctrl + O`
 Close Window: `Ctrl + Shift + W`
 
 ##### InFile

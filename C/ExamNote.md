@@ -1,3 +1,7 @@
+[toc]
+
+
+
 ## 运算
 乘除模加减，移位大小等，位算按逻辑，条件赋逗号
 | 名称 | 运算符	| 结合律 |
@@ -26,6 +30,9 @@
 
 
 
+
+
+
 ## 函数
 - 函数的命名规则和变量一样（都支持`a$b_c`）
 - 函数里不能定义另一个函数，但是允许函数里声明函数
@@ -51,6 +58,10 @@ func(int x,y){return x;}        //false
 - `char s[]="123\0456\0889"`，sizeof(s)为10，strlen(s)为5
 - sizeof的值为将所有八进制转义字符转化为一个后，字符串所有字符再加上末尾空字符的个数
 - strlen的值为至第一个空字符的字符个数，不包含空字符
+
+
+
+
 
 
 ## 数组
@@ -82,8 +93,31 @@ a[5][5] =
 
 
 
+
+
 ## 指针
 - 指针相减得到的是相隔元素数，而非字节数
+- 不同类型的指针变量是可以直接相互赋值的。F
+- 两个任意类型的指针可以使用关系运算符比较大小。F
+- `char s[2][3]={"ab", "cd"}, *p=(char *)s;`，则`*++p+2 = 'd'`
+
+```C
+For the function declaration void f(char ** p)，the definition __ of var makes the function call f(var) incorrect。
+A. char var[10][10];
+B. char *var[10];
+C. void *var = NULL;    //if change 'void' to 'char', it will report warning
+D. char *v=NULL, **var=&v;
+
+Answer: A
+warning: passing argument 1 of 'f' from incompatible pointer type
+     f(var);
+       ^~~
+note: expected 'char **' but argument is of type 'char (*)[10]'
+ void f(char ** p) {}
+```
+
+
+
 
 
 
@@ -95,6 +129,9 @@ fopen("../MakeData\\data.txt","r");
 fopen("../MakeData/data.txt","r");
 ```
 - FILE是数据类型，但不是关键字
+
+
+
 
 
 
