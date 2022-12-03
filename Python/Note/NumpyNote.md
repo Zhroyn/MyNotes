@@ -6,9 +6,9 @@
 ## Array
 #### Creating ndarray
 ```py
-array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0,
-      like=None)
-asarray(a, dtype=None, order=None, *, like=None)
+numpy.array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0,
+            like=None)
+numpy.asarray(a, dtype=None, order=None, *, like=None)
 
 >>> a = np.array([1, 2, 3])
 >>> a = np.array([1, 2, 3], np.int32)
