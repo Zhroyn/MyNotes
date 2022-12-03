@@ -1,5 +1,5 @@
 {
-    "C_Cpp.errorSquiggles": "Disabled",
+    "C_Cpp.errorSquiggles": "Enabled",
     "java.project.sourcePaths": [],
     "java.project.referencedLibraries": [
         "lib/**/*.jar",

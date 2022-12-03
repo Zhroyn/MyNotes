@@ -1,46 +1,70 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-const int SIZE = 80;
 
-void pstr_print(const char* str, int length)
+struct ListNode {
+    int data;
+    struct ListNode *next;
+};
+
+struct ListNode *readlist()
 {
-    for(int i=0; i<length; i++)
-        printf("%c", str[i]);
-}
-int pstr_cpy(char *s1, int len1, int size, const char *s2, int len2)
-{
-    int i = 0;
-    while (i < len2 && i < size) {
-        s1[i-1] = s2[i++];
+    struct ListNode *sentinel = malloc(sizeof(struct ListNode));
+    sentinel->next = NULL;
+    struct ListNode *p = sentinel;
+    int t;
+    scanf("%d", &t);
+    while (t != -1) {
+        struct ListNode *new = malloc(sizeof(struct ListNode));
+        new->data = t; new->next = NULL;
+        p->next = new;
+        p = p->next;
+        scanf("%d", &t);
     }
-    return i;
+    return sentinel->next;
 }
-int pstr_cat(char *s1, int len1, int size, const char *s2, int len2)
+struct ListNode *getodd( struct ListNode **L )
 {
-    int i = 0;
-    while (i < len2 && len1+i < size) {
-        s1[len1+i] = s2[i];
-        i++;
+    struct ListNode *senOdd = malloc(sizeof(struct ListNode));
+    senOdd->next = NULL;
+    struct ListNode *senEven = malloc(sizeof(struct ListNode));
+    senEven->next = NULL;
+    struct ListNode *p = *L;
+    struct ListNode *pOdd = senOdd;
+    struct ListNode *pEven = senEven;
+    
+    while (p) {
+        struct ListNode *new = malloc(sizeof(struct ListNode));
+        new->data = p->data; new->next = NULL;
+        if (p->data % 2) {
+            pOdd->next = new;
+            pOdd = pOdd->next;
+        } else {
+            pEven->next = new;
+            pEven = pEven->next;
+        }
+        p = p->next;
     }
-    return len1 + i;
+    *L = senEven->next;
+    return senOdd->next;
 }
-
-
+void printlist( struct ListNode *L )
+{
+     struct ListNode *p = L;
+     while (p) {
+           printf("%d ", p->data);
+           p = p->next;
+     }
+     printf("\n");
+}
 
 int main()
 {
-    char line[80] = "111111111122222222223333333333";//44444444445555555555666666666677777777778888888888
-    char text[40] = "aaaaaaaaaabbbbbbbbbbcccccccccc";
-    int len1 = 30;
-    int len2 = 30;
+    struct ListNode *L, *Odd;
+    L = readlist();
+    Odd = getodd(&L);
+    printlist(Odd);
+    printlist(L);
 
-    len1 = pstr_cat(line, len1, SIZE, "\x0D\x0A", 2);
-    len1 = pstr_cat(line, len1, SIZE, text, len2);
-    len2 = pstr_cpy(text, len2, SIZE/2, line, len1);
-    
-    pstr_print(line, len1);
-    pstr_print(text, len2);
-    
-    printf("%2X", 28);
     return 0;
 }

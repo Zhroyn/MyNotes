@@ -122,6 +122,8 @@ note: expected 'char **' but argument is of type 'char (*)[10]'
 
 
 ## 结构
+- 成员相同的结构，无论是否匿名，都不能相互赋值
+- 对 `struct A{int x;int y;};`，可以将结构体指针转换为int指针当成数组访问
 
 
 
