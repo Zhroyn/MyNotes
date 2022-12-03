@@ -121,6 +121,13 @@ note: expected 'char **' but argument is of type 'char (*)[10]'
 
 
 
+## 结构
+
+
+
+
+
+
 ## 文件
 ```C
 fopen("..\\MakeData\\data.txt","r");
