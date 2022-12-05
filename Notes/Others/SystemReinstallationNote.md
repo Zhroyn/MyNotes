@@ -17,6 +17,7 @@ Github SSH、CIL
 - WPS
 - Everything
 - Google
+- Tor
 - 正版化管理与服务平台
 
 ### 编程相关
@@ -32,3 +33,9 @@ Github SSH、CIL
 - WSL
 - Ubuntu
 - Pip
+
+### Packages
+- tldr
+- python
+- pip
+- 

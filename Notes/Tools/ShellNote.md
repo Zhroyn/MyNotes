@@ -19,6 +19,7 @@ $1 - $9 #Arguments to the script. $1 is the first argument and so on.
 $@      #All the arguments
 $#      #Number of arguments
 $?      #Return code of the previous command
+$!      #Return the pid of the last backgrounded job 
 $$      #Process identification number (PID) for the current script
 $_      #Last argument from the last command
 !!      #Entire last command, including arguments
@@ -81,6 +82,119 @@ while conditon
 do
     statement
 done
+```
+
+
+
+## Process
+#### kill
+- `SIGINT` (interrupt): `Ctrl + C`
+- `SIGQUIT` (quit): `Ctrl + \`
+- `SIGSTOP` (stop): `Ctrl + Z`
+
+```shell
+# Send a signal to a job.
+# If neither SIGSPEC nor SIGNUM is present, then SIGTERM is assumed.
+kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... 
+kill -l [sigspec]
+
+-s sig    #SIG is a signal name
+-n sig    #SIG is a signal number
+-l        #list the signal names
+-L        #synonym for -l
+
+# Terminate a program using the default SIGTERM (terminate) signal:
+kill process_id
+# Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating::
+kill -HUP process_id
+# Terminate a program using the SIGINT (interrupt) signal:
+kill -INT process_id
+# Signal the operating system to immediately terminate a program (which gets no chance to capture the signal):
+kill -KILL process_id
+# Signal the operating system to pause a program:
+kill -STOP process_id
+# Signal the operating system to continue a program:
+kill -CONT process_id
+```
+### nohup
+```shell
+# Run a process that can live beyond the terminal:
+nohup command argument1 argument2 ...
+# Launch nohup in background mode:
+nohup command argument1 argument2 ... &
+# Run a shell script that can live beyond the terminal:
+nohup path/to/script.sh &
+# Run a process and write the output to a specific file:
+nohup command argument1 argument2 ... > path/to/output_file &
+```
+
+#### jobs
+```shell
+# Display status of jobs.
+
+-l  #lists process IDs in addition to the normal information
+-n  #lists only processes that have changed status since the last notification
+-p  #lists process IDs only
+-r  #restrict output to running jobs
+-s  #restrict output to stopped jobs
+```
+#### ps
+```shell
+# Display information about a selection of the active processes.
+a      Lift the BSD-style "only yourself" restriction, which is imposed upon the set of all processes when some BSD-style (without "-") options
+      are used or when the ps personality setting is BSD-like.  The set of processes selected in this manner is in addition to the set of
+      processes selected by other means.  An alternate description is that this option causes ps to list all processes with a terminal (tty), or
+      to list all processes when used together with the x option.
+
+-A     Select all processes.  Identical to -e.
+
+-a     Select all processes except both session leaders (see getsid(2)) and processes not associated with a terminal.
+
+-e     Select all processes.  Identical to -A.
+x      Lift the BSD-style "must have a tty" restriction, which is imposed upon the set of all processes when some BSD-style (without "-") options
+      are used or when the ps personality setting is BSD-like.  The set of processes selected in this manner is in addition to the set of
+      processes selected by other means.  An alternate description is that this option causes ps to list all processes owned by you (same EUID
+      as ps), or to list all processes when used together with the a option.
+o format
+      Specify user-defined format.  Identical to -o and --format.
+
+-o format
+      User-defined format.  format is a single argument in the form of a blank-separated or comma-separated list, which offers a way to specify
+      individual output columns.  The recognized keywords are described in the STANDARD FORMAT SPECIFIERS section below.  Headers may be renamed
+      (ps -o pid,ruser=RealUser -o comm=Command) as desired.  If all column headers are empty (ps -o pid= -o comm=) then the header line will
+      not be output.  Column width will increase as needed for wide headers; this may be used to widen up columns such as WCHAN (ps -o pid,
+      wchan=WIDE-WCHAN-COLUMN -o comm).  Explicit width control (ps opid,wchan:42,cmd) is offered too.  The behavior of ps -o pid=X,comm=Y
+      varies with personality; output may be one column named "X,comm=Y" or two columns named "X" and "Y".  Use multiple -o options when in
+      doubt.  Use the PS_FORMAT environment variable to specify a default as desired; DefSysV and DefBSD are macros that may be used to choose
+      the default UNIX or BSD columns.
+
+s      Display signal format.
+
+u      Display user-oriented format.
+
+v      Display virtual memory format.
+
+X      Register format.
+```
+
+#### bg, fg
+**bg**
+```shell
+## Resumes jobs that have been suspended, and run them in the background.
+
+# Resume the most recently suspended job and run it in the background:
+bg
+# Resume a specific job and run it in the background:
+  bg %job_id
+```
+**fg**
+```shell
+## Run jobs in foreground.
+
+# Bring most recently suspended or running background job to foreground:
+fg
+# Bring a specific job to foreground:
+fg %job_id
 ```
 
 

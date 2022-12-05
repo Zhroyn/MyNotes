@@ -2,69 +2,38 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct ListNode {
-    int data;
-    struct ListNode *next;
-};
+const int SIZE = 80;
 
-struct ListNode *readlist()
-{
-    struct ListNode *sentinel = malloc(sizeof(struct ListNode));
-    sentinel->next = NULL;
-    struct ListNode *p = sentinel;
-    int t;
-    scanf("%d", &t);
-    while (t != -1) {
-        struct ListNode *new = malloc(sizeof(struct ListNode));
-        new->data = t; new->next = NULL;
-        p->next = new;
-        p = p->next;
-        scanf("%d", &t);
+int pstr_scan(char* str, int size);
+void pstr_print(const char* str, int length);
+
+
+int pstr_scan(char *str, int size){
+    int i=0;
+    for(char c=1; c!=-1&&c!=32; i++){
+        c=(char)getchar();
+        str[i]=c;
     }
-    return sentinel->next;
-}
-struct ListNode *getodd( struct ListNode **L )
-{
-    struct ListNode *senOdd = malloc(sizeof(struct ListNode));
-    senOdd->next = NULL;
-    struct ListNode *senEven = malloc(sizeof(struct ListNode));
-    senEven->next = NULL;
-    struct ListNode *p = *L;
-    struct ListNode *pOdd = senOdd;
-    struct ListNode *pEven = senEven;
-    
-    while (p) {
-        struct ListNode *new = malloc(sizeof(struct ListNode));
-        new->data = p->data; new->next = NULL;
-        if (p->data % 2) {
-            pOdd->next = new;
-            pOdd = pOdd->next;
-        } else {
-            pEven->next = new;
-            pEven = pEven->next;
-        }
-        p = p->next;
+    for(int k=0; k<i; k++){
+        printf("%d ", str[k]);
     }
-    *L = senEven->next;
-    return senOdd->next;
+    printf("\n%d", i);
+    return i-1;
 }
-void printlist( struct ListNode *L )
-{
-     struct ListNode *p = L;
-     while (p) {
-           printf("%d ", p->data);
-           p = p->next;
-     }
-     printf("\n");
+
+void pstr_print(const char *str, int length){
+    for(int i=0; i<length; i++){
+        printf("%c", str[i]);
+    }
 }
+
 
 int main()
 {
-    struct ListNode *L, *Odd;
-    L = readlist();
-    Odd = getodd(&L);
-    printlist(Odd);
-    printlist(L);
+    char line[SIZE];
 
-    return 0;
+    int length = pstr_scan(line, SIZE);
+    //pstr_print(line, length);
+    
+  return 0;
 }
