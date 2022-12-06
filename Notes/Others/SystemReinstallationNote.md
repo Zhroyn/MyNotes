@@ -1,5 +1,6 @@
 winrar
 Github SSH、CIL
+设置应用启动快捷键
 历史记录
 小组展示、课程作业
 

@@ -11,6 +11,7 @@
 
 
 #### Variable and Substitution
+**Common built-in varibles**
 ```shell
 $PATH   #environment variable
 $PWD    #Print working directory
@@ -23,13 +24,40 @@ $!      #Return the pid of the last backgrounded job
 $$      #Process identification number (PID) for the current script
 $_      #Last argument from the last command
 !!      #Entire last command, including arguments
-
-${variable} #variable substitution
-$(command)  #command substitution
-<(command) or >(command)    #process substitution
-#place input or output in a temporary file, and
-#its filename is passed as an argument to the current command
 ```
+**Variable substitution**
+- The only times a variable appears "naked" -- without the `$` prefix -- is when declared or assigned, when unset, when exported, in an arithmetic expression within double parentheses `(( ... ))`, or in the special case of a variable representing a signal
+- Assignment may be with an `=` (as in `var1=27`), in a read statement, and at the head of a loop (`for var2 in 1 2 3`)`.
+- `${var:-value}` If `var` is not-set (or null) then the value is substituted for `var`.
+- `${var:+value}` If `var` is set then the value is substituted for `var`
+- `${var:=value}` If `var` is not-set (or null), then it is set to value.
+- `${var:?message}`	If `var` is not-set (or null) then the message is printed as standard error.
+- `${var#pattern}` delete from the left to the first matched pattern
+- `${var##pattern}` delete from the left to the last matched pattern
+- `${var%pattern}` delete from the right to the first matched pattern
+- `${var%%pattern}` delete from the right to the last matched pattern
+- `${var/pattern/new}` substitute the first matched string from the left
+- `${var//pattern/new}` substitute all the matched string from the left
+```shell
+var='abc.123.abc.123'
+$ echo ${var#*.}
+123.abc.123
+$ echo ${var##*.*}
+
+$ echo ${var%%.*}
+abc
+$ echo ${var//./:}
+abc:123:abc:123
+```
+**Command substitution and process substitution**
+```shell
+$(command)
+
+<(command) or >(command)
+Place input or output in a temporary file, and its filename is passed 
+as an argument to the current command
+```
+
 
 #### Control Flow
 **if**
@@ -83,10 +111,40 @@ do
     statement
 done
 ```
+#### Aliases
+- add a file named `.bash_aliases` to `~`
+- add personal aliases to that file
+- run `source .bashrc`
+```shell
+# List all aliases:
+alias
+# Create a generic alias:
+alias word="command"
+# View the command associated to a given alias:
+alias word
+# Remove an aliased command:
+unalias word
+```
+```shell
+# Default aliases
+alias egrep='egrep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias grep='grep --color=auto'
+alias l='ls -CF'
+alias la='ls -A'
+alias ll='ls -alF'
+alias ls='ls --color=auto'
+
+# My aliases
+alias tm='tmux'
+alias tmk='tmux kill-session'
+alias tms='tmux new -s'
+```
 
 
 
-## Process
+
+## Job control
 #### kill
 - `SIGINT` (interrupt): `Ctrl + C`
 - `SIGQUIT` (quit): `Ctrl + \`
@@ -116,7 +174,7 @@ kill -STOP process_id
 # Signal the operating system to continue a program:
 kill -CONT process_id
 ```
-### nohup
+#### nohup
 ```shell
 # Run a process that can live beyond the terminal:
 nohup command argument1 argument2 ...
@@ -141,53 +199,87 @@ nohup command argument1 argument2 ... > path/to/output_file &
 #### ps
 ```shell
 # Display information about a selection of the active processes.
-a      Lift the BSD-style "only yourself" restriction, which is imposed upon the set of all processes when some BSD-style (without "-") options
-      are used or when the ps personality setting is BSD-like.  The set of processes selected in this manner is in addition to the set of
-      processes selected by other means.  An alternate description is that this option causes ps to list all processes with a terminal (tty), or
-      to list all processes when used together with the x option.
+This version(wsl2) of ps accepts several kinds of options:
+1   UNIX options, which may be grouped and must be preceded by a dash.
+2   BSD options, which may be grouped and must not be used with a dash.
+3   GNU long options, which are preceded by two dashes.
 
--A     Select all processes.  Identical to -e.
+a   list all processes with a terminal, or list all processes when with 'x'
+x   list all processes owned by you, or list all processes when with 'a'
+u   Display user-oriented format.
+l   Display BSD long format, conflict with 'u'.
+w   Wide output. Use this option twice for unlimited width.
+f   ASCII art process hierarchy (forest)
 
--a     Select all processes except both session leaders (see getsid(2)) and processes not associated with a terminal.
+-A, -e  Select all processes
+-a  Select all processes except session leaders
 
--e     Select all processes.  Identical to -A.
-x      Lift the BSD-style "must have a tty" restriction, which is imposed upon the set of all processes when some BSD-style (without "-") options
-      are used or when the ps personality setting is BSD-like.  The set of processes selected in this manner is in addition to the set of
-      processes selected by other means.  An alternate description is that this option causes ps to list all processes owned by you (same EUID
-      as ps), or to list all processes when used together with the a option.
-o format
-      Specify user-defined format.  Identical to -o and --format.
+o, -o, --format format   Specify user-defined format.
+--sort spec              Specify sorting order.
+-f     Do full-format listing.
+-F     Extra full format.
+-l     Long format.
 
--o format
-      User-defined format.  format is a single argument in the form of a blank-separated or comma-separated list, which offers a way to specify
-      individual output columns.  The recognized keywords are described in the STANDARD FORMAT SPECIFIERS section below.  Headers may be renamed
-      (ps -o pid,ruser=RealUser -o comm=Command) as desired.  If all column headers are empty (ps -o pid= -o comm=) then the header line will
-      not be output.  Column width will increase as needed for wide headers; this may be used to widen up columns such as WCHAN (ps -o pid,
-      wchan=WIDE-WCHAN-COLUMN -o comm).  Explicit width control (ps opid,wchan:42,cmd) is offered too.  The behavior of ps -o pid=X,comm=Y
-      varies with personality; output may be one column named "X,comm=Y" or two columns named "X" and "Y".  Use multiple -o options when in
-      doubt.  Use the PS_FORMAT environment variable to specify a default as desired; DefSysV and DefBSD are macros that may be used to choose
-      the default UNIX or BSD columns.
-
-s      Display signal format.
-
-u      Display user-oriented format.
-
-v      Display virtual memory format.
-
-X      Register format.
+# List all running processes:
+ps aux
+# List all running processes including the full command string:
+ps auxww
+# List all processes of the current user in extra full format:
+ps --user $(id -u) -F
+# List all processes of the current user as a tree:
+ps --user $(id -u) f
+# Get the parent PID of a process:
+ps -o ppid= -p pid
+# Sort processes by memory consumption:
+ps --sort size
 ```
 
-#### bg, fg
-**bg**
+#### pgrep
+```shell
+-f, --full              use full process name to match
+-u, --euid <ID,...>     match by effective user IDs
+
+# Return PIDs of any running processes with a matching command string:
+pgrep process_name
+# Search for processes including their command-line options:
+pgrep --full "process_name parameter"
+# Search for processes run by a specific user:
+pgrep --euid root process_name
+```
+
+#### pkill
+```shell
+-SIGNAL, --signal SIGNAL
+      Defines the signal to send to each matched process. 
+      Either the numeric or the symbolic signal name can be used.
+-f, --full      use full process name to match
+-n, --newest
+      Select only the newest(most recently started) of the matching processes.
+-o, --oldest
+      Select only the oldest(least recently started) of the matching processes.
+
+# Kill all processes which match:
+pkill "process_name"
+# Kill all processes which match full command instead of just process name:
+pkill -f "command_name"
+# Force kill matching processes (can't be blocked):
+pkill -9/KILL "process_name"
+# Send SIGUSR1 signal to processes which match:
+pkill -USR1 "process_name"
+# Kill the main firefox process to close the browser:
+pkill --oldest "firefox"
+```
+
+#### bg
 ```shell
 ## Resumes jobs that have been suspended, and run them in the background.
 
 # Resume the most recently suspended job and run it in the background:
 bg
 # Resume a specific job and run it in the background:
-  bg %job_id
+bg %job_id
 ```
-**fg**
+#### fg
 ```shell
 ## Run jobs in foreground.
 
@@ -201,13 +293,44 @@ fg %job_id
 
 
 
+## Terminal multiplexer
+#### tmux
+- Sessions
+  - `tmux` start a new session.
+  - `tmux new -s NAME` start a new session with `NAME`.
+  - `tmux ls` list the current sessions
+  - `<C-b> d` detaches the current session
+  - `tmux a/attach-session` attach the last session
+  - `tmux a/attach-session -t NAME` attach the specified session
+  - `tmux kill-session` kill the last or current attached session
+  - `tmux kill-session -t NAME` kill the specfied session
+  - `tmux kill-session -a` kill all sessions except the last or current attached one
+- Windows
+  - `<C-b> c` Creates a new window 
+  - `<C-b> p` Goes to the previous window
+  - `<C-b> n` Goes to the next window
+  - `<C-b> N` Go to the N th window
+  - `<C-b> ,` Rename the current window
+  - `<C-b> w` List current sessions and windows, and move
+- Panes
+  - `<C-b> "` Split the current pane horizontally
+  - `<C-b> %` Split the current pane vertically
+  - `<C-b> <direction>` Move to the pane in the specified direction
+  - `<C-b> z` Toggle zoom for the current pane
+  - `<C-b> <space>` Cycle through pane arrangements.
+  - `<C-b> [` Start scrollback. You can then press <space> to start a selection and <enter> to copy that selection.
+  - `<C-d>` Close pane except only one left
+  - `<C-b> x` Kill pane with prompt
+
+
+
 ## Files and Directory
 #### mv, cp, rm
 **mv**
 ```shell
 # Move or rename files and directories
 
-# Move a file or files to an arbitrary location
+# Move a file or files to an location and overwrite automatically
 mv source ... target
 # Prompt for confirmation before overwriting existing files
 mv -i source target
@@ -249,7 +372,7 @@ rm -v path/to/directory/*
 ```shell
 ls -1   # List files one per line
 ls -a   # List all files, including hidden files
-ls -F   # List all files, with trailing / added to directory names
+ls -F   # List all files, with trailing '/' added to directory names
 ls -R   # List subdirectories recursively
 
 -l      #use a long listing format
@@ -300,10 +423,16 @@ chmod a+rx path/to/file
 #### echo, cat, tee
 **echo**
 ```shell
+-e     enable interpretation of backslash escapes
+-E     disable interpretation of backslash escapes (default)
+
 # Print a message with environment variables, must with double quotation marks
 echo "My path is $PATH"
 # Append a message to the file
 echo "Hello World" >> file.txt
+# Assign a value to a variable
+i=$(echo "123d56d89")
+# 
 ```
 **cat**
 ```shell
@@ -699,6 +828,23 @@ tar xf source.tar[.gz|.bz2|.xz] --directory=directory
 tar tf source.tar
 # E[x]tract files matching a pattern from an archive [f]ile:
 tar xf source.tar --wildcards "*.html"
+```
+#### less
+```shell
+# Open a file:
+less source_file
+# Page down / up:
+<Space> (down), b (up)
+# Go to end / start of file:
+G (end), g (start)
+# Forward / Backward search for a string, allowing regexp:
+/something, ?something
+# go to next/previous match:
+n, N
+# Follow the output of the currently opened file:
+F
+# Open the current file in an editor:
+v
 ```
 
 
