@@ -39,4 +39,15 @@ Github SSH、CIL
 - tldr
 - python
 - pip
-- 
+
+
+### vscode
+- C
+- python
+- code runner
+- latex workshop
+- live preview
+- markdown all in one
+- markdown preview enhanced
+- open in browser
+- vim
