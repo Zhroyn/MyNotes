@@ -1,15 +1,56 @@
-import numpy as np
-import scipy.integrate as si	#numpy求定积分用
+import tkinter as tk
+import random
 
-def f(x):
-    y = 1/np.sqrt(2*np.pi)*np.exp(-0.5*x**2)
-    return y
+# 创建应用程序窗口
+root = tk.Tk()
 
-#3. numpy直接求定积分的API
-#利用quad求定积分，给出函数f,积分下限和积分上限[a,b]，返回值为(积分值,最大误差)
-area1 = si.quad(f,-1,1)[0]
-area2 = si.quad(f,-2,2)[0]
-area3 = si.quad(f,-3,3)[0]
-print('1 sigma 的积分 ',area1)
-print('2 sigma 的积分 ',area2)
-print('3 sigma 的积分 ',area3)
+# 定义按钮点击处理函数
+def on_button_click(event):
+    global buttons
+    global size
+
+    # 获取点击的按钮
+    btn = event.widget
+
+    # 获取按钮的文本（数字）
+    num = int(btn['text'])
+
+    # 移除原有的按钮
+    for b in buttons:
+        b.pack_forget()
+
+    # 创建新的按钮
+    buttons = []
+    for i in range(num * num):
+        b = tk.Button(root, width=10, height=5, font=('Arial', 24),
+                      text=str(random.randint(1, num * num)))
+        b.bind('<Button-1>', on_button_click)
+        buttons.append(b)
+
+    # 按钮按行排列
+    for i in range(num):
+        for j in range(num):
+            buttons[i * num + j].grid(row=i, column=j)
+
+    # 更新按钮组的大小
+    size = num
+
+
+# 初始化按钮组
+buttons = []
+size = 3
+
+# 创建按钮
+for i in range(size * size):
+    b = tk.Button(root, width=10, height=5, font=('Arial', 24),
+                  text=str(i + 1))
+    b.bind('<Button-1>', on_button_click)
+    buttons.append(b)
+
+# 按钮按行排列
+for i in range(size):
+    for j in range(size):
+        buttons[i * size + j].grid(row=i, column=j)
+
+# 运行应用程序
+root.mainloop()
