@@ -37,7 +37,6 @@ Open Least Recently Used Editor In Group: `Ctrl + Shift + Tab`
 Open Active File in New Window: `Ctrl + K and O`
 Open Folder: `Ctrl + K and Ctrl + O`
 Close Window: `Ctrl + Shift + W`
-
 ##### InFile
 Go to line: `Ctrl + G`
 Go to Next Problem: `F8`

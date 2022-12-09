@@ -361,10 +361,6 @@ array([[0, 1],
 array([[0, 1, 2, 3, 4, 5]])
 ```
 ```py
-# Return a flattened array.
-ndarray.ravel()
-# Return a contiguous flattened array.
-numpy.ravel(a, order='C')
 # Change shape and size of array in-place.
 ndarray.resize(new_shape, refcheck=True)
 # Return a new array with the specified shape.
@@ -379,6 +375,29 @@ array([[0, 1, 2],
 >>> np.resize(a,(2,4))
 array([[0, 1, 2, 3],
        [0, 1, 2, 3]])
+```
+```py
+# Return a copy of the array collapsed into one dimension.
+ndarray.flatten(order='C')
+
+# Return a flattened array.
+ndarray.ravel()
+# Return a contiguous flattened array.
+numpy.ravel(a, order='C')
+
+### When using `flatten`, changes to new array won’t change the parent array.
+### When using `ravel`, changes to new array will affect the parent array.
+>>> a = np.arange(6).reshape(2, 3)
+>>> b = a.flatten()
+>>> b[0] = 9
+>>> a
+array([[0, 1, 2],
+       [3, 4, 5]])
+>>> b = a.ravel() or np.ravel(a)
+>>> b[0] = 9
+>>> a
+array([[9, 1, 2],
+       [3, 4, 5]])
 ```
 #### Expand dimension
 ```py
@@ -429,6 +448,31 @@ array([[0, 2],
 >>> a = np.ones((1, 2, 3))
 >>> np.transpose(a, (1, 0, 2)).shape
 (2, 1, 3)
+```
+```py
+# Reverse the order of elements in an array along the given axis.
+flip(m, axis=None)
+m : array_like
+       Input array.
+axis : None or int or tuple of ints, optional
+       Axis or axes along which to flip over. The default,
+       axis=None, will flip over all of the axes of the input array.
+       If axis is negative it counts from the last to the first axis.
+
+       If axis is a tuple of ints, flipping is performed on all of the axes
+       specified in the tuple.
+
+>>> A = np.arange(8).reshape((2,2,2))
+>>> np.flip(A)
+array([[[7, 6],
+       [5, 4]],
+       [[3, 2],
+       [1, 0]]])
+>>> np.flip(A, (0, 2))
+array([[[5, 4],
+       [7, 6]],
+       [[1, 0],
+       [3, 2]]])
 ```
 
 #### Basic operations
@@ -502,6 +546,16 @@ array([[ 4,  8, 12],
 
 
 ## Random
+#### Generate random number
+```py
+# Return a sample (or samples) from the "standard normal" distribution.
+np.random.randn(d0, d1, ..., dn)
+
+If positive int_like arguments are provided, an arra of shape ``(d0, d1,
+..., dn)``, is returned
+If no argument is provided, a single float randomly sampled from the 
+distribution is returned
+```
 ```py
 # Construct a new Generator with the default BitGenerator (PCG64).
 numpy.random.default_rng(...)
@@ -509,14 +563,25 @@ numpy.random.default_rng(...)
 >>> rng = np.random.default_rng()
 >>> type(rng)
 <class 'numpy.random._generator.Generator'>
-```
-```py
+
+
+# Draw samples from a standard Normal distribution (mean=0, stdev=1).
+rng.standard_normal(size=None, dtype=np.float64, out=None)
+size : int or tuple of ints, optional
+       Output shape.  If the given shape is, e.g., ``(m, n, k)``, then
+       ``m * n * k`` samples are drawn.  Default is None, in which case a
+       single value is returned.
+dtype : dtype, optional
+       Desired dtype of the result,only `float64` and `float32` are supported
+out : ndarray, optional
+       Alternative output array in which to place the result.
+
 # Return random floats in the half-open interval [0.0, 1.0).
 rng.random(size=None, dtype=np.float64, out=None)
 size : int or tuple of ints, optional
-       Output shape. Default is None, in which case a single value is returned.
+       Output shape. Default is None,in which case a single value is returned
 dtype : dtype, optional
-       Desired dtype of the result, only `float64` and `float32` are supported.
+       Desired dtype of the result,only `float64` and `float32` are supported
 
 # Return random integers
 rng.integers(low, high=None, size=None, dtype=np.int64, endpoint=False)
@@ -535,8 +600,6 @@ dtype : dtype, optional
 endpoint : bool, optional
        If true, sample from the interval [low, high] instead of the
        default [low, high)
-
-
 ```
 
 
