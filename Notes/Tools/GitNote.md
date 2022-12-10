@@ -182,19 +182,33 @@
 
 
 ## Configuration
+#### check config
 ```shell
 # list all the settings Git can find at that point
 git config --list
+
 # check a specific key’s value
 git config user.name
+
 # show which configuration file had the final say in setting that value
 git config --show-origin rerere.autoUpdate
 ```
-#### git 用户配置
-- `git congif --global user.name "Pxtkn"`
-- `git config --global user.name "hr.zheng@outlook.com"`
+#### ssh
+```shell
+# set user name and email
+git congif --global user.name "Pxtkn"
+git config --global user.name "hr.zheng@outlook.com"
 
-#### git 换行配置
+# generate a ssh key
+ssh-keygen -t rsa -C "hr.zheng@outlook.com"
+# by default, will form '.ssh' under '~'
+# then need to copy all the content in 'id_rsa.pub' to Github
+
+# check if can connect to Github by ssh
+ssh -T git@github.com
+```
+
+#### crlf
 - `git config --global core.autocrlf true` 在push时把行结束符CRLF转换成LF，在pull时把LF转换成CRLF
 - `git config --global core.autocrlf input` 在push时把行结束符CRLF转换成LF
 - `git config --global core.autocrlf false` 什么都不改变
@@ -219,7 +233,7 @@ doc/**/*.pdf
 # ignore a0, a1, ..., c8, c9.txt
 [abc][0-9].txt
 ```
-#### Alias
+#### alias
 ```shell
 git config --global alias.co checkout
 git config --global alias.br branch
