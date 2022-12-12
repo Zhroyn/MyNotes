@@ -144,59 +144,19 @@ alias tms='tmux new -s'
 
 
 
-## Job control
-#### kill
-- `SIGINT` (interrupt): `Ctrl + C`
-- `SIGQUIT` (quit): `Ctrl + \`
-- `SIGSTOP` (stop): `Ctrl + Z`
-
-```shell
-# Send a signal to a job.
-# If neither SIGSPEC nor SIGNUM is present, then SIGTERM is assumed.
-kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... 
-kill -l [sigspec]
-
--s sig    #SIG is a signal name
--n sig    #SIG is a signal number
--l        #list the signal names
--L        #synonym for -l
-
-# Terminate a program using the default SIGTERM (terminate) signal:
-kill process_id
-# Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating::
-kill -HUP process_id
-# Terminate a program using the SIGINT (interrupt) signal:
-kill -INT process_id
-# Signal the operating system to immediately terminate a program (which gets no chance to capture the signal):
-kill -KILL process_id
-# Signal the operating system to pause a program:
-kill -STOP process_id
-# Signal the operating system to continue a program:
-kill -CONT process_id
-```
-#### nohup
-```shell
-# Run a process that can live beyond the terminal:
-nohup command argument1 argument2 ...
-# Launch nohup in background mode:
-nohup command argument1 argument2 ... &
-# Run a shell script that can live beyond the terminal:
-nohup path/to/script.sh &
-# Run a process and write the output to a specific file:
-nohup command argument1 argument2 ... > path/to/output_file &
-```
-
-#### jobs
+## Process control
+#### jobs, ps, pgrep
+**jobs**
 ```shell
 # Display status of jobs.
 
 -l  #lists process IDs in addition to the normal information
--n  #lists only processes that have changed status since the last notification
 -p  #lists process IDs only
+-n  #lists only processes that have changed status since the last notification
 -r  #restrict output to running jobs
 -s  #restrict output to stopped jobs
 ```
-#### ps
+**ps**
 ```shell
 # Display information about a selection of the active processes.
 This version(wsl2) of ps accepts several kinds of options:
@@ -204,7 +164,7 @@ This version(wsl2) of ps accepts several kinds of options:
 2   BSD options, which may be grouped and must not be used with a dash.
 3   GNU long options, which are preceded by two dashes.
 
-a   list all processes with a terminal, or list all processes when with 'x'
+a   list all processes within a terminal, or list all processes when with 'x'
 x   list all processes owned by you, or list all processes when with 'a'
 u   Display user-oriented format.
 l   Display BSD long format, conflict with 'u'.
@@ -233,8 +193,7 @@ ps -o ppid= -p pid
 # Sort processes by memory consumption:
 ps --sort size
 ```
-
-#### pgrep
+**pgrep**
 ```shell
 -f, --full              use full process name to match
 -u, --euid <ID,...>     match by effective user IDs
@@ -247,7 +206,37 @@ pgrep --full "process_name parameter"
 pgrep --euid root process_name
 ```
 
-#### pkill
+#### kill, pkill
+**kill**
+- `SIGINT` (interrupt): `Ctrl + C`
+- `SIGQUIT` (quit): `Ctrl + \`
+- `SIGSTOP` (stop): `Ctrl + Z`
+
+```shell
+# Send a signal to a job.
+# If neither SIGSPEC nor SIGNUM is present, then SIGTERM is assumed.
+kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... 
+kill -l [sigspec]
+
+-s sig    #SIG is a signal name
+-n sig    #SIG is a signal number
+-l        #list the signal names
+-L        #synonym for -l
+
+# Terminate a program using the default SIGTERM (terminate) signal:
+kill process_id
+# Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating::
+kill -HUP process_id
+# Terminate a program using the SIGINT (interrupt) signal:
+kill -INT process_id
+# Signal the operating system to immediately terminate a program (which gets no chance to capture the signal):
+kill -KILL process_id
+# Signal the operating system to pause a program:
+kill -STOP process_id
+# Signal the operating system to continue a program:
+kill -CONT process_id
+```
+**pkill**
 ```shell
 -SIGNAL, --signal SIGNAL
       Defines the signal to send to each matched process. 
@@ -269,8 +258,19 @@ pkill -USR1 "process_name"
 # Kill the main firefox process to close the browser:
 pkill --oldest "firefox"
 ```
-
-#### bg
+#### nohup, bg, fg
+**nohup**
+```shell
+# Run a process that can live beyond the terminal:
+nohup command argument1 argument2 ...
+# Launch nohup in background mode:
+nohup command argument1 argument2 ... &
+# Run a shell script that can live beyond the terminal:
+nohup path/to/script.sh &
+# Run a process and write the output to a specific file:
+nohup command argument1 argument2 ... > path/to/output_file &
+```
+**bg**
 ```shell
 ## Resumes jobs that have been suspended, and run them in the background.
 
@@ -279,7 +279,7 @@ bg
 # Resume a specific job and run it in the background:
 bg %job_id
 ```
-#### fg
+**fg**
 ```shell
 ## Run jobs in foreground.
 
@@ -321,6 +321,11 @@ fg %job_id
   - `<C-b> [` Start scrollback. You can then press <space> to start a selection and <enter> to copy that selection.
   - `<C-d>` Close pane except only one left
   - `<C-b> x` Kill pane with prompt
+
+
+
+
+
 
 
 
@@ -768,17 +773,6 @@ who am i
 # Display all available information:
 who -a
 ```
-#### ps
-```shell
-# Information about running processes.
-
-# List all running processes:
-ps aux
-# List all running processes including the full command string:
-ps auxww
-# Sort processes by memory consumption:
-ps --sort size
-```
 
 
 
@@ -875,13 +869,15 @@ apt list --installed    #list installed packages
 
 
 ## Configuration
-#### Mirror Source(Ubuntu20.04)
+#### Mirror Source
 ```shell
 sudo vim /etc/apt/source.list
 sudo apt update
 sudo apt upgrade
-
-清华源
+```
+**Ubuntu20.04**
+```shell
+# 清华源
 # 默认注释了源码镜像以提高 apt update 速度
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
@@ -892,7 +888,7 @@ deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-security main restricted universe multiverse
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-security main restricted universe multiverse
 
-阿里源
+# 阿里源
 deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
@@ -904,7 +900,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted univers
 deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
 
-中科大源
+# 中科大源
 deb https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
 deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
 deb https://mirrors.ustc.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
@@ -916,7 +912,7 @@ deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-security main restricted unive
 deb https://mirrors.ustc.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
 deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
 
-网易163源
+# 网易163源
 deb http://mirrors.163.com/ubuntu/ focal main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ focal-security main restricted universe multiverse
 deb http://mirrors.163.com/ubuntu/ focal-updates main restricted universe multiverse
@@ -927,4 +923,57 @@ deb-src http://mirrors.163.com/ubuntu/ focal-security main restricted universe m
 deb-src http://mirrors.163.com/ubuntu/ focal-updates main restricted universe multiverse
 deb-src http://mirrors.163.com/ubuntu/ focal-proposed main restricted universe multiverse
 deb-src http://mirrors.163.com/ubuntu/ focal-backports main restricted universe multiverse
+```
+**Ubuntu20.04**
+```shell
+# 清华源
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+
+# 阿里源
+deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ jammy-backports main restricted universe multiverse
+
+# 中科大源
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+deb https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+deb-src https://mirrors.ustc.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+
+# 网易163源
+deb http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-security main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-proposed main restricted universe multiverse
+deb-src http://mirrors.163.com/ubuntu/ jammy-backports main restricted universe multiverse
 ```
