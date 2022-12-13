@@ -1,6 +1,26 @@
 [toc]
 
 
+## Common usage
+#### Redo commit
+- `git commit --amend`  If you want to redo that commit, make the additional changes you forgot, stage them, and commit again using the `--amend` option. Or you can stage nothing to change commit message only.
+
+#### Unstage
+- `git restore --staged <file>...`
+- `git reset HEAD <file>...`
+
+#### Discard changes
+- `git restore <file>...`
+- `git checkout -- <file>...`
+
+#### Show Objects
+- `git show <object>` show human-readable information without specific `sha1`
+- `git cat-file -p <object>` show all references within the object
+- `git ls-files -s <object>` show all references within staging area
+
+
+
+
 
 ## Looking Info
 
@@ -67,14 +87,27 @@
 - `git add [<pathspec>…​]` 添加任意多个文件或文件夹到暂存区
 
 #### git commit
-- `git commit [<pathspec>…​]` 提交多个文件
-- `-a` 自动缓存修改和删除的文件，但未追踪的文件不会被添加或提交
-- `-m <msg>` 添加注释信息
-- `-am` 相当于`-a` + `-m`，log只有注释没有修改信息
-- `-C <commit>` 重新使用提交信息
-- `-c <commit>` 重新使用提交信息，并可编辑
-- `--amend` 提交暂存区文件取代HEAD，即使相同，类似于`git reset --soft HEAD^`+`git commit -c ORIG_HEAD`
+- `-a|--all` automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected.
+- `-m <msg>` use the given `<msg>` as the commit message. If multiple -m options are given, their values are concatenated as separate paragraphs.
+- `-C <commit>` take an existing commit object, and reuse the log message and the authorship information (including the timestamp) when creating the commit.
+- `-c <commit>` Like -C, but the user can further edit the commit message.
+- `--amend` replace the tip of the current branch by creating a new commit. The new commit has the same parents. Roughly equivalent for `git reset --soft HEAD^` + `...` + `git commit -c ORIG_HEAD`
 
+#### git mv
+- `git mv <source> <destination>` 若目标文件不存在，则重命名
+- `git mv <source> <destination directory>` 移动
+- `-f` 强制重命名或移动，即使目标存在
+- git不追踪文件的移动，所以直接移动或重命名会被当成直接删除原文件并增加新的未追踪文件，而`git rm`命令相当于`mv`+`git rm`+`git add`
+
+#### git rm
+- `git rm <file>` 若文件没有修改，则将文件从暂存区和工作区中移除
+- `git rm -f <file>` 若已修改，可使用`-f`强制移除
+- `git rm --cached <file>` 仅将文件从暂存区移除，解除git的追踪，但暂存区文件须与工作区文件或HEAD相同
+- `git rm log/\*.log` 移除`log`文件夹下的所有`.log`文件，反斜杠用来避免shell的文件名拓展
+- 直接删除只会从工作区移除，而`git rm` 会缓存文件的移除，可以直接提交，解除git对该文件的追踪，相当于`rm`+`git add`
+
+
+## Recover and stash
 #### git restore
 - `git restore [<pathspec>…​]` 将工作区文件恢复至与暂存区一致
 - `git restore --staged <pathspec>…​` 将暂存区文件恢复至与HEAD一致
@@ -92,18 +125,13 @@
   - `--hard` 重置工作区与暂存区
 - 会同时移动HEAD和分支到指定提交上，更加危险，而checkout只会移动HEAD
 
-#### git rm
-- `git rm <file>` 若文件没有修改，则将文件从暂存区和工作区中移除
-- `git rm -f <file>` 若已修改，可使用`-f`强制移除
-- `git rm --cached <file>` 仅将文件从暂存区移除，解除git的追踪，但暂存区文件须与工作区文件或HEAD相同
-- `git rm log/\*.log` 移除`log`文件夹下的所有`.log`文件，反斜杠用来避免shell的文件名拓展
-- 直接删除只会从工作区移除，而`git rm` 会缓存文件的移除，可以直接提交，解除git对该文件的追踪，相当于`rm`+`git add`
+#### git stash
+- `git stash` Record the current state of the working directory and the index
+- `git stash list [<log-options>]` List the stash entries that you currently have.
+- `git stash pop [--index] [<stash>]`  Remove a single stashed state from the stash list and apply it on top of the current working tree state. The working directory must match the index.
+- `git stash apply [--index] [<stash>]` Like pop, but do not remove the state from the stash list. 
+- `git stash drop [<stash>]` Remove a single stash entry from the list of stash entries.
 
-#### git mv
-- `git mv <source> <destination>` 若目标文件不存在，则重命名
-- `git mv <source> <destination directory>` 移动
-- `-f` 强制重命名或移动，即使目标存在
-- git不追踪文件的移动，所以直接移动或重命名会被当成直接删除原文件并增加新的未追踪文件，而`git rm`命令相当于`mv`+`git rm`+`git add`
 
 
 
@@ -154,7 +182,7 @@
 
 
 
-## Sharing and Updating Projects
+## Remote
 #### git clone
 - `git clone <url>` 克隆服务器代码到本地`origin`远程仓库中，并自动使本地master分支追踪远程master分支
 - `git clone <url> <directory-name>` 指定仓库名
@@ -182,7 +210,7 @@
 
 
 ## Configuration
-#### check config
+#### show config
 ```shell
 # list all the settings Git can find at that point
 git config --list
