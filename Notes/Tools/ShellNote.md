@@ -326,6 +326,55 @@ fg %job_id
 
 
 
+## Remote Connect
+
+#### ssh-keygen
+```shell
+Normally this program generates the key and asks for a file in which to store 
+the private key. The public key is stored in a file with the same name but 
+“.pub” appended.
+ssh-keygen will by default write keys in an OpenSSH-specific format, which 
+offers better protection and allow storage of key comments within the private 
+key file.
+
+-f filename
+      Specifies the filename of the key file.
+-t dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa
+      Specifies the type of key to create. The default is RSA.
+-a rounds
+      Specifies the number of KDF (key derivation function) rounds used.
+      The default is 16 rounds.
+-b bits
+      Specifies the number of bits in the key to create. 
+      For RSA keys, the minimum size is 1024 bits and the default is 3072 bits.
+-C comment
+      Provides a new comment.
+-c    Requests changing the comment in the private and public key files.
+      The program will prompt for the file containing the private keys, 
+      for the passphrase if the key has one, and for the new comment.
+-P passphrase
+      Provides the (old) passphrase.
+-p    Requests changing the passphrase of a private key file instead of 
+      creating a new private key.  The program will prompt for the file 
+      containing the private key, for the old passphrase, and twice for 
+      the new passphrase.
+-R hostname | [hostname]:port
+      Removes all keys belonging to the specified hostname (with optional 
+      port number) from a known_hosts file. This option is useful when a 
+      known host has a new key.
+
+# Generate a key interactively:
+ssh-keygen
+# Specify file in which to save the key:
+ssh-keygen -f ~/.ssh/filename
+# Generate an ed25519 key with 100 key derivation function rounds:
+ssh-keygen -t ed25519 -a 100
+# Generate an RSA 4096-bit key with email as a comment:
+ssh-keygen -t dsa|ecdsa|ed25519|rsa -b 4096 -C "comment|email"
+# Change the password of a key:
+ssh-keygen -p -f ~/.ssh/filename
+```
+
 
 
 
