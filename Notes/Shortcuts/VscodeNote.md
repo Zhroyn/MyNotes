@@ -49,7 +49,6 @@ Source Control: `Ctrl + Shift + G`
 Run and Debug: `Ctrl + Shift + D`
 Extensions: `Ctrl + Shift + X`
 
-
 ##### Others Pages
 Show all commands: `Ctrl + Shift + P/F1`
 Open Settings: `Ctrl + ,`
@@ -82,6 +81,10 @@ Box Selection: `Shift + Arrow`
 Add a cursor: `Ctrl + Alt + Arrow`
 Create cursor on all occurrence of the word: `Ctrl + Shift + L`
 
+
+##### Split Editor
+Split Editor: `Ctrl + \`
+Split Editor Orthogonal: `Ctrl + K and Ctrl + \`
 
 
 
