@@ -298,6 +298,14 @@ git config --global alias.st status
 git config --global alias.last 'log -1 HEAD'
 git config --global alias.unstage 'reset HEAD --'
 ```
+#### mergetool and difftool
+```shell
+merge.tool=code
+mergetool.code.cmd='code --wait $MERGED'
+
+diff.tool=code
+difftool.code.cmd='code --wait --diff $LOCAL $REMOTE'
+```
 #### Other configurations
 ```shell
 #### Default Editor
