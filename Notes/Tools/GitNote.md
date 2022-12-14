@@ -3,7 +3,7 @@
 
 ## Common usage
 #### Redo commit
-- `git commit --amend`  If you want to redo that commit, make the additional changes you forgot, stage them, and commit again using the `--amend` option. Or you can stage nothing to change commit message only.
+- `git commit --amend` If you want to redo that commit, make the additional changes you forgot, stage them, and commit again using the `--amend` option. Or you can stage nothing to change commit message only.
 
 #### Unstage
 - `git restore --staged <file>...`
@@ -12,6 +12,9 @@
 #### Discard changes
 - `git restore <file>...`
 - `git checkout -- <file>...`
+
+#### Relate upstream branch
+- `git branch -u <upstream>` Set up the current branch's tracking information, so `<upstream>` is considered the current branch's upstream branch
 
 #### Show Objects
 - `git show <object>` show human-readable information without specific `sha1`
@@ -142,35 +145,57 @@
 ## Branching and Merging
 
 #### git branch
-- `git branch [-l]` 显示本地分支信息
-- `git branch -v|-vv` 显示详细信息
-- `git branch <branchname> [<start-point>]` 在起始点（默认为HEAD）创建分支
-- `git branch (-m|-M) [<oldbranch>] <newbranch>` 重命名分支
-- `git branch (-c|-C) [<oldbranch>] <newbranch>` 拷贝分支
-- `git branch (-d|-D) [-r] <branchname>…​` 删除分支
-- `git branch -r|--remote` 显示远程仓库分支信息
-- `git branch -u|--set-upstream-to=<upstream> [<branchname>]` 设置上游分支，将本地分支与远程分支进行关联，本地分支默认为当前分支
+- `git branch <branchname> [<start-point>]` create branch
+- `git branch -d|--delete <branchname>…​` delete branch
+- `git branch -m|--move [<oldbranch>] <newbranch>` rename branch
+- `git branch -c|--copy [<oldbranch>] <newbranch>` copy branch
+- `git branch -l|--list [<pattern>]`
+  - List branches. 
+  - With optional `<pattern>`, list only the branches that match the pattern(s).
+- `git branch -v|-vv`
+  - When in list mode, show sha1 and commit subject line for each head, along with relationship to upstream branch (if any).
+  - If given twice, print the path of the linked worktree (if any) and the name of the upstream branch
+<br>
+
+- `git branch -r|--remotes`
+  - List or delete (if used with `-d`) the remote-tracking branches.
+  - Combine with `--list` to match the optional pattern(s).
+- `git branch -u|--set-upstream-to <upstream> [<branchname>]`
+  - Set up `<branchname>`'s tracking information so `<upstream>` is considered `<branchname>`'s upstream branch. 
+  - If no `<branchname>` is specified, then it defaults to the current branch.
+- `git branch --unset-upstream [<branchname>]` 
+  - Remove the upstream information for `<branchname>`.
+  - If no branch is specified it defaults to the current branch.
 
 #### git checkout
-- `git checkout <branch>` HEAD指向指定分支，并改变工作区和暂存区文件，工作区的修改会保持。如果`<branch>`本地不存在，但在一个远程仓库中存在，则相当于`git checkout -b <branch> --track <remote>/<branch>`
-- `git checkout -b <new-branch> [<start-point>]` 若直接指明本地分支，则在其上新建分支，并切换到新建分支上
-- `git checkout [-f] [<tree-ish>] <pathspec>…​` 未提供树时，用暂存区文件重写工作区文件，否则用树中文件重写工作区和暂存区文件
-- 在本地新建分支关联到远程分支
-  - `git checkout -b <new-branch> <remote>/<branch>` 若指明远程仓库/远程分支，则会新建分支关联到远程分支，并切换到远程分支的文件
-  - `git checkout -b <new-branch> --track <remote>/<branch>`
-  - `git checkout --track <remote>/<branch>` 会新建与远程分支同名的分支
+- `git checkout <branch>`
+  - To prepare for working on `<branch>`, switch to it by updating the index and the files in the working tree, and by pointing `HEAD` at the branch.
+  - Local modifications to the files in the working tree are kept.
+  - If `<branch>` is not found but there does exist a tracking branch in exactly one remote with a matching name and `--no-guess` is not specified, treat as equivalent to `git checkout -b <branch> --track <remote>/<branch>`
+- `git checkout -b <new-branch> [-t|--track[=direct|inherit]] [<start-point>]`
+  - If no specified, the `<start-point>` branch is `HEAD`
+  - `-t`, `--track`, or `--track=direct` means to use the `<start-point>` branch itself as the upstream
+  - `--track=inherit` means to copy the upstream configuration of the `<start-point>` branch.
+  - If no `-b` option is given, the name of the new branch will be derived from the remote-tracking branch. Command may be like `git checkout -t origin/dev`
+- `git checkout [-f|--force|--ours|--theirs|-m|--merge] [<tree-ish>] [--] <pathspec>…​`
+  - Overwrite the contents of the files that match the pathspec.
+  - When the `<tree-ish>` (most often a commit) is not given, overwrite working tree with the contents in the index.
+  - When the `<tree-ish>` is given, overwrite both the index and the working tree with the contents at the <tree-ish>.
 
 #### git switch
 - `git switch <branch>` 切换分支
-- `git switch (-c|-C) <new-branch> [<start-point>]` 新建分支并切换
+- `git switch -c|-C <new-branch> [<start-point>]` 新建分支并切换
 
 #### git merge
 - `git merge <commit>…​`
+  - Incorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch. 
   - Fast Forward Merge: 若HEAD指向分支为指定分支的祖先，HEAD指向分支移至指定分支（一般先移动到master）
   - Three-way Merge: 若master已有修改提交，则比较Mine, Yours, and Ancestor。若Mine和Yours一致，则不变；若不一致，但有一份与Ancestor一致，则保留不同的版本；若都不一致，则产生不可自动修改的冲突
-- `git merge --continue` 冲突之后经过手动修改，继续合并
-- `git merge --abort` 返回合并前的状态
-- `git merge --quit` 保持工作区和暂存区文件不变，退出合并
+- `git merge --continue`
+  - After resolving the conflicts and `git add` them to the index, use `git commit` or `git merge --continue` to seal the deal.
+  - The latter command checks whether there is a (interrupted) merge in progress before calling git commit.
+- `git merge --abort` Abort the current merge process, and try to reconstruct the pre-merge state, including the index and working tree.
+- `git merge --quit` Forget about the current merge in progress. Leave the index and the working tree as-is.
 
 #### git tag
 - `git tag` 列出所有标签
@@ -218,7 +243,7 @@
 # list all the settings Git can find at that point
 git config --list
 
-# check a specific key’s value
+# show a specific key’s value
 git config user.name
 
 # show which configuration file had the final say in setting that value
