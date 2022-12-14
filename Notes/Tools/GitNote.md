@@ -107,6 +107,9 @@
 - 直接删除只会从工作区移除，而`git rm` 会缓存文件的移除，可以直接提交，解除git对该文件的追踪，相当于`rm`+`git add`
 
 
+
+
+
 ## Recover and stash
 #### git restore
 - `git restore [<pathspec>…​]` 将工作区文件恢复至与暂存区一致
