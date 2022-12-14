@@ -1,49 +1,5 @@
-`dir`: 查看当前目录下的内容
-- `dir .` 在当前目录查找
-- `dir ..` 在当前目录父目录查找
-- `dir test.c` 查找特定文件
-- 支持通过通配符查找文件。通配符*代表任意字符，?代表单个字符
-  - `dir *.json` 查找末五位为`.json`的文件（查找指定类型文件）
-- `dir /?` 查看`dir`命令选项
-```
-/A          显示具有指定属性的文件。
-属性         D  目录                R  只读文件
-            H  隐藏文件            A  准备存档的文件
-            S  系统文件            I  无内容索引文件
-            L  重新分析点          O  脱机文件
-            -  表示“否”的前缀
-/B          使用空格式(没有标题信息或摘要)。
-/C          在文件大小中显示千位数分隔符。这是默认值。用 /-C 来
-            禁用分隔符显示。
-/D          跟宽式相同，但文件是按栏分类列出的。
-/L          用小写。
-/N          新的长列表格式，其中文件名在最右边。
-/O          用分类顺序列出文件。
-排列顺序     N  按名称(字母顺序)     S  按大小(从小到大)
-            E  按扩展名(字母顺序)   D  按日期/时间(从先到后)
-            G  组目录优先           -  反转顺序的前缀
-/P          在每个信息屏幕后暂停。
-/Q          显示文件所有者。
-/R          显示文件的备用数据流。
-/S          显示指定目录和所有子目录中的文件。
-```
----
-
-`pwd`: 显示当前工作目录的绝对路径
-`cls`: 清除当前屏幕内容
-`md or mkdir 目录名`: 在当前工作目录创建文件夹
-
-
----
-`cd`: 改变当前目录的路径
-- 可按tab自动补全
-- `cd ../.. or ..\..` 可返回父目录的父目录
-
-`copy`: 拷贝文件
-- `copy 路径名+源文件名 路径名` 将源文件复制到目标目录下
-- `copy 路径名+源文件名 路径名+目的文件名` 将源文件复制到目标目录下并重命名
-
-`del`: 删除文件
-- `del *.*` 删除所有文件
-- `del *` 删除所有文件
-- `del *.json` 删除所有.java文件
+#### Set command aliases
+- `Test-Path $profile` If return false, then need to perform the next step
+- `New-Item -path $profile -itemtype file -Force` It will create or override a file at `$profile`
+- `function shortcut {command}` Set aliases
+- `Set-Executionpolicy Remotesigned` Executed this as administrator
