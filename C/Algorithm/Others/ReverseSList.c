@@ -52,6 +52,7 @@ void PrintList(List L)
         printf("%d ", L->data);
         L = L->next;
     }
+    printf("\n");
 }
 
 int main()
