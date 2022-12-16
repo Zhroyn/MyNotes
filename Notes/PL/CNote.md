@@ -405,7 +405,7 @@ int (* pf[3])(char) //声明一个指针数组，每个指针指向返回值为i
 - 无论在何处声明，都会在程序被载入内存时执行完毕，不会在运行时执行
 - 声明在块内，则为块作用域的静态变量，即局部静态变量（内部静态存储类别），无链接
 - 若声明在所有函数外，则为内部链接的静态变量，具有文件作用域，**内部链接**
-- 若未显式初始化，则会被初始化为0
+- 若未显式初始化，则会被初始化为0，即使是局部变量
 
 `extern`: 声明外部变量（外部存储类别）
 - 外部变量声明在所有函数外，具有静态存储期、文件作用域和**外部链接**
@@ -769,7 +769,7 @@ __DATE__    //预处理的日期
 __TIME__    //翻译代码时的时间
 __LINE__    //当前所处行号
 __func__    //当前所处函数
-__STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设置为201101L
+__STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设置为201112L
 ```
 
 
@@ -813,7 +813,35 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
     #include "general.h"
 #endif
 ```
+**#line 和 #error**
+```C
+//重置__LINE__和__FILE__
+#line 1000
+#line 10 "cool.h"
 
+#if __STDC_VERSION__ != 201112L
+  #error Not C11
+#endif
+```
+**#pragma**
+```C
+//编译指示
+#pragma nonstandardtreatmenttypeB on
+
+//_Pragma运算符
+#define PRAGMA(X) _Pragma(#X)
+#define LIMRG(X) PRAGMA(STDC CX_LIMITED_RANGE X)
+```
+**泛型**
+```C
+//第一个项的类型匹配哪个标签，整个表达式的值就是该标签后面的值
+#define MTYPE(X) _Generic((X),\
+    int: "int",\
+    float: "float",\
+    double: "double",\
+    default: "other"\
+)
+```
 
 
 
