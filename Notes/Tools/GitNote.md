@@ -3,7 +3,7 @@
 
 ## Common usage
 #### Redo commit
-- `git commit --amend` If you want to redo that commit, make the additional changes you forgot, stage them, and commit again using the `--amend` option. Or you can stage nothing to change commit message only.
+- `git commit --amend -C HEAD` Change the last commit with the files in the index ,and use the same commit message
 
 #### Unstage
 - `git restore --staged <file>...`
@@ -13,8 +13,12 @@
 - `git restore <file>...`
 - `git checkout -- <file>...`
 
+#### Untrack files
+- `git rm --cached <file>...`
+
 #### Relate upstream branch
-- `git branch -u <upstream>` Set up the current branch's tracking information, so `<upstream>` is considered the current branch's upstream branch
+- `git branch -u <upstream>` Set up the current branch's tracking information
+- `git push -u <remote> <branch>` For every branch that is up to date or successfully pushed, add upstream (tracking) reference while pushing.
 
 #### Show Objects
 - `git show <object>` show human-readable information without specific `sha1`
@@ -147,8 +151,8 @@
 #### git branch
 - `git branch <branchname> [<start-point>]` create branch
 - `git branch -d|--delete <branchname>…​` delete branch
-- `git branch -m|--move [<oldbranch>] <newbranch>` rename branch
-- `git branch -c|--copy [<oldbranch>] <newbranch>` copy branch
+- `git branch -m|--move [<oldbranch>] <newbranch>` rename branch, default is `HEAD`
+- `git branch -c|--copy [<oldbranch>] <newbranch>` copy branch, default is `HEAD`
 - `git branch -l|--list [<pattern>]`
   - List branches. 
   - With optional `<pattern>`, list only the branches that match the pattern(s).
@@ -172,30 +176,45 @@
   - To prepare for working on `<branch>`, switch to it by updating the index and the files in the working tree, and by pointing `HEAD` at the branch.
   - Local modifications to the files in the working tree are kept.
   - If `<branch>` is not found but there does exist a tracking branch in exactly one remote with a matching name and `--no-guess` is not specified, treat as equivalent to `git checkout -b <branch> --track <remote>/<branch>`
+<br>
+
 - `git checkout -b <new-branch> [-t|--track[=direct|inherit]] [<start-point>]`
   - If no specified, the `<start-point>` branch is `HEAD`
   - `-t`, `--track`, or `--track=direct` means to use the `<start-point>` branch itself as the upstream
   - `--track=inherit` means to copy the upstream configuration of the `<start-point>` branch.
-  - If no `-b` option is given, the name of the new branch will be derived from the remote-tracking branch. Command may be like `git checkout -t origin/dev`
-- `git checkout [-f|--force|--ours|--theirs|-m|--merge] [<tree-ish>] [--] <pathspec>…​`
+  - If no `-b` option is given, the name of the new branch will be derived from the remote-tracking branch. For example: `git checkout -t origin/dev`
+<br>
+
+- `git checkout [<tree-ish>] [--] <pathspec>…​`
   - Overwrite the contents of the files that match the pathspec.
   - When the `<tree-ish>` (most often a commit) is not given, overwrite working tree with the contents in the index.
   - When the `<tree-ish>` is given, overwrite both the index and the working tree with the contents at the <tree-ish>.
+  - `--` means do not interpret any more arguments as options.
 
 #### git switch
 - `git switch <branch>` 切换分支
 - `git switch -c|-C <new-branch> [<start-point>]` 新建分支并切换
 
 #### git merge
-- `git merge <commit>…​`
-  - Incorporates changes from the named commits (since the time their histories diverged from the current branch) into the current branch. 
-  - Fast Forward Merge: 若HEAD指向分支为指定分支的祖先，HEAD指向分支移至指定分支（一般先移动到master）
-  - Three-way Merge: 若master已有修改提交，则比较Mine, Yours, and Ancestor。若Mine和Yours一致，则不变；若不一致，但有一份与Ancestor一致，则保留不同的版本；若都不一致，则产生不可自动修改的冲突
+- `git merge <commit>…​` Incorporates changes from the named commits into the current branch, since the time their histories diverged from the current branch.
 - `git merge --continue`
   - After resolving the conflicts and `git add` them to the index, use `git commit` or `git merge --continue` to seal the deal.
   - The latter command checks whether there is a (interrupted) merge in progress before calling git commit.
 - `git merge --abort` Abort the current merge process, and try to reconstruct the pre-merge state, including the index and working tree.
 - `git merge --quit` Forget about the current merge in progress. Leave the index and the working tree as-is.
+- `MERGE_HEAD` ref is set to point to the other branch head.
+- `stage 1` stores the version from the common ancestor, `stage 2` from `HEAD`, and `stage 3` from `MERGE_HEAD` (you can inspect the stages with git ls-files -u). The working tree files contain the result of the "merge" program
+
+#### git rebase
+- `git rebase [<upstream> [<branch>]]`
+  - All changes made by commits in the current branch but that are not in `<upstream>` are saved to a temporary area.
+  - The current branch is reset to `<upstream>`
+  - The commits that were previously saved into the temporary area are then reapplied to the current branch, one by one, in order.
+- `<<branch>` Working branch; defaults to `HEAD`. If `<branch>` is specified, git rebase will perform an automatic `git switch <branch>`
+- If `<upstream>` is not specified, the upstream configured in `branch.<name>.remote` and `branch.<name>.merge` options will be used
+- `--continue` Restart the rebasing process after having resolved a merge conflict.
+- `--abort` Abort the rebase operation and reset HEAD to the original branch.
+- `--quit` Abort the rebase operation but HEAD is not reset back to the original branch. The index and working tree are also left unchanged as a result.
 
 #### git tag
 - `git tag` 列出所有标签
@@ -212,26 +231,43 @@
 
 ## Remote
 #### git clone
-- `git clone <url>` 克隆服务器代码到本地`origin`远程仓库中，并自动使本地master分支追踪远程master分支
-- `git clone <url> <directory-name>` 指定仓库名
+- `git clone <repository> [<directory>]` Clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch.
 
 #### git remote
-- `git remote` 显示所有的远程仓库
-- `git remote -v|--verbose` 在远程仓库的名字后显示url
-- `git remote add <shortname> <url>` 添加新的远程仓库
-- `git remote rename <old> <new>` 重命名远程仓库
-- `git remote remove|rm <remote>` 删除远程仓库
+- `git remote` show all remotes
+- `git remote -v|--verbose` show all remotes verbosely
+- `git remote add <name> <URL>` add remote
+- `git remote rename <old> <new>` rename remote
+- `git remote rm|remove <name>` remove remote
 
 #### git fetch
-- `git fetch <remote>`
+- `git fetch [<options>] [<repository> [<refspec>…​]]`
+- `--all` Fetch all remotes.
+- The names of refs that are fetched, together with the object names they point at, are written to `.git/FETCH_HEAD`.
+
+#### git pull
+- `git pull [<options>] [<repository> [<refspec>…​]]` Incorporates changes from a remote repository into the current branch.
+- `<repository>` should be the name of a remote repository as passed to `git-fetch`.
+- `<refspec>` can name an arbitrary remote ref (for example, the name of a tag) or even a collection of refs with corresponding remote-tracking branches, but usually it is the name of a branch in the remote repository.
+- `--all` Fetch all remotes.
+- `--set-upstream` If the remote is fetched successfully, add upstream (tracking) reference
 
 #### git push
-- `git push` 推送到关联的远程仓库，默认为`origin`
-- `git push <remote>` 若远程仓库存在同名分支则推送至远程
-- `git push <remote> master` 将本地的master分支推送到到远程主机的master分支，如果远程主机的的master分支不存在则会新建
-- `git push -u|--set-upstream <remote-repo> <remote-branch>` 将当前分支与指定远程分支关联，若不存在则新建，
-- `git push <remote> <tagname>` 将本地标签上传到远程
-- `git push <remote> --tags` 将本地所有轻量标签和附注标签上传到远 程
+- `git push [<repository> [<refspec>…​]]` Updates remote refs using local refs, while sending objects necessary to complete the given refs.
+- If `<repository>` argument is not specified, the upstream configured in `branch.<name>.remote` will be used. If the configuration is missing, it defaults to origin.
+- If `<refspec>...` arguments or `--all`, `--mirror`, `--tags` options is not specified, the command finds the default `<refspec>` by consulting `remote.<name>.push` configuration, and if it is not found, honors `push.default` configuration to decide what to push
+-  The format of a `<refspec>` parameter is an optional plus +, followed by `<src>:<dst>`.
+-  If `<dst>` doesn’t start with refs/ (e.g. refs/heads/master) we will try to infer where in refs/* on the destination `<repository>` it belongs based on the type of `<src>` being pushed and whether `<dst>` is ambiguous.
+-  Pushing an empty `<src>` allows you to delete the `<dst>` ref from the remote repository. Deletions are always accepted without a leading `+` in the refspec.
+<br>
+
+- `--all` Push all branches (i.e. refs under `refs/heads/`); cannot be used with other `<refspec>`.
+- `-d|--delete` All listed refs are deleted from the remote repository. This is the same as prefixing all refs with a colon.
+- `--tags` All refs under refs/tags are pushed, in addition to refspecs explicitly listed on the command line.
+- `-u|--set-upstream` For every branch that is up to date or successfully pushed, add upstream (tracking) reference, i.e. `git push -u origin main`
+
+
+
 
 
 
