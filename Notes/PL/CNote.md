@@ -845,4 +845,42 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
 
 
 
+---
+## ***C库***
 
+#### time.h
+```C
+time_t start = time(NULL);  //在time.h中，返回time_t
+Sleep(1000);                //在windows.h中，会挂起进程，参数为毫秒
+time_t end =time(NULL);     //只能精确到秒
+printf("time = %lf\n", difftime(end, start));   //在time.h中
+```
+```C
+clock_t start = clock();    //在time.h中，返回硬件滴答数
+Sleep(1000);                //在windows.h中，会挂起进程，参数为毫秒
+clock_t end = clock();      //可以精确到毫秒
+printf("time = %lf\n",(double)(end-start)/CLK_TCK);
+```
+
+#### windows.h
+```C
+LARGE_INTEGER num;              //在windows.h(winnt.h)中
+QueryPerformanceFrequency(&num);
+long long freq = num.QuadPart;
+QueryPerformanceCounter(&num); 
+long long start = num.QuadPart; 
+Sleep(1000);
+QueryPerformanceCounter(&num); 
+long long end = num.QuadPart;   //可以精确到微秒
+printf("time = %lf\n",(double)(end - start)/freq);
+```
+
+#### sys/time.h
+```C
+struct timeval start, end;
+gettimeofday(&start, NULL);     //可以精确到微秒
+Sleep(200);
+gettimeofday(&end, NULL);
+long timeuse = 1000000*( end.tv_sec-start.tv_sec ) + end.tv_usec - start.tv_usec;
+printf("time = %lf\n", timeuse/1000000.0);
+```
