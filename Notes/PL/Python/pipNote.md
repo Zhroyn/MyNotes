@@ -60,7 +60,7 @@ pip show -f/--files [package]...
 
 ### Mirror Source
 ```shell
-# Check mirror source config
+# Show mirror source config
 pip config list
 
 # Base URL of the Python Package Index (default https://pypi.org/simple)
