@@ -27,6 +27,8 @@ opm_get_max_threads()
 #### for循环
 ```C
 // 并行下一个for语句
+#pragma omp parallel for
+// 分开执行下一个for语句
 #pragma omp for
 
 // 静态调度，分配给每个线程的任务数都是iterate_num/threads_num

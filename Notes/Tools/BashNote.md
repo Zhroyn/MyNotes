@@ -421,7 +421,7 @@ rm -rf path/to/directory
 # Remove files in verbose mode, printing a message for each removed file
 rm -v path/to/directory/*
 ```
-#### ls, mkdir, touch, chmod
+#### ls, ln, mkdir
 **ls**
 ```shell
 ls -1   # List files one per line
@@ -435,6 +435,17 @@ ls -R   # List subdirectories recursively
 -X      #sort alphabetically by entry extension
 -r      #reverse order while sorting
 ```
+**ln**
+```shell
+# Create a symbolic link to a file or directory:
+ln -s /path/to/file_or_directory path/to/symlink
+
+# Overwrite an existing symbolic link to point to a different file:
+ln -sf /path/to/new_file path/to/symlink
+
+# Create a hard link to a file:
+ln /path/to/file path/to/hardlink
+```
 **mkdir**
 ```shell
 # Create multiple directories in the current directory
@@ -442,6 +453,7 @@ mkdir directory_1 directory_2 ...
 # Create directories recursively (useful for creating nested dirs)
 mkdir -p path/to/directory
 ```
+#### touch, chmod
 **touch**
 ```shell
 # Change a file access and modification times
