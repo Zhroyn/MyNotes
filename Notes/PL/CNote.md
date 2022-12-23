@@ -134,6 +134,12 @@ int cmpfunc(const void * a, const void * b)
 - 上述为升序排序
 - 若cmpfunc返回正值则交换
 
+```C
+//在string.h中
+//str1为目标，str2为数据源，n为字节数
+void *memcpy(void *str1, const void *str2, size_t n)
+```
+
 ---
 ## ***运算符***
 
