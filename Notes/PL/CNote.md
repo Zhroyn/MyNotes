@@ -1,88 +1,120 @@
 [toc]
 
-## ***数据类型***
 
-- 类型的级别从高至低依次是: long double , double , float ,
-  unsigned long long , long long , unsigned long , long ,
-  unsigned int , int
-  - 当 int 和 long 大小相同时，unsigned int 的级别高于 long
-- char and short 在表达式中会类型转换（升级）为 int or unsigned int
-- 作为函数参数传递时，char and short 会升级为 int，float 会升级为 double
-- 赋值表达式结果会转换为被赋值变量的类型
 
-#### 整数
 
-###### 转换说明
-十进制: %d or %i
-八进制: %o or %#o
-十六进制: %x or %#x or %#X
 
-unsigned int: %u
-short: %hd  (%ho or %hx or %hu)
-long: %ld  (%lo or %lx or %lu)
-long long: %lld  (%llo or %llx or %llu)
-sizeof or strlen的返回值: %zd
 
-###### 位数
-short: 16  (-32768~32767)
-int: 32  (-2147483648~2147483647)
-long: 32 or 64
-long long: 64
+## Date type
+#### char
+```C
+char c1 = 255;
+char c2 = 257;
+printf("%d\n", c1);
+printf("%d\n", c2);
+// output:
+// 1
+// -1
+```
+
+**ASCII**
+|Dec|Hex|Glyph|
+|:-:|:-:|:---:|
+|48|30|0|
+|57|39|9|
+|65|41|A|
+|90|5A|Z|
+|97|61|a|
+|122|7A|z|
+|32|20|space|
+
+|Dec|Hex|Escape sequence|
+|:-:|:-:|:---:|
+|0|00|\0|
+|8|08|\b|
+|9|09|\t|
+|10|0A|\n|
+|13|0D|\r|
+
+
+#### int
+**bytes**
+`short` : 16 (-32768 ~ 32767)
+`int` : 32 (-2147483648 ~ 2147483647)
+`long` : 32(mycom) or 64(PTA)
+`long long` : 64
 
 2^16 = 65536
 2^32 = 42,9496,7296
 2^64 = 1844,6744,0377,0951,1616
 
-###### 前缀后缀
-二进制前缀为0b or 0B，八进制前缀为0，十六进制前缀为0x or 0X
-long: l or L
-long long: ll or LL
-unsigned long long: ull or LLU or ULL
-(两个L须在一起且大小写相同，U和L大小写可不同，相对位置可不同)
+**prefix and suffix**
+- `Binary` : 0b or 0B
+- `Octal` : 0
+- `Hexadecimal` : 0x or 0X
+<br>
+
+- `long` : l or L
+- `long long` : ll or LL
+- `unsigned long long` : ull or LLU or ULL
 
 
 
-#### 字符
-- 若传入数据过大则会截取末8位
-###### 常用字符ASCII码
-```C
-' ' = 32
-'\0' = 0, '\n' = 10 or `%lf`
-'0' = 48, '9' = 57
-'A' = 65, 'a' = 97
-```
+#### float
+**bytes**
+- `float` : 32 bits, 6-7 significant figures
+  - 1 sign, 8 exponent, 23 mantissa
+- `double` : 64 bits, 15-16 significant figures
+  - 1 sign, 11 exponent, 52 mantissa
+- `long double` : 128 bits, 18-19 significant figures
+  - 1 sign, 15 exponent, 112 mantissa
 
+**format and suffix**
+- `.2`
+- `100.`
+- `.8E-5` (can't exist space)
+- `0x0.1ap8` (this is (0 + 1/16 + 10/256) * (2^8) = 26)
+<br>
 
-#### 浮点数
-###### 转换说明
-- float: `%f`
-- double: `%lf`
-  - scanf()时应使用`%lf`，printf()时应使用`%f` or `%lf`
-- long double: `%Lf`
-- `%g` or `%G`: 根据值的不同，选择`%f` or `%e` or `%E`
-- `%a` or `%A`: 十六进制p计数法
+- `3.666` : double
+- `3.666f` or `3.666F` : float
+- `3.666l` or `3.666L` : long double
 
-###### 位数
-float: 32（8位指数，24位尾数或有效数，至少6位有效数字）
-double: 64（至少13位有效数字）
-long double: 128位（至少与double相同）
-
-###### 其他
-- 使用%.2f会四舍五入，如9.999变为10.00，但9.99仍为9.99
-- 上溢时会显示inf，下溢会损失类型全精度
-- 浮点型常量示例
-  * .2
-  * 100.
-  * .8E-5 （不可加空格）
-  * 0x0.ap4 ((0 + 10/16) * 16 = 10)
-  * 浮点型常量默认为double，加后缀f or F可变为float，加后缀l or L可变为long double
+**others**
+- `%.2f` can be used to round off. For example, 9.999 becomes 10.00, but 9.99 is still 9.99
+- `NAN(Not A Number)` or `IDN(Indeterminate Number)` : `0.0/0.0`
+- `INF(Infinity)` : `1.0/0.0` or `-1.0/0.0`
+- `DEN(Denomarlized)` : `0.01E-305`
 
 
 
-#### 复数
+#### complex
 float_Complex，double_Complex，long double_Complex
 float_Imaginary，double_Imaginary，long double_Imaginary
 (若包含complex.h头文件，可用complex、imaginary代替_Complex、_Imaginary)
+
+
+#### Implicit type conversion
+- automatic type conversion will take place when more than one data type is present in an expression
+- `char` and `short` will be promoted to `int` or `unsigned int` before operation
+- `float` will be promoted to `double` before float operation
+- when signed and unsigned int are both involved, signed int will be converted to unsigned int
+- smaller to larger: `bool -> char -> short -> int -> `
+  `unsigned int -> long -> unsigned long -> `
+  `long long -> float -> double -> long double`
+```C
+int main() {
+    int a = -10;
+    unsigned int b = 5;
+    if (a + b > 0) {
+        if ((-a) + b > 0) {
+            printf("%d\n", a + b);
+        }
+    }
+}
+// output:
+// -5
+```
 
 
 
@@ -91,37 +123,6 @@ float_Imaginary，double_Imaginary，long double_Imaginary
 
 ---
 ## ***函数***
-
-#### 常见函数
-```C
-printf()
-```
-- *修饰符：%\*d可指定字段宽度，%\*.\*f可指定字段宽度和精度
-- 浮点数的字段宽度包括小数点
-- 返回成功打印的字符数，包括空格和转义字符（比如‘\n’就属于一个字符），但不包括‘\0'。发生错误时，返回负值（-1）
-![Graph4-4](../Pictures/Graph4-4.png)
-![Graph4-5](../Pictures/Graph4-5.png)
-
-```C
-scanf()
-```
-- 把字符串读入字符数组，不需要&
-- `scanf()`只会读取字符串的第一个单词
-- `scanf()`会停止在第一个读取错误处（如%d遇到“A”）
-- 若格式字符串转换说明后紧跟其他符号（如"%d:%d"），则输出时必须在其后紧跟该符号，否则会出错
-- 格式字符串中的空格表示读取所有空白字符
-- *修饰符：将\*放在%和转换字符之间，会跳过相应的输出项
-- 返回成功读取的项数的个数，当读取到”文件结尾“时，返回-1
-
-```C
-getchar()
-```
-- 返回类型为int
-
-```C
-putchar()
-```
-- 参数类型为int
 
 ```C
 qsort(array, n, sizeof(int), cmpfunc)
@@ -849,44 +850,150 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
 )
 ```
 
+---
+## C functions
+
+#### printf()
+```C
+int printf(const char *format, ...)
+// float arguments are always promoted to double when used in a varargs call.
+
+// Format placeholder syntax
+%[flags][width][.precision][length]type
+
+// flags field
+-   Left-align the output of this placeholder.
++   Prepends a plus for positive signed-numeric types.
+space   Prepends a space for positive signed-numeric types.
+0   When the 'width' option is specified, prepends zeros for numeric types.
+''  The integer or exponent of a decimal has the thousands grouping separator 
+    applied.
+#   For g and G types, trailing zeros are not removed.
+    For f, F, e, E, g, G types, the output always contains a decimal point.
+    For o, x, X types, the text 0, 0x, 0X, respectively, is prepended to non-
+    zero numbers.
+
+// width field
+Specify a minimum number of characters to output
+// precision field
+specify a maximum limit on the output.
+For floating-point types, it specifies the number of digits of mantissa.
+For the string type, it limits the number of characters.
+The precision field can be a dynamic value with '*'.
+For example, printf("%.*s", 3, "abcdef") will result in "abc".
+
+// length field
+hh	For integer types, expect an int-sized integer promoted from a char.
+h	For integer types, expect an int-sized integer promoted from a short.
+l	For integer types, expect a long-sized integer argument.
+        For floating-point types, this is ignored.
+ll	For integer types, expect a long long-sized integer argument.
+L	For floating-point types, expect a long double argument.
+z	For integer types, expect a size_t-sized integer argument.
+j	For integer types, expect a intmax_t-sized integer argument.
+t	For integer types, expect a ptrdiff_t-sized integer argument.
+
+// type field
+d, i	int as a signed integer. %i will interpret a number as hexadecimal if 
+        it's preceded by 0x, and octal if it's preceded by 0.
+u	Print decimal unsigned int.
+f, F	double in normal (fixed-point) notation.
+        inf, infinity and nan for f
+        INF, INFINITY and NAN for F.
+e, E	double value in standard form (d.dde±dd or d.ddE±dd).
+g, G	double in either normal or exponential notation, whichever is more 
+        appropriate for its magnitude.
+a, A	double in hexadecimal notation, starting with 0x or 0X.
+x, X	unsigned int as a hexadecimal number.
+o	unsigned int in octal.
+s	null-terminated string.
+c	char (character).
+p	void* (pointer to void) in an implementation-defined format.
+```
+
+#### scanf()
+```C
+int scanf(const char *format, ...)
+
+// Format placeholder syntax
+%[*][width][modifiers]type
+
+[*] indicates the data read from the stream will be omitted
+[width] specifies the maximum chars read from the stream
+```
+
 
 
 ---
-## ***C库***
+## C libaries
 
 #### time.h
 ```C
-time_t start = time(NULL);  //在time.h中，返回time_t
-Sleep(1000);                //在windows.h中，会挂起进程，参数为毫秒
-time_t end =time(NULL);     //只能精确到秒
-printf("time = %lf\n", difftime(end, start));   //在time.h中
+time_t time(time_t *seconds)
+// Returns the seconds since the Epoch (00:00:00 UTC, January 1, 1970).
+// If seconds is not NULL, the return value is also stored in variable seconds.
+
+clock_t clock(void)
+// Returns the number of clock ticks elapsed since the program was launched
 ```
 ```C
-clock_t start = clock();    //在time.h中，返回硬件滴答数
-Sleep(1000);                //在windows.h中，会挂起进程，参数为毫秒
-clock_t end = clock();      //可以精确到毫秒
+//accurate to seconds
+time_t start = time(NULL);
+Sleep(1000);
+time_t end = time(NULL);
+printf("time = %lf\n", difftime(end, start));   //in time.h
+
+//accurate to milliseconds
+clock_t start = clock();
+Sleep(1000);
+clock_t end = clock();
 printf("time = %lf\n",(double)(end-start)/CLK_TCK);
 ```
 
 #### windows.h
 ```C
-LARGE_INTEGER num;              //在windows.h(winnt.h)中
+void Sleep(DWORD dwMilliseconds)
+// Suspend the current thread for a specific time
+// In Windows, the argument is milliseconds
+
+QueryPerformanceFrequency(&num);
+// Retrieve the frequency of the performance counter.
+QueryPerformanceCounter(&num); 
+// Retrieve the current value of the performance counter,
+```
+```C
+//accurate to microseconds
+LARGE_INTEGER num;
 QueryPerformanceFrequency(&num);
 long long freq = num.QuadPart;
+
 QueryPerformanceCounter(&num); 
 long long start = num.QuadPart; 
 Sleep(1000);
 QueryPerformanceCounter(&num); 
-long long end = num.QuadPart;   //可以精确到微秒
+long long end = num.QuadPart;
+
 printf("time = %lf\n",(double)(end - start)/freq);
 ```
 
 #### sys/time.h
 ```C
+int gettimeofday(struct timeval*tv, struct timezone *tz)
+// Return the number of seconds and microseconds since the Epoch.
+
+struct timeval{
+    long int tv_sec;  //seconds
+    long int tv_usec; //microseconds
+}
+```
+```C
+//accurate to microseconds
 struct timeval start, end;
-gettimeofday(&start, NULL);     //可以精确到微秒
+
+gettimeofday(&start, NULL);
 Sleep(200);
 gettimeofday(&end, NULL);
-long timeuse = 1000000*( end.tv_sec-start.tv_sec ) + end.tv_usec - start.tv_usec;
+
+long timeuse = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
 printf("time = %lf\n", timeuse/1000000.0);
 ```
