@@ -18,23 +18,23 @@ printf("%d\n", c2);
 ```
 
 **ASCII**
-|Dec|Hex|Glyph|
-|:-:|:-:|:---:|
-|48|30|0|
-|57|39|9|
-|65|41|A|
-|90|5A|Z|
-|97|61|a|
-|122|7A|z|
-|32|20|space|
+| Dec | Hex | Glyph |
+| :-: | :-: | :---: |
+| 48  | 30  | 0 |
+| 57  | 39  | 9 |
+| 65  | 41  | A |
+| 90  | 5A  | Z |
+| 97  | 61  | a |
+| 122 | 7A  | z |
+| 32  | 20  | space |
 
-|Dec|Hex|Escape sequence|
-|:-:|:-:|:---:|
-|0|00|\0|
-|8|08|\b|
-|9|09|\t|
-|10|0A|\n|
-|13|0D|\r|
+| Dec | Hex | Escape sequence |
+| :-: | :-: | :---: |
+| 0   | 00  | \0 |
+| 8   | 08  | \b |
+| 9   | 09  | \t |
+| 10  | 0A  | \n |
+| 13  | 0D  | \r |
 
 
 #### int
@@ -87,13 +87,6 @@ printf("%d\n", c2);
 - `DEN(Denomarlized)` : `0.01E-305`
 
 
-
-#### complex
-float_Complex，double_Complex，long double_Complex
-float_Imaginary，double_Imaginary，long double_Imaginary
-(若包含complex.h头文件，可用complex、imaginary代替_Complex、_Imaginary)
-
-
 #### Implicit type conversion
 - automatic type conversion will take place when more than one data type is present in an expression
 - `char` and `short` will be promoted to `int` or `unsigned int` before operation
@@ -120,94 +113,99 @@ int main() {
 
 
 
-
 ---
-## ***函数***
+## Operators and Expressions
+- `/` : Signed integer division truncates towards zero, i.e. `5/-2 = -2`
+- `%` : The sign of the result is the same as the left-hand operand, i.e. `-11 % ±5 = -1`
+- `-` : If the operand of negative operator `-` is an unsigned data type, the result will be the maximum value of the unsigned data type, minus the value of the operand.
+- `sizeof` : Return the bytes of the data type of its operand. It must be enclosed in parentheses when the operand is a type name.
+- `,` : Return the value of the last expression. It must be enclosed in parentheses when used in function call.
 
-```C
-qsort(array, n, sizeof(int), cmpfunc)
+#### Operator precedence
+|Description|Operator|Associativity|
+| :---: | :---: | :---: |
+| Suffix | ++ -- []   ()   ·   -> |Left-to-right|
+| Prefix | ++ -- ! ~ + - * & sizeof (*type*) _Alignof |**Right-to-left**|
+| Multiple and divide | * / % |Left-to-right|
+| Plus and Minus | +    -	        |Left-to-right|
+| Bitwise shift | <<    >>	        |Left-to-right|
+| Relational | <  <=   >  >=      |Left-to-right|
+| Renational | ==    !=	        |Left-to-right|
+| Bitwise AND | &	            |Left-to-right|
+| Bitwise XOR | ^	            |Left-to-right|
+| Bitwise OR | &#124;	        |Left-to-right|
+| Logical AND | &&	            |Left-to-right|
+| Logical OR | &#124;&#124;	|Left-to-right|
+| Ternary conditional | ? :	            |**Right-to-left**|
+| Assignment | =  +=  -=  *=  /= %= &=  ^= &#124;= <<= >>=	|**Right-to-left**|
+| Comma | ,	                |Left-to-right|
 
-int cmpfunc(const void * a, const void * b)
-{
-    return (*(int*)a - *(int*)b);
-}
-```
-- 上述为升序排序
-- 若cmpfunc返回正值则交换
 
-```C
-//在string.h中
-//str1为目标，str2为数据源，n为字节数
-void *memcpy(void *str1, const void *str2, size_t n)
-```
+#### Side effects
+- Accessing a `volatile` object
+- Modifying an object
+- Modifying a file
+- A call to a function which performs any of the above side effects
 
----
-## ***运算符***
 
-###### 优先级
-| 名称 | 运算符	| 结合律 |
-| ---- | ----- | ----- |
-|后缀运算符| []   ()   ·   ->   |从左到右|
-|一元运算符| ++   --   !   ~   +   -   *   &   sizeof |**从右到左**|
-|类型转换运算符| (*type*)	    |**从右到左**|
-|乘除法运算符| *    /    %	    |从左到右|
-|加减法运算符| +    -	        |从左到右|
-|移位运算符| <<    >>	        |从左到右|
-|关系运算符| <  <=   >  >=      |从左到右|
-|相等运算符| ==    !=	        |从左到右|
-|位运算符 AND| &	            |从左到右|
-|位运算符 XOR| ^	            |从左到右|
-|位运算符 OR| &#124;	        |从左到右|
-|逻辑运算符 AND| &&	            |从左到右|
-|逻辑运算符 OR| &#124;&#124;	|从左到右|
-|条件运算符| ? :	            |**从右到左**|
-|赋值运算符| =  +=  -=  *=  /= %= &=  ^= &#124;= <<= >>=	|**从右到左**|
-|逗号运算符| ,	                |从左到右|
+#### Sequence points
+All the side effects of previous expression evaluations must be complete at a sequence point.
 
-###### 其他
-- /: C99后，负数的整除除法为趋零截断（-5 / 2 = -2）
-- %: 负数求模结果的正负性与第一个数相同，趋零截断（-11 % ±5 = -1）
-<br>
-- 可通过在数据前加 (*type*) 进行强制类型转换
-- 若用于数据类型，sizeof 后需加 ()
-<br>
-- 比较浮点数最好只使用大于小于
-- 包含 iso646.h 头文件，便可用 and 代替 &&，or 代替 ||，not 代替 !
-- && 和 || 运算符都是序列点
-<br>
-- 条件运算符：expression1 ? expression2 : expression3。若expression1为真，则表达式的值为expression2，否则为expression3。如 max = (a > b) ? a : b
-- 逗号运算符：是一个序列点，左侧项副作用会在执行右侧项之前发生，以最后一个表达式的值作为整个表达式的值
+- A call to a function (after argument evaluation is complete)
+- The end of the left-hand operand of the `&&`
+- The end of the left-hand operand of `||`
+- The end of the left-hand operand of `,`
+- The end of the first operand of `a ? b : c`
+- The end of an initialisation expression
+- The end of an expression statement (i.e. an expression followed by `;`)
+- The end of the controlling expression of an `if` or `switch` statement
+- The end of the controlling expression of a `while` or `do` or `for` statement
+- The end of the expression in a return statement
+- Immediately before the return of a library function
+- After the actions associated with an item of formatted I/O
+- Immediately before and after a call to a comparison function (as called for example by `qsort`)
+
+
 
 
 
 
 ---
-## ***C控制语句***
+## Statements
 
-#### continue语句
-- 在 while 和 do while 循环中，会跳转到测试表达式
-- 在 for 循环中，会跳转到更新表达式，然后进入测试表达式
-
-#### break语句
-- 会直接跳转到循环后面第一条语句，更新也跳过
-
-#### switch语句
-- switch 的测试表达式必须是整型表达式，case 标签必须是整型常量或整型常量表达式
-- 可使用 default 标签，当没有匹配的标签时会跳转到 default : 标签行
+**switch statement**
+- All of the expressions compared must be of a constant integer type (e.g., a literal integer or an expression built of literal integers).
 ```C
-switch(expression){
+switch(test){
     case constant-expression :
-       statement(s);
+       statement;
     case constant-expression :
-       statement(s);
-
+       statement;
+    ...
     default :
-       statement(s);
+       statement;
 }
 ```
 
-#### goto语句
-- 把控制无条件转移到同一函数内的被标记的语句
+**do statement**
+```C
+do
+  statement
+while (test);
+```
+
+**goto statement**
+- Unconditionally jump to the place of a specified label in the same function
+- Label names do not interfere with other identifier names
+
+**break statement**
+- If the break statement is inside of a loop or switch statement which itself is inside of a loop or switch statement, the break only terminates the innermost loop or switch statement.
+
+**continue statemnet**
+- Used in loops to jump to test
+- If the a continue statement is inside a loop which itself is inside a loop, then it affects only the innermost loop.
+
+
 
 
 
@@ -921,6 +919,51 @@ int scanf(const char *format, ...)
 [*] indicates the data read from the stream will be omitted
 [width] specifies the maximum chars read from the stream
 ```
+
+#### memcpy(), memmove()
+```C
+// in string.h
+
+void* memcpy(void *restrict dest, const void *restrict src, size_t count)
+// Copy [count] chars from src to dest as unsigned char array.
+// the behavior is undefined if the objects overlap. 
+// The behavior is undefined if access occurs beyond the end of the dest array.
+// The behavior is undefined if either dest or src is an invalid or null pointer.
+
+void* memmove(void* dest, const void* src, size_t count);
+// Copy [count] chars from src to dest as unsigned char array.
+// The objects may overlap.
+// The behavior is undefined if access occurs beyond the end of the dest array.
+// The behavior is undefined if either dest or src is an invalid or null pointer.
+```
+
+#### qsort(), bsearch()
+```C
+// in stdlib.h
+
+void qsort( void *ptr, size_t count, size_t size,
+            int (*comp)(const void *, const void *) )
+// Sorts the array pointed to by ptr in ascending order.
+// If comp indicates two elements as equivalent, their order is unspecified.
+
+void* bsearch( const void *key, const void *ptr, size_t count, size_t size,
+               int (*comp)(const void*, const void*) );
+// Finds an element in an ascending array pointed to by ptr.
+// Return the pointer to an element equal to *key, or null pointer if not found.
+
+
+// Example:
+int comp(const void *a, const void *b) {
+    return *(int *)a - *(int *)b;
+}
+
+int a[5] = {2, 1, 4, 5, 3};
+qsort(a, 5, sizeof(int), comp);
+
+int key = 3;
+int *res = bsearch(&key, a, 5, sizeof(int), comp);
+```
+
 
 
 
