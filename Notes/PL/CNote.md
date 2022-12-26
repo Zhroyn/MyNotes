@@ -13,20 +13,20 @@ char c2 = 257;
 printf("%d\n", c1);
 printf("%d\n", c2);
 // output:
-// 1
 // -1
+// 1
 ```
 
 **ASCII**
 | Dec | Hex | Glyph |
 | :-: | :-: | :---: |
+| 32  | 20  | space |
 | 48  | 30  | 0 |
 | 57  | 39  | 9 |
 | 65  | 41  | A |
 | 90  | 5A  | Z |
 | 97  | 61  | a |
 | 122 | 7A  | z |
-| 32  | 20  | space |
 
 | Dec | Hex | Escape sequence |
 | :-: | :-: | :---: |
@@ -189,9 +189,9 @@ switch(test){
 
 **do statement**
 ```C
-do
-  statement
-while (test);
+do {
+  statement;
+} while (test);
 ```
 
 **goto statement**
@@ -202,7 +202,7 @@ while (test);
 - If the break statement is inside of a loop or switch statement which itself is inside of a loop or switch statement, the break only terminates the innermost loop or switch statement.
 
 **continue statemnet**
-- Used in loops to jump to test
+- Used in loops to unconditionally jump to test
 - If the a continue statement is inside a loop which itself is inside a loop, then it affects only the innermost loop.
 
 
@@ -210,89 +210,143 @@ while (test);
 
 
 ---
-##  ***字符串及字符串函数***
+##  String
 
-- 字符串最后一个字符为NULL，最大strlen比size小1
-- `char s[]` 不可改变s指向的地址，且会将静态存储区中的字符串拷贝到数组中，产生一个副本
-- `char *s` 直接指向静态存储区的字符串，可以改变指向地址，但修改指向地址的值的行为是未定义的，最好使用`const`限定符
-
-#### 字符串函数
+#### string.h
 ```C
-gets(char*)     //读取整行输入，并丢弃换行符。可能导致缓冲区溢出
-                //若读到文件末尾返回空指针NULL
-puts(char*)     //只显示字符串，并加上换行符
+// Returns the length of the givenstring, not including the first NULL
+size_t strlen( const char *str )
 
-fgets(str, n, stdin)    //str必须被分配内存
-                        //读入n-1个字符，遇到换行符停止，会读入换行符
-                        //若读到文件末尾返回空指针NULL
-fputs(str, stdout)      //不会附加换行符
+// Compares two null-terminated byte strings
+// Return negative value if lhs appears before rhs in lexicographical order
+int strcmp( const char *lhs, const char *rhs )
+// Compares at most count characters of two possibly null-terminated arrays
+int strncmp( const char *lhs, const char *rhs, size_t count )
 
-scanf()     //遇到空白字符停止，不会读入空白字符
-            //若数组大小为6，则应使用%5s最多读入5个字符
+// Finds the first occurrence of ch
+// The terminating null character can also be found
+// Return pointer to the found character in str, or NULL if not found
+char *strchr( const char *str, int ch )
+// Finds the last occurrence of ch
+char *strrchr( const char *str, int ch )
 ```
 ```C
-strlen()
+// Returns a copy of dest
+// The behavior is undefined if the destination array is not large enough.
+// The behavior is undefined if the strings overlap.
+// The behavior is undefined if either dest or src is not null-terminated.
+char *strcat( char *restrict dest, const char *restrict src )
+// Appends at most count characters from the src, stopping if NULL is found
+char *strncat( char *restrict dest, const char *restrict src, size_t count )
 
-strcat(s1, s2)      //s1附加s2的备份，s2不变
-strncat(s1, s2, n)  //防止数组溢出，n最大为sizeof(s1)-strlen(s1)-1
+// The undefined behavior is the same as upper.
+char *strcpy( char *restrict dest, const char *restrict src )
+// Copies at most count characters, including the terminating null character
+// If count is reached before entirely copied, the result is not null-terminated.
+char *strncpy( char *restrict dest, const char *restrict src, size_t count )
+```
 
-strcmp(s1, s2)      //(mingw)看第一个不同的字符，若s1在前则返回-1，若s1在后则返回1
-strncmp(s1, s2, n)  //比较前n个字符
+#### stdio.h, stdlib.h
+```C
+// Writes the results to a character string buffer.
+int sprintf( char *restrict buffer, const char *restrict format, ... )
+// At most bufsz - 1 characters are written, unless bufsz is zero.
+int snprintf( char *restrict buffer, size_t bufsz,
+              const char *restrict format, ... )
 
-strcpy(s1, s2)      //将源字符串(s2)拷贝到目标字符串(s1)，返回第一个参数的值
-strncpy(s1, s2, n)  //n为可拷贝的最大字符数，若s2第n个不是空字符，则副本不会包含空字符
+// Reads the data from null-terminated character string buffer.
+int sscanf( const char *restrict buffer, const char *restrict format, ... )
 
-strchr(str, c)      //若包含c字符，则返回str字符串首位置指针，否则返回空指针
-strrchr(str, c)     //返回c字符最后出现的位置（末尾的空字符也属于字符串）
 ```
 ```C
-sprintf(str,"...",...)  //在stdio.h中，将格式字符串储存到str
+// Converts an int to a null-terminated string using the specified base
+// Return a pointer to the resulting null-terminated string
+char *itoa( int value, char* str, int base)
+char *ltoa( int value, char* str, int base)
 
-atoi(str)   //在stdlib.h中，将str开头数字部分转化为整型返回，若开头无数字则返回0
-itoa(num, str, n)   //在stdio.h中，将整型转化为n进制字符串后储存到str
 
-strtol(str, char ** end, n) //在stdlib.h中，转化为long，n最大为36
-                            //end指向最后一位有效位数后一个字符
-strtoul(str, char ** end, n)    //在stdlib.h中，转化为unsigned long
-strtod(str, char ** end)    //在stdlib.h中，转化为double
+// Interprets an integer value in a byte string pointed to by str.
+// The implied radix is always 10.
+// Discards any whitespace characters until the first non-whitespace character.
+// Takes as many characters as possible to form a valid integer number.
+// It is undefined if the value of the result cannot be represented in the corresponding type.
+// If no conversion can be performed, ​0​ is returned.
+int atoi( const char *str )
+long atol( const char *str )
+
+// The set of valid values for base is {0,2,3,...,36}
+// If the value of base is ​0​, the numeric base is auto-detected:
+    //if the prefix is 0, the base is octal
+    //if the prefix is 0x or 0X, the base is hexadecimal
+    //otherwise the base is decimal.
+// str_end will be set to point to the character past the last numeric character.
+// If str_end is a null pointer, it is ignored.
+long strtol( const char *restrict str, char **restrict str_end, int base )
+
+
+// Interprets a floating-point value in a byte string pointed to by str.
+double atof( const char* str )
+float strtof( const char *restrict str, char **restrict str_end );
+double strtod( const char *restrict str, char **restrict str_end );
 ```
 
 #### ctype.h
-
-###### 字符测试函数
 ```C
-isalpha()
-isdigit()
-isxdigit()
-isalnum()
+int isalnum( int ch )
+int isalpha( int ch )
+int isdigit( int ch )
+int isxdigit( int ch ) //checks if a character is a hexadecimal character
 
-islower()
-isupper()
+int islower( int ch )
+int isupper( int ch )
 
-isblank()  //空格或制表符
-isspace()  //所有空白字符：空格，水平制表符，换行符，垂直制表符'\v'，提要'\f'，回车'\r'
+int isblank( int ch )  //only space and horizontal tab in the default C locale
+int isspace( int ch )  //' ', '\n', '\r', '\t', '\v', '\f'
 
-isgraph()  //除空格之外的可打印字符
-ispunct()  //除空格和字母数字之外的可打印字符
+int ispunct( int ch )  //!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~
+int iscntrl( int ch )  //i.e. codes 0x00-0x1F and 0x7F
 
-iscntrl()  //控制字符，Ascii码为0-31
-```
-###### 字符映射函数
-```C
-tolower()
-toupper()
+// Checks if the given character has a graphical representation
+// number, letter, punctuation
+int isgraph( int ch )
+// Checks if the given character can be printed
+// number, letter, punctuation, space
+int isprint( int ch )
+
+
+int tolower( int ch )
+int toupper( int ch )
 ```
 
 
 
 
 ---
-## ***数组与指针***
+## Array and Pointer
 
-- 数组名表示的是“常量”，不是可修改的左值
-- 左值为指向对象的表达式
+#### declaration and initialization
+**declaration**
+```C
+// [] and () precede *
 
-#### 初始化数组
+int * p[10]     //声明一个指针数组
+int (* p)[10]   //声明一个指向数组的指针
+int * p[3][4]   //声明一个二维指针数组
+int (* p)[3][4] //声明一个指向二维数组的指针
+int (* p[3])[4] //声明一个内含三个指针元素数组，每个指针指向int数组
+int (* pf[3])(char) //声明一个指针数组，每个指针指向返回值为int的函数
+```
+```C
+// Generate a copy of the string
+char s[] = "string constant"
+// Point directly to static storage area
+char *s = "string constant"
+```
+```C
+// make the array read-only
+const int a[n]
+```
+**initialization**
 ```C
 a[5] = {1, 2, 3};       //1 2 3 0 0
 a[5] = {1};             //1 0 0 0 0
@@ -302,7 +356,7 @@ a[5];                   //8 0 41 0 10359760
 a[] = {1, 2, 3};        //1 2 3 3 12391344
 
 a[5] = {1, 2, 3, 4, 5, 6};
-//warning: excess elements in array initializer
+//warning: excess elements in designated initializer
 a[10] = {1, 2, [4] = 3, 4, 5, [1] = 6, 7};
 //1 6 7 0 3 4 5 0 0 0  
 ```
@@ -356,17 +410,7 @@ pf(str);    //两种语法皆可用
 - 函数指针指向函数代码起始处
 - 声明函数指针时，要指明函数签名，即函数的返回类型和形参类型
 
-#### 复杂的声明
-```C
-[]和()优先级相同，从左往右结合，优先级高于*，先与[]结合表明是数组，先与*结合表明是指针
 
-int * p[10]     //声明一个指针数组
-int (* p)[10]   //声明一个指向数组的指针
-int * p[3][4]   //声明一个二维指针数组
-int (* p)[3][4] //声明一个指向二维数组的指针
-int (* p[3])[4] //声明一个内含三个指针元素数组，每个指针指向int数组
-int (* pf[3])(char) //声明一个指针数组，每个指针指向返回值为int的函数
-```
 
 
 
@@ -452,7 +496,19 @@ int (* p)[m] = (int (*)[m]) malloc(n * m * sizeof(int));
 
 ---
 ## ***文件***
+```C
+gets(char*)     //读取整行输入，并丢弃换行符。可能导致缓冲区溢出
+                //若读到文件末尾返回空指针NULL
+puts(char*)     //只显示字符串，并加上换行符
 
+fgets(str, n, stdin)    //str必须被分配内存
+                        //读入n-1个字符，遇到换行符停止，会读入换行符
+                        //若读到文件末尾返回空指针NULL
+fputs(str, stdout)      //不会附加换行符
+
+scanf()     //遇到空白字符停止，不会读入空白字符
+            //若数组大小为6，则应使用%5s最多读入5个字符
+```
 #### 文件结束信号
 - Windows: Ctrl + Z + Enter
 - Unix, Linux: Ctrl + D + Enter
@@ -854,6 +910,8 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
 #### printf()
 ```C
 int printf(const char *format, ...)
+// Return number of characters transmitted to the output stream.
+// Or return negative value if an output error or an encoding error occurred.
 // float arguments are always promoted to double when used in a varargs call.
 
 // Format placeholder syntax
@@ -912,6 +970,8 @@ p	void* (pointer to void) in an implementation-defined format.
 #### scanf()
 ```C
 int scanf(const char *format, ...)
+// Return number of receiving arguments successfully assigned.
+// Or return EOF if input failure occurs before the first argument was assigned.
 
 // Format placeholder syntax
 %[*][width][modifiers]type
@@ -1040,3 +1100,12 @@ gettimeofday(&end, NULL);
 long timeuse = 1000000*(end.tv_sec - start.tv_sec) + end.tv_usec - start.tv_usec;
 printf("time = %lf\n", timeuse/1000000.0);
 ```
+
+
+
+
+
+
+
+
+
