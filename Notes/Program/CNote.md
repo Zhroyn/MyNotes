@@ -324,43 +324,60 @@ int toupper( int ch )
 ---
 ## Array and Pointer
 
-#### declaration and initialization
-**declaration**
+#### declaration
 ```C
 // [] and () precede *
 
-int * p[10]     //声明一个指针数组
-int (* p)[10]   //声明一个指向数组的指针
-int * p[3][4]   //声明一个二维指针数组
-int (* p)[3][4] //声明一个指向二维数组的指针
-int (* p[3])[4] //声明一个内含三个指针元素数组，每个指针指向int数组
-int (* pf[3])(char) //声明一个指针数组，每个指针指向返回值为int的函数
+int * p[2]      //an array of 2 pointers-to-int
+int (* p)[2]    //a pointer points to an array of 2 ints
+int * p[3][4]   //a 2-dimensional array of 12 pointers-to-int
+int (* p)[3][4] //a pointer points to an 2-dimensional array
+int (* p[3])[4] //an array of 3 pointers-to-array
+int (* pf[3])(char) //an array of 3 pointers-to-function
 ```
+
 ```C
 // Generate a copy of the string
 char s[] = "string constant"
-// Point directly to static storage area
+// Point directly to static memory
 char *s = "string constant"
 ```
-```C
-// make the array read-only
-const int a[n]
-```
-**initialization**
-```C
-a[5] = {1, 2, 3};       //1 2 3 0 0
-a[5] = {1};             //1 0 0 0 0
-a[5] = {0};             //0 0 0 0 0
-a[5] = {};              //0 0 0 0 0
-a[5];                   //8 0 41 0 10359760
-a[] = {1, 2, 3};        //1 2 3 3 12391344
 
+```C
+// Declare the pointed-to value is a const
+const int * p
+int const * p
+// Declare the pointer is a const
+int * const p
+// Not only can't modify the value to which p points, but also where it points to
+const int * const p
+// Protect the data in array a
+void f(const int a[])
+
+
+// regular pointer can't point to const value:
+const int * p;
+int * t = p;
+// warning: assignment discards 'const' qualifier from pointer target type
+int * const p;
+int * t = p;
+// No waring
+```
+
+
+#### initialization
+```C
+a[5] = {};              //0 0 0 0 0
+a[] = {1, 2, 3};        //sizeof(a) == 12
+a[] = {};               //sizeof(a) == 0
 a[5] = {1, 2, 3, 4, 5, 6};
 //warning: excess elements in designated initializer
 a[10] = {1, 2, [4] = 3, 4, 5, [1] = 6, 7};
 //1 6 7 0 3 4 5 0 0 0  
 ```
 ```C
+a[][] = {{1, 2, 3}, {4, 5, 6}};
+//error: array type has incomplete element type 'int[]'
 a[][2] = {1,2,3,4,5};
 //1 2
 //3 4
@@ -379,36 +396,20 @@ a[5][5] =
 //0 0 0 0 0
 //0 0 0 0 0
 ```
- 
-#### 指针运算
-- `a == &a[0]`
-- `a + 2 == &a[2]`
-- `*(a + 2) == a[2]`
-- 指针求差得元素距离,可得负数
-- 相同类型指针可比较
-
-#### const指针
-- 可用`const`关键字声明数组为只读数组，但若const数组名作为实参传递给函数，导致const数据被修改，这样的结果是未定义的
-- 可在函数定义中用`const`关键字避免数组被修改
-- 不能通过const指针改变其指向地址的值，但可以改变const指针的指向地址
-- 可用普通指针改变const指针指向地址的值
-- const指针可指向const数据或非const数据的地址
-- 普通指针只能指向非const数据的地址
-- `int * const p` 可修改指针指向地址的值，但不可修改指针的值
-- `const int * const p` 既不可修改指针指向地址的值，又不可修改指针的指向地址
-
-#### 函数指针
 ```C
-void ToUpper(char *);
-void (*pf)(char *);
-pf = ToUpper;  //函数名代表函数的地址（代码起始处）
-
-char * str = "hello word";
-*pf(str);
-pf(str);    //两种语法皆可用
+int n = 3, m = 4;
+int (* p)[m] = (int (*)[m]) malloc(n * m * sizeof(int));
 ```
-- 函数指针指向函数代码起始处
-- 声明函数指针时，要指明函数签名，即函数的返回类型和形参类型
+ 
+#### Function Pointer
+```C
+void f(char *);
+...
+void (*pf)(char *) = &f     //The & is optional
+char * str = "hello word";
+pf(str)
+(*pf)(str);                 //The * is optional
+```
 
 
 
@@ -420,54 +421,56 @@ pf(str);    //两种语法皆可用
 
 
 ---
-## ***内存***
+## Storage, Linkage and Memory
 
-#### 作用域
-- **块作用域**：为用花括号括起来的区域，变量的可见范围是从定义处到包含该定义的块的末尾。内层块会隐藏外层块的含义
-- **文件作用域**：变量定义在函数外，也称为全局变量，可见范围是从定义处到文件末尾。只能使用常量表达式初始化文件作用域变量，不能用之前声明的全局变量来初始化，除非其有`const`限定符
-- 函数作用域：仅用于goto语句的标签，即标签出现在函数的内层块中，它的作用域也延伸至整个函数
-- 函数原型作用域：范围是从形参定义处到原型声明结束
+#### storage class
+**scope**
+- `block scope` : visible from the point it is defined until the end of the block containing the definition.
+- `file scope` :  visible from the point it is defined to the end of the file containing the definition. File scope variables are also called global variables .
+- `function scope` : applies just to labels used with goto statements. Even if a label first appears inside an inner block in a function, its scope extends to the whole function.
+- `function prototype scope` : applies to variable names used in function prototypes, e.g. `void f(int n, int a[n]);`
 
-#### 链接
-- 外部链接：可延伸至其他翻译单元的作用域
-- 内部链接：仅限于一个翻译单元
-- 无链接：具有**块作用域**、**函数作用域**或**函数原型作用域**的变量
+**linkage**
+- Variables with block scope, function scope, or function prototype scope have no linkage.
+- `external linkage` : can be used anywhere in a multifile program.
+- `internal linkage` : can be used anywhere in a single translation unit.
 
-#### 存储期
-- **自动存储期**：进入块时分配内存，退出块时释放内存
-- **静态存储期**：在程序执行期间一直存在
-- 线程存储期：从声明时到线程结束一直存在。关键字_Thread_local使每个线程获得声明变量的私有备份
-- 动态分配存储期
+**storage duration**
+- Scope and linkage describe the visibility of identifiers. Storage duration describes the persistence of the objects accessed by these identifiers.
+- `automatic storage duration` : have memory allocated for them when the program enters the block in which they are defined, and the memory is freed when the block is exited.
+  - Variable-length arrays provide a slight exception in that they exist from the point of declaration to the end of the block rather than from the beginning of the block to the end.
+- `static storage duration` : exists throughout program execution.
+  - For a variable to have block scope but static storage duration, exists from the time the program is loaded until the program terminates.
+- `thread storage duration` : exists from when it’s declared until the thread terminates.
+  - Such an object is created when a declaration that would otherwise create a file scope object is modified with the keyword `_Thread_local`.
+  - When a variable is declared with this specifier, each thread gets its own private copy of that variable.
+- `allocated storage duration` : exists from when the memory is allocated until it's freed.
 
-#### 存储类别说明符
-`auto`: 声明自动变量（自动存储类别）
-- 具有自动存储期、块作用域和无链接
-- 主要用于明确表达要使用与外部变量同名的局部变量
-- 不会初始化，除非显式初始化，可使用非常量表达式
+#### storage-class specifier
+- `auto` : declare a varible belonging to automatic storage class(i.e. automatic varible) which has automatic storage duration, block scope, and no linkage.
+  - automatic variables are not initialized unless you do so explicitly.
 
-`register`: 声明寄存器变量（寄存器存储类别）
-- 具有自动存储期、块作用域和无链接
-- 可请求储存在CPU的寄存器中
-- 不能获取寄存器变量的地址，无论是否请求成功
+- `register`: declare a varible belonging to register storage class(i.e. register varible) which has automatic storage duration, block scope, and no linkage.
+  - register variables are stored in the CPU registers or, more generally, in the fastest memory available, where they can be accessed and manipulated more rapidly than regular variables.
+  - you can’t take the address of a register variable whether or not your request is approved.
 
-`static`: 声明静态变量（静态存储类别）
-- 无论在何处声明，都会在程序被载入内存时执行完毕，不会在运行时执行
-- 声明在块内，则为块作用域的静态变量，即局部静态变量（内部静态存储类别），无链接
-- 若声明在所有函数外，则为内部链接的静态变量，具有文件作用域，**内部链接**
-- 若未显式初始化，则会被初始化为0，即使是局部变量
+- `static`: declare a varible belonging to static storage class(i.e. static varible) which has static storage duration. It has block scope and no linkage if declared in a block, or has file scope and internal linkage if declared outside of any function.
+  - static variables and external variables are already in place after a program is loaded into memory and is initialized just once. It’s initialization statement won't execute during runtime.
+  - can’t use `static` for function parameters
+  - static variables are initialized to zero if you don’t explicitly initialize them to some other value.
+  - define static function
 
-`extern`: 声明外部变量（外部存储类别）
-- 外部变量声明在所有函数外，具有静态存储期、文件作用域和**外部链接**
-- 是**引用式声明**，而非定义式声明，指示编译器去别处查找其定义，不会分配存储空间。因此，若定义外部变量，则不可使用extern
-- 可在函数中使用extern关键字，重复声明文件作用域变量，但不会改变其链接属性
-- 若未显式初始化，则会被初始化为0。只有定义式声明才能初始化
+- `extern`: declare a varible belonging to external storage class(i.e. external varible) which has static storage duration, file scope, and external linkage.
+  - an external variable is created by placing a defining declaration outside of any function.
+  - If a particular external variable is defined in one source code file and is used in a second source code file, declaring the variable in the second file with `extern` is mandatory.
+  - an external variable can additionally be declared inside a function with `extern` to document your intention of using the static variable created previously instead of creating a new automatic varible.
+  - declaration with `extern` does not cause space to be allocated, so don’t use the keyword to create an external definition
+  - define external function which is default
 
-#### 存储类别和函数
-函数可分为外部函数和静态函数，一般默认为外部函数
-- `static`: 用于说明该函数归特定模块，可避免名称冲突，使其他文件可使用同名函数
-- `extern`: 用于声明定义在其他文件的函数，表明该函数被定义在别处
+- `_Thread_local` : may be used together with static and extern.
+- `typedef` : doesn’t say anything about memory storage, but it is thrown in for syntax reasons.
 
-#### 动态分配内存
+#### Dynamic memory management
 `malloc(n * sizeof(int))`: 返回动态分配内存块的首字节地址，类型为 void *（指向void的指针），通常要进行强制类型转换；若分配内存失败，会返回空指针
 
 `calloc(n, sizeof(int))`: 还会初始化内存块中所有位为0
@@ -475,18 +478,30 @@ pf(str);    //两种语法皆可用
 `free()`: 用于释放之前`malloc()`和`calloc()`分配的内存
 
 ```C
-int (* p)[m] = (int (*)[m]) malloc(n * m * sizeof(int));
-//声明n×m数组
+// Allocate size bytes of uninitialized storage.
+void *malloc( size_t size );
+
+// Allocate memory for a num * size array and initializes all bytes to zero.
+void *calloc( size_t num, size_t size );
+
+// Reallocates the given area of memory.
+// It must be previously allocated by malloc(), calloc() or realloc().
+// If ptr is NULL, the behavior is the same as calling malloc(new_size).
+// If possible, the contents of the area remain unchanged.
+// If the area is expanded, the contents of the new part are undefined.
+void *realloc( void *ptr, size_t new_size );
+
+// Deallocates the space previously allocated by malloc(), calloc() or realloc().
+void free( void *ptr );
 ```
 
-#### 类型限定符
-`const`: 若使用头文件共享全局数据且禁止修改，应使用`static const`，以防止每个包含该头文件的文件拥有一个相同标识符的定义式声明
-
-`restrict`: 限定声明的指针是访问内存唯一且初始的方式，方便编译器优化
-
-`volatile`: 告知计算机代理可以修改该变量的值，使编译器假定两条语句之间声明的变量发生了变化
-
-`_Atomic`
+#### Type Qualifier
+- `const` : to share const data across files, can define global varibles with `static` in header
+- `volatile` : tells the compiler that a variable can have its value altered by agencies other than the program, which facilitates compiler optimization.
+  - A value can be both `const` and `volatile`.
+- `restrict` : can be applied only to pointers, and it indicates that a pointer is the sole initial means of accessing a data object.
+  - the compiler can’t check whether you obey this restriction.
+- `_Atomic` : While a thread performs an atomic operation on an object of atomic type, other threads won’t access that object.
 
 
 
@@ -495,7 +510,107 @@ int (* p)[m] = (int (*)[m]) malloc(n * m * sizeof(int));
 
 
 ---
-## ***文件***
+## File
+
+#### File access
+```C
+// Opens a file indicated by filename and returns a pointer to the file stream.
+// On error, returns a null pointer.
+FILE *fopen( const char *restrict filename, const char *restrict mode );
+
+// First, attempts to close the file associated with stream, ignoring any errors.
+// Then, attempts to open the file specified by filename using mode,
+// and associates that file with the file stream pointed to by stream.
+// can be used to redirect files in program
+FILE *freopen( const char *restrict filename, const char *restrict mode,
+               FILE *restrict stream );
+
+// Any unwritten buffered data are flushed to the OS.
+// Any unread buffered data are discarded.
+// ​0​ on success, EOF otherwise.
+int fclose( FILE *stream );
+
+// For output streams, writes any unwritten data from the stream's buffer to the associated output device.
+// For input streams, the behavior is undefined.
+// If stream is a null pointer, all open output streams are flushed.
+// ​0​ on success, EOF otherwise.
+int fflush( FILE *stream );
+
+// Set the buffer for a file stream.
+// If buffer is null, equivalent to setvbuf(stream, NULL, _IONBF, 0), which turns off buffering.
+void setbuf( FILE *restrict stream, char *restrict buffer );
+
+// Changes the buffering mode of the given file stream stream.
+// _IOFBF	full buffering
+// _IOLBF	line buffering
+// _IONBF	no buffering
+int setvbuf( FILE *restrict stream, char *restrict buffer,
+             int mode, size_t size );
+```
+
+**File access flags**
+|Mode string| Meaning | Explanation | If file already exists | If file does not exist |
+|:--:| :---: | :---: | :---: | :---: |
+|r | read	  |Open a file for reading  |	read from start	|failure to open|
+|w | write  |Create a file for writing|	destroy contents|create new|
+|a | append |Append to a file         |	write to end    |create new|
+|r+| read extended  |Open a file for read/write   |	read from start| failure to open|
+|w+| write extended |Create a file for read/write | destroy contents|create new|
+|a+| append extended|Open a file for read/write   |	write to end|create new|
+
+- File access mode flag `b` can optionally be specified to open a file in binary mode. This flag has no effect on POSIX systems, but on Windows it disables special handling of `\n` and `\x1A`.
+- File access mode flag `x` can optionally be appended to `w` or `w+` specifiers. This flag forces the function to fail if the file exists, instead of overwriting it. (C11)
+- In update mode (`+`), both input and output may be performed, but output cannot be followed by input without an intervening call to `fflush`, `fseek`, `fsetpos` or `rewind`, and input cannot be followed by output without an intervening call to `fseek`, `fsetpos` or `rewind`, unless the input operation encountered end of file. In update mode, implementations are permitted to use binary mode even when text mode is specified.
+
+
+
+#### Input/Output
+**Direct input/output**
+```C
+// In Windows, need to open file in binary mode
+
+// Read count objects into the array buffer from the given input stream stream.
+// Return the number of objects read successfully.
+size_t fread( void *restrict buffer, size_t size, size_t count,
+              FILE *restrict stream );
+
+// Write count of objects from the array buffer to the output stream stream.
+// Return the number of objects write successfully.
+size_t fwrite( const void *restrict buffer, size_t size, size_t count,
+               FILE *restrict stream );
+
+
+double old[1] = {3.6};
+double new[1] = {};
+FILE * fo = fopen("aaa.txt", "wb");
+fwrite(old, 8, 1, fp);
+rewind(fp);
+fread(new, 8, 1, fp);
+printf("%lf\n", new[0]);
+```
+
+**Unformatted input/output**
+```C
+// Reads the next character from the given input stream.
+// On success, returns the obtained character as an int. On failure, returns EOF.
+int fgetc( FILE *stream );
+
+// Writes a character ch to the given output stream stream.
+// On success, returns the written character. On failure, returns EOF.
+int fputc( int ch, FILE *stream );
+
+// Read at most count - 1 characters from the given file stream.
+// Stop if '\n' is found, in which case str will contain '\n', or if EOF occurs.
+// Write a null character immediately after the last character written to str.
+// Return str on success, null pointer on failure.
+char *fgets( char *restrict str, int count, FILE *restrict stream );
+
+// Writes every character from the null-terminated string str to the stream.
+// The terminating null character from str is not written.
+// On success, returns a non-negative value. On failure, returns EOF.
+int fputs( const char *restrict str, FILE *restrict stream );
+```
+
 ```C
 gets(char*)     //读取整行输入，并丢弃换行符。可能导致缓冲区溢出
                 //若读到文件末尾返回空指针NULL
@@ -509,51 +624,6 @@ fputs(str, stdout)      //不会附加换行符
 scanf()     //遇到空白字符停止，不会读入空白字符
             //若数组大小为6，则应使用%5s最多读入5个字符
 ```
-#### 文件结束信号
-- Windows: Ctrl + Z + Enter
-- Unix, Linux: Ctrl + D + Enter
-
-#### 重定向
-- 重定向运算符: `<` and `>`
-- 不能读取多个文件的输入，也不能将输出定向至多个文件
-
-### 标准文件
-标准输入文件通常为键盘，文件指针为stdin
-标准输出文件通常为显示器，文件指针为stdout
-标准错误文件通常为显示器，文件指针为stderr
-
-#### 退出文件
-`exit()`函数关闭所有打开的文件并结束程序
-- 可在其他函数调用
-- 在最初调用的`main()`函数中与return语句效果相同
-- 退出失败为`exit(EXIT_FAILURE)`
-
-#### 打开文件和关闭文件
-```C
-fopen(filename, "r")    //只读模式，不存在则打开失败
-fopen(filename, "w")    //写入模式，文件存在截为0，若不存在则新建
-fopen(filename, "a")    //追加模式，文件存在追加末尾，若不存在则新建
-
-fopen(filename, "r+")   //更新模式，可读可写，不存在则打开失败
-fopen(filename, "w+")   //写入更新模式，文件存在截为0，若不存在则新建
-fopen(filename, "a+")   //追加更新模式，文件存在追加末尾，若不存在则新建
-
-//以文本模式打开（默认）
-fopen(filename, "..t")
-fopen(filename, "..t+")
-fopen(filename, "..+t")
-
-//以二进制模式打开
-fopen(filename, "..b")
-fopen(filename, "..b+")
-fopen(filename, "..+b")
-
-fclose(fp)  //成功关闭放回0，否则返回EOF
-```
-`fopen()`返回文件指针（FILE *），不指向实际文件，指向一个包含文件信息的数据对象
-
-#### 处理文件
-###### 输入输出
 ```C
 ch = getc(fp)       //从fp指定的文件获取一个字符
 putc(ch, fp)        //将字符放入FILE指针指定的文件
@@ -570,7 +640,7 @@ fputs(str, fp)  //不会加上换行符
 - 所有的标准I/O输入函数使用相同的缓冲区，调用任何一个函数都将从上次函数停止调用的位置开始
 - 读完缓冲区所有字符后，会请求拷贝下一个缓冲大小的数据块到缓冲区
 
-###### 定位
+#### 定位
 ```C
 rewind(fp)      //让程序回到文件开始处
 
@@ -582,7 +652,7 @@ fseek(fp, -5L, SEEK_END)    //从文件结尾处回退5个字节
 n = ftell(fp)   //返回当前的位置，类型为long
 ```
 
-###### 其他标准I/O函数
+#### 其他标准I/O函数
 ```C
 ungetc(ch, fp)  //将一个字符放回输入流
 
@@ -598,6 +668,15 @@ feof(fp)    //当上一次输入调用检测到文件结尾时，返回非零值
 ferror(fp)  //当读写出现错误时，返回非零值，否则返回0
 ```
 
+#### 文件结束信号
+- Windows: Ctrl + Z + Enter
+- Unix, Linux: Ctrl + D + Enter
+
+#### 退出文件
+`exit()`函数关闭所有打开的文件并结束程序
+- 可在其他函数调用
+- 在最初调用的`main()`函数中与return语句效果相同
+- 退出失败为`exit(EXIT_FAILURE)`
 
 
 
@@ -1023,6 +1102,17 @@ qsort(a, 5, sizeof(int), comp);
 int key = 3;
 int *res = bsearch(&key, a, 5, sizeof(int), comp);
 ```
+
+#### rand(), srand()
+```C
+// Returns a pseudo-random integer value between ​0​ and RAND_MAX
+// If rand() is used before any calls to srand(), rand() behaves as if it was seeded with srand(1).
+int rand();
+
+// Seeds the pseudo-random number generator used by rand() with the value seed.
+void srand( unsigned seed );
+```
+
 
 
 
