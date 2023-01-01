@@ -444,11 +444,12 @@ pf(str)
 - `thread storage duration` : exists from when it’s declared until the thread terminates.
   - Such an object is created when a declaration that would otherwise create a file scope object is modified with the keyword `_Thread_local`.
   - When a variable is declared with this specifier, each thread gets its own private copy of that variable.
-- `allocated storage duration` : exists from when the memory is allocated until it's freed.
+- `allocated storage duration` : exists from when the memory is allocated until it's freed, stored in **heap**.
 
 #### storage-class specifier
 - `auto` : declare a varible belonging to automatic storage class(i.e. automatic varible) which has automatic storage duration, block scope, and no linkage.
   - automatic variables are not initialized unless you do so explicitly.
+  - automatic varibles are stored in **stack**.
 
 - `register`: declare a varible belonging to register storage class(i.e. register varible) which has automatic storage duration, block scope, and no linkage.
   - register variables are stored in the CPU registers or, more generally, in the fastest memory available, where they can be accessed and manipulated more rapidly than regular variables.
@@ -458,6 +459,8 @@ pf(str)
   - static variables and external variables are already in place after a program is loaded into memory and is initialized just once. It’s initialization statement won't execute during runtime.
   - can’t use `static` for function parameters
   - static variables are initialized to zero if you don’t explicitly initialize them to some other value.
+  - static local varible can also hide global varible.
+  - static varibles are stored in static memory.
   - define static function
 
 - `extern`: declare a varible belonging to external storage class(i.e. external varible) which has static storage duration, file scope, and external linkage.
@@ -471,12 +474,6 @@ pf(str)
 - `typedef` : doesn’t say anything about memory storage, but it is thrown in for syntax reasons.
 
 #### Dynamic memory management
-`malloc(n * sizeof(int))`: 返回动态分配内存块的首字节地址，类型为 void *（指向void的指针），通常要进行强制类型转换；若分配内存失败，会返回空指针
-
-`calloc(n, sizeof(int))`: 还会初始化内存块中所有位为0
-
-`free()`: 用于释放之前`malloc()`和`calloc()`分配的内存
-
 ```C
 // Allocate size bytes of uninitialized storage.
 void *malloc( size_t size );
@@ -510,7 +507,7 @@ void free( void *ptr );
 
 
 ---
-## File
+## File Input/Output
 
 #### File access
 ```C
@@ -609,74 +606,70 @@ char *fgets( char *restrict str, int count, FILE *restrict stream );
 // The terminating null character from str is not written.
 // On success, returns a non-negative value. On failure, returns EOF.
 int fputs( const char *restrict str, FILE *restrict stream );
-```
 
-```C
-gets(char*)     //读取整行输入，并丢弃换行符。可能导致缓冲区溢出
-                //若读到文件末尾返回空指针NULL
-puts(char*)     //只显示字符串，并加上换行符
-
-fgets(str, n, stdin)    //str必须被分配内存
-                        //读入n-1个字符，遇到换行符停止，会读入换行符
-                        //若读到文件末尾返回空指针NULL
-fputs(str, stdout)      //不会附加换行符
-
-scanf()     //遇到空白字符停止，不会读入空白字符
-            //若数组大小为6，则应使用%5s最多读入5个字符
+// If ch is not EOF, push ch into the input buffer associated with the stream.
+// On success ch is returned. On failure EOF is returned.
+int ungetc( int ch, FILE *stream );
 ```
 ```C
-ch = getc(fp)       //从fp指定的文件获取一个字符
-putc(ch, fp)        //将字符放入FILE指针指定的文件
+// Reads stdin into the character array pointed to by str.
+// Stop if a newline character is found or end-of-file occurs.
+// Write a null character immediately after the last character written to str.
+// The newline character is discarded but not stored in the buffer.
+char *gets( char *str );
 
-fprintf(fp, "...", ...)
-fscanf(fp, "...", ...)
+// Reads characters from stdin until a newline is found or end-of-file occurs.
+// Writes only at most n-1 characters into the array.
+// The newline character, if found, is discarded.
+// Return str on success, a null pointer on failure.
+char *gets_s( char *str, rsize_t n );
 
-fgets(str, n, fp)   //在读到换行符，或读到文件末尾，或读完n-1个字符后停止
-                    //读到换行符时，会保留换行符并给str加上空字符
-                    //遇到EOF时，会返回Null值
-                    //读完n-1个字符后，会给str末尾加上空字符
-fputs(str, fp)  //不会加上换行符
+// Writes every character from str and one additional '\n' to the stdout.
+// The terminating null character from str is not written.
+// On success, returns a non-negative value. On failure, returns EOF.
+int puts( const char *str );
 ```
-- 所有的标准I/O输入函数使用相同的缓冲区，调用任何一个函数都将从上次函数停止调用的位置开始
-- 读完缓冲区所有字符后，会请求拷贝下一个缓冲大小的数据块到缓冲区
 
-#### 定位
+**Formatted input/output**
 ```C
-rewind(fp)      //让程序回到文件开始处
-
-fseek(fp, 2L, SEEK_SET)     //从文件开始处前进2个字节
-fseek(fp, 0L, SEEK_CUR)     //定位至文件当前位置
-fseek(fp, -5L, SEEK_END)    //从文件结尾处回退5个字节
-若一切正常则返回0，若发生超出文件范围等错误则返回-1
-
-n = ftell(fp)   //返回当前的位置，类型为long
+int fscanf( FILE *restrict stream, const char *restrict format, ... );
+int fprintf( FILE *restrict stream, const char *restrict format, ... );
 ```
 
-#### 其他标准I/O函数
+#### File positioning
 ```C
-ungetc(ch, fp)  //将一个字符放回输入流
+// Returns the file position indicator for the file stream stream.
+// In binary mode, return the number of bytes from the beginning of the file.
+// In text mode, what return is unspecified and only meaningful in fseek().
+long ftell( FILE *stream );
 
-fflush(fp)      //刷新缓存区，将缓存区所有未写入的数据发送到fp指定的输出文件
-setvbuf(fp, buf, mode, size)    //创建缓冲区
+// Sets the file position indicator to the value pointed to by offset.
+// origin can have one of the following values: SEEK_SET, SEEK_CUR, SEEK_END.
+// offset can be negative value, e.g. -5L
+int fseek( FILE *stream, long offset, int origin );
 
-fwrite(void *ptr, size_t size, int nmemb, FILE *fp)
-//把二进制数据从ptr指向的数据块写进文件，size为元素大小，nmemb为元素个数
-fread(void *ptr, size_t size, int nmemb, FILE *fp)
-//把二进制数据从文件读进ptr指向的数据块，并返回成功读取的项的个数
-
-feof(fp)    //当上一次输入调用检测到文件结尾时，返回非零值，否则返回0
-ferror(fp)  //当读写出现错误时，返回非零值，否则返回0
+// Moves the file position indicator to the beginning of the given file stream.
+void rewind( FILE *stream );
 ```
 
-#### 文件结束信号
-- Windows: Ctrl + Z + Enter
-- Unix, Linux: Ctrl + D + Enter
+#### Others
+```C
+// Checks if the end of the given file stream has been reached.
+// nonzero value if the end of the stream has been reached, otherwise ​0​.
+int feof( FILE *stream );
+// Checks the given stream for errors.
+// Nonzero value if the file stream has errors occurred, ​0​ otherwise.
+int ferror( FILE *stream );
+// Prints a textual description of the error code stored in errno to stderr.
+void perror( const char *s );
 
-#### 退出文件
-`exit()`函数关闭所有打开的文件并结束程序
-- 可在其他函数调用
-- 在最初调用的`main()`函数中与return语句效果相同
-- 退出失败为`exit(EXIT_FAILURE)`
+// Deletes the file identified by character string pointed to by fname.
+int remove( const char *fname );
+// Changes the filename of a file.
+int rename( const char *old_filename, const char *new_filename );
+```
+
+
 
 
 
@@ -806,36 +799,29 @@ FUNC funcs[4];
 
 
 ---
-## ***位操作***
+## Bit manipulation
 
-#### 二进制有符号整数
-- 符号位表示法
-  - 高阶位存储符号，剩下7位表示数字
-- 二进制补码
-  - 若高阶位为1，则实际值为当前值减去256，如-1为11111111，-128为10000000
-  - 取得相反数的操作为反转每一位
-- 二进制反码
-  - 若高阶位为1，则负值为反转每一位后得到的值
+#### Bitwise operator
+- Bitwise Negation: `~`
+- Bitwise AND: `&`
+  - Mask, `a & MASK`
+  - Reset bits, `a & ~MASK`
+  - Check bits, `a & MASK == MASK`
+- Bitwise OR: `|`
+  - Set bits, `a | MASK`
+- Bitwise EXCLUSIVE OR: `^`
+  - Toggle bits, `a ^ MASK`
+- Bitwise Left Shift Operator: `<<`
+  - operand must have integral type
+  - for type smaller than int, shift as int and return int
+  - fill 0 on the right
+- Bitwise Right Shift Operator: `>>`
+  - operand must have integral type
+  - for type smaller than int, shift as int and return int
+  - for unsigned type, fill 0 on the left
+  - for signed type, fill sign on the left
 
-#### 按位运算符
-- 按位取反：`~`
-- 按位与：`&` `&=`
-- 按位或：`|` `|=`
-- 按位异或：`^` `^=`
-<br>
-- 掩码：`& mask`，1的位置被显示，0的位置被掩蔽
-- 切换位：`^ mask`，1的位置被切换，0的位置不变
-- 打开位（设置位）：`| mask`，1的位置被打开，0的位置不变
-- 关闭位（清空位）：`& ~maks`，1的位置被关闭，0的位置不变
-- 检查位的值：`(flag & mask) == mask` 1的位置被比较
-
-#### 移位运算符
-- 左移：`<< n` `<<= n`
-  - 空出的位置由0填充
-- 右移：`>> n` `>>= n`
-  - 对于无符号类型，空出的位置由0填充；对于有符号类型，其结果取决于机器
-
-#### 位字段
+#### Bit field
 ```C
 struct {
     unsigned field1 : 1;
@@ -852,7 +838,7 @@ pbit->filed3 = 0;
 - 可用未命名字段填充未命名的“洞”
 - 可用宽度为0的未命名字段迫使下一个字段与下一个整数对齐
 
-#### 对齐
+#### Align
 _Alignas
 _Alignof
 
@@ -1044,6 +1030,8 @@ o	unsigned int in octal.
 s	null-terminated string.
 c	char (character).
 p	void* (pointer to void) in an implementation-defined format.
+n	Print nothing, but writes the number of characters written so far into 
+        an integer pointer parameter.
 ```
 
 #### scanf()
@@ -1057,6 +1045,16 @@ int scanf(const char *format, ...)
 
 [*] indicates the data read from the stream will be omitted
 [width] specifies the maximum chars read from the stream
+
+// type field
+[set]	matches a non-empty sequence of character from set of characters.
+        If the first character of the set is ^, then all characters not in the 
+        set are matched. If the set begins with ] or ^] then the ] character 
+        is also included into the set. It is implementation-defined whether the 
+        character - in the non-initial position in the scanset may be indicating 
+        a range, as in [0-9]. If width specifier is used, matches only up to 
+        width.
+n	returns the number of characters read so far.
 ```
 
 #### memcpy(), memmove()
