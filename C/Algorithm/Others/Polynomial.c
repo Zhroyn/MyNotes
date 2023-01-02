@@ -31,12 +31,15 @@ void Attach(int coef, int expo, Polynomial *Rear) {
     *Rear = p;
 }
 void PrintP(Polynomial p) {
-    if(!p) {printf("0 0"); return;}
-    int tag = 0;
-    while(p) {
-        if(tag) {printf(" ");} else {tag=1;}
-        printf("%d %d", p->coef, p->expo);
-        p = p->next;
+    if(!p) {
+        printf("0 0");
+    } else {
+        int tag = 0;
+        while(p) {
+            if(tag) {printf(" ");} else {tag=1;}
+            printf("%d %d", p->coef, p->expo);
+            p = p->next;
+        }
     }
 }
 Polynomial ReadP(void) {
