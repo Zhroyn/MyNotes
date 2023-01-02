@@ -1,38 +1,54 @@
 #include <stdio.h>
 
-void swap( int a[], int i, int j)
-{
-    int t = a[i];
-    a[i] = a[j];
-    a[j] = t;
+void swap( int *a, int *b ) {
+    int t = *a;
+    *a = *b;
+    *b = t;
 }
-int Partition ( int a[], int low, int high )
+#define A 1
+#if A == 1
+int Partition ( int a[], int left, int right )
 {
-    int pivot = a[high];
-    int i = low, j = high;
-    while(i < j)
-    {
-        while(i < j && a[i] <= pivot) i++;
-        while(i < j && a[j] >= pivot) j--;
-        swap(a, i, j);
+    int i = left, j = right;
+    while (i < j) {
+        while (i < j && a[i] <= a[right]) i++;
+        while (i < j && a[j] >= a[right]) j--;
+        swap(&a[i], &a[j]);
     }
-    swap(a, i, high);
+    swap(&a[i], &a[right]);
     return i;
 }
-void QuickSort ( int a[], int low, int high ) 
+#else
+int Partition(int a[], int left, int right) {
+    int p = left;
+    for (int i = left; i < right; i++) {
+        if (a[i] < a[right]) {
+            swap(&a[p++], &a[i]);
+        }
+    }
+    swap(&a[p], &a[right]);
+    return p;
+}
+#endif
+void QSort ( int a[], int left, int right ) 
 { 
-    if(low < high)
+    if(left < right)
     {
-        int p = Partition(a, low, high) ;
-        QuickSort(a, low, p - 1) ; 
-        QuickSort(a, p + 1, high);
+        int p = Partition(a, left, right);
+        QSort(a, left, p - 1) ; 
+        QSort(a, p + 1, right);
      }
 }
 
-int main()
+void QuickSort(int a[], int N) {
+    QSort(a, 0, N);
+}
+
+int main(void)
 {
-    int a[10] = {5, 2, 4, 1, 8, 9, 10, 12, 3, 6};
-    QuickSort(a, 0, 9);
-    for(int i=0; i<10; i++)
+    int N = 10;
+    int a[] = {3, 1, 2, 8, 7, 5, 9, 4, 6, 0};
+    QuickSort(a, N);
+    for(int i = 0; i < N; i++)
         printf("%d ", a[i]);
 }
