@@ -4,10 +4,11 @@ Github SSH、CIL
 小组展示、课程作业
 
 ### 应用
-- winrar
+- Winrar
 - Acrobat
 - Photoshop
 - Clash
+- iRead
 - 钉钉
 - QQ
 - 微信
