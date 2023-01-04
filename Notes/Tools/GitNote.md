@@ -1,9 +1,58 @@
-[toc]
+<!-- TOC -->
+
+- [Common usage](#common-usage)
+        - [Redo commit](#redo-commit)
+        - [Unstage](#unstage)
+        - [Discard changes](#discard-changes)
+        - [Untrack files](#untrack-files)
+        - [Relate upstream branch](#relate-upstream-branch)
+        - [Show Objects](#show-objects)
+- [Looking Info](#looking-info)
+        - [git status](#git-status)
+        - [git diff](#git-diff)
+        - [git log](#git-log)
+        - [git show](#git-show)
+        - [git ls-files](#git-ls-files)
+- [Basic Snapshotting](#basic-snapshotting)
+        - [git add](#git-add)
+        - [git commit](#git-commit)
+        - [git mv](#git-mv)
+        - [git rm](#git-rm)
+- [Recover and stash](#recover-and-stash)
+        - [git restore](#git-restore)
+        - [git reset](#git-reset)
+        - [git stash](#git-stash)
+- [Branching and Merging](#branching-and-merging)
+        - [git branch](#git-branch)
+        - [git checkout](#git-checkout)
+        - [git switch](#git-switch)
+        - [git merge](#git-merge)
+        - [git rebase](#git-rebase)
+        - [git tag](#git-tag)
+- [Remote](#remote)
+        - [git clone](#git-clone)
+        - [git remote](#git-remote)
+        - [git fetch](#git-fetch)
+        - [git pull](#git-pull)
+        - [git push](#git-push)
+- [Configuration](#configuration)
+        - [show config](#show-config)
+        - [ssh](#ssh)
+        - [crlf](#crlf)
+        - [gitignore](#gitignore)
+        - [alias](#alias)
+        - [mergetool and difftool](#mergetool-and-difftool)
+        - [Other configurations](#other-configurations)
+
+<!-- /TOC -->
+
+
 
 
 ## Common usage
 #### Redo commit
 - `git commit --amend -C HEAD` Change the last commit with the files in the index ,and use the same commit message
+- `git restore <file>... -S -s HEAD^` and `git commit --amend -C HEAD` : inadvertently stage some file which you don't want to commit and accidently commit after that
 
 #### Unstage
 - `git restore --staged <file>...`
