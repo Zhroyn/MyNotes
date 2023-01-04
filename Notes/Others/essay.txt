@@ -1,11 +1,13 @@
 
 Now Plan:
-The missing semester, 每周两节 
+The missing semester
 CS61B(Java && Data Structure)
-Coursera: Nand2Tetris
-
-SICP
 CSAPP
+Python
+JavaScript
+爬虫
+打卡脚本
+
 
 Python爬虫,numpy,pandas...
 网页及服务器搭建，Javascript
