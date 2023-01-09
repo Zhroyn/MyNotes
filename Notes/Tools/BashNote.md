@@ -3,8 +3,8 @@
 - [Quoting](#quoting)
 - [Array](#array)
 - [Parameters](#parameters)
-- [Aliases](#aliases)
 - [Pattern Matching](#pattern-matching)
+- [Command Line Editing](#command-line-editing)
 - [Conditional Expressions](#conditional-expressions)
 - [Compound Commands](#compound-commands)
     - [Looping Constructs](#looping-constructs)
@@ -21,6 +21,9 @@
     - [Filename Expansion](#filename-expansion)
     - [Quote Removal](#quote-removal)
 - [Builtin](#builtin)
+    - [. :](#-)
+    - [alias, unalias](#alias-unalias)
+    - [builtin](#builtin-1)
 
 <!-- /TOC -->
 
@@ -31,6 +34,7 @@
 - Within single quotes, each character preserves its literal value. A single quote may not occur between single quotes, even when preceded by a backslash.
 - Within double quotes, the backslash retains its special meaning only when followed by ``$, `, ", \, or newline``.
 - Character sequences of the form `$'string'` are treated as a special kind of single quotes. The sequence expands to string, with backslash-escaped characters in string replaced as specified by the ANSI C standard. 
+
 
 
 
@@ -75,23 +79,6 @@
 
 
 
-## Aliases
-- add a file named `.bash_aliases` to `~`
-- add personal aliases to that file
-- run `source .bashrc`
-```shell
-# List all aliases:
-alias
-# Create a generic alias:
-alias word="command"
-# View the command associated to a given alias:
-alias word
-# Remove an aliased command:
-unalias word
-```
-
-
-
 ## Pattern Matching
 - Any character that appears in a pattern, other than the special pattern characters described below, matches itself.
 - A backslash escapes the following character
@@ -115,6 +102,46 @@ print   punct   space   upper   word    xdigit
 - `@(pattern-list)` Matches one of the given patterns.
 - `!(pattern-list)` Matches anything except one of the given patterns.
 
+
+
+
+
+
+## Command Line Editing
+
+- You can pass numeric arguments to Readline commands. The general way to pass numeric arguments to a command is to type meta digits before the command.
+
+**Basic**
+- `C-d` Delete the character underneath the cursor forward.
+- `C-h` Delete the character backward.
+- `C-l` Clear the screen, reprinting the current line at the top.
+- `C-_` or `C-x C-u` Undo the last editing command.
+
+**Movement**
+- `C-a` Move to the start of the line.
+- `C-e` Move to the end of the line.
+- `C-b` Move back one character.
+- `C-f` Move forward one character.
+- `M-f` Move forward a word.
+- `M-b` Move backward a word.
+
+**Killing and Yanking**
+- Killing text means to delete the text from the line, but to save it in a kill-ring for later use, usually by yanking (re-inserting) it back into the line.
+- `C-k` Kill the text from the current cursor position to the end of the line.
+- `C-u` Kill the text from the beginning of the line to the current cursor position.
+- `C-w` Kill from the cursor to the previous whitespace. This is different than M-DEL because the word boundaries differ.
+- `M-d` Kill from the cursor to the end of the current word, or, if between words, to the end of the next word. Word boundaries are the same as those used by M-f.
+- `M-DEL` Kill from the cursor to the start of the current word, or, if between words, to the start of the previous word. Word boundaries are the same as those used by M-b.
+- `C-y` Yank the most recently killed text back into the buffer at the cursor.
+- `M-y` Rotate the kill-ring, and yank the new top. You can only do this if the prior command is `C-y` or `M-y`.
+
+**Search History**
+- `C-r` Reverse search history.
+- `C-s` Forward search history.
+- `C-p` Previous history.
+- `C-n` Next history.
+- `\e[A` Previous history.
+- `\e[B` Next history.
 
 
 
@@ -430,6 +457,39 @@ After the preceding expansions, all unquoted occurrences of the characters `\`, 
 
 
 ## Builtin
+#### . :
+```shell
+. filename [arguments]
+```
+- Read and execute commands from the filename argument in the current shell context. If filename does not contain a slash, the PATH variable is used to find filename, but filename does not need to be executable.
+- This builtin is equivalent to `source`.
+
+```shell
+: [arguments]
+```
+- Do nothing beyond expanding arguments and performing redirections. The return status is zero.
+
+#### alias, unalias
+```shell
+alias [-p] [name[=value] …]
+```
+- Without arguments or with the `-p` option, alias prints the list of aliases on the standard output.
+- If arguments are supplied, an alias is defined for each name whose value is given.
+- If no value is given, the name and value of the alias is printed.
+
+```shell
+unalias [-a] [name … ]
+```
+- Remove each name from the list of aliases.
+- If `-a` is supplied, all aliases are removed.
+
+#### builtin
+```shell
+builtin [shell-builtin [args]]
+```
+- Run a shell builtin, passing it args, and return its exit status.
+- This is useful when defining a shell function with the same name as a shell builtin.
+- The return status is non-zero if shell-builtin is not a shell builtin command.
 
 
 
