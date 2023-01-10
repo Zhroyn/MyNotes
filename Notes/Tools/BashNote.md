@@ -23,9 +23,18 @@
     - [Filename Expansion](#filename-expansion)
     - [Quote Removal](#quote-removal)
 - [Builtin](#builtin)
-    - [. :](#-)
+    - [.](#)
+    - [:](#-1)
     - [alias, unalias](#alias-unalias)
+    - [bind](#bind)
+    - [break](#break)
     - [builtin](#builtin-1)
+    - [caller](#caller)
+    - [cd](#cd)
+    - [command](#command)
+    - [continue](#continue)
+    - [declare](#declare)
+    - [eval](#eval)
 
 <!-- /TOC -->
 
@@ -506,17 +515,19 @@ After the preceding expansions, all unquoted occurrences of the characters `\`, 
 
 
 ## Builtin
-#### . :
+#### .
 ```shell
 . filename [arguments]
 ```
 - Read and execute commands from the filename argument in the current shell context. If filename does not contain a slash, the PATH variable is used to find filename, but filename does not need to be executable.
 - This builtin is equivalent to `source`.
 
+#### :
 ```shell
 : [arguments]
 ```
-- Do nothing beyond expanding arguments and performing redirections. The return status is zero.
+- Do nothing beyond expanding arguments and performing redirections.
+- The return status is zero.
 
 #### alias, unalias
 ```shell
@@ -532,6 +543,29 @@ unalias [-a] [name … ]
 - Remove each name from the list of aliases.
 - If `-a` is supplied, all aliases are removed.
 
+#### bind
+- `-m keymap` Use `keymap` as the keymap to be affected by the subsequent bindings. Acceptable keymap names are `emacs`, `emacs-standard`, `emacs-meta`, `emacs-ctlx`, `vi`, `vi-move`, `vi-command`, and `vi-insert`.
+- `-l` List the names of all Readline functions.
+- `-p` Display Readline function names and bindings in the form of Readline initialization file.
+- `-P` List current Readline function names and bindings.
+- `-v` Display Readline variable names and values in the form of Readline initialization file.
+- `-V` List current Readline variable names and values.
+- `-s` Display Readline key sequences bound to macros and the strings they output in the form of Readline initialization file.
+- `-S` Display Readline key sequences bound to macros and the strings they output.
+- `-f filename` Read key bindings from filename.
+- `-q function` Query about which keys invoke the named function.
+- `-u function` Unbind all keys bound to the named function.
+- `-r keyseq` Remove any current binding for keyseq.
+- `-x keyseq:shell-command` Cause shell-command to be executed whenever keyseq is entered.
+- `-X` List all key sequences bound to shell commands and the associated commands in a format that can be reused as input.
+
+#### break
+```shell
+break [n]
+```
+- Exit from a `for`, `while`, `until`, or `select` loop.
+- If `n` is supplied, the nth enclosing loop is exited. `n` must be greater than or equal to 1.
+
 #### builtin
 ```shell
 builtin [shell-builtin [args]]
@@ -539,6 +573,48 @@ builtin [shell-builtin [args]]
 - Run a shell builtin, passing it args, and return its exit status.
 - This is useful when defining a shell function with the same name as a shell builtin.
 - The return status is non-zero if shell-builtin is not a shell builtin command.
+
+#### caller
+```shell
+caller [expr]
+```
+- Returns the context of any active subroutine call (a shell function or a script executed with the . or source builtins).
+- Without expr, caller displays the line number and source filename of the current subroutine call.
+- If a non-negative integer is supplied as expr, caller displays the line number, subroutine name, and source file corresponding to that position in the current execution call stack.
+
+#### cd
+```shell
+cd [-L|[-P [-e]] [-@] [directory]
+```
+- `-L` Force symbolic links to be followed.
+- `-P` Use the physical directory structure without following symbolic links.
+- `-e` If the `-P` option is supplied, and the current working directory cannot be determined successfully, exit with a non-zero status
+- `-@` On systems that support it, present a file with extended attributes as a directory containing the file attributes
+
+#### command
+```shell
+command [-pVv] command [arguments …]
+```
+- Runs command with arguments ignoring any shell function named command.
+- `-p` Use a default value for PATH that is guaranteed to find all of the standard utilities
+- `-v` Print a description of COMMAND similar to the `type' builtin
+- `-V` Print a more verbose description of each COMMAND 
+
+#### continue
+```shell
+continue [n]
+```
+- Resume the next iteration of an enclosing `for`, `while`, `until`, or `select` loop.
+- If n is supplied, the execution of the nth enclosing loop is resumed. n must be greater than or equal to 1.
+
+#### declare
+
+#### eval
+```shell
+eval [arguments]
+```
+- The arguments are concatenated together into a single command, which is then read and executed.
+- If there are no arguments or only empty arguments, the return status is zero.
 
 
 
