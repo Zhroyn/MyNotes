@@ -5,6 +5,8 @@
 - [Parameters](#parameters)
 - [Pattern Matching](#pattern-matching)
 - [Command Line Editing](#command-line-editing)
+    - [Emacs Mode](#emacs-mode)
+    - [Readline Init File](#readline-init-file)
 - [Conditional Expressions](#conditional-expressions)
 - [Compound Commands](#compound-commands)
     - [Looping Constructs](#looping-constructs)
@@ -109,39 +111,86 @@ print   punct   space   upper   word    xdigit
 
 ## Command Line Editing
 
+#### Emacs Mode
 - You can pass numeric arguments to Readline commands. The general way to pass numeric arguments to a command is to type meta digits before the command.
 
-**Basic**
-- `C-d` Delete the character underneath the cursor forward.
-- `C-h` Delete the character backward.
-- `C-l` Clear the screen, reprinting the current line at the top.
-- `C-_` or `C-x C-u` Undo the last editing command.
-
 **Movement**
-- `C-a` Move to the start of the line.
-- `C-e` Move to the end of the line.
-- `C-b` Move back one character.
-- `C-f` Move forward one character.
-- `M-f` Move forward a word.
-- `M-b` Move backward a word.
+- `\C-a` Move to the start of the line.
+- `\C-e` Move to the end of the line.
+- `\C-b` or `\e[D` Move back one character.
+- `\C-f` or `\e[C` Move forward one character.
+- `\eb` or `\C\e[D` or `\e\e[D` Move backward a word.
+- `\ef` or `\C\e[C` or `\e\e[C` Move forward a word.
 
-**Killing and Yanking**
+**Undo**
+- `\C-_` or `\C-x\C-u` Undo the last editing command.
+- `\er` Revert line.
+
+**Delete**
+- `\C-d` Delete the character underneath the cursor forward.
+- `\C-h` or `\C-?` Delete the character backward.
+
+**Killing**
 - Killing text means to delete the text from the line, but to save it in a kill-ring for later use, usually by yanking (re-inserting) it back into the line.
-- `C-k` Kill the text from the current cursor position to the end of the line.
-- `C-u` Kill the text from the beginning of the line to the current cursor position.
-- `C-w` Kill from the cursor to the previous whitespace. This is different than M-DEL because the word boundaries differ.
-- `M-d` Kill from the cursor to the end of the current word, or, if between words, to the end of the next word. Word boundaries are the same as those used by M-f.
-- `M-DEL` Kill from the cursor to the start of the current word, or, if between words, to the start of the previous word. Word boundaries are the same as those used by M-b.
-- `C-y` Yank the most recently killed text back into the buffer at the cursor.
-- `M-y` Rotate the kill-ring, and yank the new top. You can only do this if the prior command is `C-y` or `M-y`.
+- `\C-k` Kill line.
+- `\C-u` or `\C-x\C-?` Backward Kill line.
+- `\ed` Kill word.
+- `\e\C-h` or `\e\C-?` Backward Kill word.
+- `\C-w` Kill from the cursor to the previous whitespace. This is different than `\eDEL` because the word boundaries differ.
+- `\eDEL` Kill from the cursor to the start of the current word.
+
+**Yanking**
+- `\C-y` Yank the most recently killed text back into the buffer at the cursor.
+- `\ey` Rotate the kill-ring, and yank the new top. You can only do this if the prior command is `\C-y` or `\ey`.
+- `\e.` or `\e_` Yank the last argument of previous commands.
+
+**Clearing**
+- `\C-l` Clear screen, reprinting the current line at the top.
+- `\e\C-l` Clear display.
 
 **Search History**
-- `C-r` Reverse search history.
-- `C-s` Forward search history.
-- `C-p` Previous history.
-- `C-n` Next history.
-- `\e[A` Previous history.
-- `\e[B` Next history.
+- `\C-r` Reverse search history.
+- `\C-s` Forward search history.
+- `\C-p` or `\e[A` Previous history.
+- `\C-n` or `\e[B` Next history.
+- `\C-j` Accept line
+- `\C-m` Accept line and enter.
+- `e<` Beginning of history.
+- `e>` End of history.
+
+**Case**
+- `\ec` Capitalize word.
+- `\el` Downcase word.
+- `\eu` Upcase word.
+
+**Transpose**
+- `\C-t` Transpose the char under the cursor and the previous one.
+- `\et` Transpose the word under the cursor and the previous one.
+
+**Search Character**
+- `\C-]` Search character forward.
+- `\e\C-]` Search character backward.
+
+**Completion**
+- `\C-i` Complete
+- `\e\e` Complete
+- `\e!` Complete command
+- `\e/` Complete filename
+- `\e@` Complete hostname
+- `\e{` Complete into-braces
+- `\e~` Complete username
+- `\e$` Complete variable
+- `\C x!` Possible command completions
+- `\e=` Possible completions
+- `\e?` Possible completions
+- `\C x/` Possible filename completions
+- `\C x@` Possible hostname completions
+- `\C x~` Possible username completions
+- `\C x$` Possible variable completions
+
+#### Readline Init File
+- `\C-x\C-r` Reread init file.
+
 
 
 
