@@ -608,6 +608,26 @@ continue [n]
 - If n is supplied, the execution of the nth enclosing loop is resumed. n must be greater than or equal to 1.
 
 #### declare
+```shell
+declare [-aAfFgiIlnrtux] [-p] [name[=value] …]
+```
+- Declare variables and give them attributes. If no names are given, then display the values of variables instead.
+- The -p option will display the attributes and values of each name. 
+- When `-p` is used with name arguments, additional options, other than `-f` and `-F`, are ignored.
+- When `-p` is supplied without name arguments, `declare` will display the attributes and values of all variables having the attributes specified by the additional options.
+- Using `+` instead of `-` turns off the attribute instead, with the exceptions that `+a` and `+A` may not be used to destroy array variables and `+r` will not remove the readonly attribute.
+- `-a` Each name is an indexed array variable.
+- `-A` Each name is an associative array variable.
+- `-f` Use function names only.
+- `-F` Inhibit the display of function definitions; only the function name and attributes are printed.
+- `-g` Force variables to be created or modified at the global scope, even when declare is executed in a shell function. It is ignored in all other cases.
+- `-i` The variable is to be treated as an integer; arithmetic evaluation is performed when the variable is assigned a value.
+- `-l` When the variable is assigned a value, all upper-case characters are converted to lower-case. The upper-case attribute is disabled.
+- `-n` Give each name the nameref attribute, making it a name reference to another variable. That other variable is defined by the value of name. All references, assignments, and attribute modifications to name, except for those using or changing the -n attribute itself, are performed on the variable referenced by name’s value. The nameref attribute cannot be applied to array variables.
+- `-r` Make names readonly. These names cannot then be assigned values by subsequent assignment statements or unset.
+- `-t` Give each name the trace attribute. Traced functions inherit the DEBUG and RETURN traps from the calling shell. The trace attribute has no special meaning for variables.
+- `-u` When the variable is assigned a value, all lower-case characters are converted to upper-case. The lower-case attribute is disabled.
+- `-x` Mark each name for export to subsequent commands via the environment.
 
 #### eval
 ```shell
