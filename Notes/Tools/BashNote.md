@@ -23,18 +23,17 @@
     - [Filename Expansion](#filename-expansion)
     - [Quote Removal](#quote-removal)
 - [Builtin](#builtin)
-    - [.](#)
-    - [:](#-1)
+    - [., command, eval](#-command-eval)
+    - [:](#)
     - [alias, unalias](#alias-unalias)
     - [bind](#bind)
-    - [break](#break)
+    - [break, continue](#break-continue)
     - [builtin](#builtin-1)
     - [caller](#caller)
     - [cd](#cd)
-    - [command](#command)
-    - [continue](#continue)
-    - [declare](#declare)
-    - [eval](#eval)
+    - [declare, local, typeset](#declare-local-typeset)
+    - [echo](#echo)
+    - [enable](#enable)
 
 <!-- /TOC -->
 
@@ -515,12 +514,31 @@ After the preceding expansions, all unquoted occurrences of the characters `\`, 
 
 
 ## Builtin
-#### .
+
+#### ., command, eval
+**.**
 ```shell
 . filename [arguments]
 ```
 - Read and execute commands from the filename argument in the current shell context. If filename does not contain a slash, the PATH variable is used to find filename, but filename does not need to be executable.
 - This builtin is equivalent to `source`.
+
+**command**
+```shell
+command [-pVv] command [arguments …]
+```
+- Runs command with arguments ignoring any shell function named command.
+- `-p` Use a default value for PATH that is guaranteed to find all of the standard utilities
+- `-v` Print a description of COMMAND similar to the `type` builtin
+- `-V` Print a more verbose description of each COMMAND 
+
+**eval**
+```shell
+eval [arguments]
+```
+- The arguments are concatenated together into a single command, which is then read and executed.
+- If there are no arguments or only empty arguments, the return status is zero.
+
 
 #### :
 ```shell
@@ -559,12 +577,28 @@ unalias [-a] [name … ]
 - `-x keyseq:shell-command` Cause shell-command to be executed whenever keyseq is entered.
 - `-X` List all key sequences bound to shell commands and the associated commands in a format that can be reused as input.
 
-#### break
+#### break, continue
+**break**
 ```shell
 break [n]
 ```
 - Exit from a `for`, `while`, `until`, or `select` loop.
 - If `n` is supplied, the nth enclosing loop is exited. `n` must be greater than or equal to 1.
+
+**continue**
+```shell
+continue [n]
+```
+- Resume the next iteration of an enclosing `for`, `while`, `until`, or `select` loop.
+- If n is supplied, the execution of the nth enclosing loop is resumed. n must be greater than or equal to 1.
+
+**exit**
+```shell
+exit [n]
+```
+- Exit the shell, returning a status of n to the shell’s parent.
+- If n is omitted, the exit status is that of the last command executed.
+
 
 #### builtin
 ```shell
@@ -591,23 +625,9 @@ cd [-L|[-P [-e]] [-@] [directory]
 - `-e` If the `-P` option is supplied, and the current working directory cannot be determined successfully, exit with a non-zero status
 - `-@` On systems that support it, present a file with extended attributes as a directory containing the file attributes
 
-#### command
-```shell
-command [-pVv] command [arguments …]
-```
-- Runs command with arguments ignoring any shell function named command.
-- `-p` Use a default value for PATH that is guaranteed to find all of the standard utilities
-- `-v` Print a description of COMMAND similar to the `type' builtin
-- `-V` Print a more verbose description of each COMMAND 
 
-#### continue
-```shell
-continue [n]
-```
-- Resume the next iteration of an enclosing `for`, `while`, `until`, or `select` loop.
-- If n is supplied, the execution of the nth enclosing loop is resumed. n must be greater than or equal to 1.
-
-#### declare
+#### declare, local, typeset
+**declare**
 ```shell
 declare [-aAfFgiIlnrtux] [-p] [name[=value] …]
 ```
@@ -629,12 +649,39 @@ declare [-aAfFgiIlnrtux] [-p] [name[=value] …]
 - `-u` When the variable is assigned a value, all lower-case characters are converted to upper-case. The lower-case attribute is disabled.
 - `-x` Mark each name for export to subsequent commands via the environment.
 
-#### eval
+**local**
 ```shell
-eval [arguments]
+local [option] name[=value] …
 ```
-- The arguments are concatenated together into a single command, which is then read and executed.
-- If there are no arguments or only empty arguments, the return status is zero.
+- For each argument, a local variable named name is created, and assigned value.
+- The option can be any of the options accepted by `declare`.
+- `local` can only be used within a function; it makes the variable name have a visible scope restricted to that function and its children.
+
+**typeset**
+```shell
+typeset [-afFgrxilnrtux] [-p] [name[=value] …]
+```
+- The `typeset` command is supplied for compatibility with the Korn shell. It is a synonym for the `declare` builtin command.
+
+
+#### echo
+```shell
+echo [-neE] [arg …]
+```
+- `-n` The trailing newline is suppressed.
+- `-e` Enable the interpretation of the following backslash-escaped characters.
+- `-E` Disable the interpretation of these escape characters.
+
+#### enable
+```shell
+enable [-a] [-dnps] [-f filename] [name …]
+```
+- Enable and disable builtin shell commands.
+- If `-n` is used, the names become disabled. Otherwise names are enabled.
+- If the `-p` option is supplied, or no name arguments appear, a list of shell builtins is printed. With no other arguments, the list consists of all enabled shell builtins. The `-a` option means to list each builtin with an indication of whether or not it is enabled.
+- The `-f` option means to load the new builtin command `name` from shared object filename. The `-d` option will delete a builtin loaded with `-f`.
+- The `-s` option restricts enable to the POSIX special builtins. If `-s` is used with `-f`, the new builtin becomes a special builtin.
+
 
 
 
