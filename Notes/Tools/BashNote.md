@@ -23,17 +23,23 @@
     - [Filename Expansion](#filename-expansion)
     - [Quote Removal](#quote-removal)
 - [Builtin](#builtin)
-    - [., command, eval](#-command-eval)
+    - [., source](#-source)
+    - [command, eval](#command-eval)
     - [:](#)
     - [alias, unalias](#alias-unalias)
     - [bind](#bind)
-    - [break, continue](#break-continue)
+    - [break, continue, exit, return](#break-continue-exit-return)
     - [builtin](#builtin-1)
     - [caller](#caller)
     - [cd](#cd)
-    - [declare, local, typeset](#declare-local-typeset)
+    - [declare, export, local, readonly, typeset](#declare-export-local-readonly-typeset)
     - [echo](#echo)
     - [enable](#enable)
+    - [help](#help)
+    - [let, test, \[](#let-test-)
+    - [mapfile, readarray](#mapfile-readarray)
+    - [read](#read)
+    - [printf](#printf)
 
 <!-- /TOC -->
 
@@ -515,7 +521,7 @@ After the preceding expansions, all unquoted occurrences of the characters `\`, 
 
 ## Builtin
 
-#### ., command, eval
+#### ., source
 **.**
 ```shell
 . filename [arguments]
@@ -523,6 +529,10 @@ After the preceding expansions, all unquoted occurrences of the characters `\`, 
 - Read and execute commands from the filename argument in the current shell context. If filename does not contain a slash, the PATH variable is used to find filename, but filename does not need to be executable.
 - This builtin is equivalent to `source`.
 
+**source**
+- A synonym for `.`
+
+#### command, eval
 **command**
 ```shell
 command [-pVv] command [arguments …]
@@ -577,7 +587,7 @@ unalias [-a] [name … ]
 - `-x keyseq:shell-command` Cause shell-command to be executed whenever keyseq is entered.
 - `-X` List all key sequences bound to shell commands and the associated commands in a format that can be reused as input.
 
-#### break, continue
+#### break, continue, exit, return
 **break**
 ```shell
 break [n]
@@ -599,6 +609,12 @@ exit [n]
 - Exit the shell, returning a status of n to the shell’s parent.
 - If n is omitted, the exit status is that of the last command executed.
 
+**return**
+```shell
+return [n]
+```
+- Cause a shell function to stop executing and return the value n to its caller.
+- If n is not supplied, the return value is the exit status of the last command executed in the function.
 
 #### builtin
 ```shell
@@ -625,8 +641,16 @@ cd [-L|[-P [-e]] [-@] [directory]
 - `-e` If the `-P` option is supplied, and the current working directory cannot be determined successfully, exit with a non-zero status
 - `-@` On systems that support it, present a file with extended attributes as a directory containing the file attributes
 
+**pwd**
+```shell
+pwd [-LP]
+```
+- Print the absolute pathname of the current working directory.
+- If the `-L` option is supplied, the pathname printed may contain symbolic links.
+- If the `-P` option is supplied, the pathname printed will not contain symbolic links.
 
-#### declare, local, typeset
+
+#### declare, export, local, readonly, typeset
 **declare**
 ```shell
 declare [-aAfFgiIlnrtux] [-p] [name[=value] …]
@@ -649,6 +673,16 @@ declare [-aAfFgiIlnrtux] [-p] [name[=value] …]
 - `-u` When the variable is assigned a value, all lower-case characters are converted to upper-case. The lower-case attribute is disabled.
 - `-x` Mark each name for export to subsequent commands via the environment.
 
+**export**
+```shell
+export [-fn] [-p] [name[=value]]
+```
+- Mark each name to be passed to child processes in the environment. 
+- If the `-f` option is supplied, the names refer to shell functions; otherwise the names refer to shell variables.
+- The `-n` option means to no longer mark each name for export. If no names are supplied, or if the -p option is given, a list of names of all exported variables is displayed.
+- The `-p` option displays output in a form that may be reused as input.
+- If a variable name is followed by =value, the value of the variable is set to value.
+
 **local**
 ```shell
 local [option] name[=value] …
@@ -656,6 +690,17 @@ local [option] name[=value] …
 - For each argument, a local variable named name is created, and assigned value.
 - The option can be any of the options accepted by `declare`.
 - `local` can only be used within a function; it makes the variable name have a visible scope restricted to that function and its children.
+
+**readonly**
+```shell
+readonly [-aAf] [-p] [name[=value]] …
+```
+- Mark each name as readonly. The values of these names may not be changed by subsequent assignment.
+- If a variable name is followed by `=value`, the value of the variable is set to value.
+- If the `-f` option is supplied, each name refers to a shell function.
+- The `-a` option means each name refers to an indexed array variable.
+- The `-A` option means each name refers to an associative array variable.
+- If no name arguments are given, or if the `-p` option is supplied, a list of all readonly names is printed. The other options may be used to restrict the output to a subset of the set of readonly names.
 
 **typeset**
 ```shell
@@ -681,6 +726,76 @@ enable [-a] [-dnps] [-f filename] [name …]
 - If the `-p` option is supplied, or no name arguments appear, a list of shell builtins is printed. With no other arguments, the list consists of all enabled shell builtins. The `-a` option means to list each builtin with an indication of whether or not it is enabled.
 - The `-f` option means to load the new builtin command `name` from shared object filename. The `-d` option will delete a builtin loaded with `-f`.
 - The `-s` option restricts enable to the POSIX special builtins. If `-s` is used with `-f`, the new builtin becomes a special builtin.
+
+#### help
+```shell
+help [-dms] [pattern]
+```
+- Display helpful information about builtin commands.
+- If pattern is specified, help gives detailed help on all commands matching pattern, otherwise a list of the builtins is printed.
+- `-d` Display a short description of each pattern
+- `-m` Display the description of each pattern in a manpage-like format
+- `-s` Display only a short usage synopsis for each pattern
+
+#### let, test, [
+**let**
+```shell
+let expression [expression …]
+```
+- The let builtin allows arithmetic to be performed on shell variables.
+- If the last expression evaluates to 0, let returns 1; otherwise 0 is returned.
+
+**test, [**
+```shell
+test expr
+```
+- Evaluate a conditional expression expr and return a status of 0 (true) or 1 (false).
+- Each operator and operand must be a separate argument.
+
+#### mapfile, readarray
+**mapfile**
+```shell
+mapfile [-d delim] [-n count] [-O origin] [-s count] [-t] [-u fd] [array]
+```
+- Read lines from the standard input into the indexed array variable array, or from file descriptor fd if the `-u` option is supplied.
+- The variable `MAPFILE` is the default array.
+- `-d` The first character of delim is used to terminate each input line, rather than newline. If delim is the empty string, mapfile will terminate a line when it reads a NUL character.
+- `-n` Copy at most count lines. If count is 0, all lines are copied.
+- `-O` Begin assigning to array at index origin. The default index is 0.
+- `-s` Discard the first count lines read.
+- `-t` Remove a trailing delim (default newline) from each line read.
+- `-u` Read lines from file descriptor fd instead of the standard input.
+
+#### read
+```shell
+read [-ers] [-a aname] [-d delim] [-i text] [-n nchars]
+    [-N nchars] [-p prompt] [-t timeout] [-u fd] [name …]
+```
+- One line is read from the standard input, or from the file descriptor fd supplied as an argument to the -u option, split into words, and the first word is assigned to the first name, the second word to the second name, and so on.
+- If there are more words than names, the remaining words and their intervening delimiters are assigned to the last name.
+- If there are fewer words read from the input stream than names, the remaining names are assigned empty values.
+- If no names are supplied, the line read, without the ending delimiter but otherwise unmodified, is assigned to the variable `REPLY`.
+- The backslash character `\` may be used to remove any special meaning for the next character read and for line continuation.
+- `-a aname` The words are assigned to sequential indices of the array variable aname, starting at 0. All elements are removed from aname before the assignment. Other name arguments are ignored.
+- `-d delim` The first character of delim is used to terminate the input line, rather than newline. If delim is the empty string, read will terminate a line when it reads a NUL character.
+- `-n nchars` read returns after reading nchars characters rather than waiting for a complete line of input, but honors a delimiter if fewer than nchars characters are read before the delimiter.
+- `-N nchars` read returns after reading exactly nchars characters rather than waiting for a complete line of input, unless EOF is encountered or read times out. Delimiter characters encountered in the input are not treated specially and do not cause read to return until nchars characters are read.
+- `-p prompt` Display prompt, without a trailing newline, before attempting to read any input. The prompt is displayed only if input is coming from a terminal.
+- `-r` If this option is given, backslash does not act as an escape character. The backslash is considered to be part of the line. In particular, a backslash-newline pair may not then be used as a line continuation.
+- `-s` Silent mode. If input is coming from a terminal, characters are not echoed.
+- `-t timeout` Cause read to time out and return failure if a complete line of input (or a specified number of characters) is not read within timeout seconds. It has no effect when reading from regular files.
+- `-u fd` Read input from file descriptor fd.
+
+**readarray**
+- A synonym for `mapfile`.
+
+#### printf
+```shell
+printf [-v var] format [arguments]
+```
+- Write the formatted arguments to the standard output under the control of the format.
+- The `-v` option causes the output to be assigned to the variable var rather than being printed to the standard output.
+
 
 
 
