@@ -1,5 +1,24 @@
-[toc]
+<!-- TOC -->
 
+- [Operators and motions](#operators-and-motions)
+        - [Operators](#operators)
+        - [Word motions](#word-motions)
+        - [Left-right motions](#left-right-motions)
+        - [Up-down motions](#up-down-motions)
+        - [Text object motions](#text-object-motions)
+        - [Text object selection](#text-object-selection)
+        - [Jumps](#jumps)
+- [Other Operator](#other-operator)
+- [Other Commands](#other-commands)
+        - [File](#file)
+        - [Fold](#fold)
+        - [Substitute](#substitute)
+        - [Mark](#mark)
+        - [Multiple Windows](#multiple-windows)
+        - [Macro](#macro)
+        - [Navigation](#navigation)
+
+<!-- /TOC -->
 
 
 
