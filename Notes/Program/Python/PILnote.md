@@ -2,15 +2,26 @@
 <!-- TOC -->
 
 - [PIL.Image](#pilimage)
-        - [Attributes](#attributes)
-        - [Methods](#methods)
-        - [Functions](#functions)
+    - [Attributes](#attributes)
+    - [Methods](#methods)
+        - [Convert](#convert)
+        - [Split](#split)
+        - [Cut, Copy and Paste](#cut-copy-and-paste)
+        - [Resize](#resize)
+        - [Rotate](#rotate)
+        - [Pixel](#pixel)
+        - [Alpha](#alpha)
+        - [Filter](#filter)
+    - [Functions](#functions)
 - [PIL.ImageFilter](#pilimagefilter)
-        - [BuiltinFilter](#builtinfilter)
-        - [MultibandFilter](#multibandfilter)
+    - [BuiltinFilter](#builtinfilter)
+    - [MultibandFilter](#multibandfilter)
 - [PIL.ImageEnhance](#pilimageenhance)
 
 <!-- /TOC -->
+
+
+
 
 
 
@@ -47,7 +58,7 @@ save(fp, format=None, **params)
 close()
     Closes the file pointer, if possible.
 ```
-**Convert**
+###### Convert
 ```py
 convert(mode=None, matrix=None, ...)
     Returns a converted copy of this image.
@@ -60,7 +71,7 @@ convert(mode=None, matrix=None, ...)
     "YCbCr" : 24-bit Luminance, Blue, Red
 ```
 
-**Split**
+###### Split
 ```py
 split()
     Split this image into individual bands. This method returns a
@@ -77,7 +88,7 @@ getchannel(channel)
 >>> im2 = Image.merge('RGB', (b, g, r))
 ```
 
-**Cut, Copy and Paste**
+###### Cut, Copy and Paste
 ```py
 crop(box=None)
     Returns a rectangular region from this image. The box is a
@@ -99,7 +110,7 @@ paste(im, box=None, mask=None)
 >>> im.paste(region, box)
 ```
 
-**Resize**
+###### Resize
 ```py
 resize(size, resample=None, box=None, reducing_gap=None)
     Returns a resized copy of this image.
@@ -113,7 +124,7 @@ resize(size, resample=None, box=None, reducing_gap=None)
 
 ```
 
-**Rotate**
+###### Rotate
 ```py
 transpose(method)
     Returns a flipped or rotated copy of this image.
@@ -138,7 +149,7 @@ rotate(angle, ..., expand=0, center=None, translate=None, fillcolor=None)
 >>> im = im.rotate(-10, expand=True, translate=(100, 100), fillcolor="white")
 ```
 
-**Pixel**
+###### Pixel
 ```py
 getpixel(xy)
     Returns the pixel value at a given position.
@@ -154,7 +165,7 @@ point(lut, mode=None)
        all bands of the image.
 ```
 
-**Alpha**
+###### Alpha
 ```py
 putalpha(alpha)
     Adds or replaces the alpha layer in this image.  If the image
@@ -164,6 +175,24 @@ putalpha(alpha)
     image having the same size as this image, or an integer or
     other color value.
 ```
+
+###### Filter
+```py
+filter(filter)
+    Filters this image using the given filter.  For a list of
+    available filters, see the :py:mod:`~PIL.ImageFilter` module.
+
+    :param filter: Filter kernel.
+    :returns: An :py:class:`~PIL.Image.Image` object.
+```
+
+
+
+
+
+
+
+
 
 
 
