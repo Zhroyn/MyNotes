@@ -1,4 +1,17 @@
-[toc]
+
+<!-- TOC -->
+
+- [Datas](#datas)
+- [Functions](#functions)
+  - [Paths](#paths)
+  - [Files](#files)
+  - [Pipes](#pipes)
+- [Modules](#modules)
+  - [os.path](#ospath)
+
+<!-- /TOC -->
+
+
 
 
 ### Datas
@@ -116,7 +129,7 @@ system(command)
 
 
 
-## Modules
+### Modules
 #### os.path
 ```py
 # Return the absolute version of a path.
