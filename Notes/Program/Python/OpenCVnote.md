@@ -6,6 +6,13 @@
 - [Image](#image)
         - [Open and Save](#open-and-save)
 - [Video](#video)
+    - [VideoCapture](#videocapture)
+        - [Open and Release](#open-and-release)
+        - [Capture frame](#capture-frame)
+        - [VideoCaptureProperties](#videocaptureproperties)
+    - [VideoWriter](#videowriter)
+        - [Create and Release](#create-and-release)
+        - [fourcc](#fourcc)
 
 <!-- /TOC -->
 
@@ -88,8 +95,9 @@ imwrite(filename, img[, params]) -> retval
 
 ## Video
 ### VideoCapture
-#### Open and Close
+#### Open and Release
 ```py
+VideoCapture(filename[, apiPreference]) -> retval
 open(filename[, apiPreference]) -> retval
     Opens a video file or a capturing device or an IP video stream for video 
     capturing.
@@ -101,6 +109,7 @@ isOpened() -> retval
     succeeded, the method returns true.
 
 release() -> None
+    Close video file or capturing device.
     The method is automatically called by subsequent VideoCapture::open and 
     by VideoCapture destructor.
 ```
@@ -155,7 +164,66 @@ set(propId, value) -> retval
 
 
 ### VideoWriter
+#### Create and Release
+```py
+VideoWriter(filename, fourcc, fps, frameSize, isColor=ture) -> retval
+open(filename, fourcc, fps, frameSize, isColor=ture) -> retval
+    Initializes or reinitializes video writer.
+    The method opens video writer. Parameters are the same as in the constructor.
+    Return `true` if video writer has been successfully initialized
 
+    filename : Name of the output video file.
+    fourcc : 4-character code of codec used to compress the frames.
+             If fourcc is -1, it will pop up the codec selection dialog.
+    fps	: Framerate of the created video stream.
+    frameSize : Size of the video frames.
+    isColor : If it is not zero, the encoder will expect and encode color frames,
+              otherwise it will work with grayscale frames.
+
+
+isOpened() -> retval
+    Return true if video writer has been successfully initialized.
+
+write(image) ->	None
+    Writes the next video frame.
+    image : In general, color images are expected in BGR format.
+            It must have the same size as has been specified when opening the 
+            video writer.
+
+release() -> None
+    Close the video writer.
+    The method is automatically called by subsequent VideoWriter::open and 
+    by the VideoWriter destructor.
+```
+
+#### fourcc
+**AVI**
+- `I420`
+  - `rawvideo (I420 / 0x30323449)`
+  - YUV video stored in planar 4:2:0 format
+  - largest
+- `H264` `h264` `X264` `x264` `avc1`
+  - `h264 (Constrained Baseline) (H264 / 0x34363248)`
+  - H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10
+  - larger
+- `MJPG` `AVI1` `AVI2`
+  - `mjpeg (Baseline) (MJPG / 0x47504A4D)`
+  - Motion JPEG
+  - smaller
+- `FMP4` `XVID` `DIVD`
+  - `mpeg4 (Simple Profile) (FMP4 / 0x34504D46)`
+  - MPEG-4 part 2
+  - smallest
+
+**MP4**
+- `avc1` `avc3`
+  - `h264 (Constrained Baseline) (avc1 / 0x31637661)`
+  - H.264 / AVC / MPEG-4 AVC / MPEG-4 part 10
+  - larger
+- `mp4v`
+  - `mpeg4 (Simple Profile) (mp4v / 0x7634706D)`
+  - MPEG-4 part 2
+  - smaller
 
 
 
