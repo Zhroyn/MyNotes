@@ -4,7 +4,11 @@
         - [Open and Close](#open-and-close)
         - [Keys](#keys)
 - [Image](#image)
+    - [Basic](#basic)
         - [Open and Save](#open-and-save)
+    - [Image Process](#image-process)
+        - [Smoothing](#smoothing)
+        - [borderType](#bordertype)
 - [Video](#video)
     - [VideoCapture](#videocapture)
         - [Open and Release](#open-and-release)
@@ -69,6 +73,7 @@ waitKey([, delay]) -> retval
 
 
 ## Image
+### Basic
 #### Open and Save
 ```py
 imread(filename[, flags]) -> retval
@@ -86,6 +91,144 @@ imwrite(filename, img[, params]) -> retval
     Return true if image is saved successfully.
     The image format is chosen based on the filename extension.
 ```
+
+
+
+### Image Process
+#### Smoothing
+```py
+cv2.blur(src, ksize)
+cv2.boxFilter(src, -1, ksize)
+cv2.GaussianFilter(src, ksize, 0, 0)
+cv2.medianBlur(src, ksize)
+cv2.filter2D(src, -1, kernel)
+```
+```py
+blur(src, ksize[, dst[, anchor[, borderType]]]) -> dst
+    @brief Blurs an image using the normalized box filter.
+    The function smooths an image using the kernel:
+    \f[
+        \texttt{K} = \frac{1}{\texttt{ksize.width*ksize.height}} 
+        \begin{bmatrix} 
+            1 & 1 & 1 &  \cdots & 1 & 1  \\
+            1 & 1 & 1 &  \cdots & 1 & 1  \\
+            \hdotsfor{6} \\
+            1 & 1 & 1 &  \cdots & 1 & 1  \\ 
+        \end{bmatrix}
+    \f]
+    @param src : input image; it can have any number of channels, which are 
+                 processed independently, but the depth should be CV_8U, CV_16U, 
+                 CV_16S, CV_32F or CV_64F.
+    @param dst : output image of the same size and type as src.
+    @param ksize : blurring kernel size which can be any size.
+    @param anchor : anchor point; default value Point(-1,-1) means that the 
+                    anchor is at the kernel center.
+    @param borderType : border mode used to extrapolate pixels outside of image.
+
+
+boxFilter(src, ddepth, ksize[, dst[, anchor[, normalize[, borderType]]]]) -> dst
+    @brief Blurs an image using the box filter.
+    The function smooths an image using the kernel:
+    \f[
+        \texttt{K} =  \alpha
+        \begin{bmatrix} 
+            1 & 1 & 1 &  \cdots & 1 & 1  \\
+            1 & 1 & 1 &  \cdots & 1 & 1  \\
+            \hdotsfor{6} \\
+            1 & 1 & 1 &  \cdots & 1 & 1  \\ 
+        \end{bmatrix}
+    \f] 
+    @param src : input image.
+    @param dst : output image of the same size and type as src.
+    @param ddepth : the output image depth (-1 to use src.depth()).
+    @param ksize : blurring kernel size which can be any size.
+    @param anchor : anchor point; default value Point(-1,-1) means that the 
+                    anchor is at the kernel center.
+    @param normalize : flag, specifying whether the kernel is normalized by 
+                       its area or not, default is true.
+    @param borderType : border mode used to extrapolate pixels outside of image.
+
+
+GaussianBlur(src, ksize, sigmaX[, dst[, sigmaY[, borderType]]]) -> dst
+    @brief Blurs an image using a Gaussian filter.
+    The function convolves the source image with the specified Gaussian kernel.
+    In-place filtering is supported.
+
+    @param src : input image; the image can have any number of channels, which 
+                 are processed independently, but the depth should be CV_8U, 
+                 CV_16U, CV_16S, CV_32F or CV_64F.
+    @param dst : output image of the same size and type as src.
+    @param ksize : Gaussian kernel size. ksize.width and ksize.height can differ 
+                   but they both must be positive and odd. Or they can be zero's 
+                   and then they are computed from sigma.
+    @param sigmaX : Gaussian kernel standard deviation in X direction.
+    @param sigmaY : Gaussian kernel standard deviation in Y direction; if sigmaY 
+                    is zero, it is set to be equal to sigmaX, if both sigmas are 
+                    zeros, they are computed from ksize.width and ksize.height.
+    @param borderType : pixel extrapolation method
+
+medianBlur(src, ksize[, dst]) -> dst
+    @brief Blurs an image using the median filter.
+    The function smoothes an image using the median filter.
+    Each channel of a multi-channel image is processed independently.
+    In-place operation is supported.
+    @note The median filter uses BORDER_REPLICATE internally for border pixels.
+
+    @param src : input 1-, 3-, or 4-channel image; when ksize is 3 or 5, the 
+                 image depth should be CV_8U, CV_16U, or CV_32F, for larger 
+                 aperture sizes, it can only be CV_8U.
+    @param dst : destination array of the same size and type as src.
+    @param ksize : aperture linear size; it must be odd and greater than 1.
+
+
+bilateralFilter(src, d, sigmaColor, sigmaSpace[, dst[, borderType]]) -> dst
+    @brief Applies the bilateral filter to an image.
+    This filter does not work inplace.
+
+    @param src : Source 8-bit or floating-point, 1-channel or 3-channel image.
+    @param dst : Destination image of the same size and type as src .
+    @param d : Diameter of each pixel neighborhood that is used during filtering.
+               If it is non-positive, it is computed from sigmaSpace.
+    @param sigmaColor : Filter sigma in the color space. A larger value of the 
+                        parameter means that farther colors within the pixel 
+                        neighborhood will be mixed together.
+    @param sigmaSpace : Filter sigma in the coordinate space. A larger value of 
+                        the parameter means that farther pixels will influence 
+                        each other When d>0, it specifies the neighborhood size 
+                        regardless of sigmaSpace. Otherwise d is proportional 
+                        to sigmaSpace.
+    @param borderType : border mode used to extrapolate pixels outside of image.
+
+
+filter2D(src, ddepth, kernel[, dst[, anchor[, delta[, borderType]]]]) -> dst
+    @brief Convolves an image with the kernel.
+    The function applies an arbitrary linear filter to an image.
+    In-place operation is supported.
+
+    @param src : input image.
+    @param dst : output image of the same size and the same number of channels 
+                 as src.
+    @param ddepth : desired depth of the destination image.
+    @param kernel : convolution kernel (or rather a correlation kernel), a 
+                    single-channel floating point matrix.
+    @param anchor : anchor of the kernel that indicates the relative position of 
+                    a filtered point within the kernel; the anchor should lie 
+                    within the kernel; default value (-1,-1) means that anchor 
+                    is at the kernel center.
+    @param delta : optional value added to the filtered pixels before storing 
+                   them in dst.
+    @param borderType : pixel extrapolation method.
+```
+
+#### borderType
+- `cv.BORDER_CONSTANT` : `iiiiii|abcdefgh|iiiiiii` with some specified i
+- `cv.BORDER_REPLICATE` : `aaaaaa|abcdefgh|hhhhhhh`
+- `cv.BORDER_REFLECT` : `fedcba|abcdefgh|hgfedcb`
+- `cv.BORDER_WRAP` : `cdefgh|abcdefgh|abcdefg`
+- `cv.BORDER_REFLECT_101` : `gfedcb|abcdefgh|gfedcba`
+- `cv.BORDER_TRANSPARENT` : `uvwxyz|abcdefgh|ijklmno`
+- `cv.BORDER_REFLECT101` : same as `BORDER_REFLECT_101`
+- `cv.BORDER_DEFAULT` : same as `BORDER_REFLECT_101`
 
 
 
