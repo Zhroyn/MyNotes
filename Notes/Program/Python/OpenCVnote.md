@@ -6,7 +6,12 @@
 - [Image](#image)
     - [Basic](#basic)
         - [Open and Save](#open-and-save)
+        - [Image representation](#image-representation)
     - [Image Process](#image-process)
+        - [Operation](#operation)
+            - [Add and Subtract](#add-and-subtract)
+            - [Bit Operation](#bit-operation)
+        - [Split and Merge](#split-and-merge)
         - [Smoothing](#smoothing)
         - [borderType](#bordertype)
 - [Video](#video)
@@ -92,9 +97,119 @@ imwrite(filename, img[, params]) -> retval
     The image format is chosen based on the filename extension.
 ```
 
+#### Image representation
+- In RGB color space, the order of image channels is BGR.
+- In pixel coordinates, the first index represents the row(height), the secend index represents the colunm(width).
+
+
+
 
 
 ### Image Process
+#### Operation
+- `+` `-` `*` `/` : The result will take the modulus. If operators are two arrays, the new pixel value is the value obtained after the corresponding operation of the original two pixel values.
+- When used with `mask`, the operation will only be performed on pixels with non-zero mask value, and the value of other pixels will be set to 0.
+
+##### Add and Subtract
+```py
+add(src1, src2[, dst[, mask[, dtype]]]) -> dst
+    @brief Calculates the per-element sum of two arrays or an array and a scalar.
+    The function add calculates the sum of two arrays when both input arrays 
+    have the same size and the same number of channels, or the sum of an array 
+    and a scalar when src1 or src2 is constructed from Scalar or has the same 
+    number of elements as `src1.channels()` or `src2.channels()`.
+    @note Saturation is not applied when the output array has the depth CV_32S.
+
+    @param src1 : first input array or a scalar.
+    @param src2 : second input array or a scalar.
+    @param dst : output array that has the same size and number of channels as 
+                 the input array(s); the depth is defined by dtype or src1/src2.
+    @param mask : optional operation mask - 8-bit single channel array, that 
+                  specifies elements of the output array to be changed.
+    @param dtype : optional depth of the output array.
+
+addWeighted(src1, alpha, src2, beta, gamma[, dst[, dtype]]) -> dst
+    @brief Calculates the weighted sum of two arrays.
+    The function addWeighted calculate the weighted sum of two arrays as follows:
+        dst = src1*alpha + src2*beta + gamma
+    @note Saturation is not applied when the output array has the depth CV_32S.
+    @param src1 : first input array.
+    @param alpha : weight of the first array elements.
+    @param src2 : second input array of the same size and channel number as src1.
+    @param beta : weight of the second array elements.
+    @param gamma : scalar added to each sum.
+    @param dst : output array that has the same size and number of channels as 
+                 the input arrays.
+    @param dtype : optional depth of the output array; when both input arrays 
+                   have the same depth, dtype can be set to -1, which will be 
+                   equivalent to src1.depth().
+
+subtract(src1, src2[, dst[, mask[, dtype]]]) -> dst
+    @brief Calculates the per-element difference between two arrays or array 
+    and a scalar.
+    The function subtract calculates difference between two arrays, or difference
+    between an array and a scalar, when src1 or src2 is constructed from Scalar
+    or has the same number of elements as `src1.channels()` or `src2.channels()`.
+    The function calculate as follows:
+        dst = src1 - src2
+    @note Saturation is not applied when the output array has the depth CV_32S.
+
+    @param src1 : first input array or a scalar.
+    @param src2 : second input array or a scalar.
+    @param dst : output array that has the same size and number of channels as 
+                 the input array.
+    @param mask : optional operation mask - 8-bit single channel array, that 
+                  specifies elements of the output array to be changed.
+    @param dtype : optional depth of the output array.
+```
+##### Bit Operation
+```py
+bitwise_and(src1, src2[, dst[, mask]]) -> dst
+    @brief computes bitwise conjunction of the two arrays (dst = src1 & src2)
+    or an array and a scalar.
+bitwise_or(src1, src2[, dst[, mask]]) -> dst
+    @brief Calculates the per-element bit-wise disjunction of two arrays or an
+    array and a scalar.
+bitwise_xor(src1, src2[, dst[, mask]]) -> dst
+    @brief Calculates the per-element bit-wise "exclusive or" operation on two
+    arrays or an array and a scalar.
+bitwise_not(src[, dst[, mask]]) -> dst
+    @brief  Inverts every bit of an array.
+
+    In case of floating-point arrays, their machine-specific bit representations
+    (usually IEEE754-compliant) are used for the operation.
+    In case of multi-channel arrays, each channel is processed independently.
+    If one of the src is scalar, the scalar is first converted to the array type.
+
+    @param src1 : first input array or a scalar.
+    @param src2 : second input array or a scalar.
+    @param dst : output array that has the same size and type as input arrays.
+    @param mask : optional operation mask, 8-bit single channel array, that
+    specifies elements of the output array to be changed.
+```
+
+
+
+
+#### Split and Merge
+```py
+split(m[, mv]) -> mv
+    @param m : input multi-channel array.
+    @param mv : output vector of arrays; the arrays themselves are reallocated, 
+                if needed.
+
+merge(mv[, dst]) -> dst
+    @param mv : input vector of matrices to be merged; all the matrices in mv 
+                must have the same size and the same depth.
+    @param dst : output array of the same size and the same depth as mv[0]; The 
+                 number of channels will be the total number of channels in the
+                 matrix array.
+
+b, g, r = cv2.split(im)
+b = cv2.split(im)[0]
+out = cv2.merge([b, g, r])  #origin image
+out = cv2.merge([r, g, b])
+```
 #### Smoothing
 ```py
 cv2.blur(src, ksize)
