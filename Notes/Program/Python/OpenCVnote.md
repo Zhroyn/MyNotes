@@ -13,7 +13,10 @@
             - [Bit Operation](#bit-operation)
         - [Split and Merge](#split-and-merge)
         - [Smoothing](#smoothing)
+        - [Geometric Image Transformations](#geometric-image-transformations)
+    - [Attributes](#attributes)
         - [borderType](#bordertype)
+        - [interpolation](#interpolation)
 - [Video](#video)
     - [VideoCapture](#videocapture)
         - [Open and Release](#open-and-release)
@@ -110,6 +113,14 @@ imwrite(filename, img[, params]) -> retval
 - `+` `-` `*` `/` : The result will take the modulus. If operators are two arrays, the new pixel value is the value obtained after the corresponding operation of the original two pixel values.
 - When used with `mask`, the operation will only be performed on pixels with non-zero mask value, and the value of other pixels will be set to 0.
 
+```py
+cv2.blur(src, ksize)
+cv2.boxFilter(src, -1, ksize)
+cv2.GaussianFilter(src, ksize, 0, 0)
+cv2.medianBlur(src, ksize)
+cv2.filter2D(src, -1, kernel)
+```
+
 ##### Add and Subtract
 ```py
 add(src1, src2[, dst[, mask[, dtype]]]) -> dst
@@ -188,9 +199,6 @@ bitwise_not(src[, dst[, mask]]) -> dst
     specifies elements of the output array to be changed.
 ```
 
-
-
-
 #### Split and Merge
 ```py
 split(m[, mv]) -> mv
@@ -210,20 +218,14 @@ b = cv2.split(im)[0]
 out = cv2.merge([b, g, r])  #origin image
 out = cv2.merge([r, g, b])
 ```
+
 #### Smoothing
-```py
-cv2.blur(src, ksize)
-cv2.boxFilter(src, -1, ksize)
-cv2.GaussianFilter(src, ksize, 0, 0)
-cv2.medianBlur(src, ksize)
-cv2.filter2D(src, -1, kernel)
-```
 ```py
 blur(src, ksize[, dst[, anchor[, borderType]]]) -> dst
     @brief Blurs an image using the normalized box filter.
     The function smooths an image using the kernel:
     \f[
-        \texttt{K} = \frac{1}{\texttt{ksize.width*ksize.height}} 
+        K = \frac{1}{ksize.width*ksize.height} 
         \begin{bmatrix} 
             1 & 1 & 1 &  \cdots & 1 & 1  \\
             1 & 1 & 1 &  \cdots & 1 & 1  \\
@@ -245,14 +247,14 @@ boxFilter(src, ddepth, ksize[, dst[, anchor[, normalize[, borderType]]]]) -> dst
     @brief Blurs an image using the box filter.
     The function smooths an image using the kernel:
     \f[
-        \texttt{K} =  \alpha
+        K =  \alpha
         \begin{bmatrix} 
             1 & 1 & 1 &  \cdots & 1 & 1  \\
             1 & 1 & 1 &  \cdots & 1 & 1  \\
             \hdotsfor{6} \\
             1 & 1 & 1 &  \cdots & 1 & 1  \\ 
         \end{bmatrix}
-    \f] 
+    \f]
     @param src : input image.
     @param dst : output image of the same size and type as src.
     @param ddepth : the output image depth (-1 to use src.depth()).
@@ -335,6 +337,141 @@ filter2D(src, ddepth, kernel[, dst[, anchor[, delta[, borderType]]]]) -> dst
     @param borderType : pixel extrapolation method.
 ```
 
+
+#### Geometric Image Transformations
+**Resize**
+```py
+resize(src, dsize[, dst[, fx[, fy[, interpolation]]]]) -> dst
+    @brief Resizes an image.
+    To shrink an image, it will generally look best with INTER_AREA interpolation
+    , whereas to enlarge an image, it will generally look best with INTER_CUBIC 
+    (slow) or INTER_LINEAR (default, faster but still looks OK).
+    Note that the first parameter of dsize is width, and the second parameter is 
+    height.
+ 
+    @param src : input image.
+    @param dst : output image; the type of dst is the same as of src.
+    @param dsize : output image size; if it equals zero (`None` in Python), it 
+                   is computed from fx and fy, otherwise it will determine the 
+                   size of dst. Either dsize or both fx and fy must be non-zero.
+    @param fx : scale factor along the horizontal axis.
+    @param fy : scale factor along the vertical axis.
+    @param interpolation : interpolation method.
+```
+**Flip**
+```py
+flip(src, flipCode[, dst]) -> dst
+    @brief Flips a 2D array around vertical, horizontal, or both axes.
+    @param flipCode : a flag to specify how to flip the array. 0 means flipping 
+                      around the x-axis; positive value means flipping around 
+                      y-axis; Negative value means flipping around both axes. In 
+                      here, the x-axis is the vertical axis.
+```
+**Affine**
+```py
+warpAffine(src, M, dsize[, dst[, flags[, borderMode[, borderValue]]]]) -> dst
+    @brief Applies an affine transformation to an image.
+    The function warpAffine transforms the source image using the specified 
+    matrix (the x-axis is horizonal):
+        dst(x,y) =  src( M_{11}*x + M_{12}*y + M_{13},
+                         M_{21}*x + M_{22}*y + M_{23} )
+    The function cannot operate in-place.
+
+    @param dst : output image that has the size dsize and the same type as src.
+    @param M : 2 * 3 transformation matrix.
+    @param dsize : size of the output image.
+    @param flags : combination of interpolation methods and the optional flag 
+                   WARP_INVERSE_MAP that means M is the inverse transformation.
+    @param borderMode : pixel extrapolation method; when borderMode=BORDER_TR
+                        ANSPARENT, it means that the pixels in the destination 
+                        image corresponding to the "outliers" in the source 
+                        image are not modified by the function.
+    @param borderValue : value used in case of a constant border; by default, 
+                         it is 0.
+
+getRotationMatrix2D(center, angle, scale) -> retval
+    @brief Calculates an affine matrix of 2D rotation.
+    The function calculates the following matrix:
+    \f[
+        \alpha = scale * \cos{angle}
+        \beta =  scale * \sin{angle}
+        \begin{bmatrix}
+            \alpha & \beta  & (1-\alpha)*center.x - \beta*center.y \\
+            \beta  & \alpha & \beta*center.x + (1-\alpha)*center.y 
+        \end{bmatrix}
+    \f]
+    The transformation maps the rotation center to itself. If this is not the 
+    target, adjust the shift.
+ 
+    @param center : Center of the rotation in the source image. The coordinate 
+                    origin is assumed to be the top-left corner
+    @param angle : Rotation angle in degrees. Positive values mean counter-
+                   clockwise rotation.
+    @param scale : Isotropic scale factor.
+
+getAffineTransform(src, dst) -> retval
+    @brief Calculates an affine transform from three pairs of the corresponding 
+    points.
+    @param src : 3 * 2 matrix of coordinates of three points in the source image.
+    @param dst : 3 * 2 matrix of coordinates of the corresponding points in the 
+                 destination image.
+```
+**Perspective**
+```py
+warpPerspective(src, M, dsize[,dst[, flags[, borderMode[, borderValue]]]]) -> dst
+    @brief Applies an perspective transformation to an image.
+    The function perspective transforms the source image using the specified 
+    matrix (the x-axis is horizonal):
+        dst(x,y) =  src( \frac{M_{11} x + M_{12} y + M_{13}}
+                              {M_{31} x + M_{32} y + M_{33}} ,
+                         \frac{M_{21} x + M_{22} y + M_{23}}
+                              {M_{31} x + M_{32} y + M_{33}} )
+    The function cannot operate in-place.
+
+    @param dst : output image that has the size dsize and the same type as src.
+    @param M : 3 * 3 transformation matrix.
+    @param dsize : size of the output image.
+    @param flags : combination of interpolation methods and the optional flag 
+                   WARP_INVERSE_MAP that means M is the inverse transformation.
+    @param borderMode : pixel extrapolation method; when borderMode=BORDER_TR
+                        ANSPARENT, it means that the pixels in the destination 
+                        image corresponding to the "outliers" in the source 
+                        image are not modified by the function.
+    @param borderValue : value used in case of a constant border; by default, 
+                         it is 0.
+
+getPerspectiveTransform(src, dst) -> retval
+    @brief Calculates an perspective transform from four pairs of the 
+    corresponding points.
+    @param src : 4 * 2 matrix of coordinates of four points in the source image.
+    @param dst : 4 * 2 matrix of coordinates of the corresponding points in the 
+                 destination image.
+```
+**Remap**
+```py
+remap(src, map1, map2, interpolation[, dst[, borderMode[, borderValue]]]) -> dst
+    @brief Applies a generic geometrical transformation to an image.
+    The function remap transforms the source image using the specified map:
+        dst(x,y) = src(map_x(x,y), map_y(x,y))
+    where values of pixels with non-integer coordinates are computed using one 
+    of available interpolation methods.
+    This function cannot operate in-place.
+ 
+    @param dst : Destination image. It has the same size as map1 and the same 
+                 type as src.
+    @param map1 : The first map of either (x,y) points or just x values having 
+                  the type CV_16SC2 , CV_32FC1, or CV_32FC2.
+    @param map2 : The second map of y values having the type CV_16UC1, CV_32FC1, 
+                  or none (empty map if map1 is (x,y) points), respectively.
+    @param interpolation : Interpolation method. The methods INTER_AREA and 
+                           INTER_LINEAR_EXACT are not supported by this function.
+    @param borderMode : Pixel extrapolation method.
+    @param borderValue : Value used in case of a constant border. By default, 
+                         it is 0.
+```
+
+
+### Attributes
 #### borderType
 - `cv.BORDER_CONSTANT` : `iiiiii|abcdefgh|iiiiiii` with some specified i
 - `cv.BORDER_REPLICATE` : `aaaaaa|abcdefgh|hhhhhhh`
@@ -345,7 +482,17 @@ filter2D(src, ddepth, kernel[, dst[, anchor[, delta[, borderType]]]]) -> dst
 - `cv.BORDER_REFLECT101` : same as `BORDER_REFLECT_101`
 - `cv.BORDER_DEFAULT` : same as `BORDER_REFLECT_101`
 
-
+#### interpolation
+- `cv.INTER_NEAREST` nearest neighbor interpolation
+- `cv.INTER_LINEAR` bilinear interpolation
+- `cv.INTER_CUBIC` bicubic interpolation
+- `cv.INTER_AREA` resampling using pixel area relation. It may be a preferred method for image decimation, as it gives moire'-free results. But when the image is zoomed, it is similar to the INTER_NEAREST method.
+- `cv.INTER_LANCZOS4` Lanczos interpolation over 8x8 neighborhood
+- `cv.INTER_LINEAR_EXACT` Bit exact bilinear interpolation
+- `cv.INTER_NEAREST_EXACT` Bit exact nearest neighbor interpolation. This will produce same results as the nearest neighbor method in PIL, scikit-image or Matlab.
+- `cv.INTER_MAX` mask for interpolation codes
+- `cv.WARP_FILL_OUTLIERS` flag, fills all of the destination image pixels. If some of them correspond to outliers in the source image, they are set to zero
+- `cv.WARP_INVERSE_MAP` flag, inverse transformation
 
 
 
