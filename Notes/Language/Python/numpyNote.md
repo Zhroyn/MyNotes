@@ -1,5 +1,23 @@
-[toc]
+<!-- TOC -->
 
+- [Array](#array)
+        - [Creating ndarray](#creating-ndarray)
+        - [Creating dtype](#creating-dtype)
+        - [Attributes](#attributes)
+        - [Index and slice](#index-and-slice)
+        - [Search and count](#search-and-count)
+        - [Sort](#sort)
+        - [Concatenate](#concatenate)
+        - [Stack](#stack)
+        - [Split](#split)
+        - [Reshape](#reshape)
+        - [Expand dimension](#expand-dimension)
+        - [Transpose](#transpose)
+        - [Basic operations](#basic-operations)
+- [Random](#random)
+        - [Generate random number](#generate-random-number)
+
+<!-- /TOC -->
 
 
 
