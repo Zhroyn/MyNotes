@@ -5,7 +5,7 @@
     - [Arithmetic Operator](#arithmetic-operator)
     - [Conparisons](#conparisons)
 - [Built-in Functions](#built-in-functions)
-  - [Construct](#construct)
+  - [Constructor](#constructor)
   - [Calculate](#calculate)
   - [Convert](#convert)
   - [Get](#get)
@@ -14,7 +14,6 @@
   - [I/O](#io)
 - [Built-in Types](#built-in-types)
   - [Numeric Types (int, float, complex)](#numeric-types-int-float-complex)
-  - [Iterator Types](#iterator-types)
   - [Sequence Types (list, tuple, range)](#sequence-types-list-tuple-range)
   - [Text Sequence Type (str)](#text-sequence-type-str)
     - [Find](#find)
@@ -26,6 +25,9 @@
     - [Format String Syntax](#format-string-syntax)
     - [Formatted String Literals](#formatted-string-literals)
   - [Byte Sequence Types (bytes, bytearray)](#byte-sequence-types-bytes-bytearray)
+  - [Set Types (set, frozenset)](#set-types-set-frozenset)
+  - [Mapping Types (dict)](#mapping-types-dict)
+  - [Iterator Types](#iterator-types)
 - [Python3 基础语法](#python3-基础语法)
     - [保留字](#保留字)
     - [注释](#注释)
@@ -119,19 +121,9 @@ in  not in
 
 
 ## Built-in Functions
-### Construct
-
-
-- `set(iterable)` Return a new set object, optionally with elements taken from iterable.
+### Constructor
 - `enumerate(iterable, start=0)` Return an enumerate object. iterable must be a sequence, an iterator, or some other object which supports iteration. The `__next__()` method of the iterator returned by enumerate() returns a tuple containing a count (from start which defaults to 0) and the values obtained from iterating over iterable.
-- `dict(**kwarg)`
-- `dict(mapping, **kwarg)`
-- `dict(iterable, **kwarg)`
-- Create a new dictionary. The dict object is the dictionary class.
 <br>
-
-
-
 
 - `super(type, object_or_type=None)` Return a proxy object that delegates method calls to a parent or sibling class of type. The `object_or_type` determines the method resolution order to be searched. The search starts from the class right after the type.
 - `type(object)`
@@ -247,6 +239,9 @@ in  not in
 
 ## Built-in Types
 ### Numeric Types (int, float, complex)
+- Appending 'j' or 'J' to a numeric literal yields an imaginary number. The real and imaginary part of the complex number are each a floating point number. To extract these parts from a complex number z, use `z.real` and `z.imag`.
+
+**constructor**
 - `bool(x=False)` Return a Boolean value. x is converted using the standard truth testing procedure. If x is false or omitted, this returns False; otherwise, it returns True.
 - `int(x=0)` or `int(x, base=10)` Return an integer object constructed from a number or string x, or return 0 if no arguments are given.
   - For floating point numbers, this truncates towards zero.
@@ -254,11 +249,8 @@ in  not in
   - The allowed bases are 0 and 2–36. For base 0, the string is interpreted in a similar way to an integer literal in code, in that the actual base is 2, 8, 10, or 16 as determined by the prefix.
 - `float(x=0.0)` Return a floating point number constructed from a number or string x.
 - `complex(real=0, imag=0)` or `complex(string)` Return a complex number with the value `real` + `imag`*1j or convert a string or number to a complex number. If both arguments are omitted, returns `0j`.
-<br>
 
-- Appending 'j' or 'J' to a numeric literal yields an imaginary number. The real and imaginary part of the complex number are each a floating point number. To extract these parts from a complex number z, use `z.real` and `z.imag`.
-
-**int methods**
+**methods of int**
 - `bit_count()` Return the number of ones in the binary representation of the absolute value of the integer.
 - `bit_length()` Return the number of bits necessary to represent an integer in binary, excluding the sign and leading zeros, e.g. `(-3).bit_length` is 2.
 - `to_bytes(length=1, byteorder='big', *, signed=False)` Return an array of bytes representing an integer.
@@ -268,31 +260,25 @@ in  not in
 - `from_bytes(bytes, byteorder='big', *, signed=False)` Return the integer represented by the given array of bytes.
 - `as_integer_ratio()` Return a pair of integers, whose ratio is exactly equal to the original int and with a positive denominator.
 
-**float methods**
+**methods of float**
 - `as_integer_ratio()` Return a pair of integers, whose ratio is exactly equal to the original float and with a positive denominator.
 - `is_integer()` Return True if the float instance is finite with integral value, and False otherwise
 - `hex()` Return a hexadecimal representation of a floating-point number. For finite floating-point numbers, this representation will always include a leading 0x and a trailing p and exponent.
 - `fromhex(string)` Create a floating-point number from a hexadecimal string.
 
-**complex metheds**
+**methods of complex**
 - `conjugate()` Return the complex conjugate of its argument.
 
 
-### Iterator Types
-- Python supports a concept of iteration over containers. This is implemented using two distinct methods. Sequences always support the iteration methods.
-- One method needs to be defined for container objects to provide iterable support `container.__iter__()`, which return an iterator object. The iterator objects themselves are required to support the following two methods, which together form the iterator protocol:
-  - `iterator.__iter__()` Return the iterator object itself. This is required to allow both containers and iterators to be used with the `for` and `in` statements.
-  - `iterator.__next__()` Return the next item from the iterator. If there are no further items, raise the `StopIteration` exception.
-- Python’s generators provide a convenient way to implement the iterator protocol. If a container object’s `__iter__()` method is implemented as a generator, it will automatically return an iterator object (technically, a generator object) supplying the `__iter__()` and `__next__()` methods.
-
 ### Sequence Types (list, tuple, range)
+**constructor**
 - `list(iterable)` Rather than being a function, list is actually a mutable sequence type.
 - `tuple(iterable)` Rather than being a function, tuple is actually an immutable sequence type.
 - `range(stop)` or `range(start, stop, step=1)` Rather than being a function, range is actually an immutable sequence type. Two range objects are considered equal if they represent the same sequence of values.
 - `slice(stop)` or `slice(start, stop, step=1)` Return a slice object representing the set of indices specified by `range(start, stop, step)`. Slice objects are also generated when extended indexing syntax is used, e.g. `a[start:stop:step]` or `a[start:stop, i]`.
 <br>
 
-**Commom Sequence Operations**
+**commom sequence operations**
 - `a + b` the concatenation of a and b
 - `a * n` or `n * a` equivalent to adding a to itself n times. 
   - Replicating a list with `*` doesn’t create copies, it only creates references to the existing objects, i.e. after `a = [[0]] * 3; a[0][0] = 1`, a will be `[[1], [1], [1]]`.
@@ -310,7 +296,7 @@ in  not in
   - Optional arguments start and end are interpreted as in slice notation.
 - The only operation that immutable sequence types generally implement that is not also implemented by mutable sequence types is support for the `hash()` built-in.
 
-**list methods**
+**methods of list**
 - `append(object)` Append object to the end of the list.
 - `clear()` Remove all items from list.
 - `copy()` Return a shallow copy of the list.
@@ -325,19 +311,19 @@ in  not in
   - The `reverse` flag can be set to sort in descending order.
 
 ### Text Sequence Type (str)
+- Strings are **immutable** sequences of Unicode code points.
+- String literals can be written in a variety of ways. Single quotes allow embedded double quotes, double quotes allow embedded single quotes, triple single quotes and double quotes allow both.
+- Triple quoted strings may span multiple lines. All associated whitespace will be included in the string literal.
+- String literals that are part of a single expression and have only whitespace between them will be implicitly converted to a single string literal.
+- Both string and bytes literals may optionally be prefixed with a letter `r` or `R`; such strings are called raw strings and treat backslashes as literal characters.
+
+**constructor**
 - `str(object='')`
 - `str(object=b'', encoding='utf-8', errors='strict')`
 - Return a string version of object. If object is not provided, returns the empty string. Otherwise, the behavior of `str()` depends on whether encoding or errors is given, as follows.
   - If neither encoding nor errors is given, `str(object)` returns `type(object).__str__(object)`, which is the informal or nicely printable string representation of object. For string objects, this is the string itself. If object does not have a `__str__()` method, then `str()` falls back to returning `repr(object)`.
   - If at least one of encoding or errors is given, object should be a bytes-like object. In this case, if object is a `bytes` or `bytearray` object, then `str(bytes, encoding, errors)` is equivalent to `bytes.decode(encoding, errors)`.
   - Passing a bytes object to `str()` without the `encoding` or `errors` arguments falls under the first case of returning the informal string representation like `"b'abc'"`
-<br>
-
-- Strings are **immutable** sequences of Unicode code points.
-- String literals can be written in a variety of ways. Single quotes allow embedded double quotes, double quotes allow embedded single quotes, triple single quotes and double quotes allow both.
-- Triple quoted strings may span multiple lines. All associated whitespace will be included in the string literal.
-- String literals that are part of a single expression and have only whitespace between them will be implicitly converted to a single string literal.
-- Both string and bytes literals may optionally be prefixed with a letter `r` or `R`; such strings are called raw strings and treat backslashes as literal characters.
 
 #### Find
 - `find(sub[, start[, end]])` Return -1 on failure, others are the same as `index()`.
@@ -503,7 +489,7 @@ literal_char      ::=  <any code point except "{", "}" or NULL>
 
 
 ### Byte Sequence Types (bytes, bytearray)
-**Constuctor**
+**constuctor**
 - `bytes(source=b''[, encoding[, errors]])` Return a bytes object which is an immutable sequence of integers in the range `0 <= x < 256`.
 - `bytearray(source=b''[, encoding[, errors]])` Return a new array of bytes which is a mutable sequence of integers in the range `0 <= x < 256`.
 - The optional source parameter can be used to initialize the array in a few different ways:
@@ -529,6 +515,101 @@ literal_char      ::=  <any code point except "{", "}" or NULL>
 
 - `encode(encoding='utf-8', errors='strict')` Encode the string using the codec registered for encoding. It's the method of `str`.
 - `decode(encoding='utf-8', errors='strict')` Decode the bytes/bytearray using the codec registered for encoding. It's the method of `bytes` and `bytearray`.
+
+
+
+### Set Types (set, frozenset)
+- A set object is an unordered collection of distinct hashable objects.
+- The `set` type is mutable, so it has no hash value and cannot be used as either a dictionary key or as an element of another `set`.
+- The `frozenset` type is immutable and hashable, so it can therefore be used as a dictionary key or as an element of another `set`.
+
+**constructor**
+- `set(iterable)`
+- `frozenset(iterable)`
+- Return a new `set` or `frozenset` object, optionally with elements taken from `iterable`. The elements must be hashable.
+- `set` (not `frozensets`) can also be created by using a comma-separated list of elements within braces, or using a set comprehension, in addition to the set constructor.
+
+**commom set operations**
+- `len(set)`, `x in s`, `x not in s`
+- `isdisjoint(other)` Return True if the set has no elements in common with other.
+- `issubset(other)`
+  - `set <= other` Test whether every element in the set is in other.
+  - `set < other` Test whether the set is a proper subset of other, that is, `set <= other` and `set != other`.
+- `issuperset(other)`
+  - `set >= other` Test whether every element in other is in the set.
+  - `set > other` Test whether the set is a proper superset of other, that is, `set >= other` and `set != other`.
+<br>
+
+- `union(*others)` or `set | other | ...` Return a new set with elements from the set and all others.
+- `intersection(*others)` or `set & other & ...` Return a new set with elements common to the set and all others.
+- `difference(*others)` or `set - other - ...` Return a new set with elements in the set that are not in the others.
+- `symmetric_difference(other)` or `set ^ other` Return a new set with elements in either the set or other but not both.
+- `copy()` Return a shallow copy of the set.
+<br>
+
+- The non-operator versions of `union()`, `intersection()`, `difference()`, `symmetric_difference()`, `issubset()`, and `issuperset()` methods will accept any iterable as an argument.
+- Instances of `set` are compared to instances of `frozenset` based on their members. For example, `set('abc') == frozenset('abc')` returns True and so does `set('abc') in set([frozenset('abc')])`.
+- Operations that mix `set` instances with `frozenset` return the type of the first operand.
+
+**operations for set**
+- `add(elem)` Add element `elem` to the set.
+- `remove(elem)` Remove element `elem` from the set. Raises `KeyError` if `elem` is not contained in the set.
+- `discard(elem)` Remove element `elem` from the set if it is present.
+- `pop()` Remove and return an arbitrary element from the set. Raises `KeyError` if the set is empty.
+- `clear()` Remove all elements from the set.
+<br>
+
+- `update(*others)` or `set |= other | ...` Update a set with the union of itself and others.
+- `intersection_update(*others)` or `set &= other & ...` Update a set with the intersection of itself and another.
+- `difference_update(*others)` or `set -= other | ...` Remove all elements of another set from this set.
+- `symmetric_difference_update(other)` or `set ^= other` Update a set with the symmetric difference of itself and another.
+
+
+### Mapping Types (dict)
+- `list(dict)`, `set(dict`, `iter(dict)` and so on, only return the keys of the dictionary.
+- `d | other` or `d |= other` Create a new dictionary with the merged keys and values of `d` and `other`, which must both be dictionaries. The values of `other` take priority when `d` and `other` share keys.
+- The objects returned by `dict.keys()`, `dict.values()` and `dict.items()` are view objects. They provide a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes.
+- Keys views are set-like since their entries are unique and hashable. For set-like views, all of the operations defined for the abstract base class `collections.abc.Set` are available, e.g. `==`, `<` and `^`.
+
+**constructor**
+- `dict(**kwarg)`
+- `dict(mapping, **kwarg)`
+- `dict(iterable, **kwarg)`
+- Return a new dictionary initialized from an optional positional argument and a possibly empty set of keyword arguments.
+  - If no positional argument is given, an empty dictionary is created.
+  - If a positional argument is given and it is a mapping object, a dictionary is created with the same key-value pairs as the mapping object.
+  - Otherwise, the positional argument must be an iterable object. Each item in the iterable must itself be an iterable with exactly two objects. The first object becomes a key and the second object the corresponding value.
+  - If a key occurs more than once, the last value for that key becomes the corresponding value in the new dictionary.
+  - If keyword arguments are given, the keyword arguments and their values are added to the dictionary created from the positional argument. If a key being added is already present, the value from the keyword argument replaces the value from the positional argument.
+- `dict` can also be created by using a comma-separated list of elements of `key: value` pairs within braces, or using a dict comprehension.
+
+**methods**
+- `clear()` Remove all items from the dictionary.
+- `copy()` Return a shallow copy of the dictionary.
+- `fromkeys(iterable, value=None)` Create a new dictionary with keys from `iterable` and values set to `value`. It is a class method that returns a new dictionary.
+- `get(key, default=None)` Return the value for key if key is in the dictionary, else default.
+- `pop(key, default=None)` If key is in the dictionary, remove it and return its value, else return default.
+- `popitem()` Remove and return a `(key, value)` pair from the dictionary. Pairs are returned in LIFO order. If the dictionary is empty, calling `popitem()` raises a `KeyError`.
+- `setdefault(key, default=None)` If key is in the dictionary, return its value. If not, insert key with a value of default and return default.
+- `update([other])` Update the dictionary with the key-value pairs from other, overwriting existing keys.
+  - `update()` accepts either another dictionary object or an iterable of key-value pairs (as tuples or other iterables of length two).
+  - If keyword arguments are specified, the dictionary is then updated with those key-value pairs.
+<br>
+
+- `items()` Return a new view of the dictionary’s items (`(key, value)` pairs).
+- `keys()` Return a new view of the dictionary’s keys.
+- `values()` Return a new view of the dictionary’s values. See the documentation of view objects. An equality comparison between one `dict.values()` view and another will always return False.
+
+
+### Iterator Types
+- Python supports a concept of iteration over containers. This is implemented using two distinct methods. Sequences always support the iteration methods.
+- One method needs to be defined for container objects to provide iterable support `container.__iter__()`, which return an iterator object. The iterator objects themselves are required to support the following two methods, which together form the iterator protocol:
+  - `iterator.__iter__()` Return the iterator object itself. This is required to allow both containers and iterators to be used with the `for` and `in` statements.
+  - `iterator.__next__()` Return the next item from the iterator. If there are no further items, raise the `StopIteration` exception.
+- Python’s generators provide a convenient way to implement the iterator protocol. If a container object’s `__iter__()` method is implemented as a generator, it will automatically return an iterator object (technically, a generator object) supplying the `__iter__()` and `__next__()` methods.
+
+
+
 
 
 
