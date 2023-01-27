@@ -30,19 +30,11 @@
   - [Iterator Types](#iterator-types)
 - [Python3 基础语法](#python3-基础语法)
     - [保留字](#保留字)
-    - [注释](#注释)
     - [多行语句](#多行语句)
-- [Python3 基本数据类型](#python3-基本数据类型)
-    - [Number（数字）](#number数字)
-    - [String（字符串）](#string字符串)
-        - [转义符](#转义符)
         - [转义符的打印](#转义符的打印)
-        - [格式字符串](#格式字符串)
     - [List（列表）](#list列表)
         - [列表连接](#列表连接)
         - [改变连续元素](#改变连续元素)
-        - [列表方法](#列表方法)
-- [Python3 内置函数](#python3-内置函数)
 - [Python 文件](#python-文件)
         - [文件路径](#文件路径)
 
@@ -629,48 +621,14 @@ literal_char      ::=  <any code point except "{", "}" or NULL>
 ['False', 'None', 'True', 'and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
 ```
 
-#### 注释
-单行注释用#号开头，多行注释可用多个#号，还有’’’和”””
-
 #### 多行语句
 可以用 \ 实现多行语句，已用 []、{}、() 则不需要用 \
 
-
-## Python3 基本数据类型
-
-#### Number（数字）
-
-- Python支持int , bool , float , complex(可表示为a+bj或者complex(a,b)）
-- Python3 中，bool 是 int 的子类```issubclass(bool, int) ==> True```
-  - ```True == 1，False == 0 ``` 会返回 True，但可以通过 is 来判断类型（1 is True ==> False）
-
-- 二进制整数使用前缀0b，十六进制使用前缀0x
-- / 返回一个浮点数，// 表示整除，返回一个整数，% 表示取余，** 表示乘方
-
-#### String（字符串）
-
-###### 转义符
-- 结尾的 \ 可表示换行
-- 可表示转义命令: 
-  \n 表示换行，\t 表示tab，\r 表示回车，\000 表示空格，\oXX 表示接受八进制命令（如\o12表示换行）、\xXX表示接受十六进制命令（如\x0a表示换行）
-- 在字符串最后加 \ 只能用+的方法，即 + ’ \\ ’
 
 ###### 转义符的打印
 - 字符串只有一个 \ 时，若 \ 后不是合法的转义字符，则会在shell中会出现两个 \\（字符数目不会变多）
 - 字符串中有多个 \ 时，则shell中 \ 的数目保持原样
 - shell中会直接显示转义字符，如字符串中有 ' 或换行时，在shell中会以 \\' or \n 显示
-
-###### 格式字符串
-```python
-print('%s is %d years old' % (name, age))
-
-print('{} is {} years old'.format(name, age))
-print('{0} is {1} years old'.format(name, age))
-print('{n} is {a} years old'.format(n = name, a = age))
-
-print(f'{name} is {age} years old')
-```
-
 
 
 
@@ -693,34 +651,6 @@ print(f'{name} is {age} years old')
 >>> a
 [1, 2, 6]
 ```
-
-###### 列表方法
-.append(object)在末尾添加一个元素，.extend(iterable)在末尾添加一个集合，.insert(index,object)在特定位置前一位插入一个元素
-.pop(index=-1)在指定索引删除一个元素并返回值，.remove(value)删除出现的第一个指定元素
-.count(value)统计指定元素在列表中的数量，.index(value,start=0,stop=922337......)返回出现的第一个指定元素的索引值
-
-
-
-## Python3 内置函数
-
-type(object)：返回对象的类型，type(name, bases, dict)返回新的类型对象
-
-isinstance(obj, class_or_tuple, /)：判断一个对象是否是一个已知的类型或一个类型元组中的一个类型，会认为子类是一种父类类型，考虑继承关系
-
-issubclass(cls, class_or_tuple, /)：判断参数class是否是类型参数的子类
-
-range(stop)或range(start,stop[,step])
-
-str(object)：
-```python
-str(‘abc’) ==> 'abc'
-str([1,'a']) ==> "[1, 'a']"
-str({'a': 1}) ==> "{'a': 1}"
-```
-
-chr()：ASCII码转字符
-ord()：字符转ASCII码
-
 
 
 ## Python 文件
