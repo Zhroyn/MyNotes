@@ -2,7 +2,11 @@
 
 - [Command line and environment](#command-line-and-environment)
 - [Expressions](#expressions)
-    - [Arithmetic Operator](#arithmetic-operator)
+  - [Atoms](#atoms)
+    - [Comprehensions and Generator expressions](#comprehensions-and-generator-expressions)
+    - [Yields expressions and Generator functions](#yields-expressions-and-generator-functions)
+  - [Primaries](#primaries)
+  - [Arithmetic Operator](#arithmetic-operator)
     - [Conparisons](#conparisons)
 - [Built-in Functions](#built-in-functions)
   - [Constructor](#constructor)
@@ -87,7 +91,137 @@ python [-bBdEhiIOqsSuvVWx?] [-c cmd | -m mod | script | - ] [args]
 
 
 ## Expressions
-#### Arithmetic Operator
+
+### Atoms
+```C
+atom      ::=  identifier | literal | enclosure
+enclosure ::=  parenth_form | list_display | dict_display | set_display
+               | generator_expression | yield_atom
+
+parenth_form ::=  "(" [starred_expression] ")"
+
+list_display ::=  "[" [starred_list | comprehension] "]"
+set_display ::=  "{" (starred_list | comprehension) "}"
+dict_display       ::=  "{" [key_datum_list | dict_comprehension] "}"
+key_datum_list     ::=  key_datum ("," key_datum)* [","]
+key_datum          ::=  expression ":" expression | "**" or_expr
+dict_comprehension ::=  expression ":" expression comp_for
+```
+- Atoms are the most basic elements of expressions. The simplest atoms are identifiers or literals. Forms enclosed in parentheses, brackets or braces are also categorized syntactically as atoms.
+- A parenthesized form is an optional expression list enclosed in parentheses.
+  - An empty pair of parentheses yields an empty tuple object.
+  - A parenthesized expression list yields whatever that expression list yields: if the list contains at least one comma, it yields a tuple; otherwise, it yields the single expression that makes up the expression list.
+- A list display is a possibly empty series of expressions enclosed in square brackets.
+- A set display is denoted by curly braces and distinguishable from dictionary displays by the lack of colons separating keys and values.
+- A dictionary display is a possibly empty series of key/datum pairs enclosed in curly braces.
+  - A double asterisk `**` denotes dictionary unpacking. Its operand must be a mapping. Each mapping item is added to the new dictionary..
+  - An empty pair of braces `{}` constructs an empty dictionary, not a set.
+
+
+#### Comprehensions and Generator expressions
+```C
+comprehension ::=  assignment_expression comp_for
+comp_for      ::=  ["async"] "for" target_list "in" or_test [comp_iter]
+comp_iter     ::=  comp_for | comp_if
+comp_if       ::=  "if" or_test [comp_iter]
+
+generator_expression ::=  "(" expression comp_for ")"
+```
+- The comprehension consists of a single expression followed by at least one `for` clause and zero or more `for` or `if` clauses.
+- In this case, the elements of the new container are those that would be produced by considering each of the `for` or `if` clauses a block, nesting from left to right, and evaluating the expression to produce an element each time the innermost block is reached.
+- The iterable expression in the leftmost `for` clause is evaluated directly in the enclosing scope and then passed as an argument to the implicitly nested scope. Subsequent `for` clauses and any filter condition in the leftmost `for` clause cannot be evaluated in the enclosing scope as they may depend on the values obtained from the leftmost iterable.
+<br>
+
+- A generator expression is a compact generator notation in parentheses, which will yield a new generator object. Its syntax is the same as for comprehensions, except that it is enclosed in parentheses instead of brackets or curly braces.
+- Variables used in the generator expression are evaluated lazily when the `__next__()` method is called for the generator object. However, the iterable expression in the leftmost `for` clause is immediately evaluated.
+- The parentheses can be omitted on calls with only one argument.
+
+#### Yields expressions and Generator functions
+```C
+yield_atom       ::=  "(" yield_expression ")"
+yield_expression ::=  "yield" [expression_list | "from" expression]
+```
+- The yield expression is used when defining a generator function or an asynchronous generator function and thus can only be used in the body of a function definition. Using a yield expression in a function’s body causes that function to be a generator function, and using it in an `async def` function’s body causes that coroutine function to be an asynchronous generator function.
+- Due to their side effects on the containing scope, yield expressions are not permitted as part of the implicitly defined scopes used to implement comprehensions and generator expressions.
+- When a generator function is called, it returns an iterator known as a generator. That generator then controls the execution of the generator function.
+- Every time one of the generator’s methods is called, the execution proceeds to the next yield expression, and then it is suspended, returning the value of `expression_list` to the generator’s caller, or None if `expression_list` is omitted.
+- When `yield from <expr>` is used, the supplied expression must be an iterable, and the items in the iterable is returned one by one once one of the generator’s methods is called. When the underlying iterator is complete, the `value` attribute of the raised `StopIteration` instance becomes the value of the yield expression.
+- The parentheses may be omitted when the yield expression is the sole expression on the right hand side of an assignment statement.
+
+**Generator-iterator methods**
+- `generator.__next__()` Starts the execution of a generator function or resume it at the last executed yield expression.
+  - When a generator function is resumed with a `__next__()` method, the current yield expression always evaluates to None.
+  - The execution then continues to the next yield expression, where the generator is suspended again, and the value of the `expression_list` is returned to `__next__()`’s caller.
+  - If the generator exits without yielding another value, a `StopIteration` exception is raised.
+  - This method is normally called implicitly, e.g. by a `for` loop, or by the built-in `next()` function.
+- `generator.send(value)` Resume the execution and “sends” a value into the generator function. The value argument becomes the result of the current yield expression.
+  - The `send()` method returns the next value yielded by the generator, or raises `StopIteration` if the generator exits without yielding another value.
+  - When `send()` is called to start the generator, it must be called with None as the argument, because there is no yield expression that could receive the value.
+- `generator.throw(value)` or `generator.throw(type[, value[, traceback]])` Raise an exception at the point where the generator was paused, and returns the next value yielded by the generator function.
+- `generator.close()` Raise a `GeneratorExit` at the point where the generator function was paused.
+
+
+### Primaries
+```C
+primary ::=  atom | attributeref | subscription | slicing | call
+
+attributeref ::=  primary "." identifier
+subscription ::=  primary "[" expression_list "]"
+
+slicing      ::=  primary "[" slice_list "]"
+slice_list   ::=  slice_item ("," slice_item)* [","]
+slice_item   ::=  expression | proper_slice
+proper_slice ::=  [lower_bound] ":" [upper_bound] [ ":" [stride] ]
+lower_bound  ::=  expression
+upper_bound  ::=  expression
+stride       ::=  expression
+```
+- Primaries represent the most tightly bound operations of the language.
+- An **attribute reference** is a primary followed by a period and a name. If this attribute is not available, the exception `AttributeError` is raised.
+- The **subscription** of an instance of a container class will generally select an element from the container. The subscription of a generic class will generally return a GenericAlias object.
+  -  An object may support subscription through defining one or both of `__getitem__()` and `__class_getitem__()`. When the primary is subscripted, the evaluated result of the expression list will be passed to one of these methods.
+  -  For built-in objects, there are two types of objects that support subscription via `__getitem__()`: Mappings, the `expression list` must evaluate to an object whose value is one of the keys of the mapping; Sequences, the `expression list` must evaluate to **an int or a slice**.
+- A **slicing** selects a range of items in a sequence object. Slicings may be used as expressions or as targets in assignment or `del` statements.
+  - There is ambiguity in the formal syntax here: anything that looks like an expression list also looks like a slice list, so any subscription can be interpreted as a slicing. Rather than further complicating the syntax, this is disambiguated by defining that in this case the interpretation as a subscription takes priority over the interpretation as a slicing (this is the case if the slice list contains no proper slice).
+
+**Calls**
+```C
+call                 ::=  primary "(" [argument_list [","] | comprehension] ")"
+argument_list        ::=  positional_arguments ["," starred_and_keywords]
+                            ["," keywords_arguments]
+                          | starred_and_keywords ["," keywords_arguments]
+                          | keywords_arguments
+positional_arguments ::=  positional_item ("," positional_item)*
+positional_item      ::=  assignment_expression | "*" expression
+starred_and_keywords ::=  ("*" expression | keyword_item)
+                          ("," "*" expression | "," keyword_item)*
+keywords_arguments   ::=  (keyword_item | "**" expression)
+                          ("," keyword_item | "," "**" expression)*
+keyword_item         ::=  identifier "=" expression
+```
+- A call calls a callable object (e.g., a function) with a possibly empty series of arguments.
+- An optional trailing comma may be present after the positional and keyword arguments but does not affect the semantics.
+- All argument expressions are evaluated before the call is attempted.
+- If positional argument follows keyword argument, a `SyntaxError` is raised.
+- If keyword arguments are present, they are first converted to positional arguments, as follows.
+  - First, a list of unfilled slots is created for the formal parameters. If there are N positional arguments, they are placed in the first N slots.
+  - Next, for each keyword argument, the identifier is used to determine the corresponding slot. If the slot is already filled, a `TypeError` exception is raised.
+  - When all arguments have been processed, the slots that are still unfilled are filled with the corresponding default value from the function definition. If there are any unfilled slots for which no default value is specified, a `TypeError` exception is raised.
+  - Otherwise, the list of filled slots is used as the argument list for the call.
+<br>
+
+- If there are more positional arguments than there are formal parameter slots, a `TypeError` exception is raised, unless a formal parameter using the syntax `*identifier` is present; in this case, that formal parameter receives a tuple containing the excess positional arguments (or an empty tuple if there were no excess positional arguments).
+  - The arguments after `*` argument is keyword-only.
+- If any keyword argument does not correspond to a formal parameter name, a `TypeError` exception is raised, unless a formal parameter using the syntax `**identifier` is present; in this case, that formal parameter receives a dictionary containing the excess keyword arguments, or a empty dictionary if there were no excess keyword arguments.
+<br>
+
+- If the syntax `*expression` appears in the function call, `expression` must evaluate to an iterable. Elements from these iterables are treated as if they were additional positional arguments.
+  - Although the `*expression` syntax may appear after explicit keyword arguments, it is processed before the keyword arguments, so `f(b=1, *(2,))` is similar to `f(2, b=1)`.
+- When `**expression` is used, each key in this mapping must be a string. Each value from the mapping is assigned to the first formal parameter whose name is equal to the key. If there is no match to a formal parameter, the key-value pair is collected by the `**` parameter if there is one, otherwise a `TypeError` exception is raised.
+- Formal parameters using the syntax `*identifier` or `**identifier` cannot be used as positional argument slots or as keyword argument names.
+
+
+### Arithmetic Operator
 - For integer division `//`, the resultant value is a whole integer, though the result’s type is not necessarily int. The result is always rounded towards minus infinity and the same sign as the latter number, e.g. `1//2` is 0, `(-1)//2` is -1, `1//(-2)` is -1, and `(-1)//(-2)` is 0.
 - Python defines `0 ** 0` and `pow(0, 0)` to be 1, as is common for programming languages.
 - Bitwise operations only make sense for integers. The result of bitwise operations is calculated as though carried out in two’s complement with an infinite number of sign bits.
