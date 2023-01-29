@@ -1,22 +1,24 @@
 
 <!-- TOC -->
 
-- [PIL.Image](#pilimage)
-    - [Attributes](#attributes)
-    - [Methods](#methods)
-        - [Convert](#convert)
-        - [Split](#split)
-        - [Cut, Copy and Paste](#cut-copy-and-paste)
-        - [Resize](#resize)
-        - [Rotate](#rotate)
-        - [Pixel](#pixel)
-        - [Alpha](#alpha)
-        - [Filter](#filter)
-    - [Functions](#functions)
-- [PIL.ImageFilter](#pilimagefilter)
+- [Image](#image)
+  - [Attributes](#attributes)
+  - [Methods](#methods)
+    - [Convert](#convert)
+    - [Split](#split)
+    - [Cut, Copy and Paste](#cut-copy-and-paste)
+    - [Resize](#resize)
+    - [Rotate](#rotate)
+    - [Pixel](#pixel)
+    - [Alpha](#alpha)
+    - [Filter](#filter)
+  - [Functions](#functions)
+- [ImageFilter](#imagefilter)
+  - [MultibandFilter](#multibandfilter)
+    - [GaussianBlur](#gaussianblur)
+    - [BoxBlur](#boxblur)
     - [BuiltinFilter](#builtinfilter)
-    - [MultibandFilter](#multibandfilter)
-- [PIL.ImageEnhance](#pilimageenhance)
+- [ImageEnhance](#imageenhance)
 
 <!-- /TOC -->
 
@@ -25,7 +27,7 @@
 
 
 
-## PIL.Image
+### Image
 #### Attributes
 ```py
 >>> from PIL import Image
@@ -58,7 +60,7 @@ save(fp, format=None, **params)
 close()
     Closes the file pointer, if possible.
 ```
-###### Convert
+##### Convert
 ```py
 convert(mode=None, matrix=None, ...)
     Returns a converted copy of this image.
@@ -71,7 +73,7 @@ convert(mode=None, matrix=None, ...)
     "YCbCr" : 24-bit Luminance, Blue, Red
 ```
 
-###### Split
+##### Split
 ```py
 split()
     Split this image into individual bands. This method returns a
@@ -88,7 +90,7 @@ getchannel(channel)
 >>> im2 = Image.merge('RGB', (b, g, r))
 ```
 
-###### Cut, Copy and Paste
+##### Cut, Copy and Paste
 ```py
 crop(box=None)
     Returns a rectangular region from this image. The box is a
@@ -97,20 +99,32 @@ crop(box=None)
 copy(self)
     Copies this image.
 paste(im, box=None, mask=None)
-    Pastes another image into this image. The box argument is either
-    a 2-tuple giving the upper left corner, a 4-tuple defining the
-    left, upper, right, and lower pixel coordinate, or None (same as
-    (0, 0)). If a 4-tuple is given, the size of the pasted image must 
-    match the size of the region.
-    If the modes don't match, the pasted image is converted to the mode of
-    this image
+    Pastes another image into this image.
+    :param im: Source image or pixel value (integer or tuple). Instead 
+        of an image, the source can be a integer or tuple containing 
+        pixel values.The method then fills the region with the given 
+        color.
+    :param box: The box argument is either a 2-tuple giving the upper 
+        left corner, a 4-tuple defining the left, upper, right, and 
+        lower pixel coordinate, or None (same as (0, 0)). If a 4-tuple 
+        is given, the size of the pasted image must  match the size of 
+        the region.
+    :param mask: If a mask is given, this method updates only the 
+        regions indicated by the mask. You can use either "1", "L", 
+        "LA", "RGBA" or "RGBa" images (if present, the alpha band is 
+        used as mask). If the modes don't match, the pasted image is 
+        converted to the mode of this image.
+        Where the mask is 255, the given image is copied as is. Where 
+        the mask is 0, the current value is preserved. Intermediate 
+        values will mix the two images together, including their alpha 
+        channels if they have them.
 
 >>> box = (100, 100, 300, 300)
 >>> region = im.crop(box)
 >>> im.paste(region, box)
 ```
 
-###### Resize
+##### Resize
 ```py
 resize(size, resample=None, box=None, reducing_gap=None)
     Returns a resized copy of this image.
@@ -124,7 +138,7 @@ resize(size, resample=None, box=None, reducing_gap=None)
 
 ```
 
-###### Rotate
+##### Rotate
 ```py
 transpose(method)
     Returns a flipped or rotated copy of this image.
@@ -149,34 +163,38 @@ rotate(angle, ..., expand=0, center=None, translate=None, fillcolor=None)
 >>> im = im.rotate(-10, expand=True, translate=(100, 100), fillcolor="white")
 ```
 
-###### Pixel
+##### Pixel
 ```py
 getpixel(xy)
     Returns the pixel value at a given position.
 putpixel(xy, value)
     Modifies the pixel at the given position.
 point(lut, mode=None)
-    Maps this image through a lookup table or function.
+    Map this image through a lookup table or function.
     :param lut: A lookup table, containing 256 (or 65536 if
        self.mode=="I" and mode == "L") values per band in the
-       image.  A function can be used instead, it should take a
+       image. A function can be used instead, it should take a
        single argument. The function is called once for each
        possible pixel value, and the resulting table is applied to
        all bands of the image.
+
+>>> im.mode
+'RGB'
+>>> new = im.point(lambda x: 0 if x < 128 else 255)
 ```
 
-###### Alpha
+##### Alpha
 ```py
 putalpha(alpha)
     Adds or replaces the alpha layer in this image.  If the image
     does not have an alpha layer, it's converted to "LA" or "RGBA".
     The new layer must be either "L" or "1".
-    :param alpha: The new alpha layer.  This can either be an "L" or "1"
-    image having the same size as this image, or an integer or
-    other color value.
+    :param alpha: The new alpha layer.  This can either be an "L" or 
+        "1" image having the same size as this image, or an integer or 
+        other color value.
 ```
 
-###### Filter
+##### Filter
 ```py
 filter(filter)
     Filters this image using the given filter.  For a list of
@@ -185,9 +203,6 @@ filter(filter)
     :param filter: Filter kernel.
     :returns: An :py:class:`~PIL.Image.Image` object.
 ```
-
-
-
 
 
 
@@ -247,69 +262,241 @@ eval(image, *args)
 
 
 
-## PIL.ImageFilter
 
-#### BuiltinFilter
-- BLUR
-- CONTOUR
-- DETAIL
-- EDGE_ENHANCE
-- EDGE_ENHANCE_MORE
-- EMBOSS
-- FIND_EDGES
-- SMOOTH
-- SMOOTH_MORE
-- SHARPEN
+
+
+
+
+
+
+
+
+
+### ImageFilter
 
 #### MultibandFilter
+##### GaussianBlur
 ```py
-BoxBlur(radius)
-    Blurs the image by setting each pixel to the average value of the pixels
+class GaussianBlur(MultibandFilter):
+    """Blurs the image with a sequence of extended box filters, which
+    approximates a Gaussian kernel.
+
+    :param radius: Standard deviation of the Gaussian kernel.
+    """
+
+    name = "GaussianBlur"
+
+    def __init__(self, radius=2):
+        self.radius = radius
+
+    def filter(self, image):
+        return image.gaussian_blur(self.radius)
+```
+
+##### BoxBlur
+```py
+class BoxBlur(MultibandFilter):
+    """Blurs the image by setting each pixel to the average value of the pixels
     in a square box extending radius pixels in each direction.
     Supports float radius of arbitrary size. Uses an optimized implementation
     which runs in linear time relative to the size of the image
     for any radius value.
-     
+
     :param radius: Size of the box in one direction. Radius 0 does not blur,
                    returns an identical image. Radius 1 takes 1 pixel
                    in each direction, i.e. 9 pixels in total.
+    """
 
+    name = "BoxBlur"
 
-GaussianBlur(radius=2)
-  Blurs the image with a sequence of extended box filters, which
-  approximates a Gaussian kernel.
+    def __init__(self, radius):
+        self.radius = radius
 
-  :param radius: Standard deviation of the Gaussian kernel.
+    def filter(self, image):
+        return image.box_blur(self.radius)
 ```
 
-
-
-
-## PIL.ImageEnhance
+##### BuiltinFilter
 ```py
-# An enhancement factor of 0.0 gives a black image.
-# A factor of 1.0 gives the original image.
-enh_bri = ImageEnhance.Brightness(image)
-im = enh_bri.enhance(brightness)
+def filter(self, image):
+    if image.mode == "P":
+        raise ValueError("cannot filter palette images")
+    return image.filter(*self.filterargs)
 
+class Kernel(BuiltinFilter):
+    """
+    Create a convolution kernel.  The current version only
+    supports 3x3 and 5x5 integer and floating point kernels.
 
-# An enhancement factor of 0.0 gives a black and white image.
-# A factor of 1.0 gives the original image.
-enh_col = ImageEnhance.Color(image)
-im = enh_col.enhance(color)
+    In the current version, kernels can only be applied to
+    "L" and "RGB" images.
 
+    :param size: Kernel size, given as (width, height). In the current
+                    version, this must be (3,3) or (5,5).
+    :param kernel: A sequence containing kernel weights.
+    :param scale: Scale factor. If given, the result for each pixel is
+                    divided by this value.  The default is the sum of the
+                    kernel weights.
+    :param offset: Offset. If given, this value is added to the result,
+                    after it has been divided by the scale factor.
+    """
 
-# An enhancement factor of 0.0 gives a solid grey image.
-# A factor of 1.0 gives the original image.
-enh_con = ImageEnhance.Contrast(image)
-im = enh_con.enhance(contrast)
+    name = "Kernel"
 
-
-# An enhancement factor of 0.0 gives a blurred image.
-# A factor of 1.0 gives the original image
-# A factor of 2.0 gives a sharpened image.
-enh_sha = ImageEnhance.Sharpness(image)
-im = enh_sha.enhance(sharpness)
+    def __init__(self, size, kernel, scale=None, offset=0):
+        if scale is None:
+            # default scale is sum of kernel
+            scale = functools.reduce(lambda a, b: a + b, kernel)
+        if size[0] * size[1] != len(kernel):
+            raise ValueError("not enough coefficients in kernel")
+        self.filterargs = size, scale, offset, kernel
 ```
+**BLUR**
+```py
+filterargs = (5, 5), 16, 0, (
+    1, 1, 1, 1, 1,
+    1, 0, 0, 0, 1,
+    1, 0, 0, 0, 1,
+    1, 0, 0, 0, 1,
+    1, 1, 1, 1, 1,
+)
+```
+**CONTOUR**
+```py
+filterargs = (3, 3), 1, 255, (
+    -1, -1, -1,
+    -1,  8, -1,
+    -1, -1, -1,
+)
+```
+**DETAIL**
+```py
+filterargs = (3, 3), 6, 0, (
+    0,  -1,  0,
+    -1, 10, -1,
+    0,  -1,  0,
+)
+```
+**EDGE_ENHANCE**
+```py
+filterargs = (3, 3), 2, 0, (
+    -1, -1, -1,
+    -1, 10, -1,
+    -1, -1, -1,
+)
+```
+**EDGE_ENHANCE_MORE**
+```py
+filterargs = (3, 3), 1, 0, (
+    -1, -1, -1,
+    -1,  9, -1,
+    -1, -1, -1,
+)
+```
+**EMBOSS**
+```py
+filterargs = (3, 3), 1, 128, (
+    -1, 0, 0,
+    0,  1, 0,
+    0,  0, 0,
+)
+```
+**FIND_EDGES**
+```py
+filterargs = (3, 3), 1, 0, (
+    -1, -1, -1,
+    -1,  8, -1,
+    -1, -1, -1,
+)
+```
+**SHARPEN**
+```py
+filterargs = (3, 3), 16, 0, (
+    -2, -2, -2,
+    -2, 32, -2,
+    -2, -2, -2,
+)
+```
+**SMOOTH**
+```py
+filterargs = (3, 3), 13, 0, (
+    1, 1, 1,
+    1, 5, 1,
+    1, 1, 1,
+)
+```
+**SMOOTH_MORE**
+```py
+filterargs = (5, 5), 100, 0, (
+    1, 1,  1, 1, 1,
+    1, 5,  5, 5, 1,
+    1, 5, 44, 5, 1,
+    1, 5,  5, 5, 1,
+    1, 1,  1, 1, 1,
+)
+```
+
+
+
+
+
+
+### ImageEnhance
+```py
+class _Enhance:
+    def enhance(self, factor):
+        """
+        Returns an enhanced image.
+
+        :param factor: A floating point value controlling the enhancement.
+                       Factor 1.0 always returns a copy of the original image,
+                       lower factors mean less color (brightness, contrast,
+                       etc), and higher values more. There are no restrictions
+                       on this value.
+        :rtype: :py:class:`~PIL.Image.Image`
+        """
+        return Image.blend(self.degenerate, self.image, factor)
+
+
+class Color(_Enhance):
+    def __init__(self, image):
+        self.image = image
+        self.intermediate_mode = "L"
+        if "A" in image.getbands():
+            self.intermediate_mode = "LA"
+
+        self.degenerate = image.convert(self.intermediate_mode).convert(image.mode)
+
+
+class Contrast(_Enhance):
+    def __init__(self, image):
+        self.image = image
+        mean = int(ImageStat.Stat(image.convert("L")).mean[0] + 0.5)
+        self.degenerate = Image.new("L", image.size, mean).convert(image.mode)
+
+        if "A" in image.getbands():
+            self.degenerate.putalpha(image.getchannel("A"))
+
+
+class Brightness(_Enhance):
+    def __init__(self, image):
+        self.image = image
+        self.degenerate = Image.new(image.mode, image.size, 0)
+
+        if "A" in image.getbands():
+            self.degenerate.putalpha(image.getchannel("A"))
+
+
+class Sharpness(_Enhance):
+    def __init__(self, image):
+        self.image = image
+        self.degenerate = image.filter(ImageFilter.SMOOTH)
+
+        if "A" in image.getbands():
+            self.degenerate.putalpha(image.getchannel("A"))
+```
+
+
+
 
 
