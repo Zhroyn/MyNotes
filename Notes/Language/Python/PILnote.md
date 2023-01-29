@@ -19,6 +19,7 @@
     - [BoxBlur](#boxblur)
     - [BuiltinFilter](#builtinfilter)
 - [ImageEnhance](#imageenhance)
+- [Shorthand](#shorthand)
 
 <!-- /TOC -->
 
@@ -500,3 +501,33 @@ class Sharpness(_Enhance):
 
 
 
+
+### Shorthand
+**Image Filter**
+- `ImageFilter.GaussianBlur` or `ImageFilter.GaussianBlur()` or `ImageFilter.GaussianBlur(radius)` The default is 2.
+- `ImageFilter.BoxBlur(radius)` Radius 0 does not blur, returns an identical image. Radius 1 takes 1 pixel in each direction, i.e. 9 pixels in total.
+- `ImageFilter.Kernel(size, kernel, scale=None, offset=0)` The size must be `(3,3)` or `(5,5)`.
+- `ImageFilter.BLUR` or `ImageFilter.BLUR()`
+- `ImageFilter.CONTOUR` Show outline on a white background.
+- `ImageFilter.DETAIL`
+- `ImageFilter.EDGE_ENHANCE`
+- `ImageFilter.EDGE_ENHANCE_MORE`
+- `ImageFilter.EMBOSS` Convert to a concave-convex image.
+- `ImageFilter.FIND_EDGES` Show edges in white on a black background.
+- `ImageFilter.SMOOTH`
+- `ImageFilter.SMOOTH_MORE`
+
+**Image Enhance**
+```py
+enh_col = ImageEnhance.Color(image)
+im = enh_col.enhance(color)
+
+enh_con = ImageEnhance.Contrast(image)
+im = enh_con.enhance(contrast)
+
+enh_bri = ImageEnhance.Brightness(image)
+im = enh_bri.enhance(brightness)
+
+enh_sha = ImageEnhance.Sharpness(image)
+im = enh_sha.enhance(sharpness)
+```
