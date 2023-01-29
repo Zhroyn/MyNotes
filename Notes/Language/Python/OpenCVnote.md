@@ -25,6 +25,7 @@
     - [VideoWriter](#videowriter)
         - [Create and Release](#create-and-release)
         - [fourcc](#fourcc)
+- [Shorthand](#shorthand)
 
 <!-- /TOC -->
 
@@ -113,13 +114,6 @@ imwrite(filename, img[, params]) -> retval
 - `+` `-` `*` `/` : The result will take the modulus. If operators are two arrays, the new pixel value is the value obtained after the corresponding operation of the original two pixel values.
 - When used with `mask`, the operation will only be performed on pixels with non-zero mask value, and the value of other pixels will be set to 0.
 
-```py
-cv2.blur(src, ksize)
-cv2.boxFilter(src, -1, ksize)
-cv2.GaussianFilter(src, ksize, 0, 0)
-cv2.medianBlur(src, ksize)
-cv2.filter2D(src, -1, kernel)
-```
 
 ##### Add and Subtract
 ```py
@@ -233,6 +227,7 @@ blur(src, ksize[, dst[, anchor[, borderType]]]) -> dst
             1 & 1 & 1 &  \cdots & 1 & 1  \\ 
         \end{bmatrix}
     \f]
+    In-place filtering is supported.
     @param src : input image; it can have any number of channels, which are 
                  processed independently, but the depth should be CV_8U, CV_16U, 
                  CV_16S, CV_32F or CV_64F.
@@ -255,6 +250,7 @@ boxFilter(src, ddepth, ksize[, dst[, anchor[, normalize[, borderType]]]]) -> dst
             1 & 1 & 1 &  \cdots & 1 & 1  \\ 
         \end{bmatrix}
     \f]
+    In-place filtering is supported.
     @param src : input image.
     @param dst : output image of the same size and type as src.
     @param ddepth : the output image depth (-1 to use src.depth()).
@@ -632,6 +628,22 @@ release() -> None
 
 
 
+
+## Shorthand
+**Smooth**
+- `cv2.blur(src, ksize)` In-place filtering is supported.
+- `cv2.boxFilter(src, -1, ksize)` or `cv2.boxFilter(src, -1, ksize, normalize=False)`
+  - The second argument is `ddepth`.
+  - In-place filtering is supported.
+- `cv2.GaussianBlur(src, ksize, 0, 0)`
+  - `ksize.width` and `ksize.height` can differ but they both must be positive and odd. Or they can be zero's and then they are computed from sigma.
+  - In-place filtering is supported.
+- `cv2.medianBlur(src, ksize)`
+  - `ksize` must be an odd integer.
+  - In-place filtering is supported.
+- `cv2.filter2D(src, -1, kernel)` or `cv2.filter2D(src, -1, kernel, delta=5)`
+  - The second argument is `ddepth`.
+  - In-place filtering is supported.
 
 
 
