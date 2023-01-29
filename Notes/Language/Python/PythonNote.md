@@ -6,25 +6,23 @@
     - [Comprehensions and Generator expressions](#comprehensions-and-generator-expressions)
     - [Yields expressions and Generator functions](#yields-expressions-and-generator-functions)
   - [Primaries](#primaries)
-  - [Arithmetic Operator](#arithmetic-operator)
-    - [Conparisons](#conparisons)
+  - [Operators](#operators)
+  - [Assignment, Conditional and Lambda Expressions](#assignment-conditional-and-lambda-expressions)
 - [Built-in Functions](#built-in-functions)
-  - [Constructor](#constructor)
-  - [Calculate](#calculate)
-  - [Convert](#convert)
-  - [Get](#get)
-  - [Iterator](#iterator)
-  - [Test](#test)
-  - [I/O](#io)
+  - [Arith](#arith)
+  - [Conversion](#conversion)
+  - [Iteration](#iteration)
+  - [Judges](#judges)
+  - [Properties](#properties)
+  - [Others](#others)
 - [Built-in Types](#built-in-types)
   - [Numeric Types (int, float, complex)](#numeric-types-int-float-complex)
   - [Sequence Types (list, tuple, range)](#sequence-types-list-tuple-range)
   - [Text Sequence Type (str)](#text-sequence-type-str)
-    - [Find](#find)
-    - [Delete](#delete)
+    - [Find and Delete](#find-and-delete)
     - [Split and Join](#split-and-join)
-    - [Convert](#convert-1)
-    - [Test](#test-1)
+    - [Convert](#convert)
+    - [Testing](#testing)
     - [printf-style String Formatting](#printf-style-string-formatting)
     - [Format String Syntax](#format-string-syntax)
     - [Formatted String Literals](#formatted-string-literals)
@@ -32,15 +30,6 @@
   - [Set Types (set, frozenset)](#set-types-set-frozenset)
   - [Mapping Types (dict)](#mapping-types-dict)
   - [Iterator Types](#iterator-types)
-- [Python3 基础语法](#python3-基础语法)
-    - [保留字](#保留字)
-    - [多行语句](#多行语句)
-        - [转义符的打印](#转义符的打印)
-    - [List（列表）](#list列表)
-        - [列表连接](#列表连接)
-        - [改变连续元素](#改变连续元素)
-- [Python 文件](#python-文件)
-        - [文件路径](#文件路径)
 
 <!-- /TOC -->
 
@@ -221,63 +210,108 @@ keyword_item         ::=  identifier "=" expression
 - Formal parameters using the syntax `*identifier` or `**identifier` cannot be used as positional argument slots or as keyword argument names.
 
 
-### Arithmetic Operator
-- For integer division `//`, the resultant value is a whole integer, though the result’s type is not necessarily int. The result is always rounded towards minus infinity and the same sign as the latter number, e.g. `1//2` is 0, `(-1)//2` is -1, `1//(-2)` is -1, and `(-1)//(-2)` is 0.
-- Python defines `0 ** 0` and `pow(0, 0)` to be 1, as is common for programming languages.
+### Operators
+**Operator Precedence**
+| Description | Operator |
+| --- | --- |
+| Binding or parenthesized expression, list display, dictionary display, set display | `(expressions...)`, `[expressions...]`, `{key: value...}`, `{expressions...}` |
+| Subscription, slicing, call, attribute reference | `x[index]`, `x[index:index]`, `x(arguments...)`, `x.attribute` |
+| Await expression | `await x` |
+| Exponentiation | `**` |
+| Positive, negative, bitwise NOT | `+x`, `-x`, `~x` |
+| Multiplication, matrix multiplication, division, floor division, remainder | `*`, `@`, `/`, `//`, `%` |
+| Addition and subtraction | `+`, `-` |
+| Shifts | `<<`, `>>` |
+| Bitwise AND | `&` |
+| Bitwise XOR | `^` |
+| Bitwise OR | `|` |
+| Comparisons, including membership tests and identity tests | `in`, `not in`, `is`, `is not`, `<`, `<=`, `>`, `>=`, `!=`, `==` |
+| Boolean NOT | `not x` |
+| Boolean AND | `and` |
+| Boolean OR | `or` |
+| Conditional expression | `if – else` |
+| Lambda expression | `lambda` |
+| Assignment expression | `:=` |
+
+**Arithmetic Operations**
+- The power operator `**` binds more tightly than unary operators on its left; it binds less tightly than unary operators on its right, i.e. `1**-2` is `1.0`, `-1**2` is `-1`.
+  - For int operands, the result has the same type as the operands unless the second argument is negative; in that case, all arguments are converted to float and a float result is delivered.
+  - Raising a negative number to a fractional power results in a complex number.
+  - Raising `0` or `0.0` to a negative power results in a `ZeroDivisionError`, but to a positive power results in `0` or `0.0`, while to zero power results in `1` or `1.0`.
+- The unary invert operator `~` only applies to integral numbers or to custom objects that override the `__invert__()` special method.
 - Bitwise operations only make sense for integers. The result of bitwise operations is calculated as though carried out in two’s complement with an infinite number of sign bits.
+- The `*` (multiplication) operator's arguments must either both be numbers, or one argument must be an integer and the other must be a sequence.
+  - In the former case, the numbers are converted to a common type and then multiplied together.
+  - In the latter case, sequence repetition is performed; a zero or negative repetition factor yields an empty sequence.
+- The `//` (floor division) operator's result is always rounded towards minus infinity, e.g. `1//2` equals `0`, `-1//2` equals `-1`, `1//-2` equals `-1`, `-1//-2` equals `0`
+- The `%` (modulo) operator's arguments may be floating point numbers, e.g., `3.14%0.7` equals `0.34`.
+  - The modulo operator always yields a result with the same sign as its second operand, e.g. `1.4%-0.7` equals `-0.0`
+  - The absolute value of the result is strictly smaller than the absolute value of the second operand
 
-
-#### Conparisons
+**Conparisons**
 ```py
-< <= > >=
-== !=
-is  is not
-in  not in
+<, <=, >, >=
+==, !=
+is, is not
+in, not in
 ```
 - Objects of different types, except different numeric types, never compare equal, e.g. `1 == 1.0 and 1 == complex(1)` is True, but `1 == '1'` is False.
 - Comparisons can be chained arbitrarily, e.g., `x < y <= z` is equivalent to `x < y and y <= z`. Formally, `a op1 b op2 c ... y opN z` is equivalent to `a op1 b and b op2 c and ... y opN z`, except that each expression is evaluated at most once.
 - The operators `is` and `is not` test for an object’s identity. `x is y` is true if and only if x and y are the same object. An Object’s identity is determined using the `id()` function. They cannot be customized.
 - The operators `in` and `not in` test for membership. `x in s` evaluates to True if x is a member of s, and False otherwise. All built-in sequences and set types support this as well as dictionary, for which in tests whether the dictionary has a given key. They are supported by types that are iterable or implement the `__contains__()` method.
+- The operators `is` and `is not` test for an object’s identity: `x is y` is true if and only if x and y are the same object. An Object’s identity is determined using the `id()` function. x is not y yields the inverse truth value.
 
+### Assignment, Conditional and Lambda Expressions
+```py
+assignment_expression ::=  [identifier ":="] expression
 
+conditional_expression ::=  or_test ["if" or_test "else" expression]
+expression             ::=  conditional_expression | lambda_expr
 
+lambda_expr ::=  "lambda" [parameter_list] ":" expression
+def <lambda>(parameter_list):
+    return expression
+```
+- An assignment expression (`:=`) assigns an expression to an identifier, while also returning the value of the expression.
+- The expression `x if C else y` first evaluates the condition `C`. If `C` is true, `x` is evaluated and its value is returned; otherwise, `y` is evaluated and its value is returned.
+- Lambda expressions are used to create anonymous functions. The expression `lambda parameters: expression` yields a function object. Note that functions created with lambda expressions cannot contain statements or annotations.
 
 
 
 
 
 ## Built-in Functions
-### Constructor
-- `enumerate(iterable, start=0)` Return an enumerate object. iterable must be a sequence, an iterator, or some other object which supports iteration. The `__next__()` method of the iterator returned by enumerate() returns a tuple containing a count (from start which defaults to 0) and the values obtained from iterating over iterable.
-<br>
-
-- `super(type, object_or_type=None)` Return a proxy object that delegates method calls to a parent or sibling class of type. The `object_or_type` determines the method resolution order to be searched. The search starts from the class right after the type.
-- `type(object)`
-- `type(name, bases, dict, **kwds)`
-- With one argument, return the type of an object. The return value is a type object and generally the same object as returned by `object.__class__`.
-- With three arguments, return a new type object.
-  - The name `string` is the class name and becomes the `__name__` attribute.
-  - The `bases` tuple contains the base classes and becomes the `__bases__` attribute; if empty, `object`, the ultimate base of all classes, is added.
-  - The `dict` dictionary contains attribute and method definitions for the class body; it may be copied or wrapped before becoming the `__dict__` attribute.
-
-
-### Calculate
+### Arith
 - `abs(x)` Return the absolute value of a number. The argument may be an integer, a floating point number, or an object implementing `__abs__()`. If the argument is a complex number, its magnitude is returned.
 - `divmod(a, b)` Take two (non-complex) numbers as arguments and return a pair of numbers consisting of their quotient and remainder when using integer division.
   - With mixed operand types, the rules for binary arithmetic operators apply.
   - For integers, the result is the same as `(a // b, a % b)`.
   - For floating point numbers the result is `(q, a % b)`, where q is usually math.floor`(a / b)` but may be 1 less than that.
   - If `a % b` is non-zero, it has the same sign as b.
-- `eval(expression, globals=None, locals=None)` The arguments are a string and optional globals and locals. If provided, globals must be a dictionary. If provided, locals can be any mapping object.
-- `pow(base, exp, mod=None)` Return base to the power exp; if mod is present, return base to the power exp, modulo mod. If mod is present and exp is negative, base must be relatively prime to mod. In that case, `pow(inv_base, -exp, mod)` is returned, where `inv_base` is an inverse to `base` modulo `mod`.
+- `pow(base, exp, mod=None)` Return `base` to the power `exp`; if `mod` is present, return `base` to the power `exp`, modulo `mod`. If `mod` is present and `exp` is negative, `base` must be relatively prime to `mod`. In that case, `pow(inv_base, -exp, mod)` is returned, where `inv_base` is an inverse to `base` modulo `mod`.
 - `round(number, ndigits=None)` Return number rounded to ndigits precision after the decimal point. If ndigits is omitted or is None, it returns the nearest integer to its input.
-- `sum(iterable, /, start=0)` Sums start and the items of an iterable from left to right and returns the total.
+<br>
 
-### Convert
+- `len(s)` Return the length (the number of items) of an object. The argument may be a sequence (such as a string, bytes, tuple, list, or range) or a collection (such as a dictionary, set, or frozen set). In CPython, it will raises `OverflowError` on lengths larger than `sys.maxsize`.
+- `sum(iterable, /, start=0)` Sums start and the items of an iterable from left to right and returns the total.
+- `max(iterable, *, key=None)` or `min(iterable, *, key=None)`
+- `max(iterable, *, default, key=None)` or `min(iterable, *, default, key=None)`
+- `max(arg1, arg2, *args, key=None)` or `min(arg1, arg2, *args, key=None)`
+  - Return the largest/smallest item in an iterable, or the largest/smallest of two or more arguments.
+  - The `key` argument specifies a one-argument ordering function where comparison of iterable is performed based on its return value.
+  - The `default` argument specifies an object to return if the provided iterable is empty.
+<br>
+
+- `eval(expression, globals=None, locals=None)` The arguments are a string and optional globals and locals. If provided, globals must be a dictionary. If provided, locals can be any mapping object.
+- `sorted(iterable, /, *, key=None, reverse=False)` Return a new sorted list from the items in iterable.
+  - `key` specifies a function of one argument that is used to extract a comparison key from each element in iterable, e.g. `key=str.lower`. The default value is None (compare the elements directly).
+  - `reverse` is a boolean value. If set to True, then the list elements are sorted as if each comparison were reversed.
+
+### Conversion
 - `bin(x)` Convert an integer number to a binary string prefixed with "0b". If x is not a Python int object, it has to define an `__index__()` method that returns an integer.
 - `hex(x)` Convert an integer number to a lowercase hexadecimal string prefixed with "0x". If x is not a Python int object, it has to define an `__index__()` method that returns an integer.
 - `oct(x)` Convert an integer number to an octal string prefixed with "0o". The result is a valid Python expression. If x is not a Python int object, it has to define an `__index__()` method that returns an integer.
-- `format(value, format_spec='')` Convert a value to a “formatted” representation, as controlled by format_spec. The interpretation of format_spec will depend on the type of the value argument.
+- `format(value, format_spec='')` Convert a value to a “formatted” representation, as controlled by `format_spec`. The interpretation of `format_spec` will depend on the type of the value argument.
 <br>
 
 - `chr(i)` Return the string representing a character whose Unicode code point is the integer i.
@@ -290,71 +324,74 @@ in  not in
   - A class can control what this function returns for its instances by defining a `__repr__()` method. If `sys.displayhook()` is not accessible, this function will raise `RuntimeError`.
 - `ascii(object)` As `repr(),` return a string containing a printable representation of an object, but escape the non-ASCII characters in the string returned by `repr()` using `\x`, `\u`, or `\U` escapes.
 
-### Get
-- `dir()` or `dir(object)` Without arguments, return the list of names in the current local scope. With an argument, attempt to return a list of valid attributes for that object. If the object has a method named `__dir__()`, this method will be called and must return the list of attributes.
-- `getattr(object, name)` or `getattr(object, name, default)` Return the value of the named attribute of object. name must be a string. If the named attribute does not exist, default is returned if provided, otherwise `AttributeError` is raised. name need not be a Python identifier.
-- `setattr(object, name, value)` The arguments are an object, a string, and an arbitrary value. The string may name an existing attribute or a new attribute. The function assigns the value to the attribute, provided the object allows it.
-- `globals()` Return the dictionary implementing the current module namespace.
-- `hash(object)` Return the hash value of the object (if it has one). Hash values are integers. They are used to quickly compare dictionary keys during a dictionary lookup. Numeric values that compare equal have the same hash value (even if they are of different types, as is the case for 1 and 1.0).
-- `help()` or `help(request)` Invoke the built-in help system. If no argument is given, the interactive help system starts on the interpreter console.
-- `id(object)` Return the "identity" of an object. This is an integer which is guaranteed to be unique and constant for this object during its lifetime. In CPython, this is the address of the object in memory.
-- `len(s)` Return the length (the number of items) of an object. The argument may be a sequence (such as a string, bytes, tuple, list, or range) or a collection (such as a dictionary, set, or frozen set). In CPython, it will raises `OverflowError` on lengths larger than `sys.maxsize`.
-- `locals()` Update and return a dictionary representing the current local symbol table.
-- `open(file, mode='r', buffering=- 1, encoding=None, errors=None, newline=None, closefd=True, opener=None)` Open file and return a corresponding file object. If the file cannot be opened, an `OSError` is raised.
-- `sorted(iterable, /, *, key=None, reverse=False)` Return a new sorted list from the items in iterable.
-  - `key` specifies a function of one argument that is used to extract a comparison key from each element in iterable, e.g. `key=str.lower`. The default value is None (compare the elements directly).
-  - `reverse` is a boolean value. If set to True, then the list elements are sorted as if each comparison were reversed.
-- `vars()` or `vars(object)` Return the `__dict__` attribute for a module, class, instance, or any other object with a `__dict__` attribute. Without an argument, `vars()` acts like `locals()`.
-<br>
 
-- `max(iterable, *, key=None)`
-- `max(iterable, *, default, key=None)`
-- `max(arg1, arg2, *args, key=None)`
-- Return the largest item in an iterable or the largest of two or more arguments.
-- The `key` argument specifies a one-argument ordering function where comparison of iterable is performed based on its return value.
-- The `default` argument specifies an object to return if the provided iterable is empty.
-- `min(iterable, *, key=None)`
-- `min(iterable, *, default, key=None)`
-- `min(arg1, arg2, *args, key=None)`
-- Return the smallest item in an iterable or the smallest of two or more arguments.
-
-### Iterator
-- `iter(object)`
-- `iter(object, sentinel)`
-- Return an iterator object. The first argument is interpreted very differently depending on the presence of the second argument.
+### Iteration
+- `iter(object)` or `iter(object, sentinel)`
+  - Return an iterator object. The first argument is interpreted very differently depending on the presence of the second argument.
   - Without a second argument, object must be a collection object which supports the iterable protocol (the `__iter__()` method), or it must support the sequence protocol (the `__getitem__()` method with integer arguments starting at 0). If it does not support either of those protocols, `TypeError` is raised.
-  - If the second argument is given, then object must be a callable object. The iterator created in this case will call object with no arguments for each call to its `__next__()` method; if the value returned is equal to sentinel, `StopIteration` will be raised, otherwise the value will be returned.
-- `next(iterator)`
-- `next(iterator, default)`
-- Retrieve the next item from the iterator by calling its `__next__()` method. If default is given, it is returned if the iterator is exhausted, otherwise `StopIteration` is raised.
+  - If the second argument is given, then object must be a callable object. The iterator created in this case will call object with no arguments for each call to its `__next__()` method; if the value returned is equal to `sentinel`, `StopIteration` will be raised, otherwise the value will be returned.
+- `enumerate(iterable, start=0)`
+  - Return an enumerate object. `iterable` must be a sequence, an iterator, or some other object which supports iteration.
+  - The `__next__()` method of the iterator returned by `enumerate()` returns a tuple containing a count (from start which defaults to 0) and the values obtained from iterating over iterable.
+- `next(iterator)` or `next(iterator, default)`
+  - Retrieve the next item from the iterator by calling its `__next__()` method.
+  - If default is given, it is returned if the iterator is exhausted, otherwise `StopIteration` is raised.
 <br>
 
-- `filter(function, iterable)` Construct an iterator from those elements of iterable for which function returns true. If function is None, the identity function is assumed, that is, all elements of iterable that are false are removed.
+- `filter(function, iterable)` Construct an iterator from those elements of iterable for which function returns true.
+  - If function is None, the identity function is assumed, that is, all elements of iterable that are false are removed.
 - `map(function, iterable, *iterables)` Return an iterator that applies function to every item of iterable, yielding the results.
   - If additional iterables arguments are passed, function must take that many arguments and is applied to the items from all iterables in parallel.
   - With multiple iterables, the iterator stops when the shortest iterable is exhausted.
   - For example : `map(lambda x, y : x + y, [1, 2, 3], [0, 5, 3])`
-- `reversed(seq)` Return a reverse iterator. seq must be an object which has a `__reversed__()` method or supports the sequence protocol
+- `reversed(seq)` Return a reverse iterator. `seq` must be an object which has a `__reversed__()` method or supports the sequence protocol
 - `zip(*iterables, strict=False)` Iterate over several iterables in parallel, producing tuples with an item from each one.
   - By default, `zip()` stops when the shortest iterable is exhausted. It will ignore the remaining items in the longer iterables.
   - If `strict` is True, `zip()` will raise a `ValueError` if one iterable is exhausted before the others.
-  - With a single iterable argument, zip() returns an iterator of 1-tuples. With no arguments, it returns an empty iterator.
+  - With a single iterable argument, `zip()` returns an iterator of 1-tuples. With no arguments, it returns an empty iterator.
 
 
-### Test
+### Judges
 - `all(iterable)` Return True if all elements of the iterable are true (or if the iterable is empty).
 - `any(iterable)` Return True if any element of the iterable is true. If the iterable is empty, return False.
+<br>
+
 - `callable(object)` Return True if the object argument appears callable, False if not. If this returns True, it is still possible that a call fails, but if it is False, calling object will never succeed. Note that classes are callable; instances are callable if their class has a `__call__()` method.
 - `hasattr(object, name)` The arguments are an object and a string. The result is True if the string is the name of one of the object’s attributes, False if not.
-- `isinstance(object, classinfo)` Return True if the object argument is an instance of the classinfo argument, or of a (direct, indirect, or virtual) subclass thereof. If object is not an object of the given type, the function always returns False. If classinfo is a tuple of type objects (or recursively, other such tuples) or a Union Type of multiple types, return True if object is an instance of any of the types.
-- `issubclass(class, classinfo)` Return True if class is a subclass (direct, indirect, or virtual) of classinfo. A class is considered a subclass of itself. classinfo may be a tuple of class objects (or recursively, other such tuples) or a Union Type, in which case return True if class is a subclass of any entry in classinfo.
+- `isinstance(object, classinfo)` Return True if the object argument is an instance of the `classinfo` argument, or of a (direct, indirect, or virtual) subclass thereof.
+  - If classinfo is a tuple of type objects (or recursively, other such tuples) or a Union Type of multiple types, return True if object is an instance of any of the types.
+- `issubclass(class, classinfo)` Return True if class is a subclass (direct, indirect, or virtual) of `classinfo`.
+  - A class is considered a subclass of itself.
+  - `classinfo` may be a tuple of class objects (or recursively, other such tuples) or a Union Type, in which case return True if class is a subclass of any entry in it.
 
-### I/O
-- `input()` or `input(prompt)` If the prompt argument is present, it is written to standard output without a trailing newline. The function then reads a line from input, converts it to a string (stripping a trailing newline), and returns that. When EOF is read, EOFError is raised.
+
+### Properties
+- `getattr(object, name)` or `getattr(object, name, default)` Return the value of the named attribute of object. name must be a string. If the named attribute does not exist, default is returned if provided, otherwise `AttributeError` is raised. name need not be a Python identifier.
+- `setattr(object, name, value)` The arguments are an object, a string, and an arbitrary value. The string may name an existing attribute or a new attribute. The function assigns the value to the attribute, provided the object allows it.
+<br>
+
+- `hash(object)` Return the hash value of the object (if it has one). Hash values are integers. They are used to quickly compare dictionary keys during a dictionary lookup. Numeric values that compare equal have the same hash value (even if they are of different types, as is the case for 1 and 1.0).
+- `id(object)` Return the "identity" of an object. This is an integer which is guaranteed to be unique and constant for this object during its lifetime. In CPython, this is the address of the object in memory.
+- `type(object)` With one argument, return the type of an object. The return value is a type object and generally the same object as returned by `object.__class__`.
+<br>
+
+- `dir()` or `dir(object)` Without arguments, return the list of names in the current local scope. With an argument, attempt to return a list of valid attributes for that object. If the object has a method named `__dir__()`, this method will be called and must return the list of attributes.
+- `help()` or `help(request)` Invoke the built-in help system. If no argument is given, the interactive help system starts on the interpreter console.
+- `vars()` or `vars(object)` Return the `__dict__` attribute for a module, class, instance, or any other object with a `__dict__` attribute. Without an argument, `vars()` acts like `locals()`.
+- `globals()` Return the dictionary implementing the current module namespace.
+- `locals()` Update and return a dictionary representing the current local symbol table.
+
+
+### Others
+- `input()` or `input(prompt)` If the prompt argument is present, it is written to standard output without a trailing newline. The function then reads a line from input, converts it to a string (stripping a trailing newline), and returns that. When `EOF` is read, `EOFError` is raised.
 - `print(*objects, sep=' ', end='\n', file=None, flush=False)` Print objects to the text stream `file`, separated by `sep` and followed by `end`.
   - All non-keyword arguments are converted to strings and written to the stream, separated by `sep` and followed by `end`.
   - The `file` argument must be an object with a `write(string)` method; if it is not present or None, `sys.stdout` will be used. Since printed arguments are converted to text strings, `print()` cannot be used with binary mode file objects.
   - Whether the output is buffered is usually determined by file, but if the `flush` keyword argument is true, the stream is forcibly flushed.
+<br>
+
+- `open(file, mode='r', buffering=- 1, encoding=None, errors=None, newline=None, closefd=True, opener=None)` Open file and return a corresponding file object. If the file cannot be opened, an `OSError` is raised.
+- `super(type, object_or_type=None)` Return a proxy object that delegates method calls to a parent or sibling class of type. The `object_or_type` determines the method resolution order to be searched. The search starts from the class right after the type.
 
 
 
@@ -422,6 +459,19 @@ in  not in
   - Optional arguments start and end are interpreted as in slice notation.
 - The only operation that immutable sequence types generally implement that is not also implemented by mutable sequence types is support for the `hash()` built-in.
 
+```py
+>>> a = [1, 2, 3, 4, 5]
+>>> a[4:] = [6]
+>>> a
+[1, 2, 3, 4, 6]
+>>> a[4:4] = [7, 8]
+>>> a
+[1, 2, 3, 4, 7, 8, 6]
+>>> a[2:6] = []  
+>>> a
+[1, 2, 6]
+```
+
 **methods of list**
 - `append(object)` Append object to the end of the list.
 - `clear()` Remove all items from list.
@@ -451,12 +501,12 @@ in  not in
   - If at least one of encoding or errors is given, object should be a bytes-like object. In this case, if object is a `bytes` or `bytearray` object, then `str(bytes, encoding, errors)` is equivalent to `bytes.decode(encoding, errors)`.
   - Passing a bytes object to `str()` without the `encoding` or `errors` arguments falls under the first case of returning the informal string representation like `"b'abc'"`
 
-#### Find
+#### Find and Delete
 - `find(sub[, start[, end]])` Return -1 on failure, others are the same as `index()`.
 - `rfind(sub[, start[, end]])` Return the highest index where substring sub is found, and return -1 on failure.
 - `rindex(sub[, start[, end]])` Return the highest index where substring sub is found, and raises `ValueError` when the substring is not found.
+<br>
 
-#### Delete
 - `strip(chars=None)` Return a copy of the string with leading and trailing whitespace removed. If `chars` is given and not None, remove characters in `chars` instead.
 - `lstrip(chars=None)` Return a copy of the string with leading whitespace removed.
 - `rstrip(chars=None)` Return a copy of the string with trailing whitespace removed.
@@ -506,7 +556,7 @@ in  not in
   - If there are two arguments, they must be strings of equal length, and in the resulting dictionary, each character in x will be mapped to the character at the same position in y.
   - If there is a third argument, it must be a string, whose characters will be mapped to None in the result.
 
-#### Test
+#### Testing
 - `startswith(prefix[, start[, end]])` Return True if str starts with the specified prefix, False otherwise.
   - With optional `start`, test str beginning at that position.
   - With optional `end`, stop comparing str at that position.
@@ -739,62 +789,6 @@ literal_char      ::=  <any code point except "{", "}" or NULL>
 
 
 
-## Python3 基础语法
-
-- 默认情况下，Python 3 源码文件以 UTF-8 编码，所有字符串都是 unicode 字符串
-标识符
-- 标识符的组成为字母、数字、下划线，开头只能为字母、下划线，在Python3中可以用中文做变量名。
-- Python允许同时为多个变量赋值，如a = b = c = 1或者a, b, c = 1, 2, "runoob"
-- 可使用del语句删除对象引用，如del a,b或者del b[1]
-
-#### 保留字
-保留字即关键字，Python 的标准库提供了一个 keyword 模块，可以输出当前版本的所有关键字：
-```python
->>> import keyword
->>> keyword.kwlist
-['False', 'None', 'True', 'and', 'as', 'assert', 'break', 'class', 'continue', 'def', 'del', 'elif', 'else', 'except', 'finally', 'for', 'from', 'global', 'if', 'import', 'in', 'is', 'lambda', 'nonlocal', 'not', 'or', 'pass', 'raise', 'return', 'try', 'while', 'with', 'yield']
-```
-
-#### 多行语句
-可以用 \ 实现多行语句，已用 []、{}、() 则不需要用 \
-
-
-###### 转义符的打印
-- 字符串只有一个 \ 时，若 \ 后不是合法的转义字符，则会在shell中会出现两个 \\（字符数目不会变多）
-- 字符串中有多个 \ 时，则shell中 \ 的数目保持原样
-- shell中会直接显示转义字符，如字符串中有 ' 或换行时，在shell中会以 \\' or \n 显示
 
 
 
-#### List（列表）
-
-###### 列表连接
-列表表示索引方式与字符串基本一致。+ 是列表连接运算符，星号 * 是重复操作，如```print (list + tinylist) ==> ['runoob', 123]``` ```print (tinylist * 2) ==> [123, 123]```
-
-###### 改变连续元素
-与Python字符串不一样的是，列表中的元素是可以改变的，如：
-```python
->>> a = [1, 2, 3, 4, 5]
->>> a[4:] = [6]
->>> a
-[1, 2, 3, 4, 6]
->>> a[4:4] = [7, 8]
->>> a
-[1, 2, 3, 4, 7, 8, 6]
->>> a[2:6] = []  
->>> a
-[1, 2, 6]
-```
-
-
-## Python 文件
-
-###### 文件路径
-- …/ 表示当前文件所在的目录的上一级目录
-- ./ 表示当前文件所在的目录(可以省略)
-- / 表示当前站点的根目录(域名映射的硬盘目录)
-```python
-path1 = r"C:\windows\temp\readme.txt"
-path2 = "C:\\windows\\temp\\readme.txt"
-path3 = "c:/windows/temp/readme.txt" #可用正斜杠，且大小写不影响
-```
