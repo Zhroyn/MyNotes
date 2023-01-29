@@ -1,4 +1,8 @@
 import cv2
+import numpy as np
+from PIL import Image
+from PIL import ImageFilter
+from PIL import ImageEnhance
 
 def remove_stains(impath, outpath):
     im = cv2.imread(impath)
@@ -32,11 +36,14 @@ def change_background(impath, outpath):
                 and abs(int(r) - int(bg_color[2])) <= delta):
                     im[y, x] = 255
         im = cv2.GaussianBlur(im, (3, 1), 0, 0)
-        cv2.imwrite(outpath, im)
+        im = Image.fromarray(im[:, :, ::-1])
+        enh_sha = ImageEnhance.Sharpness(im)
+        im = enh_sha.enhance(2.0)
+        im.save(outpath)
 
 
-remove_stains("C:/Users/hrzhe/Pictures/Calculus/500cef37a1fb8886d4c4ef664877a86.jpg",
-            "C:/Users/hrzhe/Pictures/Calculus/out.jpg")
+# remove_stains("C:/Users/hrzhe/Pictures/Calculus/500cef37a1fb8886d4c4ef664877a86.jpg",
+#             "C:/Users/hrzhe/Pictures/Calculus/out.jpg")
 
-# change_background("C:/Users/hrzhe/Pictures/Calculus/5.png", 
-#                 "C:/Users/hrzhe/Pictures/Calculus/5.jpg")
+change_background("C:/Users/hrzhe/Pictures/Calculus/2.png", 
+                "C:/Users/hrzhe/Pictures/Calculus/gau20.jpg")
