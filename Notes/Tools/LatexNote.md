@@ -1,4 +1,28 @@
-[toc]
+<!-- TOC -->
+
+- [Preamble](#preamble)
+- [Document structure](#document-structure)
+    - [Abstract](#abstract)
+    - [Paragraph and new lines](#paragraph-and-new-lines)
+    - [Chapters and sections](#chapters-and-sections)
+    - [Adding a Table of Contents](#adding-a-table-of-contents)
+- [Font](#font)
+- [Math](#math)
+    - [Basic](#basic)
+    - [Superscript and Subscript](#superscript-and-subscript)
+    - [Functions](#functions)
+    - [Operations](#operations)
+    - [Symbols](#symbols)
+    - [Display Problems](#display-problems)
+    - [Greek Alphabet](#greek-alphabet)
+    - [Matrix](#matrix)
+- [Image](#image)
+- [List](#list)
+- [Table](#table)
+- [Package](#package)
+
+<!-- /TOC -->
+
 
 
 ## Preamble
@@ -23,7 +47,7 @@
 
 ## Document structure
 
-###### Abstract
+#### Abstract
 ```latex
 \begin{document}
 \begin{abstract}
@@ -32,12 +56,12 @@ document. A brief introduction about the main subject.
 \end{abstract}
 \end{document}
 ```
-###### Paragraph and new lines
+#### Paragraph and new lines
 - blank lines will automatically intent paragraph
 - `\\` or `\newline` can be used to create new lines
 - `~\\` can add blank lines anyway
 
-###### Chapters and sections
+#### Chapters and sections
 ```latex
 \part{part}
 \section{section}
@@ -47,7 +71,7 @@ document. A brief introduction about the main subject.
 \subparagraph{subparagraph}
 ```
 
-###### Adding a Table of Contents
+#### Adding a Table of Contents
 ```latex
 \begin{document}
 \tableofcontents
@@ -145,6 +169,7 @@ $$
 \prod_{k=1}^n k = n!  \\
 \int_0^1 x^2 = \frac{1}{3}
 $$
+
 #### Symbols
 $$\times, \div, \pm, \mp, \cdot, \oplus, \circ, \bullet$$
 $$\lt, \le, \leq, \leqq, \leqslant, \not\lt$$
@@ -153,6 +178,17 @@ $$\neq, \approx, \approxeq, \sim, \simeq, \cong, \equiv$$
 $$\cap, \cup, \setminus, \subset, \subseteq, \subsetneq, \supset, \in, \notin$$
 $$\to, \rightarrow, \leftarrow, \Rightarrow, \Leftarrow, \iff$$
 $$\forall, \exists, \mapsto, \because, \therefore$$
+
+#### Display Problems
+$
+\lim\limits_{n\to\infty} \sqrt[n]{n} \\~\\
+\underset{n\to\infty}{\lim} \sqrt[n]{n} \\~\\
+\sum\limits_{i=1}^n a_n \\~\\
+\displaystyle{\sum_{i=1}^n a_n} \\~\\
+\displaystyle{\frac{1}{\sqrt[n]{n}}}
+$
+
+
 #### Greek Alphabet
 |form|letter|form|letter|
 |---|---|---|---|
@@ -179,6 +215,7 @@ $$\forall, \exists, \mapsto, \because, \therefore$$
 |\varphi|φ |\Phi    |Φ|
 |\psi	  |ψ |\Psi    |Ψ|
 |\omega	|ω |\Omega  |Ω|
+
 #### Matrix
 ```latex
 $$
