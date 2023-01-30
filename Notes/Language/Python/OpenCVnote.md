@@ -645,8 +645,15 @@ release() -> None
   - The second argument is `ddepth`.
   - In-place filtering is supported.
 
-
-
-
+**Geometric Image Transformations**
+- `cv2.resize(src, dsize[, interpolation=])` or `cv2.resize(src, None, fx, fy[, interpolation=])`
+  - To shrink an image, it will generally look best with `INTER_AREA` interpolation, whereas to enlarge an image, it will generally look best with `INTER_CUBIC` (slow) or `INTER_LINEAR` (default, faster but still looks OK).
+  - `fx` and `fy` are scale factors along the axes.
+- `cv2.flip(src, flipCode)`
+  - 0 means flipping around the x-axis, that is, vertically.
+  - Positive value means flipping around y-axis.
+  - Negative value means flipping around both axes.
+- `cv2.warpAffine(src, np.float32([[1, 0, x], [0, 1, y]]), src.shape[:2][::-1])` Translation, `x` is horizontal direction.
+- `cv2.warpAffine(src, cv2.getRotationMatrix2D((width/2, height/2), angle, scale), (width, height))` Positive values mean counter-clockwise rotation.
 
 
