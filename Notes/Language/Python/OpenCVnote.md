@@ -8,7 +8,7 @@
         - [Open and Save](#open-and-save)
         - [Image representation](#image-representation)
     - [Image Process](#image-process)
-        - [Operation](#operation)
+        - [Arithmetic Operation](#arithmetic-operation)
             - [Add and Subtract](#add-and-subtract)
             - [Bit Operation](#bit-operation)
         - [Split and Merge](#split-and-merge)
@@ -110,7 +110,7 @@ imwrite(filename, img[, params]) -> retval
 
 
 ### Image Process
-#### Operation
+#### Arithmetic Operation
 - `+` `-` `*` `/` : The result will take the modulus. If operators are two arrays, the new pixel value is the value obtained after the corresponding operation of the original two pixel values.
 - When used with `mask`, the operation will only be performed on pixels with non-zero mask value, and the value of other pixels will be set to 0.
 
@@ -209,7 +209,7 @@ merge(mv[, dst]) -> dst
 
 b, g, r = cv2.split(im)
 b = cv2.split(im)[0]
-out = cv2.merge([b, g, r])  #origin image
+out = cv2.merge([b, g, r])  #original image
 out = cv2.merge([r, g, b])
 ```
 
@@ -307,7 +307,7 @@ bilateralFilter(src, d, sigmaColor, sigmaSpace[, dst[, borderType]]) -> dst
                         neighborhood will be mixed together.
     @param sigmaSpace : Filter sigma in the coordinate space. A larger value of 
                         the parameter means that farther pixels will influence 
-                        each other When d>0, it specifies the neighborhood size 
+                        each other. When d>0, it specifies the neighborhood size 
                         regardless of sigmaSpace. Otherwise d is proportional 
                         to sigmaSpace.
     @param borderType : border mode used to extrapolate pixels outside of image.
@@ -630,6 +630,34 @@ release() -> None
 
 
 ## Shorthand
+**Open, Save and Close**
+- `im = cv2.imread(filename[, flags])`
+  - `cv2.IMREAD_COLOR` Default, whose value is 1.
+  - `cv2.IMREAD_GRAYSCALE` Load an image in grayscale mode, whose value is 0.
+  - `cv2.IMREAD_UNCHANGED` Load an image as such including alpha channel, whose value is -1.
+- `cv2.imwrite(filename, im)`
+<br>
+
+- `cap = cv2.VideoCapture(filename/index)` Passing `0` will open default camera using default backend.
+- `cap.release()`
+- `video = VideoWriter(filename, fourcc, fps, frameSize)`
+  - `cv2.VideoWriter_fourcc(*"mp4v")` for `.mp4` video.
+  - `cv2.VideoWriter_fourcc(*"XVID"/"AVI1")` for `.avi` video.
+  - `cv2.VideoWriter_fourcc(*"I420")` for `.avi` raw video.
+- `video.release()`
+
+**Arithmetic Operations**
+  - The operation will only be performed on pixels with non-zero mask value, and the value of other pixels will be set to 0.
+- `cv2.add(src1, src2[, mask])` or `cv2.add(src, (b, g, r, 0)[, mask])`
+  - The scalar should be either a number or a tuple of four numbers.
+  - Saturation will be applied.
+- `cv2.subtract(src1, src2[, mask])` or `cv2.subtract(src, (b, g, r, 0)[, mask])` The same as `cv2.add()`.
+- `cv2.addWeighted(src1, alpha, src2, beta)` Between two arrays.
+- `cv2.bitwise_and(src1, src2[, mask])`
+- `cv2.bitwise_or(src1, src2[, mask])`
+- `cv2.bitwise_xor(src1, src2[, mask])`
+- `cv2.bitwise_not(src1, src2[, mask])`
+
 **Smooth**
 - `cv2.blur(src, ksize)` In-place filtering is supported.
 - `cv2.boxFilter(src, -1, ksize)` or `cv2.boxFilter(src, -1, ksize, normalize=False)`
@@ -641,14 +669,19 @@ release() -> None
 - `cv2.medianBlur(src, ksize)`
   - `ksize` must be an odd integer.
   - In-place filtering is supported.
-- `cv2.filter2D(src, -1, kernel)` or `cv2.filter2D(src, -1, kernel, delta=5)`
+- `cv2.bilateralFilter(src, d, sigmaColor, sigmaSpace)`
+  - `d` Diameter of each pixel neighborhood. If it is non-positive, it is computed from `sigmaSpace`.
+  - `sigmaColor` A larger value means that farther colors will be mixed together.
+  - `sigmaSpace` A larger value means that farther pixels will influence each other. When `d>0`, it will be neglected.
+  - If the two sigma value are smaller than 10, the filter will not have much effect. If they are larger than 150, they will have a very strong effect, making the image look "cartoonish". They could be like `20, 50`.
+- `cv2.filter2D(src, -1, kernel)` or `cv2.filter2D(src, -1, kernel[, delta=])`
   - The second argument is `ddepth`.
   - In-place filtering is supported.
 
 **Geometric Image Transformations**
-- `cv2.resize(src, dsize[, interpolation=])` or `cv2.resize(src, None, fx, fy[, interpolation=])`
+- `cv2.resize(src, dsize[, interpolation])` or `cv2.resize(src, None, fx=, fy=[, interpolation=])`
   - To shrink an image, it will generally look best with `INTER_AREA` interpolation, whereas to enlarge an image, it will generally look best with `INTER_CUBIC` (slow) or `INTER_LINEAR` (default, faster but still looks OK).
-  - `fx` and `fy` are scale factors along the axes.
+  - `fx` and `fy` are scale factors along the axes. The latter form must use keyword arguments.
 - `cv2.flip(src, flipCode)`
   - 0 means flipping around the x-axis, that is, vertically.
   - Positive value means flipping around y-axis.
