@@ -8,6 +8,9 @@
   - [Primaries](#primaries)
   - [Operators](#operators)
   - [Assignment, Conditional and Lambda Expressions](#assignment-conditional-and-lambda-expressions)
+- [Statements](#statements)
+  - [Function definitions](#function-definitions)
+    - [Decorator](#decorator)
 - [Built-in Functions](#built-in-functions)
   - [Arith](#arith)
   - [Conversion](#conversion)
@@ -30,6 +33,7 @@
   - [Set Types (set, frozenset)](#set-types-set-frozenset)
   - [Mapping Types (dict)](#mapping-types-dict)
   - [Iterator Types](#iterator-types)
+  - [Context Manager Types](#context-manager-types)
 
 <!-- /TOC -->
 
@@ -275,6 +279,111 @@ def <lambda>(parameter_list):
 - An assignment expression (`:=`) assigns an expression to an identifier, while also returning the value of the expression.
 - The expression `x if C else y` first evaluates the condition `C`. If `C` is true, `x` is evaluated and its value is returned; otherwise, `y` is evaluated and its value is returned.
 - Lambda expressions are used to create anonymous functions. The expression `lambda parameters: expression` yields a function object. Note that functions created with lambda expressions cannot contain statements or annotations.
+
+
+
+
+
+
+
+
+
+## Statements
+### Function definitions
+```C
+funcdef                   ::=  [decorators] "def" funcname "(" [parameter_list] ")"
+                               ["->" expression] ":" suite
+decorators                ::=  decorator+
+decorator                 ::=  "@" assignment_expression NEWLINE
+parameter_list            ::=  defparameter ("," defparameter)* "," "/" ["," [parameter_list_no_posonly]]
+                                 | parameter_list_no_posonly
+parameter_list_no_posonly ::=  defparameter ("," defparameter)* ["," [parameter_list_starargs]]
+                               | parameter_list_starargs
+parameter_list_starargs   ::=  "*" [parameter] ("," defparameter)* ["," ["**" parameter [","]]]
+                               | "**" parameter [","]
+parameter                 ::=  identifier [":" expression]
+defparameter              ::=  parameter ["=" expression]
+funcname                  ::=  identifier
+```
+- A function definition defines a user-defined function object.
+- A function definition is an executable statement. Its execution binds the function name in the current local namespace to a function object.
+- If a parameter has a default value, all following parameters up until the `*` must also have a default value. This is a syntactic restriction that is not expressed by the grammar.
+- Default parameter values are evaluated from left to right when the function definition is executed. This means that the expression is evaluated once, when the function is defined, and that the same "pre-computed" value is used for each call.
+<br>
+
+- A function call always assigns values to all parameters mentioned in the parameter list, either from positional arguments, from keyword arguments, or from default values.
+- If the form `*identifier` is present, it is initialized to a tuple receiving any excess positional arguments.
+- If the form `**identifier` is present, it is initialized to a new ordered mapping receiving any excess keyword arguments.
+- Parameters after `*` or `*identifier` are keyword-only parameters and may only be passed by keyword arguments.
+- Parameters before `/` are positional-only parameters and may only be passed by positional arguments.
+<br>
+
+- Parameters may have an annotation of the form `: expression` following the parameter name. Any parameter may have an annotation, even those of the form `*identifier` or `**identifier`.
+- Functions may have "return" annotation of the form `-> expression` after the parameter list.
+- These annotations can be any valid Python expression.
+- The presence of annotations does not change the semantics of a function.
+- The annotation values are available as values of a dictionary keyed by the parameters’ names in the `__annotations__` attribute of the function object.
+
+
+#### Decorator
+- A function definition may be wrapped by one or more decorator expressions.
+- Decorator expressions are evaluated when the function is defined, in the scope that contains the function definition.
+- The result must be a callable, which is invoked with the function object as the only argument.
+- The returned value is bound to the function name instead of the function object.
+- Even if the parametrized decorator has default values for its arguments, the parentheses after its name is required to call the out wapper.
+
+**Builtin decorators**
+- `@classmethod` Transform a method into a class method.
+  - A class method receives the class as an implicit first argument, just like an instance method receives the instance.
+  - A class method can be called either on the class or on an instance. The instance is ignored except for its class.
+  - If a class method is called for a derived class, the derived class object is passed as the implied first argument.
+- `@staticmethod` Transform a method into a static method.
+  - A static method does not receive an implicit first argument.
+  - A static method can be called either on the class or on an instance. Moreover, they can be called as regular functions.
+
+**Examples**
+```py
+from functools import wraps
+
+def mydecorator(func):
+    @wraps(func)
+    def wrapper(*args, **kwargs): 
+        # do some stuff before the original function gets called
+        result = func(*args, **kwargs)
+        # do some stuff after function call and return the result
+        return result
+    # return wrapper as a decorated function
+    return wrapper
+
+def mydecorator(parameters):
+    def outwrapper(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs): 
+            # do some stuff with the parameters
+            result = func(*args, **kwargs)
+            # do some stuff with the parameters
+            return result
+        # return wrapper as a decorated function
+        return wrapper
+    return outwrapper
+
+class DecoratorAsClass:
+    # return an instance of the class as a decorated function
+    def __init__(self, func):
+        self.func = func
+    
+    @wraps(func)
+    def __call__(self, *args, **kwargs):
+        # do some stuff before the original function gets called
+        result = self.func(*args, **kwargs)
+        # do some stuff after function call and return the result
+        return result
+```
+
+
+
+
+
 
 
 
@@ -742,7 +851,8 @@ literal_char      ::=  <any code point except "{", "}" or NULL>
 
 
 ### Mapping Types (dict)
-- `list(dict)`, `set(dict`, `iter(dict)` and so on, only return the keys of the dictionary.
+- `list(dict)`, `set(dict)` and `iter(dict)` only return the keys of the dictionary.
+- The n number in worst-case complexities for copying and iterating the dictionary is the maximum size that the dictionary ever achieved.
 - `d | other` or `d |= other` Create a new dictionary with the merged keys and values of `d` and `other`, which must both be dictionaries. The values of `other` take priority when `d` and `other` share keys.
 - The objects returned by `dict.keys()`, `dict.values()` and `dict.items()` are view objects. They provide a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes.
 - Keys views are set-like since their entries are unique and hashable. For set-like views, all of the operations defined for the abstract base class `collections.abc.Set` are available, e.g. `==`, `<` and `^`.
@@ -785,6 +895,15 @@ literal_char      ::=  <any code point except "{", "}" or NULL>
 - Python’s generators provide a convenient way to implement the iterator protocol. If a container object’s `__iter__()` method is implemented as a generator, it will automatically return an iterator object (technically, a generator object) supplying the `__iter__()` and `__next__()` methods.
 
 
+### Context Manager Types
+- Python’s `with` statement supports the concept of a runtime context defined by a context manager. This is implemented using a pair of methods that allow user-defined classes to define a runtime context that is entered before the statement body is executed and exited when the statement ends:
+- `contextmanager.__enter__()` Enter the runtime context and return either this object or another object related to the runtime context.
+  - The value returned by this method is bound to the identifier in the `as` clause of `with` statements using this context manager.
+- `contextmanager.__exit__(exc_type, exc_val, exc_tb)` Exit the runtime context and return a Boolean flag indicating if any exception that occurred should be suppressed.
+  - If an exception occurred while executing the body of the with statement, the arguments contain the exception type, value and traceback information. Otherwise, all three arguments are None.
+  - Returning a true value from this method will cause the with statement to suppress the exception and continue execution with the statement immediately following the `with` statement.
+  - Otherwise the exception continues propagating after this method has finished executing.
+  - Exceptions that occur during execution of this method will replace any exception that occurred in the body of the `with` statement.
 
 
 
