@@ -37,13 +37,13 @@ def enhance_color(src, factor):
     im = Image.fromarray(src)
     enh_col = ImageEnhance.Color(im)
     im = enh_col.enhance(factor)
-    return np.asarray(im)
+    return np.array(im)
 
 def enhance_sharpness(src, factor):
     im = Image.fromarray(src)
     enh_sha = ImageEnhance.Sharpness(im)
     im = enh_sha.enhance(factor)
-    return np.asarray(im)
+    return np.array(im)
 
 def gaussian_blur(src, sigma):
     return cv2.GaussianBlur(src, None, sigma)
@@ -93,9 +93,10 @@ def image_process(impath, outpath, argv):
             im = remove_stains(im, arg)
         elif func == "gau":
             im = gaussian_blur(im, arg)
+        print(operation, end=" ")
     
+    print("--", os.path.split(impath)[1], "finished.")
     cv2.imwrite(outpath, im)
-    print(outpath, "ended.")
 
 
 
@@ -107,12 +108,12 @@ clear_bg = " sha:2 cq:2 sha:2 cq:2 rbg:25 rst:200 col:1.7 cq:0.5"
 clear_bg_blur = " cq:2 sha:2 cq:2 rbg:25 rst:200 col:1.7 cq:0.5"
 
 src_dir = "C:/Users/hrzhe/Pictures/Calculus/"
-argv = clear_bg
-out_suffix = argv.replace(":", "").replace(".", "")
+argv = " cq:2 sha:2 rst:200 gau:0.5 cq:0.5"
 out_suffix = "_"
+out_suffix = argv.replace(":", "").replace(".", "")
 # l = os.listdir(src_dir)
 l = [2, 3, 4, 5, 6, 8, 9, 11, 12]
-l = [2]
+l = [1]
 
 for i in l:
     impath, outpath = get_paths(src_dir, str(i), ".png", out_suffix)
