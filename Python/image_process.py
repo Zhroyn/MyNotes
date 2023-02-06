@@ -21,17 +21,12 @@ def get_paths(prefix, name, suffix, out_suffix=""):
     outpath = impath_add_suffix(impath, out_suffix)
     return impath, outpath
     
-def change_quailty(src, scale):
-    if scale == 1 or scale <= 0:
-        pass
-    else:
-        if scale < 1:
-            interpolation = cv2.INTER_AREA
-        else:
-            interpolation = cv2.INTER_CUBIC
-        im = cv2.resize(src, None, fx=scale, fy=scale,
-                        interpolation=interpolation)
-        return im
+def scale_image(src, factor):
+    interpolation = cv2.INTER_AREA if factor < 1 \
+                    else cv2.INTER_CUBIC
+    im = cv2.resize(src, None, fx=factor, fy=factor,
+                    interpolation=interpolation)
+    return im
 
 def enhance_color(src, factor):
     im = Image.fromarray(src)
@@ -51,7 +46,6 @@ def gaussian_blur(src, sigma):
 def remove_background(src, delta):
     h, w = src.shape[:2]
     bg_color = src[5, 5].copy()
-    print("Background Color :",bg_color)
     for y in range(h):
         for x in range(w):
             b, g, r = src[y, x]
@@ -81,8 +75,8 @@ def image_process(impath, outpath, argv):
     for operation in operations:
         func, colon, arg = operation.partition(":")
         arg = float(arg)
-        if func == "cq":
-            im = change_quailty(im, arg)
+        if func == "si":
+            im = scale_image(im, arg)
         elif func == "col":
             im = enhance_color(im, arg)
         elif func == "sha":
@@ -95,7 +89,7 @@ def image_process(impath, outpath, argv):
             im = gaussian_blur(im, arg)
         print(operation, end=" ")
     
-    print("--", os.path.split(impath)[1], "finished.")
+    print("--", os.path.split(impath)[1], "has been done.")
     cv2.imwrite(outpath, im)
 
 
@@ -103,20 +97,23 @@ def image_process(impath, outpath, argv):
 
 
 
-rm_stains = " cq:2 sha:2 cq:2 rst:200 gau:0.5 cq:0.5"
-clear_bg = " sha:2 cq:2 sha:2 cq:2 rbg:25 rst:200 col:1.7 cq:0.5"
-clear_bg_blur = " cq:2 sha:2 cq:2 rbg:25 rst:200 col:1.7 cq:0.5"
+rm_stains = " si:2 sha:2 rst:190 gau:0.5 si:0.5"
+rm_stains_largen = " si:2 sha:2 si:2 rst:200 gau:0.5 si:0.5"
+clear_bg = " sha:2 si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
+clear_bg_blur = " si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
+smooth = " gau:1.5 sha:10"
+smooth_more = " gau:1.8 sha:10"
 
 src_dir = "C:/Users/hrzhe/Pictures/Calculus/"
-argv = " cq:2 sha:2 rst:200 gau:0.5 cq:0.5"
+argv = rm_stains
 out_suffix = "_"
 out_suffix = argv.replace(":", "").replace(".", "")
 # l = os.listdir(src_dir)
-l = [2, 3, 4, 5, 6, 8, 9, 11, 12]
-l = [1]
+l = [5, 6, 8, 9, 11, 12, 13, 14]
+l = ["16"]
 
 for i in l:
-    impath, outpath = get_paths(src_dir, str(i), ".png", out_suffix)
+    impath, outpath = get_paths(src_dir, str(i), ".jpg", out_suffix)
     image_process(impath, outpath, argv)
 
 
