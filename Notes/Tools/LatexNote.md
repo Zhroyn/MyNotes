@@ -13,7 +13,7 @@
     - [Functions](#functions)
     - [Operations](#operations)
     - [Symbols](#symbols)
-    - [Display Problems](#display-problems)
+    - [Style](#style)
     - [Greek Alphabet](#greek-alphabet)
     - [Matrix](#matrix)
 - [Image](#image)
@@ -179,13 +179,19 @@ $$\cap, \cup, \setminus, \subset, \subseteq, \subsetneq, \supset, \in, \notin$$
 $$\to, \rightarrow, \leftarrow, \Rightarrow, \Leftarrow, \iff$$
 $$\forall, \exists, \mapsto, \because, \therefore$$
 
-#### Display Problems
+#### Style
 $
-\lim\limits_{n\to\infty} \sqrt[n]{n} \\~\\
-\underset{n\to\infty}{\lim} \sqrt[n]{n} \\~\\
+\lim\limits_{n\to\infty} \sqrt[n]{n},
+\underset{n\to\infty}{\lim} \sqrt[n]{n},
 \sum\limits_{i=1}^n a_n \\~\\
-\displaystyle{\sum_{i=1}^n a_n} \\~\\
-\displaystyle{\frac{1}{\sqrt[n]{n}}}
+\\
+\displaystyle{\sum_{i=1}^n a_n, \frac{1}{\sqrt[n]{n}}} \\~\\
+\\
+\begin{aligned}
+f(x) &= 2x+1 \\
+     &= 2+1 \\
+     &= 3
+\end{aligned}
 $
 
 
