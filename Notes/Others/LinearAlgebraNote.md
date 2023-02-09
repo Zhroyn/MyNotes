@@ -1,7 +1,51 @@
-[toc]
+<!-- TOC -->
+
+- [集合 关系 运算 结构](#集合-关系-运算-结构)
+  - [集合](#集合)
+  - [映射](#映射)
+  - [向量运算](#向量运算)
+  - [高斯消元法](#高斯消元法)
+  - [代数结构](#代数结构)
+- [线性空间](#线性空间)
+  - [定义与定理](#定义与定理)
+  - [交、和与直和](#交和与直和)
+  - [内积空间](#内积空间)
+  - [施密特(Schmidt)正交化](#施密特schmidt正交化)
+- [线性映射](#线性映射)
+  - [像与核](#像与核)
+  - [线性映射的秩](#线性映射的秩)
+  - [线性空间的同构](#线性空间的同构)
+- [矩阵](#矩阵)
+  - [坐标变换与基的变换](#坐标变换与基的变换)
+  - [矩阵的秩](#矩阵的秩)
+  - [矩阵的高阶幂](#矩阵的高阶幂)
+    - [三角形式](#三角形式)
+    - [指数形式（矩阵秩为1）](#指数形式矩阵秩为1)
+    - [阶梯形式](#阶梯形式)
+    - [例题](#例题)
+  - [矩阵求逆](#矩阵求逆)
+    - [零化多项式](#零化多项式)
+    - [三角块方阵](#三角块方阵)
+    - [加边法](#加边法)
+    - [伴随矩阵法](#伴随矩阵法)
+    - [例题](#例题-1)
+  - [其他](#其他)
+- [行列式](#行列式)
+  - [行列式的性质](#行列式的性质)
+  - [常见计算](#常见计算)
+      - [n阶三对角行列式](#n阶三对角行列式)
+      - [范德蒙(Vandermonde)行列式](#范德蒙vandermonde行列式)
+- [线性方程组](#线性方程组)
+  - [齐次线性方程组](#齐次线性方程组)
+  - [非齐次线性方程组](#非齐次线性方程组)
+
+<!-- /TOC -->
 
 
-## 集合 关系 运算 结构
+
+
+
+### 集合 关系 运算 结构
 #### 集合
 - 幂集：非空集合A的所有子集组成的集合称为A的幂集，记作$P(A)或2^A$
 - 余集：$A\setminus B, A - B, \bar{B}(if B \subset A)$
@@ -14,11 +58,11 @@ $
 分配律：A\cap(B\cup C) = (A\cap B)\cup (A\cap B)\\
 \qquad \qquad A\cup(B\cap C) = (A\cup B)\cap (A\cup B)\\
 ~\\
-DeMorgan律：\bar{A\cup B} = \bar{A}\cap \bar{B}\\
-\qquad \qquad \qquad \quad \bar{A\cup B} = \bar{A}\cap \bar{B}\\
+DeMorgan律：\overline{A\cup B} = \bar{A}\cap \bar{B}\\
+\qquad \qquad \qquad \quad \overline{A\cup B} = \bar{A}\cap \bar{B}\\
 ~\\
 A\setminus B = A\cap \bar{B}\\
-(A\cap B)\setminus C = A\cup(B\setminus C)\\
+(A\cap B)\setminus C = A\cap(B\setminus C)\\
 (A\cup B)\setminus C = (A\setminus C)\cup(B\setminus C)
 $
 #### 映射
@@ -32,7 +76,7 @@ $
 - 加法
 - 数乘，单位向量记作$a^0$
 - 内积（点积，数量积）：$a\cdot b=|a||b|cos\theta，0\le\theta\le\pi$
-- 外积（叉积，向量积）：$a \times b = |a||b|sin\left<a,b \right>，方向为右手伸开由a转到b$
+- 外积（叉积，向量积）：$a \times b = |a||b|sin\left<a,b \right>，方向为右手伸开由a转到b（可联想空间直角坐标系，e_1e_2=e_3, e_2e_3=e_1, e_3e_1=e_2）$
 - 混合积：$a\cdot(b\times c)=b\cdot(c\times a)=c\cdot(a\times b)$
 $~\\
 自行证明，在空间直角坐标系中：\\
@@ -49,7 +93,7 @@ a\cdot(b\times c)=\begin{vmatrix}
 $
 #### 高斯消元法
 - 常数项全为0的方程组称为齐次线性方程组
-- 齐次线性方程组总是有解的，当$r=n$时有唯一解，当$r<n$时有无穷多个解
+- 齐次线性方程组总是有解的，m个方程，n个未知量，当$r=n$时有唯一解，当$r<n$时有无穷多个解
 #### 代数结构
 - $\left<G:\circ\right>$称为群，如果：满足结合律；存在单位元；存在逆元
   - 半群：满足结合律
@@ -59,7 +103,7 @@ $
   - $\left<R:+\right>$是交换群（加法群）
   - $\left<R:\circ\right>$是半群，即不一定有单位元和逆元
   - $“+”$对$“\circ”$满足左、右分配律
-  - 若乘法满足结合律，则称其为交换环
+  - 若乘法满足交换律，则称其为交换环
   - 若乘法存在单位元，则称其为含幺环
 - $\left<F:+,\circ\right>$称为域，如果：
   - 是至少含有两个元的交换环
@@ -69,7 +113,7 @@ $
 
 
 
-## 线性空间
+### 线性空间
 #### 定义与定理
 $
 如果\left<V:+\right>是一个交换群（加法群），\\
@@ -98,7 +142,6 @@ $~\\
 定理2.5：设\left\{\beta_1,\beta_2,\dots,\beta_s\right\}中的每个向量可由\left\{\alpha_1,\alpha_2,\dots,\alpha_r\right\}线性表示，\\
 若s>r，则\left\{\beta_1,\beta_2,\dots,\beta_s\right\}线性相关\\
 定理2.5等价命题：若\left\{\beta_1,\beta_2,\dots,\beta_s\right\}线性无关，则s\le r\\
-~\\
 若S中每个向量可由T线性表示，则r(S)\le r(T)
 $
 #### 交、和与直和
@@ -150,7 +193,7 @@ $$
 
 
 
-## 线性映射
+### 线性映射
 #### 像与核
 $
 Im\sigma 是V_2的一个子空间，Ker\sigma 是V_1的一个子空间\\
@@ -187,7 +230,7 @@ $
 
 
 
-## 矩阵
+### 矩阵
 #### 坐标变换与基的变换
 $$
 A:\epsilon \rightarrow e, \sigma(\epsilon) = (e)A \\
@@ -428,7 +471,7 @@ Proof:\rightarrow
 
 
 
-## 行列式
+### 行列式
 #### 行列式的性质
 $
 性质1：若有一列为零向量，则行列式等于0 \\
@@ -530,7 +573,7 @@ $$V_n = \begin{vmatrix}
 
 
 
-## 线性方程组
+### 线性方程组
 #### 齐次线性方程组
 $
 定理6.1：设A\in M_{m\times n}(F)，r(A) = r，\\
@@ -557,11 +600,13 @@ $
 
 
 
-1
-2
-3
-4
-5
+$
+\displaystyle{} \\
+\displaystyle{} \\
+\displaystyle{} \\
+\displaystyle{} \\
+\displaystyle{} \\
+$
 
 
 
