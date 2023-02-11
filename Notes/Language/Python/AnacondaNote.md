@@ -1,6 +1,9 @@
 <!-- TOC -->
 
 - [Cheatsheet](#cheatsheet)
+  - [Environment](#environment)
+  - [Package](#package)
+  - [Specifying version numbers](#specifying-version-numbers)
 - [Reference](#reference)
   - [conda info](#conda-info)
   - [conda list](#conda-list)
@@ -9,6 +12,43 @@
 <!-- /TOC -->
 
 ## Cheatsheet
+### Environment
+- `conda create -n/--name ENVIRNMENT [package_spec...]` Create a new envirenment with the specified packages
+- `conda create -n/--name ENVIRNMENT --clone ENV` Create a new environment as a copy of an existing local environment
+- `conda create -n/--name ENVIRNMENT --file FILE` Read package versions from the given file
+<br>
+
+- `conda info -e/--envs` or `conda env list` List all environments
+- `conda list --explicit > FILE` or `conda list -e/--export > FILE` Save the current environment to a file, or another by adding `-n ENV`
+<br>
+
+- `conda activate ENV` Activate the new environment to use it
+- `conda deactivate` Deactivate the current environment
+<br>
+
+- `conda env remove -n/--name ENV` Delete an environment and everything in it
+
+### Package
+- `conda install [-n ENV] package_spec...` Install a list of packages into the environment
+- `conda update [-n ENV] package_spec...` Update a list of packages in the environment
+- `conda update [-n ENV] --all/--update-all` Update all installed packages in the environment
+- `conda remove [-n ENV] package_spec...` Delete a list of packages in the environment
+<br>
+
+- `conda list [-n ENV]` List all packages installed in the environment, including versions and channels
+- `conda list REGEX` List only packages matching this regular expression
+- `conda search REGEX` Search for a package
+
+### Specifying version numbers
+- `numpy=1.11` means `1.11.0`, `1.11.1`, `1.11.2`, `1.11.18` etc
+- `numpy==1.11` means `1.11.0` exactly
+- `numpy>=1.11` means `1.11.0` or higher
+- `numpy=1.11.1|1.11.3` means `1.11.1`, `1.11.3`
+- `numpy>=1.8,<2` means `1.8`, `1.9`, not `2.0`
+
+
+
+
 
 ## Reference
 ### conda info
