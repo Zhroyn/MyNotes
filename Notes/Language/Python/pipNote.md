@@ -68,6 +68,12 @@ pip install -i/--index-url <url> [package]...
 
 # Change PyPI source
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple/
+pip config set global.trusted-host pypi.tuna.tsinghua.edu.cn
 pip config set global.index-url https://pypi.mirrors.ustc.edu.cn/simple/
+pip config set global.trusted-host pypi.mirrors.ustc.edu.cn
+
 pip config set global.index-url http://mirrors.aliyun.com/pypi/simple/
+pip config set global.trusted-host mirrors.aliyun.com
+pip config set global.index-url http://pypi.douban.com/simple/
+pip config set global.trusted-host pypi.douban.com
 ```
