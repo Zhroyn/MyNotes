@@ -2,20 +2,20 @@
 
 - [Preamble](#preamble)
 - [Document structure](#document-structure)
-    - [Abstract](#abstract)
-    - [Paragraph and new lines](#paragraph-and-new-lines)
-    - [Chapters and sections](#chapters-and-sections)
-    - [Adding a Table of Contents](#adding-a-table-of-contents)
+        - [Abstract](#abstract)
+        - [Paragraph and new lines](#paragraph-and-new-lines)
+        - [Chapters and sections](#chapters-and-sections)
+        - [Adding a Table of Contents](#adding-a-table-of-contents)
 - [Font](#font)
 - [Math](#math)
-    - [Basic](#basic)
-    - [Superscript and Subscript](#superscript-and-subscript)
-    - [Functions](#functions)
-    - [Operations](#operations)
-    - [Symbols](#symbols)
-    - [Style](#style)
-    - [Greek Alphabet](#greek-alphabet)
-    - [Matrix](#matrix)
+        - [Basic](#basic)
+        - [Up and Down](#up-and-down)
+        - [Functions](#functions)
+        - [Operations](#operations)
+        - [Symbols](#symbols)
+        - [Style](#style)
+        - [Greek Alphabet](#greek-alphabet)
+        - [Matrix](#matrix)
 - [Image](#image)
 - [List](#list)
 - [Table](#table)
@@ -150,9 +150,15 @@ E=mc^2            % unnumbered
 E=mc^2            % numbered
 \end{equation}
 ```
-
-#### Superscript and Subscript
-$$a_i^2, a_{j-1,j}^{n+1}$$
+#### Up and Down
+$$
+a_i^2, a_{j-1,j}^{n+1} \\~\\
+\hat{A}, \tilde{A} \\~\\
+\bar{A}, \underbar{A} \\~\\
+\overline{overline}, \underline{underline} \\~\\
+\overset{a}{b}, \underset{a}{b} \\~\\
+\vec{a}, \overleftarrow{b}, \overrightarrow{u}, \overleftrightarrow{v} \\~\\
+$$
 
 #### Functions
 $$
