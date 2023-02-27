@@ -2,20 +2,20 @@
 
 - [Preamble](#preamble)
 - [Document structure](#document-structure)
-        - [Abstract](#abstract)
-        - [Paragraph and new lines](#paragraph-and-new-lines)
-        - [Chapters and sections](#chapters-and-sections)
-        - [Adding a Table of Contents](#adding-a-table-of-contents)
+  - [Abstract](#abstract)
+  - [Paragraph and new lines](#paragraph-and-new-lines)
+  - [Chapters and sections](#chapters-and-sections)
+  - [Adding a Table of Contents](#adding-a-table-of-contents)
 - [Font](#font)
 - [Math](#math)
-        - [Basic](#basic)
-        - [Up and Down](#up-and-down)
-        - [Functions](#functions)
-        - [Operations](#operations)
-        - [Symbols](#symbols)
-        - [Style](#style)
-        - [Greek Alphabet](#greek-alphabet)
-        - [Matrix](#matrix)
+  - [Basic](#basic)
+  - [Up and Down](#up-and-down)
+  - [Functions](#functions)
+  - [Operations](#operations)
+  - [Symbols](#symbols)
+  - [Style](#style)
+  - [Greek Alphabet](#greek-alphabet)
+  - [Matrix](#matrix)
 - [Image](#image)
 - [List](#list)
 - [Table](#table)
@@ -25,7 +25,7 @@
 
 
 
-## Preamble
+### Preamble
 
 ```latex
 \documentclass[12pt, letterpaper]{article}  %the default size is 10pt
@@ -45,7 +45,7 @@
 
 
 
-## Document structure
+### Document structure
 
 #### Abstract
 ```latex
@@ -79,7 +79,7 @@ document. A brief introduction about the main subject.
 ```
 
 
-## Font
+### Font
 
 [Overleaf](https://cn.overleaf.com/learn/latex/Font_sizes%2C_families%2C_and_styles)
 ```latex
@@ -122,7 +122,7 @@ This text uses a different font typeface
 ```
 
 
-## Math
+### Math
 #### Basic
 To typeset inline-mode math you can use one of these delimiter pairs: `\( ... \)`, `$ ... $` or `\begin{math} ... \end{math}`
 To typeset display-mode math you can use one of these delimiter pairs: `\[ ... \]`, `$$ ... $$`, `\begin{displaymath} ... \end{displaymath}` or `\begin{equation} ... \end{equation}`
@@ -273,7 +273,7 @@ $$
 
 
 
-## Image
+### Image
 ```latex
 \documentclass{article}
 \usepackage{graphicx}
@@ -299,7 +299,7 @@ The figure \ref{fig:Eevee} is on page \pageref{fig:Eevee}.
 
 
 
-## List
+### List
 
 ```latex
 % Unordered List
@@ -316,7 +316,7 @@ The figure \ref{fig:Eevee} is on page \pageref{fig:Eevee}.
 ```
 
 
-## Table
+### Table
 
 ```latex
 \begin{center}
@@ -361,7 +361,7 @@ Table \ref{table:data} shows how to add a table caption and reference a table.
 
 
 
-## Package
+### Package
 ```latex
 \usepackage[options]{somepackage}
 ```
