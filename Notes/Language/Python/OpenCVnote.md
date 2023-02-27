@@ -25,6 +25,8 @@
     - [VideoWriter](#videowriter)
         - [Create and Release](#create-and-release)
         - [fourcc](#fourcc)
+- [Draw](#draw)
+    - [Text](#text)
 - [Shorthand](#shorthand)
 
 <!-- /TOC -->
@@ -625,6 +627,55 @@ release() -> None
   - `mpeg4 (Simple Profile) (mp4v / 0x7634706D)`
   - MPEG-4 part 2
   - smaller
+
+
+
+
+
+
+
+
+## Draw
+### Rectangle
+```py
+rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]]) -> img
+    pt1 : Vertex of the rectangle.
+    pt2 : Vertex of the rectangle opposite to pt1 .
+    color : Rectangle color or brightness (grayscale image).
+    thickness : Thickness of lines that make up the rectangle. Negative 
+                values mean that the function has to draw a filled rectangle.
+    lineType : Type of the line.
+    shift : Number of fractional bits in the point coordinates.
+```
+
+### Text
+```py
+putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType
+        [, bottomLeftOrigin]]]) -> img
+    org : Bottom-left corner of the text string in the image.
+    fontFace : Font type.
+    fontScale : Font scale factor that is multiplied by the font-specific 
+                base size.
+    color : Text color in `BGR` orger.
+    thickness : Thickness of the lines used to draw a text.
+    lineType : Line type. See #LineTypes
+    bottomLeftOrigin : When true, the image data origin is at the bottom-left 
+                       corner. Otherwise, it is at the top-left corner.
+```
+- `cv.FONT_HERSHEY_SIMPLEX` normal size sans-serif font
+- `cv.FONT_HERSHEY_PLAIN` small size sans-serif font
+- `cv.FONT_HERSHEY_DUPLEX` normal size sans-serif font (more complex than FONT_HERSHEY_SIMPLEX)
+- `cv.FONT_HERSHEY_COMPLEX` normal size serif font
+- `cv.FONT_HERSHEY_TRIPLEX` normal size serif font (more complex than FONT_HERSHEY_COMPLEX)
+- `cv.FONT_HERSHEY_COMPLEX_SMALL` smaller version of FONT_HERSHEY_COMPLEX
+- `cv.FONT_HERSHEY_SCRIPT_SIMPLEX` hand-writing style font
+- `cv.FONT_HERSHEY_SCRIPT_COMPLEX` more complex variant of FONT_HERSHEY_SCRIPT_SIMPLEX
+- `cv.FONT_ITALIC` flag for italic font
+
+
+
+
+
 
 
 
