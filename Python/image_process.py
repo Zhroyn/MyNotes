@@ -89,7 +89,7 @@ def image_process(impath, outpath, argv):
             im = gaussian_blur(im, arg)
         print(operation, end=" ")
     
-    print("--", os.path.split(impath)[1], "has been done.")
+    print("--", os.path.split(outpath)[1], "is generated.")
     cv2.imwrite(outpath, im)
 
 
@@ -97,23 +97,23 @@ def image_process(impath, outpath, argv):
 
 
 
-rm_stains = " si:2 sha:2 rst:190 gau:0.5 si:0.5"
+rm_stains = " si:2 sha:2 rst:200 gau:0.5 si:0.5"
 rm_stains_largen = " si:2 sha:2 si:2 rst:200 gau:0.5 si:0.5"
 clear_bg = " sha:2 si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
 clear_bg_blur = " si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
-smooth = " gau:1.5 sha:10"
-smooth_more = " gau:1.8 sha:10"
+bold = " gau:1.2 sha:10"
+bold_more = " gau:1.5 sha:10"
 
 src_dir = "C:/Users/hrzhe/Pictures/Calculus/"
-argv = rm_stains
+argv = rm_stains + bold_more
 out_suffix = "_"
 out_suffix = argv.replace(":", "").replace(".", "")
 # l = os.listdir(src_dir)
-l = [5, 6, 8, 9, 11, 12, 13, 14]
-l = ["16"]
+l = [1]
 
 for i in l:
     impath, outpath = get_paths(src_dir, str(i), ".jpg", out_suffix)
+    impath, outpath = get_paths(src_dir, str(i), ".png", out_suffix)
     image_process(impath, outpath, argv)
 
 
