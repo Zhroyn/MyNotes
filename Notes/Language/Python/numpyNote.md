@@ -1,137 +1,60 @@
 <!-- TOC -->
 
+- [Data Type](#data-type)
 - [Array](#array)
-        - [Creating ndarray](#creating-ndarray)
-        - [Creating dtype](#creating-dtype)
-        - [Attributes](#attributes)
-        - [Index and slice](#index-and-slice)
-        - [Search and count](#search-and-count)
-        - [Sort](#sort)
-        - [Concatenate](#concatenate)
-        - [Stack](#stack)
-        - [Split](#split)
-        - [Reshape](#reshape)
-        - [Expand dimension](#expand-dimension)
-        - [Transpose](#transpose)
-        - [Basic operations](#basic-operations)
+  - [Attributes](#attributes)
+  - [Create Array](#create-array)
+  - [Convert Array](#convert-array)
+  - [Index and slice](#index-and-slice)
+  - [Search and count](#search-and-count)
+  - [Sort](#sort)
+  - [Concatenate](#concatenate)
+  - [Stack](#stack)
+  - [Split](#split)
+  - [Reshape](#reshape)
+  - [Expand dimension](#expand-dimension)
+  - [Transpose](#transpose)
+  - [Basic operations](#basic-operations)
 - [Random](#random)
-        - [Generate random number](#generate-random-number)
+  - [Generate random number](#generate-random-number)
 
 <!-- /TOC -->
 
 
 
+
+
+
+## Data Type
+- `b1` is `bool`
+- `b` is `int8`, `i` is `int32`
+- `i1, i2, i4, i8` is `int8, int16, int32, int64`
+- `u1, u2, u4, u8` is `uint8, uint16, uint32, uint64`
+- `f, f2, f4, f8` is `float32, float16, float32, float64`
+- `c8, c16` is `complex64, complex128`
+- `m, m8` is `timedelta64`
+- `M, M8` is `datetime64`
+- `O, O8` is `object`
+- `c` is `|S1`
+- `S, S1, S2, ...` is `|S1, |S1, |S2, ...`
+- `a, a1, a2, ...` is `|S1, |S1, |S2, ...`
+- `U, U1, U2, ...` is `<U1, <U1, <U2, ...`
+<br>
+
+- `np.bool_` is `bool`
+- `np.int_, np.intc` is `int32`, `np.intp` is `int64`
+- `np.int8, np.int16, np.int32, np.int64` is corresponding integer
+- `np.uint8, np.uint16, np.uint32, np.uint64` is corresponding integer
+- `np.float_` is `float64`
+- `np.float16, np.float32, np.float64` is corresponding float number
+- `np.complex_` is `complex128`
+- `np.complex64, np.complex128` is corresponding complex number
+
+
+
+
 ## Array
-#### Creating ndarray
-```py
-numpy.array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0,
-            like=None)
-numpy.asarray(a, dtype=None, order=None, *, like=None)
-object : array_like
-       An array, any object exposing the array interface, an object whose
-       __array__ method returns an array, or any (nested) sequence.
-       If object is a scalar, a 0-dimensional array containing object is
-       returned.
-a : array_like
-       Input data, in any form that can be converted to an array.  This
-       includes lists, lists of tuples, tuples, tuples of tuples, tuples
-       of lists and ndarrays.
-
->>> a = np.array([1, 2, 3])
->>> a = np.array([1, 2, 3], np.int32)
->>> a = np.array([1, 2, 3], 'i4')
->>> a = np.array([[1, 2, 3], [4, 5, 6]])
->>> np.array([1, 2, 3], ndmin=2)
-array([[1, 2, 3]])
->>> np.array(5)
-array(5)
->>> np.array(5).reshape(1)
-array([5])
-```
-```py
-# Return a new array of given shape and type, filled with ones
-numpy.ones(shape, dtype=None, order='C', *, like=None)
-# Return a new array of given shape and type, filled with zeros
-numpy.zeros(shape, dtype=float, order='C', *, like=None)
-# Return a new array of given shape and type, without initializing entries
-numpy.empty(shape, dtype=float, order='C', *, like=None)
-# Return evenly spaced values within a given interval
-numpy.arange([start,] stop[, step,], dtype=None, *, like=None)
-# Return evenly spaced numbers over a specified interval
-numpy.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis=0)
-
->>> np.ones(2, np.int64)
-array([1, 1])    # shape: int or tuple of int
->>> np.zeros((2, 1), dtype=float, order='C')
-array([[0.],
-       [0.]])
->>> np.arange(4)
-array([0, 1, 2, 3])
->>> np.arange(5,7,0.2)
-array([5. , 5.2, 5.4, 5.6, 5.8, 6. , 6.2, 6.4, 6.6, 6.8])
->>> np.linspace(0, 10, num=5)
-array([ 0. ,  2.5,  5. ,  7.5, 10. ])
-
-```
-#### Creating dtype
-```py
-# Any string in numpy.sctypeDict.keys():
-dt = np.dtype('uint32')       # 32-bit unsigned integer
-dt = np.dtype('float64')      # 64-bit floating-point number
-
-# (flexible_dtype, itemsize)
-dt = np.dtype((np.void, 10))  # 10-byte wide data block
-dt = np.dtype(('U', 10))      # 10-character unicode string
-
-# (fixed_dtype, shape)
-dt = np.dtype((np.int32, (2,2)))          # 2 x 2 integer sub-array
-dt = np.dtype(('i4, (2,3)f8, f4', (2,3))) # 2 x 3 structured sub-array
-
-# [(field_name, field_dtype, field_shape), ...]
-### If the field_name is '' then a standard field name 'f#' is assigned.
-dt = np.dtype([('big', '>i4'), ('little', '<i4')])
-dt = np.dtype([('R','u1'), ('G','u1'), ('B','u1'), ('A','u1')])
-
-# {'names': ..., 'formats': ..., 'offsets': ..., 'titles': ..., 'itemsize': ...}
-### The names and formats keys are required. The field names must be strings.
-dt = np.dtype({'names': ['r','g','b','a'],
-               'formats': [np.uint8, np.uint8, np.uint8, np.uint8]})
-
-# {'field1': ..., 'field2': ..., ...}
-### This usage is discouraged, because it is ambiguous.
-### obj should contain string or (data-type, offset, title) tuples, etc
-dt = np.dtype({'col1': ('U10', 0), 'col2': (np.float32, 10),
-               'col3': (int, 14)})
-
-
->>> dt = np.dtype(('i4', 5))
->>> a = np.array([1,2,3], dt)
->>> a[1]
-array([2, 2, 2, 2, 2])
-
->>> dt = np.dtype([('R','u1'), ('G','u1'), ('B','u1'), ('A','u1')])
->>> a = np.array([1,2,3], dt)
->>> a[1]
-(2, 2, 2, 2)
-
->>> dt = np.dtype(('i4', (3, 2)))
->>> a = np.array([1,2,3], dt)
->>> a[1]
-array([[2, 2],
-       [2, 2],
-       [2, 2]])
-
->>> dt = np.dtype(('i4, (2,3)f8, f4', (2,3)))
->>> a = np.array([1,2,3], dt)
->>> a[1][1]
-array([(2, [[2., 2., 2.], [2., 2., 2.]], 2.),
-       (2, [[2., 2., 2.], [2., 2., 2.]], 2.),
-       (2, [[2., 2., 2.], [2., 2., 2.]], 2.)],
-      dtype=[('f0', '<i4'), ('f1', '<f8', (2, 3)), ('f2', '<f4')])
-```
-
-
-#### Attributes
+### Attributes
 ```py
 ndarray.flags    # Information about the memory layout of the array
 ndarray.shape    # Tuple of array dimensions
@@ -149,7 +72,6 @@ ndarray.itemsize # Length of one array element in bytes
   WRITEABLE : True
   ALIGNED : True
   WRITEBACKIFCOPY : False
-
 >>> a.shape
 (2, 3)
 >>> a.strides
@@ -166,7 +88,50 @@ ndarray.itemsize # Length of one array element in bytes
 dtype('int32')
 ```
 
-#### Index and slice
+### Create Array
+- `np.array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0, like=None)`
+  - `object` : An array, any object exposing the array interface, an object whose `__array__` method returns an array, or any (nested) sequence. If object is a scalar, a 0-dimensional array containing object is returned.
+  - `dtype` : If not given, then the type will be determined as the minimum type required to hold the objects.
+  - `copy` : If true (default), then the object is copied.  Otherwise, a copy will only be made if `__array__` returns a copy, if obj is a nested sequence, or if a copy is needed to satisfy any of the other requirements (`dtype`, `order`, etc.).
+  - `order` : `{'K', 'A', 'C', 'F'}`, optional. If object is not an array, the newly created array will be in C order.
+  - `subok` : If True, then sub-classes will be passed-through, otherwise the returned array will be forced to be a base-class `array`.
+    - `np.array(m, copy=False, subok=True)` will not return a copy.
+  - `ndmin` : Specifies the minimum number of dimensions that the resulting array should have. Ones will be pre-pended to the shape as needed to meet this requirement.
+<br>
+
+- `np.empty(shape, dtype=float, order='C', *, like=None)`
+  - `shape` : int or tuple of int, `np.empty(3)` is equivalent to `np.empty([3])`
+- `np.zeros(shape, dtype=float, order='C', *, like=None)`
+- `np.ones(shape, dtype=None, order='C', *, like=None)`
+  - `dtype` : Default is `numpy.float64`.
+- `np.full(shape, fill_value, dtype=None, order='C', *, like=None)`
+  - `dtype` : The default, None, means `np.array(fill_value).dtype`.
+<br>
+
+- `np.arange([start,] stop[, step,], dtype=None, *, like=None)`
+  - `start` : integer or real. The interval includes this value.  The default start value is 0.
+  - `stop` : integer or real. The interval does not include this value, except in some cases where `step` is not an integer and floating point round-off affects the length of `out`.
+  - `step` : integer or real. The default step size is 1.  If `step` is specified as a position argument, `start` must also be given.
+  - `dtype` : If is not given, infer the data type from the other input arguments.
+- `np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis=0)`
+  - `num` : Number of samples to generate. Default is 50. Must be non-negative.
+  - `endpoint` : If True, `stop` is the last sample. Otherwise, it is not included.
+  - `retstep` : If True, return (`samples`, `step`), where `step` is the spacing between samples.
+  - `dtype` : If is not given, the data type is inferred from `start` and `stop`. The inferred dtype will never be an integer.
+
+### Convert Array
+- `np.asarray(a, dtype=None, order=None, *, like=None)`
+  - `a` : Input data, in any form that can be converted to an array.  This includes lists, lists of tuples, tuples, tuples of tuples, tuples of lists and ndarrays.
+  - `dtype` : By default, the data-type is inferred from the input data.
+  - `order` : Memory layout.  'A' and 'K' depend on the order of input array a.
+  - Like `np.array(a, copy=False)`, existing arrays are not copied. If `dtype` is set, array is copied only if dtype does not match
+- `np.asanyarray(a, dtype=None, order=None, *, like=None)`
+  - Like `np.array(a, copy=False, subok=True)`, convert the input to an ndarray, but pass ndarray subclasses through.
+- `np.asfarray(a, dtype=<class 'numpy.float64'>)`
+
+
+
+### Index and slice
 ```py
 >>> a = np.array([[1, 2, 3], [4, 5, 6]])
 # Support multi-dimension index
@@ -195,7 +160,7 @@ array([3, 4, 5])
 >>> a[np.nonzero(a < 5)]
 array([1, 2, 3, 4])
 ```
-#### Search and count
+### Search and count
 ```py
 # Return the indices of the elements that are non-zero
 numpy.nonzero(a)
@@ -216,7 +181,7 @@ array([[0, 0],
        [2, 1]])
 ```
 
-#### Sort
+### Sort
 ```py
 # Sort an array in-place
 ndarray.sort(axis=-1, kind=None, order=None)
@@ -252,7 +217,7 @@ array([[1, 1],
 >>> np.sort(a, order=['age', 'height'])
 ```
 
-#### Concatenate
+### Concatenate
 ```py
 # Join a sequence of arrays along an existing axis
 numpy.concatenate((a1, a2, ...), axis=0, out=None, dtype=None, ...)
@@ -279,7 +244,7 @@ array([[1, 2, 5],
 >>> np.concatenate((a, b), axis=None)
 array([1, 2, 3, 4, 5, 6])
 ```
-#### Stack
+### Stack
 ```py
 # Stack arrays in sequence vertically (row wise).
 numpy.vstack(tup)
@@ -322,7 +287,7 @@ array([[1, 4],
        [2, 5],
        [3, 6]])
 ```
-#### Split
+### Split
 ```py
 # Split an array into multiple sub-arrays vertically (row-wise).
 numpy.vsplit(ary, indices_or_sections)
@@ -362,7 +327,7 @@ array([[3., 4., 5.],
        [6., 7., 8.]]),
 array([], shape=(0, 3), dtype=float64)]
 ```
-#### Reshape
+### Reshape
 ```py
 # Returns an array containing the same data with a new shape.
 ndarray.reshape(shape, order='C')
@@ -417,7 +382,7 @@ array([[0, 1, 2],
 array([[9, 1, 2],
        [3, 4, 5]])
 ```
-#### Expand dimension
+### Expand dimension
 ```py
 # Insert a new axis that will appear at the 'np.newaxis' position
 >>> a = np.array([1, 2, 3, 4, 5, 6])
@@ -447,7 +412,7 @@ axis : int or tuple of ints
 >>> np.expand_dims(a, (0, 2)).shape
 (1, 2, 1, 3)
 ```
-#### Transpose
+### Transpose
 ```py
 # Reverse or permute the axes of an array; returns the modified array
 numpy.transpose(a, axes=None)
@@ -493,7 +458,7 @@ array([[[5, 4],
        [3, 2]]])
 ```
 
-#### Basic operations
+### Basic operations
 ```py
 >>> data = np.array([1, 2])
 >>> ones = np.ones(2, dtype=int)
@@ -564,7 +529,7 @@ array([[ 4,  8, 12],
 
 
 ## Random
-#### Generate random number
+### Generate random number
 ```py
 # Return a sample (or samples) from the "standard normal" distribution.
 np.random.randn(d0, d1, ..., dn)
