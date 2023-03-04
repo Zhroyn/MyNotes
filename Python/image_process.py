@@ -34,6 +34,12 @@ def enhance_color(src, factor):
     im = enh_col.enhance(factor)
     return np.array(im)
 
+def enhance_contrast(src, factor):
+    im = Image.fromarray(src)
+    enh_con = ImageEnhance.Contrast(im)
+    im = enh_con.enhance(factor)
+    return np.array(im)
+
 def enhance_sharpness(src, factor):
     im = Image.fromarray(src)
     enh_sha = ImageEnhance.Sharpness(im)
@@ -79,6 +85,8 @@ def image_process(impath, outpath, argv):
             im = scale_image(im, arg)
         elif func == "col":
             im = enhance_color(im, arg)
+        elif func == "con":
+            im = enhance_contrast(im, arg)
         elif func == "sha":
             im = enhance_sharpness(im, arg)
         elif func == "rbg":
@@ -103,9 +111,10 @@ clear_bg = " sha:2 si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
 clear_bg_blur = " si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
 bold = " gau:1.2 sha:10"
 bold_more = " gau:1.5 sha:10"
+clearer = " si:2 sha:2 si:2 rst:220 con:1.2 gau:0.7 con:1.2 si:0.5"
 
 src_dir = "C:/Users/hrzhe/Pictures/Calculus/"
-argv = rm_stains + bold_more
+argv = " con:1.2 gau:0.7 con:1.2 si:0.5"
 out_suffix = "_"
 out_suffix = argv.replace(":", "").replace(".", "")
 # l = os.listdir(src_dir)
