@@ -51,7 +51,11 @@ def gaussian_blur(src, sigma):
 
 def remove_background(src, delta):
     h, w = src.shape[:2]
-    bg_color = src[5, 5].copy()
+    bg_color = np.array([255, 255, 255])
+    for y in range(0, h, h // 10):
+        for x in range(0, w, w // 10):
+            if src[y, x][0] > delta:
+                bg_color = (bg_color + src[y, x]) / 2
     for y in range(h):
         for x in range(w):
             b, g, r = src[y, x]
@@ -114,7 +118,7 @@ bold_more = " gau:1.5 sha:10"
 clearer = " si:2 sha:2 si:2 rst:220 con:1.2 gau:0.7 con:1.2 si:0.5"
 
 src_dir = "C:/Users/hrzhe/Pictures/Calculus/"
-argv = " con:1.2 gau:0.7 con:1.2 si:0.5"
+argv = clear_bg
 out_suffix = "_"
 out_suffix = argv.replace(":", "").replace(".", "")
 # l = os.listdir(src_dir)
