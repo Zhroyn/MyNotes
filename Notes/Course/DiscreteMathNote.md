@@ -113,9 +113,37 @@ propositions
 
 
 ### 1.6 Rules of Inference
+- An **argument** in propositional logic is a sequence of propositions. All but the final proposition in the argument are called **premises** and the final proposition is called the **conclusion**. An argument is **valid** if the truth of all its premises implies that the conclusion is true.
+- An argument form in propositional logic is a sequence of compound propositions involving propositional variables. An argument form is valid if no matter which particular propositions are substituted for the propositional variables in its premises, the conclusion is true if the premises are all true.
 
 
 ### 1.7 Introduction to Proofs
+- A **direct proof** of a conditional statement $p → q$ is constructed when the first step is the assumption that $p$ is true; subsequent steps are constructed using rules of inference, with the final step showing that $q$ must also be true
+<br>
 
+- Proofs of theorems that do not start with the premises and end with the conclusion, are called **indirect proofs**
+- An extremely useful type of indirect proof is known as **proof by contraposition**. In a proof by contraposition of $p → q$, we take $¬q$ as a premise, and using axioms, definitions, and previously proven theorems, together with rules of inference, we show that $¬p$ must follow
+- Because the statement $r ∧ ¬r$ is a contradiction whenever $r$ is a proposition, we can prove that $p$ is true if we can show that $¬p → (r ∧ ¬r)$ is true for some proposition $r$. Proofs of this type are called **proofs by contradiction**
+- If we can show that $p$ is false, then we have a proof, called a **vacuous proof**, of the conditional statement $p → q$
+- A proof of $p → q$ that uses the fact that $q$ is true is called a **trivial proof**
 
 ### 1.8 Proof Methods and Strategy
+- The original conditional statement with a hypothesis made up of a disjunction of the propositions $p_1, p_2, … , p_n$ can be proved by proving each of the n conditional statements $p_i → q, i = 1, 2, … , n$,  individually. Such an argument is called a **proof by cases**
+- Some theorems can be proved by examining a relatively small number of examples. Such proofs are called **exhaustive proofs**, or **proofs by exhaustion** because these proofs proceed by exhausting all possibilities
+<br>
+
+- A proof of a proposition of the form $∃xP(x)$ is called an **existence proof**. There are several ways to prove a theorem of this type
+- Sometimes an existence proof of $∃xP(x)$ can be given by finding an element a, called a witness, such that $P(a)$ is true. This type of existence proof is called **constructive**
+- It is also possible to give an existence proof that is **nonconstructive**; that is, we do not find an element a such that $P(a)$ is true, but rather prove that $∃xP(x)$ is true in some other way. One common method of giving a nonconstructive existence proof is to use proof by contradiction and show that the negation of the existential quantification implies a contradiction
+<br>
+
+- The two parts of a **uniqueness proof** are:
+  - Existence: We show that an element $x$ with the desired property exists.
+  - Uniqueness: We show that if $x$ and $y$ both have the desired property, then $x = y$
+<br>
+
+- Using the premises, together with axioms and known theorems, you can construct a proof using a sequence of steps that leads to the conclusion. This type of reasoning is called **forward reasoning**
+- In such cases it may be helpful to use **backward reasoning**. To reason backward to prove a statement $q$, we find a statement $p$ that we can prove with the property that $p → q$
+
+
+
