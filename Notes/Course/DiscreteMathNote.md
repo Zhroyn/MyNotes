@@ -5,7 +5,6 @@
   - [1.2 Applications of Propositional Logic](#12-applications-of-propositional-logic)
   - [1.3 Propositional Equivalences](#13-propositional-equivalences)
   - [1.4 Predicates and Quantifiers](#14-predicates-and-quantifiers)
-  - [1.5 Nested Quantifiers](#15-nested-quantifiers)
   - [1.6 Rules of Inference](#16-rules-of-inference)
   - [1.7 Introduction to Proofs](#17-introduction-to-proofs)
   - [1.8 Proof Methods and Strategy](#18-proof-methods-and-strategy)
@@ -127,23 +126,49 @@ propositions
 - $\exist x(P(x) \vee Q(x)) \equiv \exist xP(x) \vee \exist xQ(x)$
 - De Morgan’s laws for quantifiers : $¬∀xP(x) ≡ ∃x ¬P(x)$, $¬∃xQ(x) ≡ ∀x ¬Q(x)$
 
-### 1.5 Nested Quantifiers
-
 
 ### 1.6 Rules of Inference
 - An **argument** in propositional logic is a sequence of propositions. All but the final proposition in the argument are called **premises** and the final proposition is called the **conclusion**. An argument is **valid** if the truth of all its premises implies that the conclusion is true.
-- An argument form in propositional logic is a sequence of compound propositions involving propositional variables. An argument form is valid if no matter which particular propositions are substituted for the propositional variables in its premises, the conclusion is true if the premises are all true.
+- An **argument form** in propositional logic is a sequence of compound propositions involving propositional variables. An argument form is valid if no matter which particular propositions are substituted for the propositional variables in its premises, the conclusion is true if the premises are all true.
+
+|Rule of Inference|Tautology|Name|
+|---|---|---|
+| $p$<br>$p → q$<br>$∴ q$ | $(p ∧ (p → q)) → q$ | Modus ponens |
+| $¬q$<br>$p → q$<br>$∴ ¬p$ | $(¬q ∧ (p → q)) → ¬p$ | Modus tollens |
+| $p → q$<br>$q → r$<br>$∴ p → r$ | $((p → q) ∧ (q → r)) → (p → r)$ | Hypothetical syllogism |
+| $p ∨ q$<br>$¬p$<br>$∴ q$ | $((p ∨ q) ∧ ¬p) → q$ | Disjunctive syllogism |
+| $p$<br>$∴ p ∨ q$ | $p → (p ∨ q)$ | Addition |
+| $p ∧ q$<br>$∴ p$ | $(p ∧ q) → p$ | Simplification |
+| $p$<br>$q$<br>$∴ p ∧ q$ | $((p) ∧ (q)) → (p ∧ q)$ | Conjunction |
+| $p ∨ q$<br>$¬p ∨ r$<br>$∴ q ∨ r$ | $((p ∨ q) ∧ (¬p ∨ r)) → (q ∨ r)$ | Resolution |
+
+- The proposition $((p → q) ∧ q) → p$ is not a tautology. This type of incorrect reasoning is called the **fallacy of affirming the conclusion**
+- The proposition $((p → q) ∧ ¬p) → ¬q$ is not a tautology. This type of
+incorrect reasoning is called the **fallacy of denying the hypothesis**
+
+|Rule of Inference|Name|
+|--|--|
+| $∀xP(x)$<br>$∴ P(c)$ | Universal instantiation |
+| $P(c)$ for an arbitrary c<br>$∴ ∀xP(x)$ | Universal generalization |
+| $∃xP(x)$<br>$∴ P(c)$ for some element c | Existential instantiation |
+| $P(c)$ for some element c<br>$∴ ∃xP(x)$ | Existential generalization |
+| $∀x(P(x) → Q(x))$<br>$P(a)$<br>$∴ Q(a)$ | Universal modus ponens|
+| $∀x(P(x) → Q(x))$<br>$¬Q(a)$<br>$∴ ¬P(a)$ | Universal modus tollens|
+
 
 
 ### 1.7 Introduction to Proofs
-- A **direct proof** of a conditional statement $p → q$ is constructed when the first step is the assumption that $p$ is true; subsequent steps are constructed using rules of inference, with the final step showing that $q$ must also be true
+- A **direct proof** of a conditional statement $p → q$ is constructed when the first step is the assumption that $p$ is true, and then we show that $q$ must also be true
 <br>
 
 - Proofs of theorems that do not start with the premises and end with the conclusion, are called **indirect proofs**
-- An extremely useful type of indirect proof is known as **proof by contraposition**. In a proof by contraposition of $p → q$, we take $¬q$ as a premise, and using axioms, definitions, and previously proven theorems, together with rules of inference, we show that $¬p$ must follow
+- An extremely useful type of indirect proof is known as **proof by contraposition**. In a proof by contraposition of $p → q$, we take $¬q$ as a premise, and using axioms, definitions, and then we show that $¬p$ must follow
 - Because the statement $r ∧ ¬r$ is a contradiction whenever $r$ is a proposition, we can prove that $p$ is true if we can show that $¬p → (r ∧ ¬r)$ is true for some proposition $r$. Proofs of this type are called **proofs by contradiction**
+<br>
+
 - If we can show that $p$ is false, then we have a proof, called a **vacuous proof**, of the conditional statement $p → q$
 - A proof of $p → q$ that uses the fact that $q$ is true is called a **trivial proof**
+
 
 ### 1.8 Proof Methods and Strategy
 - The original conditional statement with a hypothesis made up of a disjunction of the propositions $p_1, p_2, … , p_n$ can be proved by proving each of the n conditional statements $p_i → q, i = 1, 2, … , n$,  individually. Such an argument is called a **proof by cases**
@@ -151,8 +176,8 @@ propositions
 <br>
 
 - A proof of a proposition of the form $∃xP(x)$ is called an **existence proof**. There are several ways to prove a theorem of this type
-- Sometimes an existence proof of $∃xP(x)$ can be given by finding an element a, called a witness, such that $P(a)$ is true. This type of existence proof is called **constructive**
-- It is also possible to give an existence proof that is **nonconstructive**; that is, we do not find an element a such that $P(a)$ is true, but rather prove that $∃xP(x)$ is true in some other way. One common method of giving a nonconstructive existence proof is to use proof by contradiction and show that the negation of the existential quantification implies a contradiction
+- One type of existence proof is called **constructive**
+- Another type of existence proof is **nonconstructive**; that is, we directly prove that $∃xP(x)$ is true in some other way. One common method is to use proof by contradiction; that is, we show that the negation of the existential quantification implies a contradiction
 <br>
 
 - The two parts of a **uniqueness proof** are:
@@ -162,6 +187,16 @@ propositions
 
 - Using the premises, together with axioms and known theorems, you can construct a proof using a sequence of steps that leads to the conclusion. This type of reasoning is called **forward reasoning**
 - In such cases it may be helpful to use **backward reasoning**. To reason backward to prove a statement $q$, we find a statement $p$ that we can prove with the property that $p → q$
+
+
+
+
+
+
+
+
+
+
 
 
 
