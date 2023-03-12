@@ -1,58 +1,59 @@
 <!-- TOC -->
 
 - [Common usage](#common-usage)
-        - [Redo commit](#redo-commit)
-        - [Unstage](#unstage)
-        - [Discard changes](#discard-changes)
-        - [Untrack files](#untrack-files)
-        - [Relate upstream branch](#relate-upstream-branch)
-        - [Show Objects](#show-objects)
+  - [Redo commit](#redo-commit)
+  - [Unstage](#unstage)
+  - [Discard changes](#discard-changes)
+  - [Untrack files](#untrack-files)
+  - [Relate upstream branch](#relate-upstream-branch)
+  - [Show Objects](#show-objects)
 - [Looking Info](#looking-info)
-        - [git status](#git-status)
-        - [git diff](#git-diff)
-        - [git log](#git-log)
-        - [git show](#git-show)
-        - [git ls-files](#git-ls-files)
+  - [git status](#git-status)
+  - [git diff](#git-diff)
+  - [git log](#git-log)
+  - [git show](#git-show)
+  - [git ls-files](#git-ls-files)
 - [Basic Snapshotting](#basic-snapshotting)
-        - [git add](#git-add)
-        - [git commit](#git-commit)
-        - [git mv](#git-mv)
-        - [git rm](#git-rm)
+  - [git add](#git-add)
+  - [git commit](#git-commit)
+  - [git mv](#git-mv)
+  - [git rm](#git-rm)
 - [Recover and stash](#recover-and-stash)
-        - [git restore](#git-restore)
-        - [git reset](#git-reset)
-        - [git stash](#git-stash)
+  - [git restore](#git-restore)
+  - [git reset](#git-reset)
+  - [git stash](#git-stash)
 - [Branching and Merging](#branching-and-merging)
-        - [git branch](#git-branch)
-        - [git checkout](#git-checkout)
-        - [git switch](#git-switch)
-        - [git merge](#git-merge)
-        - [git rebase](#git-rebase)
-        - [git tag](#git-tag)
+  - [git branch](#git-branch)
+  - [git checkout](#git-checkout)
+  - [git switch](#git-switch)
+  - [git merge](#git-merge)
+  - [git rebase](#git-rebase)
+  - [git tag](#git-tag)
 - [Remote](#remote)
-        - [git clone](#git-clone)
-        - [git remote](#git-remote)
-        - [git fetch](#git-fetch)
-        - [git pull](#git-pull)
-        - [git push](#git-push)
+  - [git clone](#git-clone)
+  - [git remote](#git-remote)
+  - [git fetch](#git-fetch)
+  - [git pull](#git-pull)
+  - [git push](#git-push)
 - [Configuration](#configuration)
-        - [show config](#show-config)
-        - [ssh](#ssh)
-        - [crlf](#crlf)
-        - [gitignore](#gitignore)
-        - [alias](#alias)
-        - [mergetool and difftool](#mergetool-and-difftool)
-        - [Other configurations](#other-configurations)
+  - [show config](#show-config)
+  - [ssh](#ssh)
+  - [crlf](#crlf)
+  - [gitignore](#gitignore)
+  - [alias](#alias)
+  - [mergetool and difftool](#mergetool-and-difftool)
+  - [Other configurations](#other-configurations)
 
 <!-- /TOC -->
 
 
 
 
-## Common usage
+### Common usage
 #### Redo commit
-- `git commit --amend -C HEAD` Change the last commit with the files in the index ,and use the same commit message
-- `git restore <file>... -S -s HEAD^` and `git commit --amend -C HEAD` : inadvertently stage some file which you don't want to commit and accidently commit after that
+- `git restore <file>... -S -s HEAD^` Restore accidentally staged files in index to their previous version before the last commit
+- `git commit --amend -C HEAD` Change the last commit with the current index and the same commit message
+- `git commit --amend -c HEAD` Change the last commit with the current index and the wanted commit message
 
 #### Unstage
 - `git restore --staged <file>...`
@@ -78,7 +79,7 @@
 
 
 
-## Looking Info
+### Looking Info
 
 #### git status
 - `git status` 显示工作区与暂存区的区别，以及暂存区与HEAD的区别
@@ -136,7 +137,7 @@
 
 
 
-## Basic Snapshotting
+### Basic Snapshotting
 
 #### git add
 - `git add .` 添加当前项目所有文件
@@ -166,7 +167,7 @@
 
 
 
-## Recover and stash
+### Recover and stash
 #### git restore
 - `git restore [<pathspec>…​]` 将工作区文件恢复至与暂存区一致
 - `git restore --staged <pathspec>…​` 将暂存区文件恢复至与HEAD一致
@@ -195,7 +196,7 @@
 
 
 
-## Branching and Merging
+### Branching and Merging
 
 #### git branch
 - `git branch <branchname> [<start-point>]` create branch
@@ -278,7 +279,7 @@
 
 
 
-## Remote
+### Remote
 #### git clone
 - `git clone <repository> [<directory>]` Clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch.
 
@@ -322,7 +323,7 @@
 
 
 
-## Configuration
+### Configuration
 #### show config
 ```shell
 # list all the settings Git can find at that point
