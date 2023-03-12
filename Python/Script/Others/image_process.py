@@ -115,14 +115,14 @@ clear_bg = " sha:2 si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
 clear_bg_blur = " si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
 bold = " gau:1.2 sha:10"
 bold_more = " gau:1.5 sha:10"
-clearer = " si:2 sha:2 si:2 rst:220 con:1.2 gau:0.7 con:1.2 si:0.5"
+clearer = " si:2 sha:2 rst:220 con:1.2 gau:0.7 con:1.2"
 
 src_dir = "C:/Users/hrzhe/Pictures/Calculus/"
-argv = clear_bg
-out_suffix = "_"
+argv = clearer + bold_more
 out_suffix = argv.replace(":", "").replace(".", "")
+out_suffix = "_"
 # l = os.listdir(src_dir)
-l = [1]
+l = [1,2,5]
 
 for i in l:
     impath, outpath = get_paths(src_dir, str(i), ".jpg", out_suffix)
