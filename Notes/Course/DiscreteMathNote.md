@@ -8,6 +8,9 @@
   - [1.6 Rules of Inference](#16-rules-of-inference)
   - [1.7 Introduction to Proofs](#17-introduction-to-proofs)
   - [1.8 Proof Methods and Strategy](#18-proof-methods-and-strategy)
+- [Basic Structures](#basic-structures)
+  - [2.1 Sets](#21-sets)
+  - [2.2 Set Operations](#22-set-operations)
 
 <!-- /TOC -->
 
@@ -192,6 +195,54 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 
 
+
+
+
+## Basic Structures
+### 2.1 Sets
+- **elements** or **members** : $a ∈ A$ or $a ∉ A$
+- describe a set : use **roster method** or **set builder** notation
+- **equal** if and only if have the same elements
+- **subject** : $A ⊆ B$ or $A ⊈ B$
+- **superset** : $B ⊇ A$
+- **proper subset** : $A ⊂ B$
+<br>
+
+- If there are exactly $n$ distinct elements in $S$ where $n$ is a nonnegative integer, we say that $S$ is a **finite set** and that $n$ is the **cardinality** of $S$. The cardinality of $S$ is denoted by $|S|$
+- A set is said to be **infinite** if it is not finite
+- The **power set** of $S$ is the set of all subsets of the set $S$, which is denoted by $\Rho(S)$
+<br>
+
+- **ordered n-tuple** : $(a_1, a_2, … , a_n)$
+- **ordered pairs** : $(a_1, a_2)$
+- **Cartesian product** : $A1 × A2 × ⋯ × An = \{(a_1, a_2, … , a_n) ∣ a_i ∈ A_i \; for \; i = 1, 2, … , n\}$
+- A subset $R$ of the Cartesian product $A × B$ is called a **relation** from the set $A$ to the set $B$
+<br>
+
+- $∀x ∈ S(P(x))$ is shorthand for $∀x(x ∈ S → P(x))$
+- $∃x ∈ S(P(x))$ is shorthand for $∃x(x ∈ S ∧ P(x))$
+- The **truth set** of $P(x)$ is denoted by $\{x ∈ D ∣ P(x)\}$
+
+
+### 2.2 Set Operations
+- **union** : $A ∪ B$
+- **intersection** : $A ∩ B$
+  - Two sets are called **disjoint** if their intersection is the empty set
+- **difference of A and B** or **complement of B with respect to A** : $A − B$
+- **complement** : $\bar{A}$
+
+|Identity|Name|
+|--|--|
+|$A ∩ U = A$ <br> $A ∪∅= A$ | Identity laws |
+|$A ∪ U = U$ <br> $A ∩∅=∅$ | Domination laws  |
+|$A ∪ A = A$ <br> $A ∩ A = A$ | Idempotent laws  |
+|$(A) = A$ | Complementation law |
+|$A ∪ B = B ∪ A$ <br> $A ∩ B = B ∩ A$ | Commutative laws |
+|$A ∪ (B ∪ C) = (A ∪ B) ∪ C$ <br> $A ∩ (B ∩ C) = (A ∩ B) ∩ C$ | Associative laws |
+|$A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)$ <br> $A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)$ | Distributive laws |
+|$A ∩ B = A ∪ B$ <br> $A ∪ B = A ∩ B$ | De Morgan's laws |
+|$A ∪ (A ∩ B) = A$ <br> $A ∩ (A ∪ B) = A$ | Absorption laws |
+|$A ∪ A = U$ <br> $A ∩ A = ∅$ | Complement laws |
 
 
 
