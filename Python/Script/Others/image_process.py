@@ -76,6 +76,37 @@ def remove_stains(src, threshold):
                 src[y, x] = 255
     return src
 
+def reduce_line_space(src, factor):
+    if factor >= 1:
+        return src
+    h, w = src.shape[:2]
+    space_between_line = []
+    n = 0
+    for y in range(h):
+        flag = True
+        for x in range(w):
+            b, g, r = src[y, x]
+            if b < 150 or g < 150 or r < 150:
+                if n >= 5:
+                    space_between_line.append((y - n, y))
+                n = 0
+                flag = False
+                break
+        if flag:
+            n += 1
+
+    slicing = []
+    pre = 0
+    for i in space_between_line:
+        slicing.append(slice(pre, i[0]))
+        interval = int(np.floor(factor * (i[1] - i[0])))
+        slicing.append(slice(i[0], i[0] + interval))
+        pre = i[1]
+    slicing.append(slice(pre, h))
+    images = [src[s, :, :] for s in slicing]
+    im = np.concatenate(images, axis=0)
+    return im
+
 def image_process(impath, outpath, argv):
     im = cv2.imread(impath)
     if im is None:
@@ -97,6 +128,8 @@ def image_process(impath, outpath, argv):
             im = remove_background(im, arg)
         elif func == "rst":
             im = remove_stains(im, arg)
+        elif func == "rls":
+            im = reduce_line_space(im, arg)
         elif func == "gau":
             im = gaussian_blur(im, arg)
         print(operation, end=" ")
@@ -113,16 +146,15 @@ rm_stains = " si:2 sha:2 rst:200 gau:0.5 si:0.5"
 rm_stains_largen = " si:2 sha:2 si:2 rst:200 gau:0.5 si:0.5"
 clear_bg = " sha:2 si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
 clear_bg_blur = " si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
-bold = " gau:1.2 sha:10"
-bold_more = " gau:1.5 sha:10"
+bolder = " sha:2 con:1.2"
 clearer = " si:2 sha:2 rst:220 con:1.2 gau:0.7 con:1.2"
 
 src_dir = "C:/Users/hrzhe/Pictures/Calculus/"
-argv = clearer + bold_more
+argv = clearer + bolder + bolder + " rls:0.7"
 out_suffix = argv.replace(":", "").replace(".", "")
 out_suffix = "_"
 # l = os.listdir(src_dir)
-l = [1,2,5]
+l = [1]
 
 for i in l:
     impath, outpath = get_paths(src_dir, str(i), ".jpg", out_suffix)
