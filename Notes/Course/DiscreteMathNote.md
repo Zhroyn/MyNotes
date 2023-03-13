@@ -11,6 +11,7 @@
 - [Basic Structures](#basic-structures)
   - [2.1 Sets](#21-sets)
   - [2.2 Set Operations](#22-set-operations)
+  - [2.3 Functions](#23-functions)
 
 <!-- /TOC -->
 
@@ -210,7 +211,7 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 - If there are exactly $n$ distinct elements in $S$ where $n$ is a nonnegative integer, we say that $S$ is a **finite set** and that $n$ is the **cardinality** of $S$. The cardinality of $S$ is denoted by $|S|$
 - A set is said to be **infinite** if it is not finite
-- The **power set** of $S$ is the set of all subsets of the set $S$, which is denoted by $\Rho(S)$
+- The **power set** of $S$ is the set of all subsets of the set $S$, which is denoted by $P(S)$
 <br>
 
 - **ordered n-tuple** : $(a_1, a_2, … , a_n)$
@@ -221,7 +222,7 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 - $∀x ∈ S(P(x))$ is shorthand for $∀x(x ∈ S → P(x))$
 - $∃x ∈ S(P(x))$ is shorthand for $∃x(x ∈ S ∧ P(x))$
-- The **truth set** of $P(x)$ is denoted by $\{x ∈ D ∣ P(x)\}$
+- We define the **truth set** of $P$ to be the set of elements $x$ in $D$ for which $P(x)$ is true, which is denoted by $\{x ∈ D ∣ P(x)\}$
 
 
 ### 2.2 Set Operations
@@ -243,6 +244,33 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 |$A ∩ B = A ∪ B$ <br> $A ∪ B = A ∩ B$ | De Morgan's laws |
 |$A ∪ (A ∩ B) = A$ <br> $A ∩ (A ∪ B) = A$ | Absorption laws |
 |$A ∪ A = U$ <br> $A ∩ A = ∅$ | Complement laws |
+
+- A **multiset** (short for multiple-membership set) $\{m_1 ⋅ a_1, m_2 ⋅ a_2, … , m_r ⋅ a_r\}$ is an unordered collection of elements where an element can occur as a member more than once. The numbers $m_i , i = 1, 2, … , r$, are called the **multiplicities** of the elements $a_i , i = 1, 2, … , r$
+- In the **union** of the multisets P and Q, the multiplicity is the maximum
+- In the **intersection** of the multisets P and Q, the multiplicity is the minimum
+- In the **difference** of P and Q, the multiplicity is the difference of P less Q unless this difference is negative
+- In the **sum** of P and Q, the multiplicity is the sum of multiplicities in P and Q
+
+### 2.3 Functions
+- A $function f$ from $A$ to $B$ is an assignment of exactly one element of $B$ to each element of $A$.
+- We write $f(a) = b$ if $b$ is the unique element of $B$ assigned by the function $f$ to the element $a$ of $A$, and we say that $b$ is the **image** of $a$ and $a$ is a **preimage** of $b$. The **range**, or **image** of $f$, is the set of all images of elements of $A$
+- If $f$ is a function from $A$ to $B$, we write $f : A → B$ and we say that $A$ is the **domain** of $f$ and $B$ is the **codomain** of $f$.
+- Let $f_1$ and $f_2$ be functions from $A$ to $R$. Then $f_1 + f_2$ and $f_1 f_2$ are also functions from $A$ to $R$ defined for all $x ∈ A$ by
+  - $(f_1 + f_2)(x) = f_1(x) + f_2(x)$
+  - $(f_1f_2)(x) = f_1(x)f_2(x)$
+- The **image** of $S$ : $f(S) = \{t ∣ ∃s∈S (t = f(s))\}$ or $\{f(s) ∣ s ∈ S\}$
+<br>
+
+- A function $f$ is said to be **one-to-one**, or an **injection**, if and only if $f(a) = f(b)$ implies that $a = b$ for all $a$ and $b$ in the domain of $f$. A function is said to be injective if it is one-to-one
+- A function f from A to B is called **onto**, or a **surjection**, if and only if for every element $b ∈ B$ there is an element $a ∈ A$ with $f(a) = b$. A function is called **surjective** if it is onto
+- The function f is a **one-to-one correspondence**, or a **bijection**, if it is both one-to-one and onto. We also say that such a function is **bijective**
+<br>
+
+- The **inverse function** of $f$ is denoted by $f^{−1}$
+- Let $g$ be a function from the set $A$ to the set $B$ and let $f$ be a function from the set $B$ to the set $C$, then the **composition** of the functions $f$ and $g$ is denoted by $f \circ g$
+- The value of the **floor function** at $x$ is denoted by $⌊x⌋$
+- The value of the **ceiling function** at $x$ is denoted by $⌈x⌉$
+- A **partial function** $f$ from $A$ to $B$ is an assignment to each element $a$ in a subject of $A$, called the domain of definition of $f$ , of a unique element $b$ in $B$. We say that $f$ is undefined for elements in $A$ that are not in the domain of definition of $f$. When the domain of definition of $f$ equals $A$, we say that $f$ is a **total function**
 
 
 
