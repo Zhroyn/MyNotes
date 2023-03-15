@@ -12,6 +12,7 @@
   - [Up and Down](#up-and-down)
   - [Functions](#functions)
   - [Operations](#operations)
+  - [Equations](#equations)
   - [Symbols](#symbols)
   - [Style](#style)
   - [Greek Alphabet](#greek-alphabet)
@@ -168,12 +169,36 @@ $$
 \log_{2}{x}   \\
 \lim_{x\to 0} x^2
 $$
+$$
+y =
+\begin{cases}
+\sin(x)       & x<0 \\
+x^2 + 2x +4   & 0 \leq x < 1 \\
+x^3           & x \geq 1 \\
+\end{cases}
+$$
 
 #### Operations
 $$
 \sum_{i=0}^\infty i^2 \\
 \prod_{k=1}^n k = n!  \\
 \int_0^1 x^2 = \frac{1}{3}
+$$
+
+
+#### Equations
+$$
+\left\{
+\begin{aligned}
+a + b - c &= 2 \\
+a - b &= 4 \\
+\end{aligned}
+\right.
+\\~\\
+\begin{cases}
+a + b - c = 2 \\
+a - b = 4 \\
+\end{cases}
 $$
 
 #### Symbols
@@ -199,6 +224,7 @@ f(x) &= 2x+1 \\
      &= 3
 \end{aligned}
 $
+
 
 
 #### Greek Alphabet
