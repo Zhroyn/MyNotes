@@ -79,6 +79,7 @@ $
 - 内积（点积，数量积）：$a\cdot b=|a||b|cos\theta，0\le\theta\le\pi$
 - 外积（叉积，向量积）：$a \times b = |a||b|sin\left<a,b \right>，方向为右手伸开由a转到b（可联想空间直角坐标系，e_1e_2=e_3, e_2e_3=e_1, e_3e_1=e_2）$
 - 混合积：$a\cdot(b\times c)=b\cdot(c\times a)=c\cdot(a\times b)$
+- 抽心公式：$a \times (b \times c) = (a \cdot c) \cdot b - (a \cdot b) \cdot c$
 $~\\
 自行证明，在空间直角坐标系中：\\
 a\times b=\begin{vmatrix}
