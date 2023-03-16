@@ -48,32 +48,24 @@ def enhance_sharpness(src, factor):
 def gaussian_blur(src, sigma):
     return cv2.GaussianBlur(src, None, sigma)
 
-def remove_background(src, delta):
+def remove_background(src, threshold):
+    im = np.full(src.shape, [255, 255, 255])
+    mask = src < [threshold, threshold, threshold]
+    np.copyto(im, src, where=mask)
+    return im
+
+def clear_background(src, threshold):
     h, w = src.shape[:2]
-    bg_color = np.array([255, 255, 255])
+    bg_colors = []
     for y in range(0, h, h // 10):
         for x in range(0, w, w // 10):
-            if src[y, x][0] > delta:
-                bg_color = (bg_color + src[y, x]) / 2
-    for y in range(h):
-        for x in range(w):
-            b, g, r = src[y, x]
-            if (abs(int(b) - int(bg_color[0])) <= delta
-                and abs(int(g) - int(bg_color[1])) <= delta
-                    and abs(int(r) - int(bg_color[2])) <= delta):
-                src[y, x] = 255
-    return src
+            bg_colors.append(src[y, x])
+    bg_color = max(bg_colors, key=(lambda x : sum(x)))
 
-def remove_stains(src, threshold):
-    h, w = src.shape[:2]
-    threshold = 3 * threshold
-    for y in range(h):
-        for x in range(w):
-            if (int(src[y, x, 0])
-                + int(src[y, x, 1])
-                    + int(src[y, x, 1]) > threshold):
-                src[y, x] = 255
-    return src
+    im = np.full(src.shape, bg_color)
+    mask = src < [threshold, threshold, threshold]
+    np.copyto(im, src, where=mask)
+    return im
 
 def change_line_space(src, factor):
     h, w = src.shape[:2]
@@ -130,8 +122,8 @@ def image_process(impath, outpath, argv):
             im = enhance_sharpness(im, arg)
         elif func == "rbg":
             im = remove_background(im, arg)
-        elif func == "rst":
-            im = remove_stains(im, arg)
+        elif func == "cbg":
+            im = clear_background(im, arg)
         elif func == "cls":
             im = change_line_space(im, arg)
         elif func == "gau":
@@ -147,14 +139,14 @@ rm_stains_largen = " si:2 sha:2 si:2 rst:200 gau:0.5 si:0.5"
 clear_bg = " sha:2 si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
 clear_bg_blur = " si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
 bolder = " sha:2 con:1.2"
-clearer = " si:2 sha:2 rst:220 con:1.2 gau:0.7 con:1.2"
+clearer = " si:2 sha:2 cbg:220 con:1.2 gau:0.7 con:1.2"
 
 src_dir = "C:/Users/hrzhe/Pictures/Calculus/"
 argv = clearer + bolder + bolder + " cls:0.7"
 out_suffix = argv.replace(":", "").replace(".", "")
 out_suffix = "_"
 # l = os.listdir(src_dir)
-l = [1]
+l = [i for i in range(1,8)]
 
 for i in l:
     impath, outpath = get_paths(src_dir, str(i), ".jpg", out_suffix)
