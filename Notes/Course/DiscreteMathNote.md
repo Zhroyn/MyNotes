@@ -12,6 +12,7 @@
   - [2.1 Sets](#21-sets)
   - [2.2 Set Operations](#22-set-operations)
   - [2.3 Functions](#23-functions)
+  - [2.5 Cardinality of Sets](#25-cardinality-of-sets)
 
 <!-- /TOC -->
 
@@ -252,7 +253,7 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 - In the **sum** of P and Q, the multiplicity is the sum of multiplicities in P and Q
 
 ### 2.3 Functions
-- A $function f$ from $A$ to $B$ is an assignment of exactly one element of $B$ to each element of $A$.
+- A **function** $f$ from $A$ to $B$ is an assignment of exactly one element of $B$ to each element of $A$.
 - We write $f(a) = b$ if $b$ is the unique element of $B$ assigned by the function $f$ to the element $a$ of $A$, and we say that $b$ is the **image** of $a$ and $a$ is a **preimage** of $b$. The **range**, or **image** of $f$, is the set of all images of elements of $A$
 - If $f$ is a function from $A$ to $B$, we write $f : A → B$ and we say that $A$ is the **domain** of $f$ and $B$ is the **codomain** of $f$.
 - Let $f_1$ and $f_2$ be functions from $A$ to $R$. Then $f_1 + f_2$ and $f_1 f_2$ are also functions from $A$ to $R$ defined for all $x ∈ A$ by
@@ -261,7 +262,7 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 - The **image** of $S$ : $f(S) = \{t ∣ ∃s∈S (t = f(s))\}$ or $\{f(s) ∣ s ∈ S\}$
 <br>
 
-- A function $f$ is said to be **one-to-one**, or an **injection**, if and only if $f(a) = f(b)$ implies that $a = b$ for all $a$ and $b$ in the domain of $f$. A function is said to be injective if it is one-to-one
+- A function $f$ is said to be **one-to-one**, or an **injection**, if and only if $f(a) = f(b)$ implies that $a = b$ for all $a$ and $b$ in the domain of $f$. A function is said to be **injective** if it is one-to-one
 - A function f from A to B is called **onto**, or a **surjection**, if and only if for every element $b ∈ B$ there is an element $a ∈ A$ with $f(a) = b$. A function is called **surjective** if it is onto
 - The function f is a **one-to-one correspondence**, or a **bijection**, if it is both one-to-one and onto. We also say that such a function is **bijective**
 <br>
@@ -275,7 +276,11 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 
 
+### 2.5 Cardinality of Sets
+- The sets $A$ and $B$ have the same cardinality if and only if there is a one-to-one correspondence from $A$ to $B$, and this is denoted by $|A| = |B|$
+- If there is a one-to-one function from $A$ to $B$, we write $|A| ≤ |B|$
+- A set that is either finite or has the same cardinality as the set of positive integers is called **countable**, and we denote the cardinality of this set by $ℵ_0$. We write $|S| = ℵ_0$ and say that $S$ has cardinality "aleph null"
 
-
-
+- If $A$ and $B$ are countable sets, then $A ∪ B$ is also countable
+-  **Schröder-Bernstein theorem** :  If $A$ and $B$ are sets with $|A| ≤ |B|$ and $|B| ≤ |A|$, then $|A| = |B|$. In other words, if there are one-to-one functions $f$ from $A$ to $B$ and $g$ from $B$ to $A$, then there is a one-to-one correspondence between $A$ and $B$
 
