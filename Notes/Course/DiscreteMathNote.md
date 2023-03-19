@@ -13,6 +13,8 @@
   - [2.2 Set Operations](#22-set-operations)
   - [2.3 Functions](#23-functions)
   - [2.5 Cardinality of Sets](#25-cardinality-of-sets)
+- [Algorithms](#algorithms)
+  - [3.1 Algorithms](#31-algorithms)
 
 <!-- /TOC -->
 
@@ -283,4 +285,36 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 - If $A$ and $B$ are countable sets, then $A ∪ B$ is also countable
 -  **Schröder-Bernstein theorem** :  If $A$ and $B$ are sets with $|A| ≤ |B|$ and $|B| ≤ |A|$, then $|A| = |B|$. In other words, if there are one-to-one functions $f$ from $A$ to $B$ and $g$ from $B$ to $A$, then there is a one-to-one correspondence between $A$ and $B$
+
+
+
+
+
+
+
+
+
+## Algorithms
+### 3.1 Algorithms
+- Algorithms that make what seems to be the best choice at each step are called **greedy algorithms**
+<br>
+
+- $Input$. An algorithm has input values from a specified set.
+- $Output$. From each set of input values an algorithm produces output values from a specified set. The output values are the solution to the problem.
+- $Definiteness$. The steps of an algorithm must be defined precisely.
+- $Correctness$. An algorithm should produce the correct output values for each set of input values.
+- $Finiteness$. An algorithm should produce the desired output after a finite (but perhaps large) number of steps for any input in the set.
+- $Effectiveness$. It must be possible to perform each step of an algorithm exactly and in a finite amount of time.
+- $Generality$. The procedure should be applicable for all problems of the desired form, not just for a particular set of input values.
+
+
+
+
+
+
+
+
+
+
+
 
