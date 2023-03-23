@@ -17,6 +17,8 @@
   - [3.1 Algorithms](#31-algorithms)
   - [3.2 The Growth of Functions](#32-the-growth-of-functions)
   - [3.3 Complexity of Algorithms](#33-complexity-of-algorithms)
+- [Number Theory and Cryptography](#number-theory-and-cryptography)
+  - [4.1 Divisibility and Modular Arithmetic](#41-divisibility-and-modular-arithmetic)
 
 <!-- /TOC -->
 
@@ -329,6 +331,25 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 -  There is also an important class of problems, called **NP-complete problems**, with the property that if any of these problems can be solved by a polynomial worst-case time algorithm, then all problems in the class NP can be solved by polynomial worst-case time algorithms
 -  The **P versus NP problem** asks whether NP, the class of problems for which it is possible to check solutions in polynomial time, equals P, the class of tractable problems
 
+
+
+
+
+
+
+
+
+
+## Number Theory and Cryptography
+### 4.1 Divisibility and Modular Arithmetic
+- The notation $a \mid b$ denotes that $a$ divides $b$. We write $a \nmid b$ when $a$ does not divide $b$
+- Let $a$ be an integer and $d$ a positive integer. Then there are unique integers $q$ and $r$, with $0 ≤ r < d$, such that $a = dq + r$. $d$ is called the **divisor**, $a$ is called the **dividend**, $q$ is called the **quotient**, and $r$ is called the **remainder**. This notation is used to express the quotient and remainder: $q = a \; div \; d$, $r = a \; mod \; d$
+<br>
+
+- If $m$ divides $a − b$, we say that $a$ is congruent to $b$ modulo $m$ with the notation $a ≡ b (mod \; m)$, and we say that $a ≡ b (mod m)$ is a **congruence** and that $m$ is its **modulus**
+- $a ≡ b (mod \; m)$ if and only if there is an integer $k$ such that $a = b + km$
+- If $a ≡ b (mod \; m)$ and $c ≡ d (mod \; m)$, then $a + c ≡ b + d (mod \; m)$ and $ac ≡ bd (mod \; m)$
+- The operations $+_m$ and $⋅_m$ are called addition and multiplication modulo $m$ and when we use these operations, we are said to be doing **arithmetic modulo** $m$
 
 
 
