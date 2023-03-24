@@ -25,16 +25,16 @@
   - 状态栏（Status Bar）
 
 **顶部标题栏**
-- Edit
-  - Repeat Last : `Shift R`
-  - Repeat History
-  - Adjust Last Operation : `F9`
-  - Lock Object Modes
-  - Preference
-- Window
-  - Next Workspace : `Ctrl Page Down`
-  - Previous Workspace : `Ctrl Page Up`
-  - Show Status Bar
+- 编辑
+  - 重复上一步 : `Shift R`
+  - 重做历史
+  - 调整上一步操作 : `F9`
+  - 锁定物体模式
+  - 偏好设置
+- 窗口
+  - 后一个工作区 : `Ctrl Page Down`
+  - 前一个工作区 : `Ctrl Page Up`
+  - 显示状态栏
 
 **工作区**
 - 工作区本质上是预定义的窗口布局，每个工作区由一组区域和编辑器组成
