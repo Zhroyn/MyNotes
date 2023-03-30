@@ -27,6 +27,7 @@
 - [Counting](#counting)
   - [6.1 The Basics of Counting](#61-the-basics-of-counting)
   - [6.2 The Pigeonhole Principle](#62-the-pigeonhole-principle)
+  - [6.3 Permutations and Combinations](#63-permutations-and-combinations)
 
 <!-- /TOC -->
 
@@ -409,12 +410,21 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 - **THE SUBTRACTION RULE** : If a task can be done in either $n_1$ ways or $n_2$ ways, then the number of ways to do the task is $n_1 + n_2$ minus the number of ways to do the task that are common to the two different ways. The subtraction rule is also known as the **principle of inclusion–exclusion**
 - **THE DIVISION RULE** : There are $n∕d$ ways to do a task if it can be done using a procedure that can be carried out in $n$ ways, and for every way $w$, exactly $d$ of the $n$ ways correspond to way $w$
 
+
 ### 6.2 The Pigeonhole Principle
 - **THE PIGEONHOLE PRINCIPLE** : If $k$ is a positive integer and $k + 1$ or more objects are placed into $k$ boxes, then there is at least one box containing two or more of the objects
 - The pigeonhole principle is also called the **Dirichlet drawer principle**
 - **THE GENERALIZED PIGEONHOLE PRINCIPLE** If $N$ objects are placed into $k$ boxes, then there is at least one box containing at least $⌈N∕k⌉$ objects. Proof:
   - Suppose that none of the boxes contains more than $⌈N∕k⌉ − 1$ objects. Then, the total number of objects is at most $k(⌈N/k⌉ − 1) < k ((N/k + 1) − 1) = N$
   - Thus, the total number of objects is less than $N$. This completes the proof by contraposition
+
+
+### 6.3 Permutations and Combinations
+- An ordered arrangement of $r$ elements of a set is called an **r-permutation**. If $n$ is a positive integer and $r$ is an integer with $1 ≤ r ≤ n$, then there are $\displaystyle P(n, r) = n(n − 1)(n − 2) ⋯ (n − r + 1) = \frac{n!}{(n-r)!}$
+- An **r-combination** of elements of a set is an unordered selection of r elements from the set. Thus, $\displaystyle C(n, r) = \frac{n!}{r!(n-r)!}$. $C(n, r)$ is also denoted by $\begin{pmatrix} n \\ r \end{pmatrix}$ and is called a **binomial coefficient**
+<br>
+
+- A **combinatorial proof** of an identity is a proof that uses counting arguments to prove that both sides of the identity count the same objects but in different ways or a proof that is based on showing that there is a bijection between the sets of objects counted by the two sides of the identity. These two types of proofs are called double counting proofs and bijective proofs, respectively.
 
 
 
