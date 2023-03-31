@@ -424,7 +424,7 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 - An **r-combination** of elements of a set is an unordered selection of r elements from the set. Thus, $\displaystyle C(n, r) = \frac{n!}{r!(n-r)!}$. $C(n, r)$ is also denoted by $\begin{pmatrix} n \\ r \end{pmatrix}$ and is called a **binomial coefficient**
 <br>
 
-- A **combinatorial proof** of an identity is a proof that uses counting arguments to prove that both sides of the identity count the same objects but in different ways or a proof that is based on showing that there is a bijection between the sets of objects counted by the two sides of the identity. These two types of proofs are called double counting proofs and bijective proofs, respectively.
+- A **combinatorial proof** of an identity is a proof that uses counting arguments to prove that both sides of the identity count the same objects but in different ways or a proof that is based on showing that there is a bijection between the sets of objects counted by the two sides of the identity. These two types of proofs are called **double counting proofs** and **bijective proofs**, respectively
 
 
 
