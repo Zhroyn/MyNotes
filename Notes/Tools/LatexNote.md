@@ -177,6 +177,12 @@ x^2 + 2x +4   & 0 \leq x < 1 \\
 x^3           & x \geq 1 \\
 \end{cases}
 $$
+$$
+\frac{\mathrm{d} y}{\mathrm{d} x}, 
+\frac{\partial f}{\partial x}, 
+f^{'}, 
+\nabla f
+$$
 
 #### Operations
 $$
