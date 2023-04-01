@@ -5,8 +5,17 @@
   - [Attributes and Propeties](#attributes-and-propeties)
   - [Basic Operation](#basic-operation)
   - [Image Process](#image-process)
-    - [Smoothing](#smoothing)
+    - [Image Filtering](#image-filtering)
+      - [Kernel and Operator](#kernel-and-operator)
+      - [Smoothing](#smoothing)
     - [Geometric Transformation](#geometric-transformation)
+      - [Resize](#resize)
+      - [Flip](#flip)
+      - [Affine](#affine)
+      - [Perspective](#perspective)
+      - [Remap](#remap)
+    - [Miscellaneous Transformations](#miscellaneous-transformations)
+      - [Binarization](#binarization)
 - [Video](#video)
   - [VideoCapture](#videocapture)
   - [VideoWriter](#videowriter)
@@ -22,7 +31,7 @@
 
 
 
-## Display and Interaction
+# Display and Interaction
 - `namedWindow(winname[, flags]) -> None`
   - If a window with the same name already exists, the function does nothing.
   - `flags` : By default is `cv2.WINDOW_AUTOSIZE` or `cv2.WINDOW_KEEPRATIO` or `cv2.WINDOW_GUI_EXPANDED`
@@ -47,8 +56,8 @@
 
 
 
-## Image
-### Attributes and Propeties
+# Image
+## Attributes and Propeties
 **Image Propeties**
 - `im.dtype` Image datatype
 - `im.itemsize` Length of an element in bytes
@@ -57,31 +66,40 @@
 - `im.shape` A tuple of number of rows, columns, and channels (if image is color)
 - `im.size` Total number of pixels, same as `im.shape[0] * im.shape[1]` or `im.shape[0] * im.shape[1] * im.shape[2]`
 
+**ddepth**
+- `CV_8U` is 0
+- `CV_8S` is 1
+- `CV_16U` is 2
+- `CV_16S` is 3
+- `CV_32S` is 4
+- `CV_32F` is 5
+- `CV_64F` is 6
+
 **borderType**
-- `cv2.BORDER_CONSTANT` : `iiiiii|abcdefgh|iiiiiii`
-- `cv2.BORDER_REPLICATE` : `aaaaaa|abcdefgh|hhhhhhh`
-- `cv2.BORDER_REFLECT` : `fedcba|abcdefgh|hgfedcb`
-- `cv2.BORDER_WRAP` : `cdefgh|abcdefgh|abcdefg`
-- `cv2.BORDER_REFLECT_101` : `gfedcb|abcdefgh|gfedcba`
-- `cv2.BORDER_TRANSPARENT` : `uvwxyz|abcdefgh|ijklmno`
-- `cv2.BORDER_REFLECT101` : same as `BORDER_REFLECT_101`
-- `cv2.BORDER_DEFAULT` : same as `BORDER_REFLECT_101`
+- `BORDER_CONSTANT` : `iiiiii|abcdefgh|iiiiiii`
+- `BORDER_REPLICATE` : `aaaaaa|abcdefgh|hhhhhhh`
+- `BORDER_REFLECT` : `fedcba|abcdefgh|hgfedcb`
+- `BORDER_WRAP` : `cdefgh|abcdefgh|abcdefg`
+- `BORDER_REFLECT_101` : `gfedcb|abcdefgh|gfedcba`
+- `BORDER_TRANSPARENT` : `uvwxyz|abcdefgh|ijklmno`
+- `BORDER_REFLECT101` : same as `BORDER_REFLECT_101`
+- `BORDER_DEFAULT` : same as `BORDER_REFLECT_101`
 
 
 **interpolation**
-- `cv2.INTER_NEAREST` nearest neighbor interpolation
-- `cv2.INTER_LINEAR` bilinear interpolation
-- `cv2.INTER_CUBIC` bicubic interpolation
-- `cv2.INTER_AREA` resampling using pixel area relation. It may be a preferred method for image decimation, as it gives moire'-free results. But when the image is zoomed, it is similar to the INTER_NEAREST method.
-- `cv2.INTER_LANCZOS4` Lanczos interpolation over 8x8 neighborhood
-- `cv2.INTER_LINEAR_EXACT` Bit exact bilinear interpolation
-- `cv2.INTER_NEAREST_EXACT` Bit exact nearest neighbor interpolation. This will produce same results as the nearest neighbor method in PIL, scikit-image or Matlab.
-- `cv2.INTER_MAX` mask for interpolation codes
-- `cv2.WARP_FILL_OUTLIERS` flag, fills all of the destination image pixels. If some of them correspond to outliers in the source image, they are set to zero
-- `cv2.WARP_INVERSE_MAP` flag, inverse transformation
+- `INTER_NEAREST` nearest neighbor interpolation
+- `INTER_LINEAR` bilinear interpolation
+- `INTER_CUBIC` bicubic interpolation
+- `INTER_AREA` resampling using pixel area relation. It may be a preferred method for image decimation, as it gives moire'-free results. But when the image is zoomed, it is similar to the INTER_NEAREST method.
+- `INTER_LANCZOS4` Lanczos interpolation over 8x8 neighborhood
+- `INTER_LINEAR_EXACT` Bit exact bilinear interpolation
+- `INTER_NEAREST_EXACT` Bit exact nearest neighbor interpolation. This will produce same results as the nearest neighbor method in PIL, scikit-image or Matlab.
+- `INTER_MAX` mask for interpolation codes
+- `WARP_FILL_OUTLIERS` flag, fills all of the destination image pixels. If some of them correspond to outliers in the source image, they are set to zero
+- `WARP_INVERSE_MAP` flag, inverse transformation
 
 
-### Basic Operation
+## Basic Operation
 - In RGB color space, the order of image channels is BGR.
 - In pixel coordinates, the first index represents the row(height), the secend index represents the colunm(width).
 - `+` `-` `*` `/` : The result will take the modulus. The operators can be two arrays or an array and a scalar.
@@ -130,7 +148,37 @@
 
 
 
-### Image Process
+## Image Process
+### Image Filtering
+- `filter2D(src, ddepth, kernel[, dst[, anchor[, delta[, borderType]]]]) -> dst` Convolve an image with the kernel.
+  - In-place operation is supported.
+  - `ddepth` : desired depth of the destination image.
+  - `kernel` : convolution kernel (or rather a correlation kernel), a single-channel floating point matrix.
+  - `anchor` : anchor of the kernel that indicates the relative position of a filtered point within the kernel; the anchor should lie within the kernel; default value (-1,-1) means at the kernel center.
+  - `delta` : optional value added to the filtered pixels.
+  - `cv2.filter2D(src, -1, kernel)`
+  - `cv2.filter2D(src, -1, kernel, delta=5)`
+
+#### Kernel and Operator
+- `getGaussianKernel(ksize, sigma[, ktype]) ->	retval`
+  - Return a $ksize\times 1$ matrix of Gaussian filter coefficients.
+  - `ksize`	: Aperture size. It should be odd and positive.
+  - `sigma`	: Gaussian standard deviation. If it is non-positive, it is computed from ksize as `sigma = 0.3*((ksize-1)*0.5 - 1) + 0.8`.
+  - `cv2.getGaussianKernel(ksize, 0) * cv2.getGaussianKernel(ksize, 0).T` Get 2-dimensional Gaussian kernel
+<br>
+
+- `Sobel(src, ddepth, dx, dy[, dst[, ksize[, scale[, delta[, borderType]]]]]) -> dst`
+  - Calculates the first, second, third, or mixed image derivatives using an extended Sobel operator.
+  - `ddepth` : output image depth; in the case of 8-bit input images it will result in truncated derivatives.
+  - `dx` : order of the derivative x.
+  - `dy` : order of the derivative y.
+  - `ksize` : size of the extended Sobel kernel; it must be 1, 3, 5, or 7. Default is 3. When ksize = 1, the $3\times 1$ or $1\times 3$ kernel is used.
+  - `scale` : optional scale factor for the computed derivative values; by default, no scaling is applied.
+  - `delta` : optional delta value that is added to the results.
+  - `cv2.Soble(src, -1, 1, 0)` use $\begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{bmatrix}$
+  - `cv2.Soble(src, -1, 0, 1)` use $\begin{bmatrix} -1 & -2 & -1 \\ 0 & 0 & 0 \\ 1 & 2 & 1 \end{bmatrix}$
+
+
 #### Smoothing
 - `blur(src, ksize[, dst[, anchor[, borderType]]]) -> dst` Blur an image using the normalized box filter:
     $\displaystyle K = \frac{1}{width * height} 
@@ -193,20 +241,11 @@
   - `d` : Diameter of each pixel neighborhood that is used during filtering. If it is non-positive, it is computed from sigmaSpace.
   - `sigmaColor` : Filter sigma in the color space. A larger value of the parameter means that farther colors within the pixel neighborhood will be mixed together.
   - `sigmaSpace` : Filter sigma in the coordinate space. A larger value of the parameter means that farther pixels will influence each other. When `d>0`, it specifies the neighborhood size regardless of `sigmaSpace`. Otherwise `d` is proportional to `sigmaSpace`.
-<br>
-
-- `filter2D(src, ddepth, kernel[, dst[, anchor[, delta[, borderType]]]]) -> dst` Convolve an image with the kernel.
-  - In-place operation is supported.
-  - `ddepth` : desired depth of the destination image.
-  - `kernel` : convolution kernel (or rather a correlation kernel), a single-channel floating point matrix.
-  - `anchor` : anchor of the kernel that indicates the relative position of a filtered point within the kernel; the anchor should lie within the kernel; default value (-1,-1) means at the kernel center.
-  - `delta` : optional value added to the filtered pixels.
-  - `cv2.filter2D(src, -1, kernel)`
-  - `cv2.filter2D(src, -1, kernel, delta=5)`
 
 
-#### Geometric Transformation
-**Resize**
+
+### Geometric Transformation
+#### Resize
 - `resize(src, dsize[, dst[, fx[, fy[, interpolation]]]]) -> dst`
   - To shrink an image, it will generally look best with `cv2.INTER_AREA` interpolation
   - To enlarge an image, it will generally look best with `cv2.INTER_CUBIC` (slow) or `cv2.INTER_LINEAR` (default, faster but still looks OK).
@@ -217,7 +256,7 @@
   - `cv2.resize(src, (1920, 1080), interpolation=cv2.INTER_CUBIC)`
   - `cv2.resize(src, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)`
 
-**Flip**
+#### Flip
 - `flip(src, flipCode[, dst]) -> dst` Flip a 2D array around vertical, horizontal, or both axes.
   - `flipCode` : a flag to specify how to flip the array.
     - 0 means flipping around the x-axis;
@@ -225,7 +264,7 @@
     - Negative value means flipping around both axes.
   - Here, x-axis is vertical.
 
-**Affine**
+#### Affine
 - `warpAffine(src, M, dsize[, dst[, flags[, borderMode[, borderValue]]]]) -> dst` Apply an affine transformation to an image.
     $\begin{aligned}
         \texttt{dst}(x,y) =  \texttt{src}( M_{11}x + M_{12}y + M_{13}, \\
@@ -255,7 +294,7 @@
   - `src` : $3\times 2$ matrix of coordinates of three points in the source image.
   - `dst` : $3\times 2$ matrix of coordinates of the corresponding points in the destination image.
 
-**Perspective**
+#### Perspective
 - `warpPerspective(src, M, dsize[,dst[, flags[, borderMode[, borderValue]]]]) -> dst` Apply an perspective transformation to an image.
     $\begin{aligned}
         \texttt{dst}(x,y) =  \texttt{src}( \frac{M_{11} x + M_{12} y + M_{13}}
@@ -272,7 +311,7 @@
   - `src` : $4\times 2$ matrix of coordinates of three points in the source image.
   - `dst` : $4\times 2$ matrix of coordinates of the corresponding points in the destination image.
 
-**Remap**
+#### Remap
 - `remap(src, map1, map2, interpolation[, dst[, borderMode[, borderValue]]]) -> dst` Apply a generic geometrical transformation to an image.
     $\texttt{dst}(x,y) = \texttt{src}(map_x(x,y), map_y(x,y))$,  where values of pixels with non-integer coordinates are computed using one of available interpolation methods.
   - This function cannot operate in-place.
@@ -281,6 +320,20 @@
   - `interpolation` : Interpolation method. The methods `INTER_AREA` and `INTER_LINEAR_EXACT` are not supported by this function.
 
 
+### Miscellaneous Transformations
+#### Binarization
+- `threshold(src, thresh, maxval, type[, dst]) ->	retval, dst`
+  - Apply a fixed-level threshold to each array element.
+  - `thresh` : threshold value.
+  - `maxval` : maximum value to use with some thresholding types.
+  - `type` : thresholding type.
+<br>
+
+- `THRESH_BINARY` : $\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{maxval} & \texttt{if src(x,y) > thresh} \\ & \texttt{0} & \texttt{otherwise} \end{aligned} \right.$
+- `THRESH_BINARY_INV` : $\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{0} & \texttt{if src(x,y) > thresh} \\ & \texttt{maxval} & \texttt{otherwise} \end{aligned} \right.$
+- `THRESH_TRUNC` : $\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{threshold} & \texttt{if src(x,y) > thresh} \\ & \texttt{src(x, y)} & \texttt{otherwise} \end{aligned} \right.$
+- `THRESH_TOZERO` : $\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{src(x, y)} & \texttt{if src(x,y) > thresh} \\ & \texttt{0} & \texttt{otherwise} \end{aligned} \right.$
+- `THRESH_TOZERO_INV` : $\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{0} & \texttt{if src(x,y) > thresh} \\ & \texttt{src(x, y)} & \texttt{otherwise} \end{aligned} \right.$
 
 
 
@@ -288,8 +341,8 @@
 
 
 
-## Video
-### VideoCapture
+# Video
+## VideoCapture
 **Open and Release**
 - `VideoCapture(filename[, apiPreference]) -> retval`
 - `VideoCapture.open(filename[, apiPreference]) -> retval`
@@ -319,32 +372,24 @@
 - `cap.set(propId, value) -> retval` Set a property in the VideoCapture.
 <br>
 
-- Video
-  - `cv2.CAP_PROP_FPS` Frame rate.
-  - `cv2.CAP_PROP_FOURCC` 4-character code of codec.
-  - `cv2.CAP_PROP_FORMAT` Format of the Mat objects returned by `VideoCapture.retrieve()`. Set value -1 to fetch undecoded RAW video streams (as Mat 8UC1).
 - Position
-  - `cv2.CAP_PROP_POS_MSEC` Current position of the video file in milliseconds.
-  - `cv2.CAP_PROP_POS_FRAMES` 0-based index of the frame to be decoded/captured next.
-  - `cv2.CAP_PROP_POS_AVI_RATIO` Relative position of the video file: 0=start of the film, 1=end of the film.
+  - `CAP_PROP_POS_MSEC` Current position of the video file in milliseconds.
+  - `CAP_PROP_POS_FRAMES` 0-based index of the frame to be decoded/captured next.
+  - `CAP_PROP_POS_AVI_RATIO` Relative position of the video file: 0=start of the film, 1=end of the film.
 - Frame
-  - `cv2.CAP_PROP_FRAME_WIDTH` Width of the frames in the video stream.
-  - `cv2.CAP_PROP_FRAME_HEIGHT` Height of the frames in the video stream.
-  - `cv2.CAP_PROP_FRAME_COUNT` Number of frames in the video file.
-- `cv2.CAP_PROP_MODE` Backend-specific value indicating the current capture mode.
-- `cv2.CAP_PROP_BRIGHTNESS` Brightness of the image (only for those cameras that support).
-- `cv2.CAP_PROP_CONTRAST` Contrast of the image (only for cameras).
-- `cv2.CAP_PROP_SATURATION` Saturation of the image (only for cameras).
-- `cv2.CAP_PROP_HUE` Hue of the image (only for cameras).
-- `cv2.CAP_PROP_GAIN` Gain of the image (only for those cameras that support).
-- `cv2.CAP_PROP_EXPOSURE` Exposure (only for those cameras that support).
-- `cv2.CAP_PROP_CONVERT_RGB` Boolean flags indicating whether images should be converted to RGB.
+  - `CAP_PROP_FRAME_WIDTH` Width of the frames in the video stream.
+  - `CAP_PROP_FRAME_HEIGHT` Height of the frames in the video stream.
+  - `CAP_PROP_FRAME_COUNT` Number of frames in the video file.
+- `CAP_PROP_FPS` Frame rate.
+- `CAP_PROP_FOURCC` 4-character code of codec.
+- `CAP_PROP_FORMAT` Format of the Mat objects returned by `VideoCapture.retrieve()`. Set value -1 to fetch undecoded RAW video streams (as Mat 8UC1).
 
 
 
 
 
-### VideoWriter
+
+## VideoWriter
 **Create and Release**
 - `VideoWriter(filename, fourcc, fps, frameSize, isColor=ture) -> retval`
 - `VideoWriter.open(filename, fourcc, fps, frameSize, isColor=ture) -> retval`
@@ -369,7 +414,7 @@
             video writer.
 
 
-### fourcc
+## fourcc
 **AVI**
 - `I420`
   - `rawvideo (I420 / 0x30323449)`
@@ -403,8 +448,8 @@
 
 
 
-## Draw
-### Rectangle
+# Draw
+## Rectangle
 - `rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]]) -> img`
   - `pt1` : Vertex of the rectangle.
   - `pt2` : Vertex of the rectangle opposite to pt1 .
@@ -413,7 +458,7 @@
   - `lineType` : Type of the line.
   - `shift` : Number of fractional bits in the point coordinates.
 
-### Text
+## Text
 - `putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType[, bottomLeftOrigin]]]) -> img`
   - `org` : Bottom-left corner of the text string in the image.
   - `fontFace` : Font type.
