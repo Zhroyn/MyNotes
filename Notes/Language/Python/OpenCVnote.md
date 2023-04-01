@@ -2,23 +2,18 @@
 
 - [Display and Interaction](#display-and-interaction)
 - [Image](#image)
-  - [Attributes](#attributes)
+  - [Attributes and Propeties](#attributes-and-propeties)
   - [Basic Operation](#basic-operation)
   - [Image Process](#image-process)
     - [Smoothing](#smoothing)
     - [Geometric Transformation](#geometric-transformation)
 - [Video](#video)
   - [VideoCapture](#videocapture)
-    - [Open and Release](#open-and-release)
-    - [Capture frame](#capture-frame)
-    - [VideoCaptureProperties](#videocaptureproperties)
   - [VideoWriter](#videowriter)
-    - [Create and Release](#create-and-release)
-    - [fourcc](#fourcc)
+  - [fourcc](#fourcc)
 - [Draw](#draw)
   - [Rectangle](#rectangle)
   - [Text](#text)
-- [Shorthand](#shorthand)
 
 <!-- /TOC -->
 
@@ -53,15 +48,14 @@
 
 
 ## Image
-### Attributes
-```py
-im.dtype
-im.itemsize
-im.nbytes
-im.ndim
-im.shape
-im.size
-```
+### Attributes and Propeties
+**Image Propeties**
+- `im.dtype` Image datatype
+- `im.itemsize` Length of an element in bytes
+- `im.nbytes` Number of bytes in memery, same as `im.itemsize * im.size`
+- `im.ndim` Number of array dimensions, same as `len(im.shape)`
+- `im.shape` A tuple of number of rows, columns, and channels (if image is color)
+- `im.size` Total number of pixels, same as `im.shape[0] * im.shape[1]` or `im.shape[0] * im.shape[1] * im.shape[2]`
 
 **borderType**
 - `cv2.BORDER_CONSTANT` : `iiiiii|abcdefgh|iiiiiii`
@@ -296,108 +290,86 @@ im.size
 
 ## Video
 ### VideoCapture
-#### Open and Release
-```py
-VideoCapture(filename[, apiPreference]) -> retval
-open(filename[, apiPreference]) -> retval
-    Opens a video file or a capturing device or an IP video stream for video 
-    capturing.
-    Parameters are same as the constructor VideoCapture.
-    Return `true` if the file has been successfully opened.
+**Open and Release**
+- `VideoCapture(filename[, apiPreference]) -> retval`
+- `VideoCapture.open(filename[, apiPreference]) -> retval`
+  - Open a video file or a capturing device or an IP video stream.
+  - Passing 0 will open default camera using default backend.
+  - Return true if the file has been successfully opened.
+- `cap.isOpened() -> retval`
+  - If the previous call to `cv2.VideoCapture()` or `cv2.VideoCapture.open()` succeeded, the method returns true.
+- `cap.release() -> None`
+  - Close video file or capturing device.
 
-isOpened() -> retval
-    If the previous call to VideoCapture constructor or VideoCapture::open() 
-    succeeded, the method returns true.
+**Capture Frame**
+- `cap.read([, image]) -> retval, image`
+  - The video frame is returned in image. If no frames has been grabbed the image will be empty.
+  - Return false if no frames has been grabbed
+<br>
 
-release() -> None
-    Close video file or capturing device.
-    The method is automatically called by subsequent VideoCapture::open and 
-    by VideoCapture destructor.
-```
+- `cap.grab() -> retval`
+  - The method/function grabs the next frame from video file or camera.
+  - Return true (non-zero) in the case of success.
+- `cap.retrieve([, image[, flag]]) -> retval, image`
+  - The method decodes and returns the just grabbed frame.
+  - If no frames has been grabbed, the method returns false and the function returns an empty image.
 
-#### Capture frame
-```py
-read([, image]) -> retval, image
-    The video frame is returned in image.
-    If no frames has been grabbed the image will be empty.
-    Return false if no frames has been grabbed
+**Get and Set Properties**
+- `cap.get(propId) -> retval` Return the specified VideoCapture property.
+- `cap.set(propId, value) -> retval` Set a property in the VideoCapture.
+<br>
 
-grab() -> retval
-    The method/function grabs the next frame from video file or camera and 
-    returns true (non-zero) in the case of success.
+- Video
+  - `cv2.CAP_PROP_FPS` Frame rate.
+  - `cv2.CAP_PROP_FOURCC` 4-character code of codec.
+  - `cv2.CAP_PROP_FORMAT` Format of the Mat objects returned by `VideoCapture.retrieve()`. Set value -1 to fetch undecoded RAW video streams (as Mat 8UC1).
+- Position
+  - `cv2.CAP_PROP_POS_MSEC` Current position of the video file in milliseconds.
+  - `cv2.CAP_PROP_POS_FRAMES` 0-based index of the frame to be decoded/captured next.
+  - `cv2.CAP_PROP_POS_AVI_RATIO` Relative position of the video file: 0=start of the film, 1=end of the film.
+- Frame
+  - `cv2.CAP_PROP_FRAME_WIDTH` Width of the frames in the video stream.
+  - `cv2.CAP_PROP_FRAME_HEIGHT` Height of the frames in the video stream.
+  - `cv2.CAP_PROP_FRAME_COUNT` Number of frames in the video file.
+- `cv2.CAP_PROP_MODE` Backend-specific value indicating the current capture mode.
+- `cv2.CAP_PROP_BRIGHTNESS` Brightness of the image (only for those cameras that support).
+- `cv2.CAP_PROP_CONTRAST` Contrast of the image (only for cameras).
+- `cv2.CAP_PROP_SATURATION` Saturation of the image (only for cameras).
+- `cv2.CAP_PROP_HUE` Hue of the image (only for cameras).
+- `cv2.CAP_PROP_GAIN` Gain of the image (only for those cameras that support).
+- `cv2.CAP_PROP_EXPOSURE` Exposure (only for those cameras that support).
+- `cv2.CAP_PROP_CONVERT_RGB` Boolean flags indicating whether images should be converted to RGB.
 
-retrieve([, image[, flag]]) -> retval, image
-    The method decodes and returns the just grabbed frame. If no frames has 
-    been grabbed, the method returns false and the function returns an empty 
-    image.
-    [out] image : the video frame is returned here. If no frames has been 
-    grabbed the image will be empty.
-    flag : it could be a frame index or a driver specific flag
-```
-
-#### VideoCaptureProperties
-```py
-get(propId) -> retval
-    Return the specified VideoCapture property.
-
-set(propId, value) -> retval
-    Set a property in the VideoCapture.
-```
-- `cv.CAP_PROP_POS_MSEC` Current position of the video file in milliseconds.
-- `cv.CAP_PROP_POS_FRAMES` 0-based index of the frame to be decoded/captured next.
-- `cv.CAP_PROP_POS_AVI_RATIO` Relative position of the video file: 0=start of the film, 1=end of the film.
-- `cv.CAP_PROP_FRAME_WIDTH` Width of the frames in the video stream.
-- `cv.CAP_PROP_FRAME_HEIGHT` Height of the frames in the video stream.
-- `cv.CAP_PROP_FPS` Frame rate.
-- `cv.CAP_PROP_FOURCC` 4-character code of codec.
-- `cv.CAP_PROP_FRAME_COUNT` Number of frames in the video file.
-- `cv.CAP_PROP_FORMAT` Format of the Mat objects returned by VideoCapture::retrieve(). Set value -1 to fetch undecoded RAW video streams (as Mat 8UC1).
-- `cv.CAP_PROP_MODE` Backend-specific value indicating the current capture mode.
-- `cv.CAP_PROP_BRIGHTNESS` Brightness of the image (only for those cameras that support).
-- `cv.CAP_PROP_CONTRAST` Contrast of the image (only for cameras).
-- `cv.CAP_PROP_SATURATION` Saturation of the image (only for cameras).
-- `cv.CAP_PROP_HUE` Hue of the image (only for cameras).
-- `cv.CAP_PROP_GAIN` Gain of the image (only for those cameras that support).
-- `cv.CAP_PROP_EXPOSURE` Exposure (only for those cameras that support).
-- `cv.CAP_PROP_CONVERT_RGB` Boolean flags indicating whether images should be converted to RGB.
 
 
 
 
 ### VideoWriter
-#### Create and Release
-```py
-VideoWriter(filename, fourcc, fps, frameSize, isColor=ture) -> retval
-open(filename, fourcc, fps, frameSize, isColor=ture) -> retval
-    Initializes or reinitializes video writer.
-    The method opens video writer. Parameters are the same as in the constructor.
-    Return `true` if video writer has been successfully initialized
+**Create and Release**
+- `VideoWriter(filename, fourcc, fps, frameSize, isColor=ture) -> retval`
+- `VideoWriter.open(filename, fourcc, fps, frameSize, isColor=ture) -> retval`
+  - Initializes or reinitializes video writer.
+  - Return `true` if video writer has been successfully initialized
+  - `fourcc` : 4-character code of codec used to compress the frames. If fourcc is -1, it will pop up the codec selection dialog.
+    - `cv2.VideoWriter_fourcc(*"mp4v")` for `.mp4` video.
+    - `cv2.VideoWriter_fourcc(*"XVID"/"AVI1")` for `.avi` video.
+    - `cv2.VideoWriter_fourcc(*"I420")` for `.avi` raw video.
+  - `fps`	: Framerate of the created video stream.
+  - `frameSize` : Size of the video frames.
+  - `isColor` : If it is not zero, the encoder will expect and encode color frames, otherwise it will work with grayscale frames.
+<br>
 
-    filename : Name of the output video file.
-    fourcc : 4-character code of codec used to compress the frames.
-             If fourcc is -1, it will pop up the codec selection dialog.
-    fps	: Framerate of the created video stream.
-    frameSize : Size of the video frames.
-    isColor : If it is not zero, the encoder will expect and encode color frames,
-              otherwise it will work with grayscale frames.
+- `isOpened() -> retval` Return true if video writer has been successfully initialized.
+- `release() -> None` Close the video writer.
 
-
-isOpened() -> retval
-    Return true if video writer has been successfully initialized.
-
-write(image) ->	None
-    Writes the next video frame.
+**Add Frame**
+- `write(image) ->	None` Writes the next video frame.
     image : In general, color images are expected in BGR format.
             It must have the same size as has been specified when opening the 
             video writer.
 
-release() -> None
-    Close the video writer.
-    The method is automatically called by subsequent VideoWriter::open and 
-    by the VideoWriter destructor.
-```
 
-#### fourcc
+### fourcc
 **AVI**
 - `I420`
   - `rawvideo (I420 / 0x30323449)`
@@ -431,69 +403,42 @@ release() -> None
 
 
 
-
-
 ## Draw
 ### Rectangle
-```py
-rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]]) -> img
-    pt1 : Vertex of the rectangle.
-    pt2 : Vertex of the rectangle opposite to pt1 .
-    color : Rectangle color or brightness (grayscale image).
-    thickness : Thickness of lines that make up the rectangle. Negative 
-                values mean that the function has to draw a filled rectangle.
-    lineType : Type of the line.
-    shift : Number of fractional bits in the point coordinates.
-```
+- `rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]]) -> img`
+  - `pt1` : Vertex of the rectangle.
+  - `pt2` : Vertex of the rectangle opposite to pt1 .
+  - `color` : Rectangle color or brightness (grayscale image).
+  - `thickness` : Thickness of lines that make up the rectangle. Negative values mean that the function has to draw a filled rectangle.
+  - `lineType` : Type of the line.
+  - `shift` : Number of fractional bits in the point coordinates.
 
 ### Text
-```py
-putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType
-        [, bottomLeftOrigin]]]) -> img
-    org : Bottom-left corner of the text string in the image.
-    fontFace : Font type.
-    fontScale : Font scale factor that is multiplied by the font-specific 
-                base size.
-    color : Text color in `BGR` orger.
-    thickness : Thickness of the lines used to draw a text.
-    lineType : Line type. See #LineTypes
-    bottomLeftOrigin : When true, the image data origin is at the bottom-left 
-                       corner. Otherwise, it is at the top-left corner.
-```
-- `cv.FONT_HERSHEY_SIMPLEX` normal size sans-serif font
-- `cv.FONT_HERSHEY_PLAIN` small size sans-serif font
-- `cv.FONT_HERSHEY_DUPLEX` normal size sans-serif font (more complex than FONT_HERSHEY_SIMPLEX)
-- `cv.FONT_HERSHEY_COMPLEX` normal size serif font
-- `cv.FONT_HERSHEY_TRIPLEX` normal size serif font (more complex than FONT_HERSHEY_COMPLEX)
-- `cv.FONT_HERSHEY_COMPLEX_SMALL` smaller version of FONT_HERSHEY_COMPLEX
-- `cv.FONT_HERSHEY_SCRIPT_SIMPLEX` hand-writing style font
-- `cv.FONT_HERSHEY_SCRIPT_COMPLEX` more complex variant of FONT_HERSHEY_SCRIPT_SIMPLEX
-- `cv.FONT_ITALIC` flag for italic font
+- `putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType[, bottomLeftOrigin]]]) -> img`
+  - `org` : Bottom-left corner of the text string in the image.
+  - `fontFace` : Font type.
+  - `fontScale` : Font scale factor that is multiplied by the font-specific base size.
+  - `color` : Text color in BGR orger.
+  - `thickness` : Thickness of the lines used to draw a text.
+  - `lineType` : Line type.
+  - `bottomLeftOrigin` : When true, the image data origin is at the bottom-left corner. Otherwise, it is at the top-left corner.
+
+**fontFace**
+- `cv2.FONT_HERSHEY_SIMPLEX` normal size sans-serif font
+- `cv2.FONT_HERSHEY_PLAIN` small size sans-serif font
+- `cv2.FONT_HERSHEY_DUPLEX` normal size sans-serif font (more complex than FONT_HERSHEY_SIMPLEX)
+- `cv2.FONT_HERSHEY_COMPLEX` normal size serif font
+- `cv2.FONT_HERSHEY_TRIPLEX` normal size serif font (more complex than FONT_HERSHEY_COMPLEX)
+- `cv2.FONT_HERSHEY_COMPLEX_SMALL` smaller version of FONT_HERSHEY_COMPLEX
+- `cv2.FONT_HERSHEY_SCRIPT_SIMPLEX` hand-writing style font
+- `cv2.FONT_HERSHEY_SCRIPT_COMPLEX` more complex variant of FONT_HERSHEY_SCRIPT_SIMPLEX
+- `cv2.FONT_ITALIC` flag for italic font
 
 
 
 
 
 
-
-
-
-## Shorthand
-**Open, Save and Close**
-- `im = cv2.imread(filename[, flags])`
-  - `cv2.IMREAD_COLOR` Default, whose value is 1.
-  - `cv2.IMREAD_GRAYSCALE` Load an image in grayscale mode, whose value is 0.
-  - `cv2.IMREAD_UNCHANGED` Load an image as such including alpha channel, whose value is -1.
-- `cv2.imwrite(filename, im)`
-<br>
-
-- `cap = cv2.VideoCapture(filename/index)` Passing `0` will open default camera using default backend.
-- `cap.release()`
-- `video = VideoWriter(filename, fourcc, fps, frameSize)`
-  - `cv2.VideoWriter_fourcc(*"mp4v")` for `.mp4` video.
-  - `cv2.VideoWriter_fourcc(*"XVID"/"AVI1")` for `.avi` video.
-  - `cv2.VideoWriter_fourcc(*"I420")` for `.avi` raw video.
-- `video.release()`
 
 
 
