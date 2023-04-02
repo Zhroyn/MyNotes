@@ -17,6 +17,10 @@
     - [Miscellaneous Transformations](#miscellaneous-transformations)
       - [Thresholding Process](#thresholding-process)
       - [Color Space Conversions](#color-space-conversions)
+  - [Image Matching](#image-matching)
+    - [Detection and Description](#detection-and-description)
+    - [Descriptor Matchers](#descriptor-matchers)
+    - [Draw Keypoints and Matches](#draw-keypoints-and-matches)
 - [Video](#video)
   - [VideoCapture](#videocapture)
   - [VideoWriter](#videowriter)
@@ -372,6 +376,83 @@
 - `COLOR_RGBA2GRAY` = 11
 
 
+
+
+## Image Matching
+### Detection and Description
+- `SIFT([, nfeatures[, nOctaveLayers[, contrastThreshold[, edgeThreshold[, sigma]]]]]) ->	retval`
+- `SIFT(nfeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma, descriptorType	 ->	retval`
+  - Nearly the same as `SIFT_create()` and `SIFT.create()`.
+  - `nfeatures` : The number of best features to retain. The features are ranked by their scores (measured in SIFT algorithm as the local contrast)
+  - `nOctaveLayers` : The number of layers in each octave. 3 is the value used in D. Lowe paper. The number of octaves is computed automatically from the image resolution.
+  - `contrastThreshold` : The contrast threshold used to filter out weak features in semi-uniform (low-contrast) regions. The larger the threshold, the less features are produced by the detector.
+  - `edgeThreshold` : The threshold used to filter out edge-like features. Its meaning is different from the `contrastThreshold`, i.e. the larger the edgeThreshold, the less features are filtered out.
+  - `sigma` : The sigma of the Gaussian applied to the input image at the octave 0. If your image is captured with a weak camera with soft lenses, you might want to reduce the number.
+  - `descriptorType` : The type of descriptors. Only `CV_32F` and `CV_8U` are supported.
+  - `sift = cv2.SIFT()`
+<br>
+
+- `detect(image[, mask]) -> keypoints`
+- `detect(images[, masks]) -> keypoints`
+  - Detect keypoints in an image (first variant) or image set (second variant).
+  - `kpt = sift.detect(im)`
+<br>
+
+- `compute(image, keypoints[, descriptors]) -> keypoints, descriptors`
+- `compute(images, keypoints[, descriptors]) -> keypoints, descriptors`
+  - Compute the descriptors for a set of keypoints detected in an image (first variant) or image set (second variant).
+  - `desc = sift.compute(im, kpt)`
+<br>
+
+- `detectAndCompute(image, mask[, descriptors[, useProvidedKeypoints]]) -> keypoints, descriptors`
+  - Detect keypoints and compute the descriptors
+  - `kpt, desc = sift.detectAndCompute(im, None)`
+
+### Descriptor Matchers
+- `BFMatcher([, normType=NORM=L2[, crossCheck=false]]) -> retval`
+  - Nearly the same as `BFMatcher_create()` and `BFMatcher.create()`.
+  - `normType` : One of `NORM_L1`, `NORM_L2`, `NORM_HAMMING`, `NORM_HAMMING2`.
+    - `L1` and `L2` norms are preferable choices for SIFT and SURF descriptors.
+    - `NORM_HAMMING` should be used with ORB, BRISK and BRIEF.
+    - `NORM_HAMMING2` should be used with ORB when WTA_K==3 or 4.
+  - `crossCheck` : If it is false, this is will be default BFMatcher behaviour when it finds the k nearest neighbors for each query descriptor. If it is true, then the `knnMatch()` method with k=1 will only return pairs (i,j).
+  - `bf = cv2.BFMatcher()`
+<br>
+
+- `match(queryDescriptors, trainDescriptors[, mask]) -> matches`
+  - `queryDescriptors` : Query set of descriptors.
+  - `trainDescriptors` : Train set of descriptors.
+  - `mask` : Mask specifying permissible matches between an input query and train matrices of descriptors.
+  - `matches`:  Matches. If a query descriptor is masked out in mask , no match is added for this descriptor.
+  - `matches = bf.match(desc1, desc2)`
+<br>
+
+- `knnMatch(queryDescriptors, trainDescriptors, k[, mask[, compactResult]]) -> matches`
+  - Find the k best matches for each descriptor from a query set.
+  - `k` : Count of best matches found per each query descriptor or less.
+  - `matches` : Matches. Each `matches[i]` is k or less matches for the same query descriptor.
+  - `matches = bf.knnMatch(desc1, desc2, 2)`
+
+### Draw Keypoints and Matches
+- `drawKeypoints(image, keypoints, outImage[, color[, flags]]) -> outImage`
+  - `keypoints` : Keypoints from the source image.
+  - `outImage` : Output image. Its content depends on the flags value defining what is drawn in the output image. See possible flags bit values below.
+  - `color` : Color of keypoints.  If `color==Scalar::all(-1)`, the color is generated randomly.
+  - `flags` : Flags setting drawing features.
+  - `out = cv2.drawKeypoints(im, kpt, None)`
+<br>
+
+- `drawMatches(img1, keypoints1, img2, keypoints2, matches1to2, outImg[, matchColor[, singlePointColor[, matchesMask[, flags]]]]) -> outImg`
+- `drawMatches(img1, keypoints1, img2, keypoints2, matches1to2, outImg, matchesThickness[, matchColor[, singlePointColor[, matchesMask[, flags]]]]) -> outImg`
+- `drawMatchesKnn(img1, keypoints1, img2, keypoints2, matches1to2, outImg[, matchColor[, singlePointColor[, matchesMask[, flags]]]]) -> outImg`
+  - Draw the found matches of keypoints from two images.
+  - `matches1to2` : Matches from the first image to the second one, which means that `keypoints1[i]` has a corresponding point in `keypoints2[matches[i]]` .
+  - `outImg` : Output image. Its content depends on the flags value defining what is drawn in the output image.
+  - `matchColor` : Color of matches (lines and connected keypoints). If `matchColor==Scalar::all(-1)`, the color is generated randomly.
+  - `singlePointColor` : Color of single keypoints (circles), which means that keypoints do not have the matches. If `singlePointColor==Scalar::all(-1)`, the color is generated randomly.
+  - `matchesMask` : Mask determining which matches are drawn. If the mask is empty, all matches are drawn.
+  - `flags` : Flags setting drawing features.
+  - `out = cv2.drawMatches(img1, kpt1, img2, kpt2, matches, None)`
 
 
 
