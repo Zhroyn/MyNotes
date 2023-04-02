@@ -8,6 +8,7 @@
     - [Harris Detector](#harris-detector)
     - [Blob Detector](#blob-detector)
   - [Description](#description)
+    - [SIFT Descriptor](#sift-descriptor)
   - [Matching](#matching)
 
 <!-- /TOC -->
@@ -44,7 +45,7 @@ $\displaystyle H = \begin{bmatrix} a & b \\ c & d \end{bmatrix},
 3. Classify points using eigenvalues of H
 
 #### Gradient Operators
-**Roberts operator**
+**Roberts Operator**
 $\begin{bmatrix}
     1 & 0 \\ 
     0 & -1 \\ 
@@ -54,7 +55,7 @@ $\begin{bmatrix}
     -1 & 0 \\ 
 \end{bmatrix}$
 
-**Prewitt operator**
+**Prewitt Operator**
 $\begin{bmatrix}
     -1 & 0 & 1\\ 
     -1 & 0 & 1\\ 
@@ -66,7 +67,7 @@ $\begin{bmatrix}
     -1 & -1 & -1 \\ 
 \end{bmatrix}$
 
-**Sobel operator**
+**Sobel Operator**
 $\begin{bmatrix}
     -1 & 0 & 1\\ 
     -2 & 0 & 2\\ 
@@ -78,7 +79,7 @@ $\begin{bmatrix}
     -1 & -2 & -1 \\ 
 \end{bmatrix}$
 
-**Laplacian operator**
+**Laplacian Operator**
 $\begin{bmatrix}
     0 & 1 & 0 \\ 
     1 & -4 & 1 \\ 
@@ -114,11 +115,43 @@ $\displaystyle f = \frac{\lambda_1\lambda_2}{\lambda_1 + \lambda_2}
 
 
 
-
 ### Description
+#### SIFT Descriptor
+**Orientation Normalization**
+- Compute orientation histogram
+- Select dominant orientation
+- Normalize: rotate to fixed orientation 
+
+**Lowe’s SIFT algorithm**
+- Run DoG detector
+  - Find maxima in location/scale space
+  - Remove edge points
+- Find dominate orientation
+- For each (x,y,scale,orientation), create descriptor
+
+**Other detectors and descriptors**
+- HOG: Histogram of oriented gradients
+- SURF: Speeded Up Robust Features 
+- FAST (corner detector) 
+- ORB: an efficient alternative to SIFT or SURF 
+- Fast Retina Key- point (FREAK) 
+
 ### Matching
+- Define distance function that compares two descriptors
+- Test all the features in another image, find the one with min distance
+- Simple approach: $||f1 - f2 ||$
+- Can give small distances for ambiguous (incorrect) matches
 
+**Ratio test**
+- Ratio score = $||f_1 - f_2 || / || f_1 - f_2^{'} ||$
+  - $f_2$ is best match to $f_1$ in $I_2$
+  - $f_2^{'}$ is 2nd best match to $f_1$ in $I_2$
+- Ambiguous matches have large ratio scores
 
+**Mutual nearest neighbor**
+- Find mutual nearest neighbors
+- $f_2$ is the nearest neighbor of $f_1$ in $I_2$
+- $f_1$ is the nearest neighbor of $f_2$ in $I_1$
 
 
 
