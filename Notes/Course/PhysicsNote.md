@@ -10,9 +10,9 @@
   - [Gravitation](#gravitation)
     - [Rocket Propulsion](#rocket-propulsion)
 - [Rotational Motion](#rotational-motion)
-  - [Formulas](#formulas)
+  - [Velocity, Acceleration, Torque, Energy and Power](#velocity-acceleration-torque-energy-and-power)
   - [Moment of Inertia of differernt Objects](#moment-of-inertia-of-differernt-objects)
-  - [Cross product](#cross-product)
+  - [Cross product and Coriolis force](#cross-product-and-coriolis-force)
 
 <!-- /TOC -->
 
@@ -112,7 +112,7 @@ $
 
 
 ## Rotational Motion
-### Formulas
+### Velocity, Acceleration, Torque, Energy and Power
 **Constant Angular Acceleration**
 $
 \displaystyle \omega_f = \omega_i + \alpha t \\
@@ -165,10 +165,12 @@ Solid cylinder : $\displaystyle I = \frac{1}{2}MR^2 $
 Hollow cylinder : $\displaystyle I = \int_{R_1}^{R_2} M\cdot \frac{2\pi r dr}{\pi (R_2^2-R_1^2)} \cdot r^2 = \frac{1}{2}M(R_1^2 + R_1^2) $
 <br>
 
-Solid sphere : $\displaystyle I = \frac{2}{5}MR^2 $
-Thin spherical shell : $\displaystyle I = \frac{2}{3}MR^2 $
+Solid sphere : $\displaystyle I = \int_{-R}^{R} \frac{1}{2}\rho\pi (R^2-y^2)^2 dy = \frac{2}{5}\cdot (\frac{2}{3}\rho\pi R^3)\cdot R^2 = \frac{2}{5}MR^2 $
+Thin spherical shell : $\displaystyle I = \int_0^\pi \rho(Rd\theta \cdot h \cdot 2\pi R sin\theta)(Rsin\theta)^2d\theta = \frac{2}{3}\cdot (4\pi R^2\cdot h)\cdot R^2 = \frac{2}{3}MR^2 $
+
 
 **The Parallel-Axis Theorem**
+
 $\displaystyle 
 \begin{aligned}
 I_P &= \sum m_i[(x_i - a)^2 + (y_i - b)^2] \\
@@ -178,14 +180,45 @@ I_P &= \sum m_i[(x_i - a)^2 + (y_i - b)^2] \\
 
 
 
-$\displaystyle a = \frac{(m_1 - m_2)g}{m_1 + m_2 + \frac{nI}{R^2}} $
-
-### Cross product
+### Cross product and Coriolis force
 - The direction of angular velocity obeys **right-hand rule**
 - The direction of vector in cross product also obeys **right-hand rule**
 
-$\displaystyle \frac{d}{dt} (\bold{A \times B}) = \bold{A \times} \frac{d\bold{B}}{dt} + \frac{d\bold{A}}{dt} \bold{\times B}
-\\~\\
-\vec{v} = \frac{d\vec{r}}{dt} = \vec{\omega} \times \vec{r} \\~\\
-\vec{a} = \frac{d\vec{v}}{dt} = \frac{d}{dt} (\vec{\omega} \times \vec{r}) = \frac{d\vec{\omega}}{dt} \times \vec{r} + \vec{\omega} \times \frac{d\vec{r}}{dt} = \vec{\alpha} \times \vec{r} + \vec{\omega} \times \vec{v}
-$
+$\bold{C} = \bold{A\times B} = \hat{i}\begin{vmatrix}A_y & A_z \\ B_y & B_z \end{vmatrix} - \hat{j}\begin{vmatrix}A_x & A_z \\ B_x & B_z \end{vmatrix} + \hat{k}\begin{vmatrix}A_x & A_y \\ B_x & B_y \end{vmatrix} $
+
+$\displaystyle \frac{d}{dt} (\bold{A \times B}) = \bold{A \times} \frac{d\bold{B}}{dt} + \frac{d\bold{A}}{dt} \bold{\times B} $
+
+$(\vec{a}\times \vec{b})\cdot(\vec{c}\times \vec{d}) = (\vec{a}\cdot \vec{c})(\vec{b}\cdot \vec{d}) - (\vec{a}\cdot \vec{d})(\vec{b}\cdot \vec{c}) $
+
+$\vec{a}\times(\vec{b}\times \vec{c}) = \vec{b}(\vec{a}\cdot \vec{c}) - \vec{c}(\vec{a}\cdot \vec{b}) $
+<br>
+
+$\displaystyle
+\vec{v} = \frac{d\vec{r}}{dt} = \vec{\omega} \times \vec{r}$
+
+$\displaystyle
+\begin{aligned}
+\vec{a} &= \frac{d\vec{v}}{dt} = \frac{d}{dt} (\vec{\omega} \times \vec{r}) = \frac{d\vec{\omega}}{dt} \times \vec{r} + \vec{\omega} \times \frac{d\vec{r}}{dt} \\
+  &= \vec{\alpha} \times \vec{r} + \vec{\omega} \times \vec{v} \\
+  &= \vec{\alpha} \times \vec{r} + \vec{\omega} \times (\vec{\omega}\times \vec{r}) \\
+  &= \vec{a_t} + \vec{a_r} \\
+  &\Rightarrow a = r^2\sqrt{\alpha^2 + \omega^4} 
+\end{aligned} $
+
+$\displaystyle
+\begin{aligned}
+K &= \frac{1}{2} \sum m_i|\vec{\omega}\times \vec{r_i}|^2 \\
+  &= \frac{1}{2} \sum m_i(\vec{\omega}\times \vec{r_i})\cdot(\vec{\omega}\times \vec{r_i}) \\
+  &= \frac{1}{2} \sum m_i[\omega^2r_i^2 - \omega^2(\hat{\omega} \cdot r_i)^2] \\
+  &= \frac{1}{2} (\sum m_i r_{i,\perp}^2)\omega^2 = \frac{1}{2}I \omega^2
+\end{aligned} $
+
+
+For the motion in uniform rotating frame:
+
+$\displaystyle \left. \frac{d\vec{r}}{dt}\right|_I = \left.\frac{d\vec{r}}{dt}\right|_R + \vec{\omega}\times \vec{r} = \vec{v}_R + \vec{\omega}\times \vec{r} $
+
+$\displaystyle \left.\frac{d\vec{v}_R}{dt}\right|_I = \left.\frac{d\vec{v}_R}{dt}\right|_R + \vec{\omega}\times \vec{v}_R $
+
+
+
