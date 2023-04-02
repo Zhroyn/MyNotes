@@ -6,6 +6,7 @@
     - [Corner Detection](#corner-detection)
     - [Gradient Operators](#gradient-operators)
     - [Harris Detector](#harris-detector)
+    - [Blob Detector](#blob-detector)
   - [Description](#description)
   - [Matching](#matching)
 
@@ -38,54 +39,79 @@ I_y = \frac{\partial f}{\partial x} \\
 
 2. Compute eigenvalues
 $\displaystyle H = \begin{bmatrix} a & b \\ c & d \end{bmatrix}, 
-\lambda_{\pm} = \frac{1}{2}((a + d) \pm \sqrt{4bc + (a - d)^2}) $
+\lambda_{\pm} = \frac{1}{2}((a  d) \pm \sqrt{4bc  (a - d)^2}) $
 
 3. Classify points using eigenvalues of H
 
 #### Gradient Operators
 **Roberts operator**
 $\begin{bmatrix}
-    +1 & 0 \\ 
+    1 & 0 \\ 
     0 & -1 \\ 
 \end{bmatrix}, 
 \begin{bmatrix}
-    0 & +1 \\ 
+    0 & 1 \\ 
     -1 & 0 \\ 
 \end{bmatrix}$
 
 **Prewitt operator**
 $\begin{bmatrix}
-    -1 & 0 & +1\\ 
-    -1 & 0 & +1\\ 
-    -1 & 0 & +1\\ 
+    -1 & 0 & 1\\ 
+    -1 & 0 & 1\\ 
+    -1 & 0 & 1\\ 
 \end{bmatrix}, 
 \begin{bmatrix}
-    +1 & +1 & +1 \\ 
+    1 & 1 & 1 \\ 
     0 & 0 & 0 \\ 
     -1 & -1 & -1 \\ 
 \end{bmatrix}$
 
 **Sobel operator**
 $\begin{bmatrix}
-    -1 & 0 & +1\\ 
-    -2 & 0 & +2\\ 
-    -1 & 0 & +1\\ 
+    -1 & 0 & 1\\ 
+    -2 & 0 & 2\\ 
+    -1 & 0 & 1\\ 
 \end{bmatrix}, 
 \begin{bmatrix}
-    +1 & +2 & +1 \\ 
+    1 & 2 & 1 \\ 
     0 & 0 & 0 \\ 
     -1 & -2 & -1 \\ 
 \end{bmatrix}$
 
+**Laplacian operator**
+$\begin{bmatrix}
+    0 & 1 & 0 \\ 
+    1 & -4 & 1 \\ 
+    0 & 1 & 0 \\ 
+\end{bmatrix}$
+
+
 #### Harris Detector
 $\displaystyle f = \frac{\lambda_1\lambda_2}{\lambda_1 + \lambda_2}
-= \frac{determinant(H)}{trace(H)} = \frac{ad - bc}{a + d} \\
+= \frac{determinant(H)}{trace(H)} = \frac{ad - bc}{a  d} \\
 \text{f is called corner response} $
 1. Compute derivatives at each pixel
 2. Compute covariance matrix $H$ in a Gaussian window around each pixel 
 3. Compute corner response function $f$
 4. Threshold $f$
 5. Find local maxima of response function (nonmaximum suppression)
+
+- Invariant to intensity shift
+- Not invariant to intensity scaling
+- Invariant to translation and rotation
+- Not invariant to scaling
+  - Find scale that gives local maximum of f
+  - Instead of computing $f$ for larger and larger windows, we can implement using a fixed window size with an image pyramid
+
+#### Blob Detector
+- Laplacian is sensitive to noise
+- Usually using Laplacian of Gaussian (LoG) filter
+- Feature points are local maxima in both position and scale
+<br>
+
+- LoG can be approximated by Difference of two Gaussians (DoG)
+- Computing DoG at different scales
+
 
 
 
