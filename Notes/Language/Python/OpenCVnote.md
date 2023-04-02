@@ -15,7 +15,8 @@
       - [Perspective](#perspective)
       - [Remap](#remap)
     - [Miscellaneous Transformations](#miscellaneous-transformations)
-      - [Binarization](#binarization)
+      - [Thresholding Process](#thresholding-process)
+      - [Color Space Conversions](#color-space-conversions)
 - [Video](#video)
   - [VideoCapture](#videocapture)
   - [VideoWriter](#videowriter)
@@ -67,13 +68,13 @@
 - `im.size` Total number of pixels, same as `im.shape[0] * im.shape[1]` or `im.shape[0] * im.shape[1] * im.shape[2]`
 
 **ddepth**
-- `CV_8U` is 0
-- `CV_8S` is 1
-- `CV_16U` is 2
-- `CV_16S` is 3
-- `CV_32S` is 4
-- `CV_32F` is 5
-- `CV_64F` is 6
+- `CV_8U` = 0
+- `CV_8S` = 1
+- `CV_16U` = 2
+- `CV_16S` = 3
+- `CV_32S` = 4
+- `CV_32F` = 5
+- `CV_64F` = 6
 
 **borderType**
 - `BORDER_CONSTANT` : `iiiiii|abcdefgh|iiiiiii`
@@ -321,7 +322,7 @@
 
 
 ### Miscellaneous Transformations
-#### Binarization
+#### Thresholding Process
 - `threshold(src, thresh, maxval, type[, dst]) ->	retval, dst`
   - Apply a fixed-level threshold to each array element.
   - `thresh` : threshold value.
@@ -335,7 +336,40 @@
 - `THRESH_TOZERO` : $\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{src(x, y)} & \texttt{if src(x,y) > thresh} \\ & \texttt{0} & \texttt{otherwise} \end{aligned} \right.$
 - `THRESH_TOZERO_INV` : $\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{0} & \texttt{if src(x,y) > thresh} \\ & \texttt{src(x, y)} & \texttt{otherwise} \end{aligned} \right.$
 
+#### Color Space Conversions
+- `cvtColor(src, code[, dst[, dstCn=0]]) -> dst`
+  - Convert an image from one color space to another.
+  - The conventional ranges for R, G, and B channel values are:
+    - 0 to 255 for `CV_8U` images
+    - 0 to 65535 for `CV_16U` images
+    - 0 to 1 for `CV_32F` images
+  - If conversion adds the alpha channel, its value will set to the maximum of corresponding channel range: 255 for `CV_8U`, 65535 for `CV_16U`, 1 for `CV_32F`.
+  - `src`	: 8-bit unsigned, 16-bit unsigned, or single-precision floating-point.
+  - `dst` : output image of the same size and depth as src.
+  - `code` : color space conversion code
+  - `dstCn` : number of channels in the destination image; if the parameter is 0, the number of the channels is derived automatically from src and code.
 
+**code**
+- `COLOR_BGR2BGRA` = 0
+- `COLOR_RGB2RGBA` = `COLOR_BGR2BGRA`
+- `COLOR_BGRA2BGR` = 1
+- `COLOR_RGBA2RGB` = `COLOR_BGRA2BGR`
+- `COLOR_BGR2RGBA` = 2
+- `COLOR_RGB2BGRA` = `COLOR_BGR2RGBA`
+- `COLOR_RGBA2BGR` = 3
+- `COLOR_BGRA2RGB` = `COLOR_RGBA2BGR`
+- `COLOR_BGR2RGB` = 4
+- `COLOR_RGB2BGR` = `COLOR_BGR2RGB`
+- `COLOR_BGRA2RGBA` = 5
+- `COLOR_RGBA2BGRA` = `COLOR_BGRA2RGBA`
+- `COLOR_BGR2GRAY` = 6
+- `COLOR_RGB2GRAY` = 7
+- `COLOR_GRAY2BGR` = 8
+- `COLOR_GRAY2RGB` = `COLOR_GRAY2BGR`
+- `COLOR_GRAY2BGRA` = 9
+- `COLOR_GRAY2RGBA` = `COLOR_GRAY2BGRA`
+- `COLOR_BGRA2GRAY` = 10
+- `COLOR_RGBA2GRAY` = 11
 
 
 
