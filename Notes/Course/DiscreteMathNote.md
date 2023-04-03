@@ -28,6 +28,8 @@
   - [6.1 The Basics of Counting](#61-the-basics-of-counting)
   - [6.2 The Pigeonhole Principle](#62-the-pigeonhole-principle)
   - [6.3 Permutations and Combinations](#63-permutations-and-combinations)
+  - [6.4 Binomial Coefficients and Identities](#64-binomial-coefficients-and-identities)
+  - [6.5 Generalized Permutations and Combinations](#65-generalized-permutations-and-combinations)
 
 <!-- /TOC -->
 
@@ -425,6 +427,32 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 <br>
 
 - A **combinatorial proof** of an identity is a proof that uses counting arguments to prove that both sides of the identity count the same objects but in different ways or a proof that is based on showing that there is a bijection between the sets of objects counted by the two sides of the identity. These two types of proofs are called **double counting proofs** and **bijective proofs**, respectively
+
+
+### 6.4 Binomial Coefficients and Identities
+- $\displaystyle (x+y)^n = \sum_{j=0}^n \begin{pmatrix} n \\ j \end{pmatrix}x^{n-j}y^j $
+- $\displaystyle \sum_{k=0}^n \begin{pmatrix} n \\ k \end{pmatrix} = 2^n $
+- $\displaystyle \sum_{k=0}^n (-1)^k\begin{pmatrix} n \\ k \end{pmatrix} = 0 $
+- $\displaystyle \sum_{k=0}^n 2^k\begin{pmatrix} n \\ k \end{pmatrix} = 3^n $
+- Pascal’s Identity : $\displaystyle \begin{pmatrix} n+1 \\ k \end{pmatrix} = \begin{pmatrix} n \\ k-1 \end{pmatrix} + \begin{pmatrix} n \\ k \end{pmatrix}$
+- Vandermonde’s Identity : $\displaystyle \begin{pmatrix} m+n \\ r \end{pmatrix} = \sum_{k=0}^r \begin{pmatrix} m \\ r-k \end{pmatrix} \begin{pmatrix} n \\ k \end{pmatrix}$
+  - $\displaystyle \begin{pmatrix} 2n \\ n \end{pmatrix} = \sum_{k=0}^n \begin{pmatrix} n \\ k \end{pmatrix}^2$
+- $\displaystyle \begin{pmatrix} n+1 \\ r+1 \end{pmatrix} = \sum_{j=r}^n \begin{pmatrix} j \\ r \end{pmatrix}$
+
+
+### 6.5 Generalized Permutations and Combinations
+- **Permutations with Repetition** : The number of r-permutations of a set of $n$ objects with repetition allowed is $n^r$
+- **Combinations with Repetition** : There are $C(n + r − 1, r) = C(n + r − 1, n − 1)$ r-combinations from a set with $n$ elements when repetition of elements is allowed.
+- **Permutations with Indistinguishable Objects** : The number of different permutations of $n$ objects, where there are $n_1$ indistinguishable objects of type 1, $n_2$ indistinguishable objects of type 2, … , and $n_k$ indistinguishable objects of
+type k, is $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
+- **Distributing Objects into Boxes**
+  - **Distinguishable Objects and Distinguishable Boxes** : The number of ways to distribute $n$ distinguishable objects into $k$ distinguishable boxes so that $n_i$ objects are placed into box $i$, $i = 1, 2, … , k$, equals $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
+  - **Indistinguishable Objects and Distinguishable Boxes** : There are $C(n + r − 1, n − 1)$ ways to place $r$ indistinguishable objects into $n$ distinguishable boxes
+  - **Distinguishable Objects and Indistinguishable Boxes**
+    - Let $S(n, j)$ denote the number of ways to distribute $n$ distinguishable objects into $j$ indistinguishable boxes so that no box is empty. The numbers $S(n, j)$ are called **Stirling numbers of the second kind**.
+    - It can be shown that $\displaystyle S(n, j) = \frac{1}{j!}\sum_{i=0}^{j-1} (-1)^i\begin{pmatrix} j \\ i \end{pmatrix} (j-i)^n $
+    - So the number of ways to distribute $n$ distinguishable objects into $k$ indistinguishable boxes equals $\displaystyle \sum_{j=1}^k S(n, j) = \frac{1}{j!}\sum_{i=0}^{j-1} (-1)^i\begin{pmatrix} j \\ i \end{pmatrix} (j-i)^n $
+  - **Indistinguishable Objects and Indistinguishable Boxes** : No simple closed formula exists for this number.
 
 
 
