@@ -13,6 +13,7 @@
   - [Velocity, Acceleration, Torque, Energy and Power](#velocity-acceleration-torque-energy-and-power)
   - [Moment of Inertia of differernt Objects](#moment-of-inertia-of-differernt-objects)
   - [Cross product and Coriolis force](#cross-product-and-coriolis-force)
+  - [Angular Momentum](#angular-momentum)
 
 <!-- /TOC -->
 
@@ -128,7 +129,7 @@ $
 
 **Torque**
 $
-\displaystyle \tau = rF\sin\phi = Fd = \bold{F \times r} \\~\\
+\displaystyle \tau = rF\sin\phi = Fd = \bold{r \times F} \\~\\
 \displaystyle d\tau = r dF_t = (r dm)a_t = (r^2 dm)\alpha \\
 \displaystyle \Rightarrow \tau = \alpha \int r^2dm = I\alpha
 $
@@ -218,7 +219,49 @@ For the motion in uniform rotating frame:
 
 $\displaystyle \left. \frac{d\vec{r}}{dt}\right|_I = \left.\frac{d\vec{r}}{dt}\right|_R + \vec{\omega}\times \vec{r} = \vec{v}_R + \vec{\omega}\times \vec{r} $
 
-$\displaystyle \left.\frac{d\vec{v}_R}{dt}\right|_I = \left.\frac{d\vec{v}_R}{dt}\right|_R + \vec{\omega}\times \vec{v}_R $
+$\displaystyle \left. \frac{d^2\vec{r}}{dt^2}\right|_I = \left.\frac{d^2\vec{r}}{dt^2}\right|_R + 2\vec{\omega}\times \left.\frac{d\vec{r}}{dt}\right|_R + \vec{\omega}\times(\vec{\omega}\times \vec{r}) $
+
+$\vec{F}_R = \vec{F} - 2m\vec{\omega}\times \vec{v}_R - m \vec{\omega}\times(\vec{\omega}\times \vec{r}) \\
+\vec{F}_{Coriolis} = - 2m\vec{\omega}\times \vec{v}_R \\
+\vec{F}_{Centrifugal} = - m \vec{\omega}\times(\vec{\omega}\times \vec{r}) $
+
+
+
+### Angular Momentum
+**Kinetic energy of rolling object**
+$\displaystyle E = \frac{1}{2}I_P \omega^2 = \frac{1}{2}(I_{CM} + MR^2) \omega^2 = \frac{1}{2}I_{CM} \omega^2 + \frac{1}{2}Mv_{CM}^2 = \frac{1}{2}(\frac{I_{CM}}{R^20} + M) v_{CM}^2 = K_r + K_t $
+
+**Gravity torque**
+$\displaystyle \vec{\tau} = \sum\vec{r}_i \times m_i\vec{g} = \sum(m_i\vec{r}_i)\times \vec{g} = \vec{r}_{CM} \times M\vec{g} $
+
+**Angular Momentum**
+$\displaystyle \bold{\tau} = \bold{r\times F} = \bold{r\times}\frac{d\bold{p}}{dt} $
+
+$\displaystyle \frac{d}{dt}(\bold{r\times p}) = \bold{r\times}\frac{d\bold{p}}{dt} + \frac{d\bold{r}}{dt}\bold{\times p} = \bold{r\times F} + \bold{v}\times (m\bold{v}) = \bold{\tau} $
+
+$\Rightarrow \bold{L \equiv r\times p} $
+
+$\displaystyle \sum \bold{\tau}_{ext} = \frac{d\bold{L}}{dt} = 0 \\
+\Rightarrow \bold{L} = constant $
+
+$\displaystyle L_z = \sum r_{i,\perp} (m_i \omega r_{i,\perp}) = \sum (m_ir_{i,\perp}^2)\omega = I\omega \\
+\sum \tau_{ext,z} = \frac{dL_z}{dt} = I\frac{d\omega}{dt} = I\alpha $
+<br>
+
+$\vec{L} = \sum \vec{r}_i\times (m_i \vec{v}_i) = \sum m_i\vec{r}_i\times (\vec{\omega} \times \vec{r}_i) = \sum m_i[r_i^2\vec{\omega} - \vec{r}_i(\vec{r}_i \times \vec{\omega})] $
+
+$L_x = \omega_x\sum m_i(y_i^2 + z_i^2) - \omega_y\sum m_ix_iy_i - \omega_y\sum m_ix_iz_i \\
+L_y = - \omega_x\sum m_iy_ix_i + \omega_y\sum (z_i^2 + x_i^2) - \omega_y\sum m_iy_iz_i \\
+L_z = - \omega_x\sum m_iz_ix_i - \omega_y\sum m_iz_iy_i + \omega_y\sum m_i(x_i^2 + y_i^2) \\ $
+
+$\begin{pmatrix} L_x \\ L_y \\ L_z \end{pmatrix}
+= \begin{pmatrix}
+    I_{xx} & I_{xy} & I{xz} \\
+    I_{yx} & I_{yy} & I{yz} \\
+    I_{zx} & I_{zy} & I{zz} \\
+\end{pmatrix}
+\begin{pmatrix} \omega_x \\ \omega_y \\ \omega_z \end{pmatrix} $
+
 
 
 
