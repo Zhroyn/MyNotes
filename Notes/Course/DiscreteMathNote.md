@@ -451,7 +451,7 @@ type k, is $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
   - **Distinguishable Objects and Indistinguishable Boxes**
     - Let $S(n, j)$ denote the number of ways to distribute $n$ distinguishable objects into $j$ indistinguishable boxes so that no box is empty. The numbers $S(n, j)$ are called **Stirling numbers of the second kind**.
     - It can be shown that $\displaystyle S(n, j) = \frac{1}{j!}\sum_{i=0}^{j-1} (-1)^i\begin{pmatrix} j \\ i \end{pmatrix} (j-i)^n $
-    - So the number of ways to distribute $n$ distinguishable objects into $k$ indistinguishable boxes equals $\displaystyle \sum_{j=1}^k S(n, j) = \frac{1}{j!}\sum_{i=0}^{j-1} (-1)^i\begin{pmatrix} j \\ i \end{pmatrix} (j-i)^n $
+    - So the number of ways to distribute $n$ distinguishable objects into $k$ indistinguishable boxes equals $\displaystyle \sum_{j=1}^k S(n, j) = \sum_{j=1}^k\frac{1}{j!}\sum_{i=0}^{j-1} (-1)^i\begin{pmatrix} j \\ i \end{pmatrix} (j-i)^n $
   - **Indistinguishable Objects and Indistinguishable Boxes** : No simple closed formula exists for this number.
 
 
