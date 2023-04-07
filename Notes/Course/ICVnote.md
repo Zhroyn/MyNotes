@@ -10,6 +10,14 @@
   - [Description](#description)
     - [SIFT Descriptor](#sift-descriptor)
   - [Matching](#matching)
+- [Image Warping](#image-warping)
+  - [Affine Transformation](#affine-transformation)
+  - [Projective Transformation (Homography)](#projective-transformation-homography)
+  - [Implement](#implement)
+- [Image Stitching](#image-stitching)
+  - [Affine Transformation](#affine-transformation-1)
+  - [Projective Transformation](#projective-transformation)
+  - [RANSAC](#ransac)
 
 <!-- /TOC -->
 
@@ -152,6 +160,112 @@ $\displaystyle f = \frac{\lambda_1\lambda_2}{\lambda_1 + \lambda_2}
 - Find mutual nearest neighbors
 - $f_2$ is the nearest neighbor of $f_1$ in $I_2$
 - $f_1$ is the nearest neighbor of $f_2$ in $I_1$
+
+
+
+
+
+
+
+## Image Warping
+### Affine Transformation
+- Affine Map = Linear Map + Translation
+
+$\begin{pmatrix}x'\\y' \end{pmatrix}
+= \begin{pmatrix}a & b \\ c & d \end{pmatrix}
+\begin{pmatrix}x \\ y \end{pmatrix} + 
+\begin{pmatrix}t_x \\ t_y \end{pmatrix} $
+- Using homogeneous coordinates
+
+$\begin{pmatrix}x'\\ y' \\ 1 \end{pmatrix}
+= \begin{pmatrix}a &b & t_x \\ c & d & t_y \\ 0 & 0 & 1 \end{pmatrix}
+\begin{pmatrix}x \\ y \\ 1 \end{pmatrix} $
+
+### Projective Transformation (Homography)
+$\begin{pmatrix}x'\\ y' \\ 1 \end{pmatrix}
+= \begin{pmatrix}h_{00} & h_{01} & h_{02} \\ h_{10} & h_{11} & h_{12} \\ h_{20} & h_{21} & h_{22} \end{pmatrix}
+\begin{pmatrix}x \\ y \\ 1 \end{pmatrix} $
+
+
+- Homography matrix is up to scale (can be multiplied by a scalar), which means the degree of freedom is 8
+- We usually constrain the length of the vector $[h_{00}, h_{01}, …, h_{22}]$ to be 1
+- Can generate any synthetic camera view as long as it has the same center of projection
+
+### Implement
+- **Forward Warping** : Send each pixel in $f(x, y)$ to its corresponding location in $g(x', y')$ by $(x', y') = T(x, y)$
+- **Inverse Warping** : Get each pixel in $g(x', y')$ from its corresponding location in $f(x, y)$ by $(x, y) = T^{-1}(x', y')$
+- **Interpolation** : including nearest neighbor, bilinear, bicubic, sinc, etc.
+
+
+
+
+
+## Image Stitching
+### Affine Transformation
+$\begin{bmatrix}x'\\ y' \\ 1 \end{bmatrix}
+= \begin{bmatrix}a &b & c \\ d & e & f \\ 0 & 0 & 1 \end{bmatrix}
+\begin{bmatrix}x \\ y \\ 1 \end{bmatrix}
+= \begin{bmatrix}ax+by+c \\ dx+ey+f \\ 1 \end{bmatrix} $
+
+$\begin{bmatrix}x' \\ y' \end{bmatrix}
+= \begin{bmatrix}x & y & 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & x & y & 1 \end{bmatrix}
+= \begin{bmatrix}a \\ b \\ c \\ d \\ e \\ f \end{bmatrix} $
+
+$\begin{bmatrix}
+  x_1 & y_1 & 1 & 0 & 0 & 0 \\
+  0 & 0 & 0 & x_1 & y_1 & 1 \\
+  x_2 & y_2 & 1 & 0 & 0 & 0 \\
+  0 & 0 & 0 & x_2 & y_2 & 1 \\
+  \vdots & \vdots & \vdots & \vdots & \vdots & \vdots \\
+  x_n & y_n & 1 & 0 & 0 & 0 \\
+  0 & 0 & 0 & x_n & y_n & 1 \\
+\end{bmatrix}
+\begin{bmatrix}a \\ b \\ c \\ d \\ e \\ f \end{bmatrix}
+= \begin{bmatrix}x_1' \\ y_1' \\ x_2' \\ y_2' \\ \vdots \\ x_n' \\ y_n' \end{bmatrix} $
+
+$\Rightarrow \bold{\underset{2n\times 6}{A}\; \underset{6\times 1}{t} = \underset{2n\times 1}{b}} $
+
+- Least squares: find $\bold{t} $ that minimizes $\bold{||At - b||^2}$
+- The solution is given by
+$$
+\bold{A^TAt = A^tb } \\
+\bold{t = (A^TA)^{-1}A^tb } \\
+$$
+
+### Projective Transformation
+$\begin{bmatrix}x'\\ y' \\ 1 \end{bmatrix}
+\cong \begin{bmatrix}h_{00} & h_{01} & h_{02} \\ h_{10} & h_{11} & h_{12} \\ h_{20} & h_{21} & h_{22} \end{bmatrix}
+\begin{bmatrix}x \\ y \\ 1 \end{bmatrix} $
+
+$\displaystyle x_i' = \frac{h_{00}x_i + h_{01}y_i + h_{02}}{h_{20}x_i + h_{21}y_i + h_{22}} \\~\\
+\displaystyle y_i' = \frac{h_{10}x_i + h_{11}y_i + h_{12}}{h_{20}x_i + h_{21}y_i + h_{22}} $
+
+$x_i'(h_{20}x_i + h_{21}y_i + h_{22}) = h_{00}x_i + h_{01}y_i + h_{02}\\
+y_i'(h_{20}x_i + h_{21}y_i + h_{22}) = h_{10}x_i + h_{11}y_i + h_{12} $
+
+$\begin{bmatrix}
+  x_1 & y_1 & 1 & 0 & 0 & 0 & -x_1'x_1 & -x_1'y_1 & -x_1' \\
+  0 & 0 & 0 & x_1 & y_1 & 1 & -y_1'x_1 & -y_1'y_1 & -y_1' \\
+  &&&& \vdots \\
+  x_n & y_n & 1 & 0 & 0 & 0 & -x_n'x_n & -x_n'y_n & -x_n' \\
+  0 & 0 & 0 & x_n & y_n & 1 & -y_n'x_n & -y_n'y_n & -y_n'\\
+\end{bmatrix}
+\begin{bmatrix}h_{00} \\ h_{01} \\ h_{02} \\ h_{10} \\ h_{11} \\ h_{12} \\ h_{20} \\ h_{21} \\ h_{22} \end{bmatrix}
+= \begin{bmatrix}0 \\ 0 \\ \vdots \\ 0 \\ 0 \end{bmatrix} $
+
+$\Rightarrow \bold{\underset{2n\times 9}{A}\; \underset{9\times 1}{h} = \underset{2n\times 1}{0}} $
+
+- Least squares: find $\bold{h} $ that minimizes $\bold{||Ah - 0||^2}$
+- Since $\bold{h}$ is defined up to scale, solve for unit vector $\hat{\bold{h}}$
+- Solution: $\hat{\bold{h}}$ = eigenvector of $\bold{A^TA}$ with smallest eigenvalue
+
+### RANSAC
+1. Randomly choose ***s*** samples. Typically ***s*** = minimum sample size that lets you fit a model
+1. Fit a model (e.g., transformation matrix) to those samples
+2. Count the number of inliers that approximately fit the model
+3. Repeat N times
+4. Choose the model that has the largest set of inliers
+
 
 
 
