@@ -6,6 +6,7 @@
   - [List environments](#list-environments)
   - [Save environment](#save-environment)
   - [Activate environment](#activate-environment)
+  - [Rename environment](#rename-environment)
 - [Package](#package)
   - [Install package](#install-package)
   - [Remove package](#remove-package)
@@ -43,6 +44,9 @@
 - `conda activate ENV` Activate the new environment to use it
 - `conda deactivate` Deactivate the current environment
 
+#### Rename environment
+- `conda create -n/--name NEWENV --clone OLDENV`
+- `conda env remove -n\--name OLDENV`
 
 
 
