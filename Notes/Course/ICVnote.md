@@ -18,6 +18,10 @@
   - [Affine Transformation](#affine-transformation-1)
   - [Projective Transformation](#projective-transformation)
   - [RANSAC](#ransac)
+- [Structure from Motion](#structure-from-motion)
+  - [Camera Model](#camera-model)
+  - [Camera Calibration](#camera-calibration)
+  - [Structure from Motion](#structure-from-motion-1)
 
 <!-- /TOC -->
 
@@ -266,6 +270,84 @@ $\Rightarrow \bold{\underset{2n\times 9}{A}\; \underset{9\times 1}{h} = \underse
 3. Repeat N times
 4. Choose the model that has the largest set of inliers
 
+
+
+
+
+
+
+
+## Structure from Motion
+### Camera Model
+**World-to-Camera Transformation**
+
+Position : $c_w$
+Orientation : $R = 
+\begin{bmatrix} \hat{x_c} \\ \hat{y_c} \\ \hat{z_c} \end{bmatrix} 
+= \begin{bmatrix}
+  r_{11} & r_{12} & r_{13} \\ 
+  r_{21} & r_{22} & r_{23} \\ 
+  r_{31} & r_{32} & r_{33} \\ 
+\end{bmatrix} $
+
+$\bold{x_c} = R(\bold{x_w - c_w}) = R\bold{x_w} - R\bold{c_w} = R\bold{x_w} + \bold{t}, \bold{t} = -R\bold{c_w} $
+
+Extrinsic Matrix : $\bold{x_c} = 
+\begin{bmatrix} x_c \\ y_c \\ z_c \\ 1 \end{bmatrix}
+= \begin{bmatrix}
+  r_{11} & r_{12} & r_{13} & t_x \\ 
+  r_{21} & r_{22} & r_{23} & t_y \\ 
+  r_{31} & r_{32} & r_{33} & t_z \\ 
+  0 & 0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix} x_w \\ y_w \\ z_w \\ 1 \end{bmatrix} $
+
+
+**Perspective Projection**
+
+$$\bold{x_c} = \begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix} \\~\\
+\Rightarrow \bold{x_i} = \bold{f} \cdot \begin{bmatrix} x_c/z_c \\ y_c/z_c \\ 1 \end{bmatrix} $$
+
+
+**Image Plane to Image Sensor Mapping**
+
+If $m_x$ and $m_y$ are the pixel densities (pixels/mm) in x and y directions, and pixel $(c_x, c_y)$ is the Principle Point where the optical axis pierces the sensor, then pixel coordinates are:
+$$\displaystyle u = m_xf\frac{x_c}{z_c}, \displaystyle v = m_yf\frac{y_c}{z_c} $$
+
+If $f_x = m_xf$, $f_y = m_yf $, then in homogenous coordinates:
+$$
+\begin{bmatrix} u \\ v \\ 1 \end{bmatrix}
+= \begin{bmatrix}
+  f_x & 0 & c_x \\ 
+  0 & f_y & c_y \\ 
+  0 & 0 & 1
+\end{bmatrix}
+\begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix}
+$$
+
+Intrinsic Matrix : $\bold{\tilde{u}_c} = 
+\begin{bmatrix} \tilde{u} \\ \tilde{v} \\ \tilde{w} \end{bmatrix}
+= \begin{bmatrix}
+  f_x & 0 & c_x & 0 \\ 
+  0 & f_y & c_y & 0 \\ 
+  0 & 0 & 1 & 0
+\end{bmatrix}
+\begin{bmatrix} x_c \\ y_c \\ z_c \\ 1 \end{bmatrix} $
+
+**Projection Matrix**
+$$
+\bold{\tilde{u}} = M_{int}\bold{\tilde{x}_c} \\~\\
+\bold{\tilde{x}_c} = M_{ext}\bold{\tilde{x}_w} \\~\\
+\bold{\tilde{u}} = M_{int}M_{ext}\bold{\tilde{x}_w} = P_{3\times 4}\bold{\tilde{x}_w} \\~\\
+$$
+
+
+### Camera Calibration
+
+
+
+
+### Structure from Motion
 
 
 
