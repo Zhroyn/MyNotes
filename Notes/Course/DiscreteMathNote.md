@@ -30,6 +30,9 @@
   - [6.3 Permutations and Combinations](#63-permutations-and-combinations)
   - [6.4 Binomial Coefficients and Identities](#64-binomial-coefficients-and-identities)
   - [6.5 Generalized Permutations and Combinations](#65-generalized-permutations-and-combinations)
+  - [6.6 Generating Permutations and Combinations](#66-generating-permutations-and-combinations)
+- [Advanced Counting Techniques](#advanced-counting-techniques)
+  - [8.1 Applications of Recurrence Relations](#81-applications-of-recurrence-relations)
 
 <!-- /TOC -->
 
@@ -454,6 +457,26 @@ type k, is $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
     - So the number of ways to distribute $n$ distinguishable objects into $k$ indistinguishable boxes equals $\displaystyle \sum_{j=1}^k S(n, j) = \sum_{j=1}^k\frac{1}{j!}\sum_{i=0}^{j-1} (-1)^i\begin{pmatrix} j \\ i \end{pmatrix} (j-i)^n $
   - **Indistinguishable Objects and Indistinguishable Boxes** : No simple closed formula exists for this number.
 
+
+
+### 6.6 Generating Permutations and Combinations
+- A general method can be described for producing the next larger permutation in increasing order following a given permutation $a_1a_2 ⋯ a_n$:
+  - First, find the integers $a_j$ and $a_{j+1}$ with $a_{j} < a_{j+1}$ and $a_{j+1} > a_{j+2} > ⋯ > a_{n}$, that is, the last pair of adjacent integers in the permutation where the first integer in the pair is smaller than the second.
+  - Then, the next larger permutation in lexicographic order is obtained by putting in the $j$th position the least integer among $a_{j+1}, a_{j+2}, ⋯, a_{n}$ that is greater than $a_j$, and then listing in increasing order the rest of the integers $a_j, a_{j+1}, ⋯, a_{n}$ in positions $j + 1$ to $n$.
+-  The next r-combination after $a_1a_2 ⋯ a_r$ can be obtained in the following way:
+   - First, locate the last element $a_i$ in the sequence such that $a_i ≠ n − r + i$.
+   - Then, replace $a_i$ with $a_i + 1$ and $a_j$ with $a_i + j − i + 1$, for $j = i + 1, i + 2, … , r$.
+
+
+
+
+
+
+
+
+## Advanced Counting Techniques
+### 8.1 Applications of Recurrence Relations
+- A rule for determining subsequent terms from those that precede them, is called a **recurrence relation**
 
 
 
