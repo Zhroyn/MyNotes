@@ -14,6 +14,9 @@
   - [Moment of Inertia of differernt Objects](#moment-of-inertia-of-differernt-objects)
   - [Cross product and Coriolis force](#cross-product-and-coriolis-force)
   - [Angular Momentum](#angular-momentum)
+- [Oscillatory Motion](#oscillatory-motion)
+  - [Equilibrium](#equilibrium)
+  - [Simple Harmonic Oscillation](#simple-harmonic-oscillation)
 
 <!-- /TOC -->
 
@@ -229,10 +232,17 @@ $\vec{F}_R = \vec{F} - 2m\vec{\omega}\times \vec{v}_R - m \vec{\omega}\times(\ve
 
 ### Angular Momentum
 **Kinetic energy of rolling object**
-$\displaystyle E = \frac{1}{2}I_P \omega^2 = \frac{1}{2}(I_{CM} + MR^2) \omega^2 = \frac{1}{2}I_{CM} \omega^2 + \frac{1}{2}Mv_{CM}^2 = \frac{1}{2}(\frac{I_{CM}}{R^20} + M) v_{CM}^2 = K_r + K_t $
+$\displaystyle \begin{aligned}
+E &= \frac{1}{2}I_P \omega^2 = \frac{1}{2}(I_{CM} + MR^2) \omega^2 \\
+&= \frac{1}{2}I_{CM} \omega^2 + \frac{1}{2}Mv_{CM}^2 \\
+&= \frac{1}{2}(\frac{I_{CM}}{R^2} + M) v_{CM}^2 \\
+&= K_r + K_t
+\end{aligned} $
 
 **Gravity torque**
+
 $\displaystyle \vec{\tau} = \sum\vec{r}_i \times m_i\vec{g} = \sum(m_i\vec{r}_i)\times \vec{g} = \vec{r}_{CM} \times M\vec{g} $
+- The center of gravity is located at the center of mass as long as the object is in a uniform gravitational field : $\vec{r}_{CM} = \vec{r}_{CG}$
 
 **Angular Momentum**
 $\displaystyle \bold{\tau} = \bold{r\times F} = \bold{r\times}\frac{d\bold{p}}{dt} $
@@ -261,6 +271,49 @@ $\begin{pmatrix} L_x \\ L_y \\ L_z \end{pmatrix}
     I_{zx} & I_{zy} & I{zz} \\
 \end{pmatrix}
 \begin{pmatrix} \omega_x \\ \omega_y \\ \omega_z \end{pmatrix} $
+
+
+
+
+
+
+
+
+## Oscillatory Motion
+### Equilibrium
+- An object is in equilibrium if it is in both translational and rotational equilibrium, which means that both the linear acceleration and the angular acceleration are zero
+- If an object is in equilibrium and the net torque is zero about one point, then the net torque must be zero about any other point
+$\displaystyle \begin{aligned}
+\sum \bold{\tau}_{O'} &= \bold{(r_1-r')\times F_1 + (r_2-r')\times F_2 + \cdots} \\
+&= \bold{r_1\times F_1 + r_2\times F_2 + \cdots - r'(F_1 + F_2 + \cdots) } \\
+&= \sum \tau_O - \bold{r' \sum F} \\
+&= \sum \tau_O
+\end{aligned} $
+
+- Positions of **stable equilibrium** correspond to points for which $U(x)$ is a minimum : $\displaystyle \frac{dU}{dx}=0, \frac{d^2U}{dx^2}>0 $
+- Quite generically, we expect linear restoring force if we neglect the higher order terms, which are usually small if we stay close enough to the equilibrium, for Taylor expansion of $U(x)$. This universal family of motion is known as the **simple harmonic motion**
+
+### Simple Harmonic Oscillation
+- An object moves with simple harmonic motion whenever its acceleration is proportional to its displacement from some equilibrium position and is oppositely directed
+$\displaystyle F_s = -kx = ma\\
+a = -\frac{k}{m} x \\$
+
+$\displaystyle
+\text{Define } \omega = \sqrt{k/m }, \\
+\text{then } \frac{d^2x}{dt^2} = -\omega^2x,\\
+\Rightarrow x = A\cos(\omega t + \phi) \\
+\Rightarrow v = -A\omega\sin(\omega t + \phi) \\
+\Rightarrow a = -A\omega^2\cos(\omega t + \phi) \\
+$
+
+$\displaystyle T = \frac{2\pi}{\omega}, f = \frac{\omega}{2\pi}, \omega = 2\pi f $
+
+$\displaystyle K = \frac{1}{2}mv^2 = \frac{1}{2}m\omega^2A^2\sin^2(\omega t + \phi) = \frac{1}{2}k^2A^2\sin^2(\omega t + \phi) \\
+U = \frac{1}{2}kx^2 = \frac{1}{2}kA^2\cos^2(\omega t + \phi) \\ 
+\Rightarrow E = K + U = \frac{1}{2}kA^2 $
+
+
+
 
 
 
