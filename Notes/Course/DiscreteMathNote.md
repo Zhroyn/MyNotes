@@ -480,19 +480,39 @@ type k, is $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
 - A rule for determining subsequent terms from those that precede them, is called a **recurrence relation**
 
 ### 8.2 Solving Linear Recurrence Relations
-- A **linear homogeneous recurrence relation of degree k with constant coefficients** is a recurrence relation of the form $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$, where $c_1, c_2, … , c_k$ are real numbers, and $c_k ≠ 0$
+**Linear Homogeneous Recurrence Relations**
+- A **linear homogeneous recurrence relation of degree k with constant coefficients** is a recurrence relation of the form $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$.
+- $r^k − c_1r^{k−1} − c_2r^{k−2} − ⋯ − c_{k−1}r − c_k = 0$ is called the **characteristic equation** of the recurrence relation.
 <br>
 
-- Let $c_1$ and $c_2$ be real numbers. Suppose that $r_2 − c_1r − c_2 = 0$ has only one root $r_0$. Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_n^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
-- Let $c_1$ and $c_2$ be real numbers with $c_2 ≠ 0$. Suppose that $r_2 − c_1r − c_2 = 0$ has two distinct roots $r_1$ and $r_2$. Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_0^n + \alpha_2nr_0^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
+- **THEOREM 1** : Let $c_1$ and $c_2$ be real numbers. Suppose that $r_2 − c_1r − c_2 = 0$ has only one root $r_0$. Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_n^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
+- **THEOREM 2** : Let $c_1$ and $c_2$ be real numbers with $c_2 ≠ 0$. Suppose that $r_2 − c_1r − c_2 = 0$ has two distinct roots $r_1$ and $r_2$. Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_0^n + \alpha_2nr_0^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
 <br>
 
-- Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $k$ distinct roots $r_1, r_2, … , r_k$. Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_2^n + ⋯ + \alpha_kr_k^n$ for $n = 0, 1, 2, …$
-- Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $t$ distinct roots $r_1, r_2, … , r_t$ with multiplicities $m_1, m_2, … , m_t$, respectively, so that $m_1 + m_2 + ⋯ + m_t = k$. Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if 
+- **THEOREM 3** : Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $k$ distinct roots $r_1, r_2, … , r_k$. Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_2^n + ⋯ + \alpha_kr_k^n$ for $n = 0, 1, 2, …$
+- **THEOREM 4** : Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $t$ distinct roots $r_1, r_2, … , r_t$ with multiplicities $m_1, m_2, … , m_t$, respectively, so that $m_1 + m_2 + ⋯ + m_t = k$. Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if 
   $\begin{aligned} a_n = &(\alpha_{1,0} + \alpha_{1,1}n + ⋯ + \alpha_{1,m_1-1}n^{m_1-1})r_1^n \\
   &+ (\alpha_{2,0} + \alpha_{2,1}n + ⋯ + \alpha_{2,m_2-1}n^{m_2-1})r_2^n \\
   &+ ⋯ + (\alpha_{t,0} + \alpha_{t,1}n + ⋯ + \alpha_{t,m_t-1}n^{m_t-1})r_t^n \end{aligned}$ 
   for $n = 0, 1, 2, …$
+
+
+**Linear Nonhomogeneous Recurrence Relations**
+- A **linear nonhomogeneous recurrence relation with constant coefficients** is a recurrence relation of the form $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k} + F(n)$.
+- The recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ is called the **associated homogeneous recurrence relation**.
+<br>
+
+- **THEOREM 5** : If $\{a^{(p)}_n\}$ is a particular solution of the nonhomogeneous linear recurrence relation with constant coefficients, then every solution is of the form $\{a^{(p)}_n + a^{(h)}_n \}$, where $\{a^{(h)}_n\}$ is a solution of the associated homogeneous recurrence relation.
+<br>
+
+- **THEOREM 6** : Suppose that $\{a^n\}$ satisfies the linear nonhomogeneous recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k} + F(n)$, where
+  $\qquad F(n) = (b_tn^t + b_{t−1}n^{t−1} + ⋯ + b_1n + b_0)s^n$.
+  When $s$ is not a root of the characteristic equation of the associated linear homogeneous recurrence relation, there is a particular solution of the form
+  $\qquad (p_tn^t + p_{t−1}n^{t−1} + ⋯ + p_1n + p_0)s^n$.
+  When s is a root of this characteristic equation and its multiplicity is $m$, there is a particular solution of the form
+  $\qquad n^m(p_tn^t + p_{t−1}n^{t−1} + ⋯ + p_1n + p_0)s^n$.
+
+
 
 
 
