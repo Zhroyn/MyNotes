@@ -34,6 +34,7 @@
 - [Advanced Counting Techniques](#advanced-counting-techniques)
   - [8.1 Applications of Recurrence Relations](#81-applications-of-recurrence-relations)
   - [8.2 Solving Linear Recurrence Relations](#82-solving-linear-recurrence-relations)
+  - [8.4 Generating Functions](#84-generating-functions)
 
 <!-- /TOC -->
 
@@ -115,10 +116,10 @@ propositions
 - $(p → r) ∨ (q → r) ≡ (p ∧ q) → r$
 <br>
 
-- $p ↔ q ≡ (p → q) ∧ (q → p)$
-- $p ↔ q ≡ ¬p ↔ ¬q$
-- $p ↔ q ≡ (p ∧ q) ∨ (¬p ∧ ¬q)$
-- $¬(p ↔ q) ≡ p ↔ ¬q$
+- $p \leftrightarrow q ≡ (p → q) ∧ (q → p)$
+- $p \leftrightarrow q ≡ ¬p \leftrightarrow ¬q$
+- $p \leftrightarrow q ≡ (p ∧ q) ∨ (¬p ∧ ¬q)$
+- $¬(p \leftrightarrow q) ≡ p \leftrightarrow ¬q$
 <br>
 
 - $p \oplus q \equiv (p \land \neg q)\vee(\neg p \land q)$
@@ -139,7 +140,7 @@ propositions
 <br>
 
 - The notation $∀xP(x)$ denotes the universal quantification of $P(x)$. Here $\forall$ is called the **universal quantifier**. An element for which $P(x)$ is false is called a **counterexample** to $∀xP(x)$
-- The notation $∃xP(x)$ denotes the existential quantification of $P(x)$. Here $\exist$ is called the **existential quantifier**
+- The notation $∃xP(x)$ denotes the existential quantification of $P(x)$. Here $\exists$ is called the **existential quantifier**
 - The notation $∃!xP(x)$ or $∃_1xP(x)$ states “There exists a unique $x$ such that $P(x)$ is true.” Here $∃!$ is called the **uniqueness quantifier**
 - The quantifiers $∀$ and $∃$ have higher precedence than all logical operators from propositional calculus
 <br>
@@ -149,7 +150,7 @@ propositions
 <br>
 
 - $∀x(P(x) ∧ Q(x)) \equiv ∀xP(x) ∧ ∀xQ(x)$
-- $\exist x(P(x) \vee Q(x)) \equiv \exist xP(x) \vee \exist xQ(x)$
+- $\exists x(P(x) \vee Q(x)) \equiv \exists xP(x) \vee \exists xQ(x)$
 - De Morgan’s laws for quantifiers : $¬∀xP(x) ≡ ∃x ¬P(x)$, $¬∃xQ(x) ≡ ∀x ¬Q(x)$
 
 
@@ -259,13 +260,13 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 |$A ∩ U = A$ <br> $A ∪∅= A$ | Identity laws |
 |$A ∪ U = U$ <br> $A ∩∅=∅$ | Domination laws  |
 |$A ∪ A = A$ <br> $A ∩ A = A$ | Idempotent laws  |
-|$(A) = A$ | Complementation law |
+|$\overline{(\bar A)} = A$ | Complementation law |
 |$A ∪ B = B ∪ A$ <br> $A ∩ B = B ∩ A$ | Commutative laws |
 |$A ∪ (B ∪ C) = (A ∪ B) ∪ C$ <br> $A ∩ (B ∩ C) = (A ∩ B) ∩ C$ | Associative laws |
 |$A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)$ <br> $A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)$ | Distributive laws |
-|$A ∩ B = A ∪ B$ <br> $A ∪ B = A ∩ B$ | De Morgan's laws |
+|$\overline{(A ∩ B)} = \bar A ∪ \bar B$ <br> $\overline{(A ∪ B)} = \bar A ∩ \bar B$ | De Morgan's laws |
 |$A ∪ (A ∩ B) = A$ <br> $A ∩ (A ∪ B) = A$ | Absorption laws |
-|$A ∪ A = U$ <br> $A ∩ A = ∅$ | Complement laws |
+|$A ∪ \bar A = U$ <br> $A ∩ \bar A = ∅$ | Complement laws |
 
 - A **multiset** (short for multiple-membership set) $\{m_1 ⋅ a_1, m_2 ⋅ a_2, … , m_r ⋅ a_r\}$ is an unordered collection of elements where an element can occur as a member more than once. The numbers $m_i , i = 1, 2, … , r$, are called the **multiplicities** of the elements $a_i , i = 1, 2, … , r$
 - In the **union** of the multisets P and Q, the multiplicity is the maximum
@@ -334,7 +335,7 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 - Suppose that $f_1(x)$ is $O(g_1(x))$ and that $f_2(x)$ is $O(g_2(x))$. Then $(f_1 + f_2)(x)$ is $O(g(x))$, where $g(x) = (max(|g_1(x)|, |g_2(x)|)$ for all $x$
 - Suppose that $f_1(x)$ is $O(g_1(x))$ and that $f_2(x)$ is $O(g_2(x))$. Then $(f_1f_2)(x)$ is $O(g_1(x)g_2(x))$
-- Let $f(x) = a_nx_n + a_{n−1}x_{n−1} + ⋯ + a_1x + a_0$, where $a_0, a_1, … , a_n$ are real numbers with $a_n ≠ 0$. Then $f(x)$ is of order $x_n$
+- Let $f(x) = a_nx^n + a_{n−1}x^{n−1} + ⋯ + a_1x + a_0$, where $a_0, a_1, … , a_n$ are real numbers with $a_n ≠ 0$. Then $f(x)$ is of order $x_n$
 
 ### 3.3 Complexity of Algorithms
 - An **algorithmic paradigm** is a general approach based on a particular concept that can be used to construct algorithms for solving a variety of problems
@@ -485,12 +486,21 @@ type k, is $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
 - $r^k − c_1r^{k−1} − c_2r^{k−2} − ⋯ − c_{k−1}r − c_k = 0$ is called the **characteristic equation** of the recurrence relation.
 <br>
 
-- **THEOREM 1** : Let $c_1$ and $c_2$ be real numbers. Suppose that $r_2 − c_1r − c_2 = 0$ has only one root $r_0$. Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_n^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
-- **THEOREM 2** : Let $c_1$ and $c_2$ be real numbers with $c_2 ≠ 0$. Suppose that $r_2 − c_1r − c_2 = 0$ has two distinct roots $r_1$ and $r_2$. Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_0^n + \alpha_2nr_0^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
+**THEOREM 1** : 
+Let $c_1$ and $c_2$ be real numbers. Suppose that $r_2 − c_1r − c_2 = 0$ has only one root $r_0$. 
+Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_n^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
+
+**THEOREM 2** : 
+Let $c_1$ and $c_2$ be real numbers with $c_2 ≠ 0$. Suppose that $r_2 − c_1r − c_2 = 0$ has two distinct roots $r_1$ and $r_2$. 
+Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_0^n + \alpha_2nr_0^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
 <br>
 
-- **THEOREM 3** : Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $k$ distinct roots $r_1, r_2, … , r_k$. Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_2^n + ⋯ + \alpha_kr_k^n$ for $n = 0, 1, 2, …$
-- **THEOREM 4** : Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $t$ distinct roots $r_1, r_2, … , r_t$ with multiplicities $m_1, m_2, … , m_t$, respectively, so that $m_1 + m_2 + ⋯ + m_t = k$. Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if 
+**THEOREM 3** : 
+Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $k$ distinct roots $r_1, r_2, … , r_k$. 
+Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_2^n + ⋯ + \alpha_kr_k^n$ for $n = 0, 1, 2, …$
+
+**THEOREM 4** : 
+Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $t$ distinct roots $r_1, r_2, … , r_t$ with multiplicities $m_1, m_2, … , m_t$, respectively, so that $m_1 + m_2 + ⋯ + m_t = k$. Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if 
   $\begin{aligned} a_n = &(\alpha_{1,0} + \alpha_{1,1}n + ⋯ + \alpha_{1,m_1-1}n^{m_1-1})r_1^n \\
   &+ (\alpha_{2,0} + \alpha_{2,1}n + ⋯ + \alpha_{2,m_2-1}n^{m_2-1})r_2^n \\
   &+ ⋯ + (\alpha_{t,0} + \alpha_{t,1}n + ⋯ + \alpha_{t,m_t-1}n^{m_t-1})r_t^n \end{aligned}$ 
@@ -500,20 +510,42 @@ type k, is $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
 **Linear Nonhomogeneous Recurrence Relations**
 - A **linear nonhomogeneous recurrence relation with constant coefficients** is a recurrence relation of the form $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k} + F(n)$.
 - The recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ is called the **associated homogeneous recurrence relation**.
+
+**THEOREM 5** : 
+If $\{a^{(p)}_n\}$ is a particular solution of the nonhomogeneous linear recurrence relation with constant coefficients, then every solution is of the form $\{a^{(p)}_n + a^{(h)}_n \}$, where $\{a^{(h)}_n\}$ is a solution of the associated homogeneous recurrence relation.
 <br>
 
-- **THEOREM 5** : If $\{a^{(p)}_n\}$ is a particular solution of the nonhomogeneous linear recurrence relation with constant coefficients, then every solution is of the form $\{a^{(p)}_n + a^{(h)}_n \}$, where $\{a^{(h)}_n\}$ is a solution of the associated homogeneous recurrence relation.
-<br>
-
-- **THEOREM 6** : Suppose that $\{a^n\}$ satisfies the linear nonhomogeneous recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k} + F(n)$, where
+**THEOREM 6** :
+Suppose that $\{a^n\}$ satisfies the linear nonhomogeneous recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k} + F(n)$, where
   $\qquad F(n) = (b_tn^t + b_{t−1}n^{t−1} + ⋯ + b_1n + b_0)s^n$.
-  When $s$ is not a root of the characteristic equation of the associated linear homogeneous recurrence relation, there is a particular solution of the form
+When $s$ is not a root of the characteristic equation of the associated linear homogeneous recurrence relation, there is a particular solution of the form
   $\qquad (p_tn^t + p_{t−1}n^{t−1} + ⋯ + p_1n + p_0)s^n$.
-  When s is a root of this characteristic equation and its multiplicity is $m$, there is a particular solution of the form
+When s is a root of this characteristic equation and its multiplicity is $m$, there is a particular solution of the form
   $\qquad n^m(p_tn^t + p_{t−1}n^{t−1} + ⋯ + p_1n + p_0)s^n$.
 
 
 
+### 8.4 Generating Functions
+- The **generating function** for the sequence $a_0, a_1, … , a_k, …$ of real numbers is the infinite series $\displaystyle G(x) = a_0 + a_1x + ⋯ + a_kx_k + ⋯ = \sum^∞_{k = 0} a_kx_k$.
+
+**THEOREM 1** : 
+- $\displaystyle f(x) + g(x) = \sum^∞_{k = 0} (a_k + b_k)x^k$
+- $\displaystyle x\cdot f'(x) = \sum^∞_{k = 0} k\cdot a_kx^k$
+- $\displaystyle f(x)g(x) = \sum^∞_{k = 0} ( \sum^k_{j=0}a_jb_{k−j})x^k$
+<br>
+
+$\displaystyle \begin{aligned}
+\begin{pmatrix} -n \\ r \end{pmatrix}
+&= \frac{(-n)(-n-1)\cdots (-n-r+1)}{r!} \\
+&= \frac{(-1)^r n(n+1)\cdots (n+r-1)}{r!} \\
+&= \frac{(-1)^r (n+r-1)(n+r-2)\cdots (n)}{r!} \\
+&= \frac{(-1)^r (n+r-1)!}{r!(n-1)!} \\
+&= (-1)^r \begin{pmatrix} n+r-1 \\ r \end{pmatrix} \\
+&= (-1)^r C(n+r-1, r)
+\end{aligned} $
+
+**THEOREM 2 (THE EXTENDED BINOMIAL THEOREM)** : 
+$\displaystyle (1 + x)^u = \sum^∞_{k = 0}\begin{pmatrix} u \\ k \end{pmatrix}x^k$
 
 
 
