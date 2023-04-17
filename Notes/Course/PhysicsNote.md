@@ -17,6 +17,12 @@
 - [Oscillatory Motion](#oscillatory-motion)
   - [Equilibrium](#equilibrium)
   - [Simple Harmonic Oscillation](#simple-harmonic-oscillation)
+  - [Applications of Oscillatory Motion](#applications-of-oscillatory-motion)
+    - [Pendulum](#pendulum)
+    - [Damped Oscillator](#damped-oscillator)
+    - [Forced Oscillation](#forced-oscillation)
+    - [Coupled Oscillators](#coupled-oscillators)
+    - [Elastic Properties](#elastic-properties)
 
 <!-- /TOC -->
 
@@ -293,6 +299,7 @@ $\displaystyle \begin{aligned}
 - Positions of **stable equilibrium** correspond to points for which $U(x)$ is a minimum : $\displaystyle \frac{dU}{dx}=0, \frac{d^2U}{dx^2}>0 $
 - Quite generically, we expect linear restoring force if we neglect the higher order terms, which are usually small if we stay close enough to the equilibrium, for Taylor expansion of $U(x)$. This universal family of motion is known as the **simple harmonic motion**
 
+
 ### Simple Harmonic Oscillation
 - An object moves with simple harmonic motion whenever its acceleration is proportional to its displacement from some equilibrium position and is oppositely directed
 $\displaystyle F_s = -kx = ma\\
@@ -314,6 +321,77 @@ U = \frac{1}{2}kx^2 = \frac{1}{2}kA^2\cos^2(\omega t + \phi) \\
 
 
 
+### Applications of Oscillatory Motion
+#### Pendulum
+**Simple Pendulum**
+$\displaystyle -mg\sin\theta = m\frac{d^2s}{dt^2} \\
+\Rightarrow \frac{d^2\theta}{dt^2} = -\frac{g}{L}\sin\theta \\
+\Rightarrow \frac{d^2\theta}{dt^2} = -\frac{g}{L}\theta \\ $
+$\displaystyle \omega = \sqrt{\frac{g}{L}}, T = \frac{2\pi}{\omega} = 2\pi\sqrt{\frac{L}{g}} $
+
+**Physical Pendulum**
+If a hanging object oscillates about a fixed axis that does not pass through its center of mass, and the object cannot be approximated as a point mass, we cannot treat the system as a simple pendulum. In this case the system is called a physical pendulum.
+
+$\displaystyle -mgd\sin\theta = I\frac{d^2\theta}{dt^2} \\
+\Rightarrow \frac{d^2\theta}{dt^2} = -\frac{mgd}{I}\theta \\ $
+$\displaystyle \omega = \frac{mgd}{I}, T = \frac{2\pi}{\omega} = 2\pi\sqrt{\frac{I}{mgd}} $
+
+**Torsional Pendulum**
+Restoring torque is proportional to the angular displacement.
+$\displaystyle \tau = -\kappa\theta = I\frac{d^2\theta}{dt^2} $
+
+
+#### Damped Oscillator
+$\displaystyle F_x = -kx - bv = ma_x \\
+\Rightarrow -kx - b\frac{dx}{dt} = m\frac{d^2x}{dt^2} $
+- **Weak Damping (Underdamped)** : 
+  $When \; b^2 - 4km < 0 \; or \; \displaystyle \frac{k}{m} > (\frac{b}{2m})^2, x = Ae^{-\frac{b}{2m}t} \cos(\omega t + \phi), $ 
+  where $\displaystyle \omega = \sqrt{\frac{k}{m} - (\frac{b}{2m})^2}. $
+- **Critical Damping** : 
+  $\displaystyle When \; b^2 - 4km = 0 \; or \; \frac{k}{m} = (\frac{b}{2m})^2, x = (A_1 + A_2t)e^{-\frac{b}{2m}t}. $
+- **Overdamped** : 
+  $\displaystyle When \; b^2 - 4km > 0 \; or \; \frac{k}{m} < (\frac{b}{2m})^2, x = A_1e^{r_1t} + A_2e^{r_2t} $, 
+  where $r_1, r_2$ is the solution of $mr^2 + km + b = 0.$
+
+
+#### Forced Oscillation
+$\displaystyle F_{ext}\cos\omega t - kx - b\frac{dx}{dt} = m\frac{d^2x}{dt^2} \\~\\
+\Rightarrow \left\{
+  \begin{aligned}
+    &x = A'e^{-\frac{b}{2m}t} \cos(\omega' t + \phi') + A\cos(\omega t + \phi) \\
+    &\omega' = \sqrt{\frac{k}{m} - (\frac{b}{2m})^2} \\
+    &A = \frac{F_{ext}/m}{\sqrt{(\omega^2 - \omega_0^2)^2 + (\frac{b\omega}{m})^2}} \\
+    &\omega_0 = \sqrt{\frac{k}{m}} \\
+    &\cos\phi =  \frac{\omega^2_0 - \omega^2}{\sqrt{(\omega^2 - \omega_0^2)^2 + (\frac{b\omega}{m})^2}}, \sin\phi =  \frac{-\frac{b\omega}{m}}{\sqrt{(\omega^2 - \omega_0^2)^2 + (\frac{b\omega}{m})^2}}
+  \end{aligned}
+\right. \\
+\text{it's the solution at underdamped situation.} $
+
+- When $\omega < \omega_0 = \sqrt{k/m}$, that is, the driving force is slow enough that the oscillator can follow the force after the transient motion decays.
+- When $\omega > \omega_0 = \sqrt{k/m}$, that is, the driving force is fast such the oscillator cannot follow the force and lags behind ($\pi$ out of phase). Note that the amplitude is smaller than that for slow drive.
+- When $\omega = \omega_0 = \sqrt{k/m}$, the amplitude quickly grows to a maximum. After the transient motion decays and the oscillator settles into steady state motion, the displacement $\pi/2$ out of phase with force. 
+  - The dramatic increase in amplitude near the **natural frequency** $w_0$ is called **resonance**, and for this reason $w_0$ is sometimes called the **resonance frequency** of the system.
+  - At resonance, the applied force is **in phase** with the velocity and that the power transferred to the oscillator is a maximum.
+
+
+
+#### Coupled Oscillators
+1. List the vibration equations for each object.
+2. Assume normal mode : $x_i = x_{i0}\cos(\omega t + \phi) $.
+3. Substitute and get the linear equations about the amplitude and frequency of each normal mode.
+4. Rerange the linear equations as matrix, and then calculate the eigenvalues and eigenvectors of the matrix, or find the eigenfrequency by solve $|A| = 0$.
+5. For each eigenvalue, we can get the frequency of a normal mode, and the relation between the amplitudes of objects in this normal mode from corresponding eigenvector.
+6. By the relation between amplitudes of all objects in all normal modes, We can write the displacement functions of all objects.
+
+
+#### Elastic Properties
+$\displaystyle \text{Elastic modulus} \equiv \frac{\text{stress}}{\text{strain}} $
+- Stress: A quantity that is proportional to the force causing a deformation; more specifically, stress is the external force acting on an object per unit cross-sectional area.
+- Strain: A measure of the degree of deformation.
+- Elastic modulus: The constant of proportionalitydepends on the material being deformed and on the nature of the deformation.
+- Young’s Modulus : $\displaystyle Y = \frac{F/A}{\Delta L/L_i} $
+- Shear Modulus : $\displaystyle Y = \frac{F/A}{\Delta x/h} $
+- Bulk Modulus : $\displaystyle Y = -\frac{F/A}{\Delta V/V_i} = -\frac{\Delta P}{\Delta V/V_i} $
 
 
 
