@@ -23,6 +23,7 @@
     - [Forced Oscillation](#forced-oscillation)
     - [Coupled Oscillators](#coupled-oscillators)
     - [Elastic Properties](#elastic-properties)
+- [Wave Motion](#wave-motion)
 
 <!-- /TOC -->
 
@@ -394,5 +395,15 @@ $\displaystyle \text{Elastic modulus} \equiv \frac{\text{stress}}{\text{strain}}
 - Bulk Modulus : $\displaystyle Y = -\frac{F/A}{\Delta V/V_i} = -\frac{\Delta P}{\Delta V/V_i} $
 
 
+## Wave Motion
+**Wave Function** : $y=f(x,t) $
+
+**Superposition Principle** : If two or more traveling waves are moving through a medium, the resultant wave function at any point is the **algebraic sum of the wave functions** of the individual waves.
+**Linear Waves** : Waves that obey the superposition principle are called linear waves. Waves that violate the superposition principle are called nonlinear waves. 
+**Interference** : The combination of separate waves in the same region of space to produce a resultant wave is called interference.
+
+**Reflection** : When the pulse reaches the fixed end of the string, the pulse moves back along the string in the opposite direction.
+**Free Boundary Condition** : When the string is tied to a light ring that is free to slide vertically on a smooth post, again, the pulse is reflected, but this time it is not inverted. 
+**Transmission** : We may have a situation in which the boundary is intermediate between these two extremes. In this case, part of the incident pulse is reflected and part undergoes transmission—that is, some of the pulse passes through the boundary.
 
 
