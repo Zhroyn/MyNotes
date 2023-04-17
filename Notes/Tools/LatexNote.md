@@ -231,6 +231,10 @@ f(x) &= 2x+1 \\
 \end{aligned}
 $
 
+$\mathbb{R}, \mathcal{R}, \mathscr{R} \\ 
+\mathbb{P}, \mathcal{P}, \mathscr{P} \\ 
+\mathbb{L}, \mathcal{L}, \mathscr{L} \\ $
+
 
 
 #### Greek Alphabet
