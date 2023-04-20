@@ -5,7 +5,8 @@
   - [Attributes](#attributes)
   - [Create Array](#create-array)
   - [Convert Array](#convert-array)
-  - [Index and slice](#index-and-slice)
+  - [Basic Operators](#basic-operators)
+    - [Index](#index)
   - [Search and count](#search-and-count)
   - [Sort](#sort)
   - [Concatenate](#concatenate)
@@ -17,6 +18,7 @@
   - [Basic operations](#basic-operations)
 - [Random](#random)
   - [Generate random number](#generate-random-number)
+  - [Choice Element](#choice-element)
 
 <!-- /TOC -->
 
@@ -55,38 +57,14 @@
 
 ## Array
 ### Attributes
-```py
-ndarray.flags    # Information about the memory layout of the array
-ndarray.shape    # Tuple of array dimensions
-ndarray.strides  # Tuple of bytes to step in each dimension when traversing array
-ndarray.ndim     # Number of array dimensions
-ndarray.data     # Python buffer object pointing to the start of the array's data
-ndarray.size     # Number of elements in the array
-ndarray.itemsize # Length of one array element in bytes
+- `ndarray.data` Python buffer object pointing to the start of the array's data
+- `ndarray.flags` Information about the memory layout of the array
+- `ndarray.itemsize` Length of one array element in bytes
+- `ndarray.ndim` Number of array dimensions
+- `ndarray.size` Number of elements in the array
+- `ndarray.shape` Tuple of array dimensions
+- `ndarray.strides` Tuple of bytes to step in each dimension when traversing array
 
-
->>> a.flags
-  C_CONTIGUOUS : True
-  F_CONTIGUOUS : False
-  OWNDATA : True
-  WRITEABLE : True
-  ALIGNED : True
-  WRITEBACKIFCOPY : False
->>> a.shape
-(2, 3)
->>> a.strides
-(12, 4)
->>> a.ndim
-2
->>> a.data
-<memory at 0x000002E067F039F0>
->>> a.size
-6
->>> a.itemsize
-4
->>> a.dtype
-dtype('int32')
-```
 
 ### Create Array
 - `np.array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0, like=None)`
@@ -131,10 +109,14 @@ dtype('int32')
 
 
 
-### Index and slice
+### Basic Operators
+#### Index
+- Support multi-dimension index : `a[1][1]` or `a[1, 1]`
+- Slice each dimension independently : `a[:, :, ::-1]` or `a[2:4, 2::-1, 1]`
+  - Return a view instead of a copy
+
 ```py
->>> a = np.array([[1, 2, 3], [4, 5, 6]])
-# Support multi-dimension index
+# 
 >>> a[1][1] or a[1, 1]
 5
 # Support index list or index array
@@ -584,6 +566,25 @@ endpoint : bool, optional
        If true, sample from the interval [low, high] instead of the
        default [low, high)
 ```
+
+
+### Choice Element
+- `np.random.choice(a, size=None, replace=True, p=None)` Generates a random sample from a given 1-D array
+  - `a` : 1-D array-like or int
+    - If an ndarray, a random sample is generated from its elements.
+    - If an int, the random sample is generated as if it were ``np.arange(a)``
+  - `size` : int or tuple of ints, optional
+    - If the given shape is, e.g., ``(m, n, k)``, then ``m * n * k`` samples are drawn. 
+    - Default is None, in which case a single value is returned.
+  - `replace` : boolean, optional
+    - Whether the sample is with or without replacement.
+    - Default is True, meaning that a value can be selected multiple times.
+  - `p` : 1-D array-like, optional
+    - The probabilities associated with each entry in a.
+    - If not given, the sample assumes a uniform distribution over all
+    entries in ``a``.
+
+
 
 
 
