@@ -5,6 +5,7 @@
   - [1.2 Applications of Propositional Logic](#12-applications-of-propositional-logic)
   - [1.3 Propositional Equivalences](#13-propositional-equivalences)
   - [1.4 Predicates and Quantifiers](#14-predicates-and-quantifiers)
+  - [1.5 Nested Quantifiers and Normal Form](#15-nested-quantifiers-and-normal-form)
   - [1.6 Rules of Inference](#16-rules-of-inference)
   - [1.7 Introduction to Proofs](#17-introduction-to-proofs)
   - [1.8 Proof Methods and Strategy](#18-proof-methods-and-strategy)
@@ -31,10 +32,6 @@
   - [6.4 Binomial Coefficients and Identities](#64-binomial-coefficients-and-identities)
   - [6.5 Generalized Permutations and Combinations](#65-generalized-permutations-and-combinations)
   - [6.6 Generating Permutations and Combinations](#66-generating-permutations-and-combinations)
-- [Advanced Counting Techniques](#advanced-counting-techniques)
-  - [8.1 Applications of Recurrence Relations](#81-applications-of-recurrence-relations)
-  - [8.2 Solving Linear Recurrence Relations](#82-solving-linear-recurrence-relations)
-  - [8.4 Generating Functions](#84-generating-functions)
 
 <!-- /TOC -->
 
@@ -78,6 +75,7 @@ propositions
 |$\vee$| 3 |
 |$\rightarrow$| 4 |
 |$\leftrightarrow$| 5 |
+
 
 ### 1.2 Applications of Propositional Logic
 - System specifications should be **consistent**, that is, they should not contain conflicting requirements that could be used to derive a contradiction
@@ -125,6 +123,7 @@ propositions
 - $p \oplus q \equiv (p \land \neg q)\vee(\neg p \land q)$
 - $p \downarrow p \equiv \neg p$
 - $(p \downarrow q)\downarrow(p \downarrow q) \equiv p \vee q$
+- $(p \downarrow p)\downarrow(q \downarrow q) \equiv p \land q$
 
 ### 1.4 Predicates and Quantifiers
 - Many mathematical statements assert that a property is true for all values of a variable in a particular domain, called the **domain of discourse**, often just referred to as the **domain**
@@ -151,7 +150,47 @@ propositions
 
 - $∀x(P(x) ∧ Q(x)) \equiv ∀xP(x) ∧ ∀xQ(x)$
 - $\exists x(P(x) \vee Q(x)) \equiv \exists xP(x) \vee \exists xQ(x)$
+- $∀xP(x) \vee ∀xQ(x) \Rightarrow ∀x(P(x) \vee Q(x))$
+- $\exists x(P(x) \land Q(x)) \Rightarrow \exists xP(x) \land \exists xQ(x)$
 - De Morgan’s laws for quantifiers : $¬∀xP(x) ≡ ∃x ¬P(x)$, $¬∃xQ(x) ≡ ∀x ¬Q(x)$
+
+
+### 1.5 Nested Quantifiers and Normal Form
+- A conjunction with disjunctive clauses as its conjuncts is said to be in **conjunctive normal form (CNF)** : $(A_{11} \vee … \vee A_{1n_1}) \land … \land (A_{k1} \vee … \vee A_{kn_k}).$
+- A disjunction with conjunctive clauses as its disjuncts is said to be in **disjunctive normal form (DNF)** : $(A_{11} \land … \land A_{1n_1}) \vee … \vee (A_{k1} \land … \land A_{kn_k}).$
+<br>
+
+- A minterm is a conjunction of literals in which each variable is represented exactly once.
+-  If a formula is expressed as a disjunction of minterms, it is said to be in **full disjunctive normal form**.
+<br>
+
+- A statement is in **prenex normal form** if it is of the form $Q_1x_1\cdots Q_nx_nB$, where $Q_i$ is $\forall$ or $\exists$ and the predicate $B$ is quantifier free. 
+- A formula with no quantifiers is regarded as a trivial case of a prenex normal form.
+<br>
+
+- $(\forall x P)\land Q = \forall xP\land Q $
+- $(\forall x P)\land Q = \forall xP\land Q $
+- $(\forall x P)\vee Q = \forall xP\vee Q $
+- $(\exists x P)\land Q = \forall xP\land Q $
+- $(\exists x P)\vee Q = \forall xP\vee Q $
+<br>
+
+- $(\forall x P)\rightarrow Q = \forall x(P\rightarrow Q) $
+- $(\exists x P)\rightarrow Q = \exists x(P\rightarrow Q) $
+- $P \rightarrow(\forall x Q) = \forall x(P\rightarrow Q) $
+- $P \rightarrow(\exists x Q) = \exists x(P\rightarrow Q) $
+<br>
+
+- $\forall xP(x) \land \forall xQ(x) \equiv \forall x(P(x) \land Q(x))$
+- $\forall xP(x) \land \exists xQ(x) \equiv \forall x\exists y(P(x) \land Q(y))$
+- $\exists xP(x) \land \forall xQ(x) \equiv \exists x\forall y(P(x) \land Q(y))$
+- $\exists xP(x) \land \exists xQ(x) \equiv \exists x\exists y(P(x) \land Q(y))$
+<br>
+
+- $\forall xP(x) \vee \forall xQ(x) \equiv \forall x\forall y(P(x) \vee Q(y))$
+- $\forall xP(x) \vee \exists xQ(x) \equiv \forall x\exists y(P(x) \vee Q(y))$
+- $\exists xP(x) \vee \forall xQ(x) \equiv \exists x\forall y(P(x) \vee Q(y))$
+- $\exists xP(x) \vee \exists xQ(x) \equiv \exists x(P(x) \vee Q(x))$
 
 
 ### 1.6 Rules of Inference
@@ -473,79 +512,6 @@ type k, is $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
 
 
 
-
-
-
-## Advanced Counting Techniques
-### 8.1 Applications of Recurrence Relations
-- A rule for determining subsequent terms from those that precede them, is called a **recurrence relation**
-
-### 8.2 Solving Linear Recurrence Relations
-**Linear Homogeneous Recurrence Relations**
-- A **linear homogeneous recurrence relation of degree k with constant coefficients** is a recurrence relation of the form $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$.
-- $r^k − c_1r^{k−1} − c_2r^{k−2} − ⋯ − c_{k−1}r − c_k = 0$ is called the **characteristic equation** of the recurrence relation.
-<br>
-
-**THEOREM 1** : 
-Let $c_1$ and $c_2$ be real numbers. Suppose that $r_2 − c_1r − c_2 = 0$ has only one root $r_0$. 
-Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_n^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
-
-**THEOREM 2** : 
-Let $c_1$ and $c_2$ be real numbers with $c_2 ≠ 0$. Suppose that $r_2 − c_1r − c_2 = 0$ has two distinct roots $r_1$ and $r_2$. 
-Then the sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2}$ if and only if $a_n = \alpha_1r_0^n + \alpha_2nr_0^2$ for $n = 0, 1, 2, …$ , where $\alpha_1$ and $\alpha_2$ are constants.
-<br>
-
-**THEOREM 3** : 
-Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $k$ distinct roots $r_1, r_2, … , r_k$. 
-Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if $a_n = \alpha_1r_1^n + \alpha_2r_2^n + ⋯ + \alpha_kr_k^n$ for $n = 0, 1, 2, …$
-
-**THEOREM 4** : 
-Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k = 0$ has $t$ distinct roots $r_1, r_2, … , r_t$ with multiplicities $m_1, m_2, … , m_t$, respectively, so that $m_1 + m_2 + ⋯ + m_t = k$. Then a sequence $\{a_n\}$ is a solution of the recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ if and only if 
-  $\begin{aligned} a_n = &(\alpha_{1,0} + \alpha_{1,1}n + ⋯ + \alpha_{1,m_1-1}n^{m_1-1})r_1^n \\
-  &+ (\alpha_{2,0} + \alpha_{2,1}n + ⋯ + \alpha_{2,m_2-1}n^{m_2-1})r_2^n \\
-  &+ ⋯ + (\alpha_{t,0} + \alpha_{t,1}n + ⋯ + \alpha_{t,m_t-1}n^{m_t-1})r_t^n \end{aligned}$ 
-  for $n = 0, 1, 2, …$
-
-
-**Linear Nonhomogeneous Recurrence Relations**
-- A **linear nonhomogeneous recurrence relation with constant coefficients** is a recurrence relation of the form $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k} + F(n)$.
-- The recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k}$ is called the **associated homogeneous recurrence relation**.
-
-**THEOREM 5** : 
-If $\{a^{(p)}_n\}$ is a particular solution of the nonhomogeneous linear recurrence relation with constant coefficients, then every solution is of the form $\{a^{(p)}_n + a^{(h)}_n \}$, where $\{a^{(h)}_n\}$ is a solution of the associated homogeneous recurrence relation.
-<br>
-
-**THEOREM 6** :
-Suppose that $\{a^n\}$ satisfies the linear nonhomogeneous recurrence relation $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k} + F(n)$, where
-  $\qquad F(n) = (b_tn^t + b_{t−1}n^{t−1} + ⋯ + b_1n + b_0)s^n$.
-When $s$ is not a root of the characteristic equation of the associated linear homogeneous recurrence relation, there is a particular solution of the form
-  $\qquad (p_tn^t + p_{t−1}n^{t−1} + ⋯ + p_1n + p_0)s^n$.
-When s is a root of this characteristic equation and its multiplicity is $m$, there is a particular solution of the form
-  $\qquad n^m(p_tn^t + p_{t−1}n^{t−1} + ⋯ + p_1n + p_0)s^n$.
-
-
-
-### 8.4 Generating Functions
-- The **generating function** for the sequence $a_0, a_1, … , a_k, …$ of real numbers is the infinite series $\displaystyle G(x) = a_0 + a_1x + ⋯ + a_kx_k + ⋯ = \sum^∞_{k = 0} a_kx_k$.
-
-**THEOREM 1** : 
-- $\displaystyle f(x) + g(x) = \sum^∞_{k = 0} (a_k + b_k)x^k$
-- $\displaystyle x\cdot f'(x) = \sum^∞_{k = 0} k\cdot a_kx^k$
-- $\displaystyle f(x)g(x) = \sum^∞_{k = 0} ( \sum^k_{j=0}a_jb_{k−j})x^k$
-<br>
-
-$\displaystyle \begin{aligned}
-\begin{pmatrix} -n \\ r \end{pmatrix}
-&= \frac{(-n)(-n-1)\cdots (-n-r+1)}{r!} \\
-&= \frac{(-1)^r n(n+1)\cdots (n+r-1)}{r!} \\
-&= \frac{(-1)^r (n+r-1)(n+r-2)\cdots (n)}{r!} \\
-&= \frac{(-1)^r (n+r-1)!}{r!(n-1)!} \\
-&= (-1)^r \begin{pmatrix} n+r-1 \\ r \end{pmatrix} \\
-&= (-1)^r C(n+r-1, r)
-\end{aligned} $
-
-**THEOREM 2 (THE EXTENDED BINOMIAL THEOREM)** : 
-$\displaystyle (1 + x)^u = \sum^∞_{k = 0}\begin{pmatrix} u \\ k \end{pmatrix}x^k$
 
 
 
