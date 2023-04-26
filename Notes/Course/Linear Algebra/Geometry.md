@@ -52,7 +52,7 @@
   - 当 $l,m,n$ 有一个为0时，直线垂直于对应坐标轴
   - 当 $l,m,n$ 有两个为0时，直线垂直于对应坐标平面
   - 当 $lmn\neq 0$ 时，$\displaystyle{\frac{x-x_0}{l}=\frac{y-y_0}{m}=\frac{z-z_0}{n}}$
-- 直线的一般方程：$\bm{S} = \bm{n_1\times n_2} $
+- 直线的一般方程：$\bm{S} = \bm{n}_1\times \bm{n}_2 $
   $\left\{ \begin{aligned}
     &a_1x + b_1y + c_1z + d_1 = 0 \\ 
     &a_2x + b_2y + c_2z + d_2 = 0 \\ 
@@ -119,8 +119,8 @@ $\left\{ \begin{aligned}
 $$\displaystyle \bm{n}^0 = \frac{1}{\sqrt{a^2 + b^2 + c^2}}(a, b, c)
 \\~\\
 \begin{aligned}
-  d &= \left| |\overrightarrow{P_0P}| \cdot \cos\theta \right| = |\overrightarrow{P_0P}\bm{\cdot n}^0 | \\
-  &= \frac{|a(x_1-x_0) + b(y_1-y_0) + c(z_1-z_0)}{\sqrt{a^2 + b^2 + c^2}} \\
+  d &= \left| |\overrightarrow{P_0P}| \cdot \cos\theta \right| = |\overrightarrow{P_0P}\cdot \bm{n}^0 | \\
+  &= \frac{|a(x_1-x_0) + b(y_1-y_0) + c(z_1-z_0)|}{\sqrt{a^2 + b^2 + c^2}} \\
   &= \frac{|ax_1 + by_1 + cz_1 + d|}{\sqrt{a^2 + b^2 + c^2}} \\
 \end{aligned} $$
 
@@ -134,12 +134,12 @@ $$\begin{aligned}
 #### 平面与平面的距离和夹角
 $$
 \begin{aligned}
-  d &= |\overrightarrow{P_0P_1}\bm{\cdot n}^0| \\
+  d &= |\overrightarrow{P_0P_1}\cdot \bm{n}^0| \\
   &= \frac{|d_1 - d_2|}{\sqrt{a^2 + b^2 + c^2}} \\
 \end{aligned}
 \\~\\
 \begin{aligned}
-  \cos\theta &= |\bm{n}_1^0 \bm{\cdot} \bm{n}_2^0| \\
+  \cos\theta &= |\bm{n}_1^0 \cdot \bm{n}_2^0| \\
   &= \frac{|a_1a_2 + b_1b_2 + c_1c_2|}{\sqrt{a_1^2 + b_1^2 + c_1^2}\cdot\sqrt{a_2^2 + b_2^2 + c_2^2}}, \theta \le \frac{\pi}{2}
 \end{aligned}
 $$
@@ -150,14 +150,14 @@ $$
 当两条直线既不相交又不平行时，
 $$
 \bm{S} = \bm{S}_1 \times \bm{S}_2 \\
-d = \frac{|\overrightarrow{P_1P_2}\times \bm{S}|}{|\bm{S}|} = |\overrightarrow{P_1P_2}\times \bm{S}_0|
+d = \frac{|\overrightarrow{P_1P_2}\cdot \bm{S}|}{|\bm{S}|} = |\overrightarrow{P_1P_2}\cdot \bm{S}_0|
 $$
 
-$$\theta = \arccos(\bm{S}_1^0 \bm{\cdot} \bm{S}_2^0), 0 \le \theta \le \pi $$
+$$\theta = \arccos(\bm{S}_1^0 \cdot \bm{S}_2^0), 0 \le \theta \le \pi $$
 
 #### 直线与平面的距离和夹角
 当直线与平面相交时，$d = 0$
-当直线与平面平行时，$d = |\overrightarrow{P_0P_1}\bm{\cdot n}^0|$
+当直线与平面平行时，$d = |\overrightarrow{P_0P_1}\cdot \bm{n}^0|$
 
 $$\theta = \arcsin\frac{|\bm{n} \cdot \bm{s}|}{|\bm{n}|\cdot|\bm{s}|}, 0 \le \theta \le \frac{\pi}{2} $$
 
@@ -171,7 +171,7 @@ $$\theta = \arcsin\frac{|\bm{n} \cdot \bm{s}|}{|\bm{n}|\cdot|\bm{s}|}, 0 \le \th
 
 ## 二次曲线
 ### 二次曲线的一般方程
-一般方程：$a_11x_1^2 + 2a_{12}x_1x_2 + a_{22}x_2^2 + 2a_1x_1 + 2a_2x_2 + a_0 = 0$
+一般方程：$a_{11}x_1^2 + 2a_{12}x_1x_2 + a_{22}x_2^2 + 2a_1x_1 + 2a_2x_2 + a_0 = 0$
 其中，二次项部分为
 $$
 \begin{aligned}

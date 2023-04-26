@@ -27,7 +27,7 @@ $\text{Proof :}$
 $(A^TA)\bm{X} = 0 \\
 \Rightarrow \bm{X}^T(A^TA)\bm{X} = 0 \\
 \Rightarrow (\bm{X}^TA^T)(A\bm{X}) = 0 \\
-\Rightarrow (A\bm{X})^2 = 0 \\
+\Rightarrow |A\bm{X}|^2 = 0 \\
 \Rightarrow A\bm{X} = 0 $
 
 #### 非齐次线性方程组
