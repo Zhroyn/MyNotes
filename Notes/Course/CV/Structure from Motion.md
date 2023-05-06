@@ -6,6 +6,7 @@
     - [Direct Linear Transform (DLT)](#direct-linear-transform-dlt)
     - [Perspective-n-Point (PnP) Problem](#perspective-n-point-pnp-problem)
   - [Structure from Motion](#structure-from-motion-1)
+    - [Epipolar Geometry](#epipolar-geometry)
 
 <!-- /TOC -->
 
@@ -111,8 +112,8 @@ $$
 $$
 
 Projection matrix is up to scale, we can use $p_{34}=1$ or $||\bm{p}||^2 = 1$ as constraint condition.
-So the solution can become: 
-$$\text{arg }\underset{p}{\text{min}}||A\bm{p}||^2 \text{ such that } ||\bm{p}||^2 = 1 $$ It can be proven that eigenvector $\bm{p}$ with smallest eigenvalue $\lambda$ of matrix $A^TA$ is the solution.
+So the solution is the $\bm{p}$ that satisfies: 
+$$\underset{p}{\text{min}}||A\bm{p}||^2 \text{ such that } ||\bm{p}||^2 = 1 $$ It can be proven that eigenvector $\bm{p}$ with smallest eigenvalue $\lambda$ of matrix $A^TA$ is the solution.
 
 Then, to decompose projection matrices to intrinsic and extrinsic matrices, we can use QR factorization:
 $$
@@ -216,7 +217,147 @@ $$ Initialized by P3P, optimized by Gauss-Newton.
 
 
 ### Structure from Motion
+- Compute 3D structure of the scene and camera poses from multiple views
+- Assume intrinsic matrix $K$ is known for each camera
 
+#### Epipolar Geometry
+- Epipolar geometry describes the geometric relation between the 2D projections ($u_l$ and $u_r$) of a 3D point in two views
+- Epipolar geometry tells us how to solve $t$ and $R$ between the two cameras given a few pairs of 2D correspondences
+<br>
+
+- **Epipole** : Image point of origin/pinhole of one camera as viewed by the other camera.
+- **Epipolar Plane** : The plane formed by camera origins($o_l$ and $o_r$), epipoles ($e_l$ and $e_r$) and scene point $P$.
+
+The normal vecter to the epipolar plane is $\bm{n} = \bm{t} \times \bm{x}_l $, so $\bm{x}_l \cdot (\bm{t} \times \bm{x}_l) = 0 $
+That is 
+$$
+\begin{bmatrix} x_l & y_l & z_l \end{bmatrix}
+\begin{bmatrix} t_yz_l - t_zy_l \\ t_zx_l - t_xz_l \\ t_xy_l - t_yx_l \end{bmatrix} = 0
+\\~\\
+\Rightarrow 
+\begin{bmatrix} x_l & y_l & z_l \end{bmatrix}
+\begin{bmatrix}
+  0 & -t_z & t_y \\
+  t_z & 0 & -t_x \\
+  -t_y & t_x & 0 \\
+\end{bmatrix}
+\begin{bmatrix} x_l \\ y_l \\ z_l \end{bmatrix} = 0
+\\~\\
+\Rightarrow 
+\bm{x}_l^T T_X \bm{x}_l = 0
+$$
+
+Substitute $\bm{x}_l = R\bm{x}_r + \bm{t} $ into the epipolar constraint, then we can get:
+$$
+\bm{x}_l^T (T_XR\bm{x}_r + T_X\bm{t}) = 0
+\\~\\
+\Rightarrow \bm{x}_l^T (T_XR\bm{x}_r + \bm{t}\times \bm{t}) = 0
+\\~\\
+\Rightarrow 
+\begin{bmatrix} x_l & y_l & z_l \end{bmatrix}
+\begin{bmatrix}
+  e_{11} & e_{12} & e_{13} \\
+  e_{21} & e_{22} & e_{23} \\
+  e_{31} & e_{32} & e_{33} \\
+\end{bmatrix}
+\begin{bmatrix} x_r \\ y_r \\ z_r \end{bmatrix} = 0
+\\~\\
+\begin{bmatrix}
+  e_{11} & e_{12} & e_{13} \\
+  e_{21} & e_{22} & e_{23} \\
+  e_{31} & e_{32} & e_{33} \\
+\end{bmatrix}
+= \begin{bmatrix}
+  0 & -t_z & t_y \\
+  t_z & 0 & -t_x \\
+  -t_y & t_x & 0 \\
+\end{bmatrix}
+\begin{bmatrix}
+  r_{11} & r_{12} & r_{13} \\
+  r_{21} & r_{22} & r_{23} \\
+  r_{31} & r_{32} & r_{33} \\
+\end{bmatrix}
+\\~\\
+\text{Essential Matrix : } E = T_XR
+$$
+
+Given that $T_X$ is a Skew-Symmetric matrix ($a_{ij} = -a_{ji} $) and $R$ is an Orthonormal matrix, it is possible to “decouple” $T_X$ and $R$ from their product using “Singular Value Decomposition”.
+So if $E$ is known, we can calculate $\bm{t}$ and $R$.
+
+To calculate $E$, fistly, we can get:
+$$
+z_l\begin{bmatrix} u_l \\ v_l \\ 1 \end{bmatrix}
+= \begin{bmatrix}
+  f_x^{(l)} & 0 & o_x^{(l)} \\
+  0 & f_y^{(l)} & o_y^{(l)} \\
+  0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix} x_l \\ y_l \\ z_l \end{bmatrix}, 
+z_r\begin{bmatrix} u_r \\ v_r \\ 1 \end{bmatrix}
+= \begin{bmatrix}
+  f_x^{(r)} & 0 & o_x^{(r)} \\
+  0 & f_y^{(r)} & o_y^{(r)} \\
+  0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix} x_r \\ y_r \\ z_r \end{bmatrix}
+\\~\\
+\Rightarrow x_l^T = \begin{bmatrix} u_l & v_l & 1 \end{bmatrix}z_l K_l^{{-1}^T}, 
+x_r = K_r^{-1} z_r \begin{bmatrix} u_r \\ v_r \\ 1 \end{bmatrix}
+$$ Substitute these into the epipolar constraint, then we can get:
+$$
+\begin{bmatrix} u_l & v_l & 1 \end{bmatrix} K_l^{{-1}^T}
+\begin{bmatrix}
+  e_{11} & e_{12} & e_{13} \\
+  e_{21} & e_{22} & e_{23} \\
+  e_{31} & e_{32} & e_{33} \\
+\end{bmatrix}
+K_r^{-1} \begin{bmatrix} u_r \\ v_r \\ 1 \end{bmatrix} = 0
+\\~\\
+\Rightarrow \begin{bmatrix} u_l & v_l & 1 \end{bmatrix}
+\begin{bmatrix}
+  f_{11} & f_{12} & f_{13} \\
+  f_{21} & f_{22} & f_{23} \\
+  f_{31} & f_{32} & f_{33} \\
+\end{bmatrix}
+\begin{bmatrix} u_r \\ v_r \\ 1 \end{bmatrix} = 0
+\\~\\
+\text{Fundamental Matrix : } 
+F = \begin{bmatrix}
+  f_{11} & f_{12} & f_{13} \\
+  f_{21} & f_{22} & f_{23} \\
+  f_{31} & f_{32} & f_{33} \\
+\end{bmatrix}
+\\~\\
+E = K_l^T F K_r
+$$
+
+Fundamental Matrix $F$ and $kF$ describe the same epipolar geometry. That is, $F$ is defined only up to a scale.
+So we can add a scale constraint on $F$ : $||f||^2 = 1$
+
+Expand the matrix to get linear equation:
+$$
+\begin{aligned}
+  & (f_{11}u_r^{(i)} + f_{12}v_r^{(i)} + f_{13})u_l^{(l)} \\
+  &+ (f_{21}u_r^{(i)} + f_{22}v_r^{(i)} + f_{23})v_l^{(l)} \\
+  &+ f_{31}u_r^{(i)} + f_{32}v_r^{(i)} + f_{33} \\
+  &= 0
+\end{aligned}
+$$ Rerange the terms, and set $\bm{p}_r = \begin{bmatrix} u_r & v_r & 1 \end{bmatrix}$, then we can get:
+$$
+\begin{bmatrix}
+  u_l^{(1)}\bm{p}_r & v_l^{(1)}\bm{p}_r & \bm{p}_r \\
+  \vdots & \vdots & \vdots \\
+  u_l^{(i)}\bm{p}_r & v_l^{(i)}\bm{p}_r & \bm{p}_r \\
+  \vdots & \vdots & \vdots \\
+  u_l^{(n)}\bm{p}_r & v_l^{(n)}\bm{p}_r & \bm{p}_r \\
+\end{bmatrix}
+\begin{bmatrix} f_{11} \\ f_{12} \\ f_{13} \\ f_{21} \\ f_{22} \\ f_{23} \\ f_{31} \\ f_{32} \\ f_{33} \end{bmatrix}
+= \bm{0}
+\\~\\
+\Rightarrow A\bm{f} = \bm{0}
+$$
+So the solution is the $\bm{f}$ that satisfies: 
+$$\underset{f}{\text{min}}||A\bm{f}||^2 \text{ such that } ||\bm{f}||^2 = 1 $$ The eigenvector with smallest eigenvalue $\lambda$ of matrix $A^TA$ is the solution.
 
 
 
