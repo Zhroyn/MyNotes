@@ -7,6 +7,10 @@
     - [Perspective-n-Point (PnP) Problem](#perspective-n-point-pnp-problem)
   - [Structure from Motion](#structure-from-motion-1)
     - [Epipolar Geometry](#epipolar-geometry)
+    - [Triangulation](#triangulation)
+      - [Linear Solution](#linear-solution)
+      - [Non-linear Solution](#non-linear-solution)
+    - [Sequential Structure from Motion](#sequential-structure-from-motion)
 
 <!-- /TOC -->
 
@@ -80,6 +84,13 @@ $$
 $$
 
 
+
+
+
+
+
+
+
 ### Camera Calibration
 #### Direct Linear Transform (DLT)
 The relation between the coordinates in world and camera coordinate systems is
@@ -93,9 +104,9 @@ $$
 \begin{bmatrix} x_w^{(i)} \\ y_w^{(i)} \\ z_w^{(i)} \\ 1 \end{bmatrix}
 $$ That is
 $$
-\displaystyle u^{(i)} = \frac{p_{11}x_w^{(i)} + p_{12}y_w^{(i)} + p_{13}z_w^{(i)} + p_{14}}{p_{31}x_w^{(i)} + p_{32}y_w^{(i)} + p_{33}z_w^{(i)} + p_{34}}
+u^{(i)} = \frac{p_{11}x_w^{(i)} + p_{12}y_w^{(i)} + p_{13}z_w^{(i)} + p_{14}}{p_{31}x_w^{(i)} + p_{32}y_w^{(i)} + p_{33}z_w^{(i)} + p_{34}}
 \\~\\
-\displaystyle v^{(i)} = \frac{p_{21}x_w^{(i)} + p_{22}y_w^{(i)} + p_{23}z_w^{(i)} + p_{24}}{p_{31}x_w^{(i)} + p_{32}y_w^{(i)} + p_{33}z_w^{(i)} + p_{34}}
+v^{(i)} = \frac{p_{21}x_w^{(i)} + p_{22}y_w^{(i)} + p_{23}z_w^{(i)} + p_{24}}{p_{31}x_w^{(i)} + p_{32}y_w^{(i)} + p_{33}z_w^{(i)} + p_{34}}
 $$ Rerange the equations, we can get:
 $$
 \bm{x}_w^{(i)} = \begin{bmatrix} x_w^{(i)} & y_w^{(i)} & z_w^{(i)} & 1 \end{bmatrix}, \bm{p}_i = \begin{bmatrix} p_{i1} \\ p_{i2} \\ p_{i3} \\ p_{i4} \end{bmatrix}
@@ -216,6 +227,15 @@ $$ Initialized by P3P, optimized by Gauss-Newton.
 
 
 
+
+
+
+
+
+
+
+
+
 ### Structure from Motion
 - Compute 3D structure of the scene and camera poses from multiple views
 - Assume intrinsic matrix $K$ is known for each camera
@@ -226,7 +246,7 @@ $$ Initialized by P3P, optimized by Gauss-Newton.
 <br>
 
 - **Epipole** : Image point of origin/pinhole of one camera as viewed by the other camera.
-- **Epipolar Plane** : The plane formed by camera origins($o_l$ and $o_r$), epipoles ($e_l$ and $e_r$) and scene point $P$.
+- **Epipolar Plane** : The plane formed by camera origins($O_l$ and $O_r$), epipoles ($e_l$ and $e_r$) and scene point $P$.
 
 The normal vecter to the epipolar plane is $\bm{n} = \bm{t} \times \bm{x}_l $, so $\bm{x}_l \cdot (\bm{t} \times \bm{x}_l) = 0 $
 That is 
@@ -358,6 +378,105 @@ $$
 $$
 So the solution is the $\bm{f}$ that satisfies: 
 $$\underset{f}{\text{min}}||A\bm{f}||^2 \text{ such that } ||\bm{f}||^2 = 1 $$ The eigenvector with smallest eigenvalue $\lambda$ of matrix $A^TA$ is the solution.
+
+
+#### Triangulation
+##### Linear Solution
+Given corresponding 2D coordinates of one point in two views, and the parameters of the two cameras, we want to calculate the 3D coordinate of the point.
+
+Firstly, we can get the image equations:
+$$
+\begin{bmatrix} u_{r} \\ v_{r} \\ 1 \end{bmatrix}
+\equiv \begin{bmatrix}
+  f_x^{(r)} & 0 & o_x^{(r)} & 0 \\
+  0 & f_y^{(r)} & o_y^{(r)} & 0 \\
+  0 & 0 & 1 & 0 \\
+\end{bmatrix}
+\begin{bmatrix} x_{r} \\ y_{r} \\ z_{r} \\ 1 \end{bmatrix}
+\\~\\
+\begin{bmatrix} u_{l} \\ v_{l} \\ 1 \end{bmatrix}
+\equiv \begin{bmatrix}
+  f_x^{(l)} & 0 & o_x^{(l)} & 0 \\
+  0 & f_y^{(l)} & o_y^{(l)} & 0 \\
+  0 & 0 & 1 & 0 \\
+\end{bmatrix}
+\begin{bmatrix} x_{l} \\ y_{l} \\ z_{l} \\ 1 \end{bmatrix} \\
+\equiv \begin{bmatrix}
+  f_x^{(l)} & 0 & o_x^{(l)} & 0 \\
+  0 & f_y^{(l)} & o_y^{(l)} & 0 \\
+  0 & 0 & 1 & 0 \\
+\end{bmatrix}
+\begin{bmatrix}
+  r_{11} & r_{12} & r_{13} & t_{x} \\
+  r_{21} & r_{22} & r_{23} & t_{y} \\
+  r_{31} & r_{32} & r_{33} & t_{z} \\
+  0 & 0 & 0 & 1 \\
+\end{bmatrix}
+\begin{bmatrix} x_{r} \\ y_{r} \\ z_{r} \\ 1 \end{bmatrix}
+$$ Rewrite the imaging equations:
+$$
+\tilde{\bm{u}}_r = M_r \tilde{\bm{x}}_r
+\Rightarrow
+\begin{bmatrix} u_{r} \\ v_{r} \\ 1 \end{bmatrix}
+\equiv \begin{bmatrix}
+  m_{11} & m_{12} & m_{13} & m_{14} \\
+  m_{21} & m_{22} & m_{23} & m_{24} \\
+  m_{31} & m_{32} & m_{33} & m_{34} \\
+\end{bmatrix}
+\begin{bmatrix} x_{r} \\ y_{r} \\ z_{r} \\ 1 \end{bmatrix}
+\\~\\
+\tilde{\bm{u}}_l = P_l \tilde{\bm{x}}_r
+\Rightarrow
+\begin{bmatrix} u_{l} \\ v_{l} \\ 1 \end{bmatrix}
+\equiv \begin{bmatrix}
+  p_{11} & p_{12} & p_{13} & p_{14} \\
+  p_{21} & p_{22} & p_{23} & p_{24} \\
+  p_{31} & p_{32} & p_{33} & p_{34} \\
+\end{bmatrix}
+\begin{bmatrix} x_{r} \\ y_{r} \\ z_{r} \\ 1 \end{bmatrix}
+$$ So
+$$
+u_r = \frac{m_{11}x_r + m_{12}y_r + m_{13}z_r + m_{14}}{m_{31}x_r + m_{32}y_r + m_{33}z_r + m_{34}}
+\\~\\
+v_r = \frac{m_{21}x_r + m_{22}y_r + m_{23}z_r + m_{24}}{m_{31}x_r + m_{32}y_r + m_{33}z_r + m_{34}}
+\\~\\
+u_l = \frac{p_{11}x_r + p_{12}y_r + p_{13}z_r + p_{14}}{p_{31}x_r + p_{32}y_r + p_{33}z_r + p_{34}}
+\\~\\
+v_l = \frac{p_{21}x_r + p_{22}y_r + p_{23}z_r + p_{24}}{p_{31}x_r + p_{32}y_r + p_{33}z_r + p_{34}}
+$$ That is
+$$
+\begin{bmatrix}
+  u_rm_{31} - m_{11} & u_rm_{32} - m_{12} & u_rm_{33} - m_{13} \\
+  v_rm_{31} - m_{11} & v_rm_{32} - m_{12} & v_rm_{33} - m_{13} \\
+  u_lp_{31} - p_{11} & u_lp_{32} - p_{12} & u_lp_{33} - p_{13} \\
+  v_lp_{31} - p_{11} & v_lp_{32} - p_{12} & v_lp_{33} - p_{13} \\
+\end{bmatrix}
+\begin{bmatrix} x_{r} \\ y_{r} \\ z_{r} \end{bmatrix}
+= \begin{bmatrix} 
+  m_{14} - u_rm_{34} \\
+  m_{24} - v_rm_{34} \\
+  p_{14} - u_lp_{34} \\
+  p_{24} - v_lp_{34} \\
+\end{bmatrix}
+\\~\\
+\Rightarrow A\bm{x}_r = \bm{b}
+$$ Find least squares solution by:
+$$\bm{x}_r = (A^TA)^{-1} A^T \bm{b} $$
+
+
+##### Non-linear Solution
+Minimize reprojection error:
+$$\text{cons}(\bold{P}) = ||\bold{u}_l - \hat{\bold{u}_l}||^2 + ||\bold{u}_r - \hat{\bold{u}_r}||^2 $$
+
+
+
+#### Sequential Structure from Motion
+1. Initialize camera motion and scene structure
+2. For each additional view
+   - Determine projection matrix of new camera using all the known 3D points that are visible in its image
+   - Refine and extend structure: compute new 3D points, reoptimize existing points that are also seen by this camera
+3. Refine structure and motion: Bundle Adjustment
+   - Refining 3D points and camera parameters by minimizing reprojection error over all frames: $$E(P_{proj}, \bold{P}) = \sum_{i=1}^{m} \sum_{j=1}^{n} ||u_j^{(i)} - P_{proj}^{(i)}\bold{P}_j||^2 $$
 
 
 
