@@ -16,7 +16,6 @@
 
 
 
-
 ## Relations
 ### 9.1 Relations and Their Properties
 - Let A and B be sets. A **binary relation from $A$ to $B$** is a subset of $A × B$.

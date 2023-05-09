@@ -11,6 +11,7 @@
     - [Solving Recurrence Relations by Generating Functions](#solving-recurrence-relations-by-generating-functions)
     - [Proving Identities by Generating Functions](#proving-identities-by-generating-functions)
   - [8.5 Inclusion-Exclusion](#85-inclusion-exclusion)
+  - [8.6 Applications of Inclusion–Exclusion](#86-applications-of-inclusionexclusion)
     - [An Alternative Form of Inclusion–Exclusion](#an-alternative-form-of-inclusionexclusion)
     - [The Sieve of Eratosthenes](#the-sieve-of-eratosthenes)
     - [The Number of Onto Functions](#the-number-of-onto-functions)
@@ -145,20 +146,26 @@ $\displaystyle (1 + x)^u = \sum^∞_{k = 0}\begin{pmatrix} u \\ k \end{pmatrix}x
 **THE PRINCIPLE OF INCLUSION–EXCLUSION**
 Let $A_1, A_2, … , A_n$ be finite sets, then
 $$\begin{aligned}
-  |A1 ∪ A2 ∪ ⋯ ∪ An| = &\sum_{1≤i≤n}|A_i| − \sum_{1≤i<j≤n}|A_i ∩ A_j| + \sum_{1≤i<j<k≤n}|A_i ∩ A_j ∩ A_k| \\
+  |A_1 ∪ A_2 ∪ ⋯ ∪ A_n| = &\sum_{1≤i≤n}|A_i| − \sum_{1≤i<j≤n}|A_i ∩ A_j| + \sum_{1≤i<j<k≤n}|A_i ∩ A_j ∩ A_k| \\
   &− ⋯ + (−1)^{n+1}|A_1 ∩ A_2 ∩ ⋯ ∩ A_n| \\
 \end{aligned} $$
 
 $ \text{Proof :} $
-Suppose that $a$ is a member of exactly $r$ of the sets $A_1, A_2, … , A_n$ where $1 ≤ r ≤ n$.
+For every element $a$ in $|A_1 ∪ A_2 ∪ ⋯ ∪ A_n|$, suppose that $a$ is a member of exactly $r$ of the sets $A_1, A_2, … , A_n$ where $1 ≤ r ≤ n$.
 In general, it is counted $C(r, m)$ times by the summation involving $m$ of the sets $A_i$.
-Thus, this element is counted exactly 
+Thus, in the right-hand side of the equation, this element is counted exactly 
 $$
 C(r, 1) − C(r, 2) + C(r, 3) − ⋯ + (−1)^{r+1}C(r, r) \\ 
 = C(r, 0) - (1 - 1)^r = 1
-$$
+$$ times. So every element in the left union is counted exactly once by the right-hand side of the equation.
 
 
+
+
+
+
+
+### 8.6 Applications of Inclusion–Exclusion
 #### An Alternative Form of Inclusion–Exclusion
 Let $A_i$ be the subset containing the elements that have property $P_i$.
 Then the number of elements with all the properties $P_1, P_2, … , P_k$ is denoted by $N(P_1 P_2 … P_k)$.
@@ -216,7 +223,7 @@ Let $m$ and $n$ be positive integers with $m ≥ n$. Then, there are
 $$n^m − C(n, 1)(n − 1)^m + C(n, 2)(n − 2)^m − ⋯ + (−1)^{n−1}C(n, n − 1) ⋅ 1^m$$ onto functions from a set with $m$ elements to a set with $n$ elements.
 
 $\text{Proof :}$
-Let $P_i$ be the propety that $b_1$ is not in the range of the funtion, then 
+Let $P_i$ be the propety that $b_i$ is not in the range of the funtion, then 
 $$
 \begin{aligned}
   N(P'_1P'_2\cdots P'_n) 
