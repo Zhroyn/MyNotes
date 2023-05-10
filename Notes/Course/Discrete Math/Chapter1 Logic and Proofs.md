@@ -9,6 +9,7 @@
   - [1.6 Rules of Inference](#16-rules-of-inference)
   - [1.7 Introduction to Proofs](#17-introduction-to-proofs)
   - [1.8 Proof Methods and Strategy](#18-proof-methods-and-strategy)
+- [Shorthand](#shorthand)
 
 <!-- /TOC -->
 
@@ -106,23 +107,34 @@
 ### 1.4 Predicates and Quantifiers
 - Many mathematical statements assert that a property is true for all values of a variable in a particular domain, called the **domain of discourse**, often just referred to as the **domain**
 - The area of logic that deals with predicates and quantifiers is called the **predicate calculus**
-<br>
 
+**Predicates**
 - The statement $P(x)$ is said to be the value of the **propositional function** $P$ at $x$. Once a value has been assigned to the variable $x$, the statement $P(x)$ becomes a proposition and has a truth value
+- A **predicate** (propositional function) is a statement that contains variables. Once the values of the variables are specified, the function has a truth value.
 - A statement of the form $P(x_1, x_2, \dots , x_n)$ is the value of the propositional function $P$ at the n-tuple $(x_1, x_2, \dots , x_n)$, and $P$ is also called an **n-place predicate** or an **n-ary predicate**
 <br>
 
-- The statements that describe valid input are known as **preconditions** 
-- The conditions that the output should satisfy when the program has run are known as **postconditions**
-<br>
-
+**Quantifiers**
 - The notation $∀xP(x)$ denotes the universal quantification of $P(x)$. Here $\forall$ is called the **universal quantifier**. An element for which $P(x)$ is false is called a **counterexample** to $∀xP(x)$
 - The notation $∃xP(x)$ denotes the existential quantification of $P(x)$. Here $\exists$ is called the **existential quantifier**
 - The notation $∃!xP(x)$ or $∃_1xP(x)$ states “There exists a unique $x$ such that $P(x)$ is true.” Here $∃!$ is called the **uniqueness quantifier** 
-- The quantifiers $∀$ and $∃$ have higher precedence than all logical operators from propositional calculus
-<br>
 
-- Statements involving predicates and quantifiers are **logically equivalent** if and only if they have the same truth value no matter which predicates are substituted into these statements and which domain of discourse is used for the variables in these propositional functions
+**Quantifiers with Restricted Domains**
+- An abbreviated notation is often used to restrict the domain of a quantifier.
+- In this notation, a condition a variable must satisfy is included after the quantifier, e.g. $\forall x < 0 (x^2 > 0) \equiv \forall x(x < 0 \rightarrow x^2 > 0)$, $\exists z > 0 (z^2 = 2) \equiv \exists z(z > 0 \land z^2 = 2) $
+
+**Precedence of Quantifiers**
+- The quantifiers $∀$ and $∃$ have higher precedence than all logical operators from propositional calculus
+
+**Binding Variables**
+- When a quantifier is used on the variable x, we say that this occurrence of the variable is **bound**.
+- An occurrence of a variable that is not bound by a quantifier or set equal to a particular value is said to be **free**.
+- The part of a logical expression to which a quantifier is applied is called the **scope** of this quantifier. Consequently, a variable is free if it is outside the scope of all quantifiers in the formula that specify this variable.
+
+**Logical Equivalences Involving Quantifiers**
+- Statements involving predicates and quantifiers are **logically equivalent** if and only if they have the same truth 
+  - for every predicate substituted into these statements
+  - for every domain of discourse used for the variables in the expressions
 - Suppose $p$ and $q$ are statements involving predicates and quantifiers, we can show $p$ and $q$ are logically equivalent by showing that if one of them is true, then the other is true
 <br>
 
@@ -130,35 +142,59 @@
 - $\exists x(P(x) \vee Q(x)) \equiv \exists xP(x) \vee \exists xQ(x)$
 - $∀xP(x) \vee ∀xQ(x) \Rightarrow ∀x(P(x) \vee Q(x))$
 - $\exists x(P(x) \land Q(x)) \Rightarrow \exists xP(x) \land \exists xQ(x)$
-- De Morgan’s laws for quantifiers : $¬∀xP(x) ≡ ∃x ¬P(x)$, $¬∃xQ(x) ≡ ∀x ¬Q(x)$
+<br>
+
+- $(\forall x P)\land Q \equiv \forall x(P\land Q) $
+- $(\forall x P)\vee Q \equiv \forall x(P\vee Q) $
+- $(\exists x P)\land Q \equiv \exists x(P\land Q) $
+- $(\exists x P)\vee Q \equiv \exists x(P\vee Q) $
+<br>
+
+- $(\forall x P)\rightarrow Q \equiv \forall x(P\rightarrow Q) $
+- $(\exists x P)\rightarrow Q \equiv \exists x(P\rightarrow Q) $
+- $P \rightarrow(\forall x Q) \equiv \forall x(P\rightarrow Q) $
+- $P \rightarrow(\exists x Q) \equiv \exists x(P\rightarrow Q) $
+
+**Negating Quantified Expressions**
+De Morgan’s laws for quantifiers : 
+$$¬∀xP(x) ≡ ∃x ¬P(x)\\
+¬∃xQ(x) ≡ ∀x ¬Q(x)$$
 
 
 
 
 
 ### 1.5 Nested Quantifiers and Normal Form
-- A conjunction with disjunctive clauses as its conjuncts is said to be in **conjunctive normal form (CNF)** : $(A_{11} \vee … \vee A_{1n_1}) \land … \land (A_{k1} \vee … \vee A_{kn_k}).$
+**Nested Quantifier**
+- Two quantifiers are **nested** if one is within the scope of the other.
+- Everyone has exactly one best friend : $\forall x \exists y \forall z(B(x, y)\land ((z \neq y)\rightarrow \neg B(x, z)))$
+- The order of nested quantifiers matters if quantifiers are of different types.
+
+**Normal Form**
+- Disjunctions with literals as disjuncts are called **disjunctive clauses**.
+- Conjunctions with literals as conjuncts are called **conjunctive clauses**.
+- Disjunctive and conjunctive clauses are simply called clauses.
+<br>
+
 - A disjunction with conjunctive clauses as its disjuncts is said to be in **disjunctive normal form (DNF)** : $(A_{11} \land … \land A_{1n_1}) \vee … \vee (A_{k1} \land … \land A_{kn_k}).$
+- A conjunction with disjunctive clauses as its conjuncts is said to be in **conjunctive normal form (CNF)** : $(A_{11} \vee … \vee A_{1n_1}) \land … \land (A_{k1} \vee … \vee A_{kn_k}).$
 <br>
 
 - A minterm is a conjunction of literals in which each variable is represented exactly once.
--  If a formula is expressed as a disjunction of minterms, it is said to be in **full disjunctive normal form**.
-<br>
+- If a formula is expressed as a disjunction of minterms, it is said to be in **full disjunctive normal form**.
+- A disjunction of minterms is true if and only if one of its constituents minterms is true, so the number of cases when the statement is true is exactly the number of minterms.
+$$
+\begin{aligned}
+  & (p \land q)\vee(\neg p \land r)\vee(q \land r) \\
+  \equiv & (p \land q \land (r \vee \neg r))\vee(\neg p \land (q \vee \neg q) \land r)\vee((p \vee \neg p) \land q \land r) \\
+  \equiv & (p \land q \land r)\vee(p \land q \land \neg r)\vee(\neg p \land q \land r)\vee(\neg p \land \neg q \land r) \\
+  & \vee(p \land q \land r)\vee(\neg p \land q \land r) \\
+  \equiv & (p \land q \land r)\vee(p \land q \land \neg r)\vee(\neg p \land q \land r)\vee(\neg p \land \neg q \land r)
+\end{aligned}
+$$
 
 - A statement is in **prenex normal form** if it is of the form $Q_1x_1\cdots Q_nx_nB$, where $Q_i$ is $\forall$ or $\exists$ and the predicate $B$ is quantifier free. 
 - A formula with no quantifiers is regarded as a trivial case of a prenex normal form.
-<br>
-
-- $(\forall x P)\land Q = \forall xP\land Q $
-- $(\forall x P)\vee Q = \forall xP\vee Q $
-- $(\exists x P)\land Q = \forall xP\land Q $
-- $(\exists x P)\vee Q = \forall xP\vee Q $
-<br>
-
-- $(\forall x P)\rightarrow Q = \forall x(P\rightarrow Q) $
-- $(\exists x P)\rightarrow Q = \exists x(P\rightarrow Q) $
-- $P \rightarrow(\forall x Q) = \forall x(P\rightarrow Q) $
-- $P \rightarrow(\exists x Q) = \exists x(P\rightarrow Q) $
 <br>
 
 - $\forall xP(x) \land \forall xQ(x) \equiv \forall x(P(x) \land Q(x))$
@@ -178,8 +214,18 @@
 
 
 ### 1.6 Rules of Inference
-- An **argument** in propositional logic is a sequence of propositions. All but the final proposition in the argument are called **premises** and the final proposition is called the **conclusion**. An argument is **valid** if the truth of all its premises implies that the conclusion is true.
-- An **argument form** in propositional logic is a sequence of compound propositions involving propositional variables. An argument form is valid if no matter which particular propositions are substituted for the propositional variables in its premises, the conclusion is true if the premises are all true.
+- An **argument** in propositional logic is a sequence of statements that end with a conclusion.
+- All but the final proposition in the argument are called **premises**.
+- The final proposition is called the **conclusion**.
+- Proofs in mathematics are **valid arguments**. An argument is valid if the truth of all its premises implies that the conclusion is true.
+<br>
+
+- An **argument form** in propositional logic is a sequence of compound propositions involving propositional variables.
+- An argument form is valid if no matter which particular propositions are substituted for the propositional variables in its premises, the conclusion is true if the premises are all true.
+<br>
+
+- **Rules of inference** are simple argument forms whose correctness we can establish with truth tables.
+- To use resolution as the only rule of inference, we can firstly write the premises and the conclusion as CNF.
 
 |Rule of Inference|Tautology|Name|
 |---|---|---|
@@ -235,14 +281,87 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 <br>
 
 - The two parts of a **uniqueness proof** are:
-  - Existence: We show that an element $x$ with the desired property exists.
-  - Uniqueness: We show that if $x$ and $y$ both have the desired property, then $x = y$
+  - Existence: show that an element $x$ with the desired property exists.
+  - Uniqueness: show that if $x$ and $y$ both have the desired property, then $x = y$
 <br>
 
 - Using the premises, together with axioms and known theorems, you can construct a proof using a sequence of steps that leads to the conclusion. This type of reasoning is called **forward reasoning**
 - In such cases it may be helpful to use **backward reasoning**. To reason backward to prove a statement $q$, we find a statement $p$ that we can prove with the property that $p → q$
 
 
+
+
+
+
+
+
+## Shorthand
+**Propositional Logic**
+- converse
+- inverse
+- contrapositive
+
+**Propositional Equivalences**
+- tautology
+- contradiction
+- **contigency**
+<br>
+
+- Absorption laws : $p \vee (p \land q) ≡ p$, $p \land (p \vee q) ≡ p$
+- $p → q ≡ ¬p ∨ q$
+- $p \leftrightarrow q ≡ (¬p ∨ q) ∧ (p ∨ ¬q) ≡ (p ∧ q) ∨ (¬p ∧ ¬q)$
+- $(p → q) ∧ (p → r) ≡ p → (q ∧ r)$
+- $(p → r) ∧ (q → r) ≡ (p ∨ q) → r$
+- $(p → q) ∨ (p → r) ≡ p → (q ∨ r)$
+- $(p → r) ∨ (q → r) ≡ (p ∧ q) → r$
+<br>
+
+- $p \downarrow p \equiv \neg p$
+- $(p \downarrow q)\downarrow(p \downarrow q) \equiv p \vee q$
+- $(p \downarrow p)\downarrow(q \downarrow q) \equiv p \land q$
+
+
+**Predicates and Quantifiers**
+- $∀x(P(x) ∧ Q(x)) \equiv ∀xP(x) ∧ ∀xQ(x)$
+- $\exists x(P(x) \vee Q(x)) \equiv \exists xP(x) \vee \exists xQ(x)$
+- $∀xP(x) \vee ∀xQ(x) \Rightarrow ∀x(P(x) \vee Q(x))$
+- $\exists x(P(x) \land Q(x)) \Rightarrow \exists xP(x) \land \exists xQ(x)$
+
+**Nested Quantifiers and Normal Form**
+- CNF
+- DNF
+
+**Rules of Inference**
+- $(p ∧ (p → q)) → q$
+- $(¬q ∧ (p → q)) → ¬p$
+- $((p → q) ∧ (q → r)) → (p → r)$
+- $((p ∨ q) ∧ ¬p) → q$
+- $p → (p ∨ q)$
+- $(p ∧ q) → p$
+- $((p) ∧ (q)) → (p ∧ q)$
+- Resolution
+<br>
+
+- Universal instantiation
+- Universal generalization
+- Existential instantiation
+- Existential generalization
+- Universal modus ponens
+- Universal modus tollens
+
+**Introduction to Proofs**
+- proof by contraposition
+- proofs by contradiction
+- vacuous proof : $p$ is true
+- trivial proof : $q$ is true
+
+**Proof Methods and Strategy**
+- Existence proof
+  - constructive
+  - nonconstructive : the negation of the existential quantification implies a contradiction
+- Uniqueness proof
+  - Existence
+  - Uniqueness : if $x$ and $y$ both have the desired property, then $x = y$
 
 
 
