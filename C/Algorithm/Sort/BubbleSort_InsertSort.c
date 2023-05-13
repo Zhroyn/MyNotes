@@ -30,7 +30,7 @@ int main(void)
 {
     int N = 10;
     int a[] = {3, 1, 2, 8, 7, 5, 9, 4, 6, 0};
-    MergeSort(a, N);
+    BubbleSort(a, N);
     for(int i = 0; i < N; i++)
         printf("%d ", a[i]);
 }
