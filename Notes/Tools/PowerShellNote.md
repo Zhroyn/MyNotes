@@ -1,4 +1,4 @@
-#### Create links
+#### Create Links
 ```powershell
 # Create symbolic link
 cmd /c mklink path\to\symlink target\file
@@ -16,7 +16,7 @@ New-Item -ItemType HardLink `
 ```
 
 
-#### Set command aliases
+#### Set Command Aliases
 ```powershell
 # If return false, then need to perform the next step
 Test-Path $profile
@@ -29,6 +29,12 @@ function shortcut {command}
 
 # Executed this as administrator
 Set-Executionpolicy Remotesigned
+```
+
+
+#### Show Environment Varibles
+```powershell
+(type env:path) -split ';'
 ```
 
 
