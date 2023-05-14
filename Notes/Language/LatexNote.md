@@ -8,15 +8,12 @@
   - [Adding a Table of Contents](#adding-a-table-of-contents)
 - [Font](#font)
 - [Math](#math)
-  - [Basic](#basic)
-  - [Up and Down](#up-and-down)
-  - [Functions](#functions)
-  - [Operations](#operations)
-  - [Equations](#equations)
+  - [Additional Component](#additional-component)
+  - [Operators](#operators)
   - [Symbols](#symbols)
-  - [Style](#style)
-  - [Greek Alphabet](#greek-alphabet)
+  - [Equations and Alignment](#equations-and-alignment)
   - [Matrix](#matrix)
+  - [Greek Alphabet](#greek-alphabet)
 - [Image](#image)
 - [List](#list)
 - [Table](#table)
@@ -81,102 +78,73 @@ document. A brief introduction about the main subject.
 
 
 ### Font
+$$
+text \\
+\textit{text} \\
+\text{text} \\
+\textrm{text} \\
+\textup{text} \\
+\textbf{text} \\
+\textsf{text} \\
+\texttt{text} \\
+$$
 
-[Overleaf](https://cn.overleaf.com/learn/latex/Font_sizes%2C_families%2C_and_styles)
-```latex
-\documentclass{article}
-\begin{document}
-
-% Font sizes
-{\tiny this will show different font sizes}
-{\footnotesize Foot note size also}
-{\small}    {\normalsize}
-{\large}    {\Large}    {\LARGE}
-{\huge}     {\Huge}
-
-% Default font families
-\textrm{serif(roman)}	            \rmfamily
-\textsf{sans serif}	            \sffamily
-\texttt{typewriter(monospace)}	    \ttfamily
-
-% Font styles
-\textmd{medium}	              \mdseries
-\textbf{bold}	              \bfseries
-\textup{upright}	      \upshape
-\textit{italic}	              \itshape
-\textsl{slanted}	      \slshape
-\textsc{small caps}	      \scshape
-
-
-% Change sans font as a default by using the command:
-\renewcommand{\familydefault}{\sfdefault}
-\renewcommand{\familydefault}{\rmdefault}
-
-% Use other font typefaces like TEX Gyre Bonum by:
-\usepackage{tgbonum}
-% Change default font typeface like TEX gyre cursor, whose fontcode is qcr by:
-{\fontfamily{qcr}\selectfont
-This text uses a different font typeface
-}
-
-\end{document}
-```
-
+$$
+math \\
+\mathrm{math} \\
+\mathbf{math} \\
+\mathsf{math} \\
+\mathtt{math} \\
+\mathbb{R}, \mathcal{R}, \mathscr{R} \\ 
+\mathbb{P}, \mathcal{P}, \mathscr{P} \\ 
+\mathbb{L}, \mathcal{L}, \mathscr{L} \\
+$$
 
 ### Math
-#### Basic
-To typeset inline-mode math you can use one of these delimiter pairs: `\( ... \)`, `$ ... $` or `\begin{math} ... \end{math}`
-To typeset display-mode math you can use one of these delimiter pairs: `\[ ... \]`, `$$ ... $$`, `\begin{displaymath} ... \end{displaymath}` or `\begin{equation} ... \end{equation}`
-```latex
-% Inline-mode
-$E=mc^2$
-\(E=mc^2\)
-
-\begin{math}
-E=mc^2
-\end{math}
-
-% Display-mode
-\[E=mc^2\]        % unnumbered
-
-$$
-E=mc^2            % unnumbered
-$$
-
-\begin{displaymath}
-E=mc^2            % unnumbered
-\end{displaymath}
-
-\begin{equation}
-E=mc^2            % numbered
-\end{equation}
-```
-#### Up and Down
+#### Additional Component
+**Subscript and Supscript**
 $$
 a_i^2, a_{j-1,j}^{n+1} \\~\\
-\hat{A}, \tilde{A} \\~\\
-\bar{A}, \underbar{A} \\~\\
-\overline{overline}, \underline{underline} \\~\\
-\overset{a}{b}, \underset{a}{b} \\~\\
-\vec{a}, \overleftarrow{b}, \overrightarrow{u}, \overleftrightarrow{v} \\~\\
 $$
 
-#### Functions
+$a_i^n, \mathop{a}\limits_i^n $
+$\sum_{i=1}^n, \sum\limits_{i=1}^n $
+$\lim_{n\to\infty}, \lim\limits_{n\to\infty} $
+
+**Additional Symbols**
 $$
-\sin x \\
-\cos x \\
-\ln x  \\
-\log_{2}{x}   \\
-\lim_{x\to 0} x^2
+\hat{a}, \widehat{a}, \check{a}, \widecheck{a}, \tilde{a}, \widetilde{a} \\~\\
+\bar{a}, \vec{a} \\~\\
+\acute{a}, \grave{a} \\~\\
+\dot{a}, \ddot{a} \\~\\
+\not\in, \cancel\in \\
 $$
+
+**Over and Under**
 $$
-y =
-\begin{cases}
-\sin(x)       & x<0 \\
-x^2 + 2x +4   & 0 \leq x < 1 \\
-x^3           & x \geq 1 \\
-\end{cases}
+\overleftarrow{abc}, \underleftarrow{abc} \\~\\
+\overrightarrow{abc}, \underrightarrow{abc} \\~\\
+\overleftrightarrow{abc}, \underleftrightarrow{abc} \\~\\
+\overline{\text{overline}}, \underline{\text{underline}} \\~\\
+\underbar{\text{underbar}}, \underbrace{\text{underbrace}} \\~\\
+\overset{a}{\text{overset}}, \underset{a}{\text{underset}} \\~\\
 $$
+
+#### Operators
+**Binary Operators**
+$$
+\pm, \mp, \oplus, \setminus \\~\\
+\times, \div \\~\\
+\cdot, \odot, \circ, \bullet \\~\\
+\cap, \cup, \bigcap, \bigcup \\~\\
+\wedge, \vee, \bigwedge,\bigvee \\~\\
+$$
+
+**Large Operators**
+$$
+\lim, \sum, \prod, \int, \sqrt[n]{n},
+$$
+
 $$
 \frac{\mathrm{d} y}{\mathrm{d} x}, 
 \frac{\partial f}{\partial x}, 
@@ -184,58 +152,85 @@ f^{'},
 \nabla f
 $$
 
-#### Operations
-$$
-\sum_{i=0}^\infty i^2 \\
-\prod_{k=1}^n k = n!  \\
-\int_0^1 x^2 = \frac{1}{3}
-$$
-
-
-#### Equations
-$$
-\left\{
-\begin{aligned}
-a + b - c &= 2 \\
-a - b &= 4 \\
-\end{aligned}
-\right.
-\\~\\
-\begin{cases}
-a + b - c = 2 \\
-a - b = 4 \\
-\end{cases}
-$$
 
 #### Symbols
-$$\times, \div, \pm, \mp, \cdot, \oplus, \circ, \bullet$$
 $$\lt, \le, \leq, \leqq, \leqslant, \not\lt$$
 $$\gt, \ge, \geq, \geqq, \geqslant, \not\gt$$
 $$\neq, \approx, \approxeq, \sim, \simeq, \cong, \equiv$$
-$$\cap, \cup, \setminus, \subset, \subseteq, \subsetneq, \supset, \in, \notin$$
+$$\subset, \subseteq, \subsetneq, \supset, \in, \notin$$
 $$\to, \rightarrow, \leftarrow, \Rightarrow, \Leftarrow, \iff$$
 $$\forall, \exists, \mapsto, \because, \therefore$$
 
-#### Style
-$
-\lim\limits_{n\to\infty} \sqrt[n]{n},
-\underset{n\to\infty}{\lim} \sqrt[n]{n},
-\sum\limits_{i=1}^n a_n \\~\\
-\\
-\displaystyle{\sum_{i=1}^n a_n, \frac{1}{\sqrt[n]{n}}} \\~\\
-\\
+
+#### Equations and Alignment
+$$
+y =
+\begin{cases}
+  \sin(x)       & x<0 \\
+  x^2 + 2x +4   & 0 \leq x < 1 \\
+  x^3           & x \geq 1 \\
+\end{cases}
+$$
+
+$$
+\begin{cases}
+  a + b - c = 2 \\
+  a - b = 4 \\
+\end{cases}
+\\~\\
+\left\{
+  \begin{aligned}
+    & a + b - c = 2 \\
+    & a - b = 4 \\
+  \end{aligned}
+\right.
+$$
+
+$$
 \begin{aligned}
 f(x) &= 2x+1 \\
      &= 2+1 \\
      &= 3
 \end{aligned}
-$
-
-$\mathbb{R}, \mathcal{R}, \mathscr{R} \\ 
-\mathbb{P}, \mathcal{P}, \mathscr{P} \\ 
-\mathbb{L}, \mathcal{L}, \mathscr{L} \\ $
+$$
 
 
+#### Matrix
+$$
+\left(
+\left[
+  \begin{array}{ccc}
+    a_{11} & a_{12} & \cdots & a_{1n} \\
+    a_{21} & a_{22} & \cdots & a_{2n} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    a_{n1} & a_{n2} & \cdots & a_{nn} \\
+  \end{array}
+\right]
+\right)
+$$
+
+$$
+\begin{matrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{matrix}, 
+\begin{pmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{pmatrix}, 
+\begin{bmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{bmatrix}, 
+\begin{vmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{vmatrix}, 
+$$
 
 #### Greek Alphabet
 |form|letter|form|letter|
@@ -264,45 +259,6 @@ $\mathbb{R}, \mathcal{R}, \mathscr{R} \\
 |\psi	  |ψ |\Psi    |Ψ|
 |\omega	|ω |\Omega  |Ω|
 
-#### Matrix
-```latex
-$$
-% without brackets
-\begin{array}{ccc}
-    1 & 0 & 0\\
-    0 & 1 & 0\\
-    0 & 0 & 1\\
-\end{array}
-
-% with brackets
-\left(
-\left[
-  \begin{array}{ccc}
-      1 & 0 & 0\\
-      0 & 1 & 0\\
-      0 & 0 & 1\\
-  \end{array}
-\right]
-\right)
-
-
-\begin{pmatrix}   % matrix with []
-\begin{bmatrix}   % matrix with ()
-\begin{vmatrix}   % determinant
-    1 & 0 & 0\\
-    0 & 1 & 0\\
-    0 & 0 & 1\\
-\end{pmatrix}
-
-A = \frac{1}{3} \times
-  \begin{pmatrix}
-      a_{11} & a_{12} & \cdots & a_{1n}\\
-      a_{21} & a_{22} & \cdots & a_{2n}\\
-      \vdots & \vdots & \ddots & \vdots\\
-      a_{n1} & a_{n2} & \cdots & a_{nn}\\
-  \end{pmatrix}
-$$
-```
 
 
 
@@ -313,14 +269,14 @@ $$
 ```latex
 \documentclass{article}
 \usepackage{graphicx}
-\graphicspath{{C:/Users/壬/Pictures/head profile/Pokemon}}
+\graphicspath{{C:/Users/hrzhe/Pictures/head profile/Pokemon}}
 %the path cannot use '\'
 
 
 \begin{document}
 
 \includegraphics[height=10cm,width=10cm]{Eevee}
-\includegraphics{C:/Users/壬/Pictures/head profile/Pokemon/Eevee}
+\includegraphics{C:/Users/hrzhe/Pictures/head profile/Pokemon/Eevee}
 
 \begin{figure}
     \centering
