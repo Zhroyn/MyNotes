@@ -13,6 +13,14 @@
     - [Equivalence Relations](#equivalence-relations)
     - [Equivalence Classes](#equivalence-classes)
     - [Equivalence Classes and Partitions](#equivalence-classes-and-partitions)
+    - [The Operations of Equivalence Class](#the-operations-of-equivalence-class)
+  - [9.6 Partial Orderings](#96-partial-orderings)
+    - [Definitions about Partial Ordering](#definitions-about-partial-ordering)
+    - [Lexicographic Order](#lexicographic-order)
+    - [Hasse Diagrams](#hasse-diagrams)
+    - [Maximal and Minimal Elements](#maximal-and-minimal-elements)
+    - [Lattice](#lattice)
+    - [Topological Sorting](#topological-sorting)
 
 <!-- /TOC -->
 
@@ -202,6 +210,91 @@ $$
 **Theorem 2**
 Let $R$ be an equivalence relation on a set $S$. Then the equivalence classes of $R$ form a partition of $S$.
 Conversely, given a partition $\{A_i ∣ i ∈ I\}$ of the set $S$, there is an equivalence relation $R$ that has the sets $A_i, i ∈ I$, as its equivalence classes.
+
+
+#### The Operations of Equivalence Class
+**Theorem 3**
+If $R_1, R_2$ are equivalence relations on $A$, then $R_1 \cap R_2$ is equivalence relations on $A$.
+
+**Theorem 4**
+If $R_1, R_2$ are equivalence relations on $A$, then $R_1 \cup R_2$ is reflexive and symmetric relations on $A$.
+
+
+
+
+
+
+
+### 9.6 Partial Orderings
+#### Definitions about Partial Ordering
+**Definition 1**
+A relation $R$ on a set $S$ is called a **partial ordering** or **partial order** if it is *reflexive*, *antisymmetric*, and *transitive*.
+A set $S$ together with a partial ordering $R$ is called a **partially ordered set**, or **poset**, which is denoted by $(S, R)$.
+Members of $S$ are called **elements** of the poset.
+
+**Definition 2**
+When $a$ and $b$ are elements of a poset $(S, \preccurlyeq )$ such that either $a \preccurlyeq b$ or $b \preccurlyeq a$, $a$ and $b$ are called **comparable**.
+When $a$ and $b$ are elements of $(S, \preccurlyeq )$ such that neither $a \preccurlyeq b$ nor $b \preccurlyeq a$, $a$ and $b$ are called **incomparable**.
+
+**Definition 3**
+If $(S, \preccurlyeq )$ is a poset and every two elements of $S$ are comparable, $S$ is called a **totally ordered or linearly ordered set**, and $\preccurlyeq$ is called a **total order** or a **linear order**.
+A subset of a poset such that every two elements of this subset are comparable is called a **chain**.
+A subset of a poset such that every two elements of this subset are incomparable is called an **antichain**.
+
+**Definition 4**
+$(S, \preccurlyeq )$ is a **well-ordered set** if it is a poset such that $\preccurlyeq$ is a total ordering and every nonempty subset of $S$ has a least element.
+
+**Theorem 1 : The Principle of Well-ordered Induction**
+Suppose that $S$ is a well-ordered set, then $P(x)$ is true for all $x ∈ S$, if
+**Inductive Step**: For every $y ∈ S$, if $P(x)$ is true for all $x ∈ S$ with $x ≺ y$, then $P(y)$ is
+true.
+$\text{Proof :}$ Suppose it is not the case that $P(x)$ is true for all $x ∈ S$, then there is an element $y ∈ S$ such that $P(y)$ is false. Consequently, the set $A = \{x ∈ S ∣ P(x) \text{ is false}\}$ is nonempty.
+Because $S$ is well-ordered, $A$ has a least element $a$. By the choice of $a$ as a least element of $A$, we know that $P(x)$ is true for all $x ∈ S$ with $x \prec a$. This implies by the inductive step $P(a)$ is true.
+This contradiction shows that $P(x)$ must be true for all $x ∈ S$.
+
+
+#### Lexicographic Order
+A **lexicographic ordering** can be defined on the Cartesian product of $n$ posets $(A_1, \preccurlyeq_{1}), (A_2, \preccurlyeq_{2}), … , (A_n, \preccurlyeq_{n})$. Define the partial ordering $\preccurlyeq$ on $A_1 × A_2 × ⋯ × A_n$ by $$(a_1, a_2, … , a_n) ≺ (b_1, b_2, … , b_n)$$ if $a_1 \prec_{1} b_1$, or if there is an integer $i > 0$ such that $a_1 = b_1, … , a_i = b_i$ and $a_{i+1} \prec_{i+1} b_{i+1}$
+
+
+#### Hasse Diagrams
+The procedure of constructing a Hasse diagram of $(S, \preccurlyeq)$ is:
+1. Construct a digraph representation of the poset $(S, \preccurlyeq)$ so that all arcs are pointed upward (except the loops).
+2. Eliminate all loops.
+3. Eliminate all arcs that are redundant because of transitivity.
+4. Eliminate the arrows at the ends of arcs since everything points up.
+
+
+#### Maximal and Minimal Elements
+$a$ is **maximal** in the poset $(S, \preccurlyeq )$ if there is no $b ∈ S$ such that $a \prec b$.
+$a$ is **minimal** in the poset $(S, \preccurlyeq )$ if there is no $b ∈ S$ such that $b \prec a$.
+
+$a$ is the **greatest element** of the poset $(S, \preccurlyeq )$ if $b \preccurlyeq a$ for all $b ∈ S$.
+$a$ is the **least element** of the poset $(S, \preccurlyeq )$ if $a \preccurlyeq b$ for all $b ∈ S$.
+The greatest and least elements are unique.
+
+
+#### Lattice
+A partially ordered set in which every pair of elements has both a least upper bound and a greatest lower bound is called a **lattice**.
+
+
+#### Topological Sorting
+A total ordering $\preccurlyeq$ is said to be compatible with the partial ordering $R$ if $a \preccurlyeq b$ whenever $aRb$.
+Constructing a compatible total ordering from a partial ordering is called **topological sorting**.
+
+**Lemma 1**
+Every finite nonempty poset $(S, \preccurlyeq )$ has at least one minimal element.
+
+**Algorithm**
+$
+\text{procedure } \textit{topological sort } ((S, \preccurlyeq )\text{: finite poset}) \\
+k := 1 \\
+\text{while } S ≠ ∅ \\
+\quad a_k := \text{ a minimal element of S \{such an element exists by Lemma 1\}} \\
+\quad S := S − {a_k} \\
+\quad k := k + 1 \\
+\text{return } a_1, a_2,… , a_n \{a_1, a_2,… , a_n \text{ is a compatible total ordering of } S\} \\
+$
 
 
 
