@@ -156,6 +156,7 @@ $$
 #### Symbols
 $$\lt, \le, \leq, \leqq, \leqslant, \not\lt$$
 $$\gt, \ge, \geq, \geqq, \geqslant, \not\gt$$
+$$\prec, \preceq, \preccurlyeq, \precapprox, \precnapprox, \precsim, \precnsim $$
 $$\neq, \approx, \approxeq, \sim, \simeq, \cong, \equiv$$
 $$\subset, \subseteq, \subsetneq, \supset, \in, \notin$$
 $$\to, \rightarrow, \leftarrow, \Rightarrow, \Leftarrow, \iff$$
