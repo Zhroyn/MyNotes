@@ -9,6 +9,10 @@
   - [9.4 Closures of Relations](#94-closures-of-relations)
     - [Transitive Closures](#transitive-closures)
     - [Warshall’s Algorithm](#warshalls-algorithm)
+  - [9.5 Equivalence Relations](#95-equivalence-relations)
+    - [Equivalence Relations](#equivalence-relations)
+    - [Equivalence Classes](#equivalence-classes)
+    - [Equivalence Classes and Partitions](#equivalence-classes-and-partitions)
 
 <!-- /TOC -->
 
@@ -18,7 +22,7 @@
 
 ## Relations
 ### 9.1 Relations and Their Properties
-- Let A and B be sets. A **binary relation from $A$ to $B$** is a subset of $A × B$.
+- Let $A$ and $B$ be sets. A **binary relation from $A$ to $B$** is a subset of $A × B$.
 - We use the notation $aRb$ to denote that $(a, b) ∈ R$ and $a \cancel{R} b$ to denote that $(a, b) ∉ R$.
 - Moreover, when $(a, b)$ belongs to $R$, $a$ is said to be **related to** $b$ by $R$.
 - A **relation on a set $A$** is a relation from $A$ to $A$.
@@ -28,19 +32,12 @@
 - A relation $R$ on a set $A$ is called **symmetric** if for all $a, b ∈ A$, $(b, a) ∈ R$ whenever $(a, b) ∈ R$.
 - A relation $R$ on a set $A$ is called **antisymmetric** if for all $a, b ∈ A$, if $(a, b) ∈ R$ and $(b, a) ∈ R$, then $a = b$.
 - A relation $R$ on a set $A$ is called **transitive** if for all $a, b ∈ A$, if $(a, b) ∈ R$ and $(b, c) ∈ R$, then $ (a, c) ∈ R$.
-<br>
 
 #### Combining Relations
-- Two relations from A to B can be combined in any way two sets can be combined, such as $R_1 ∪ R_2, R_1 ∩ R_2, R_1 ⊕ R_2, R_1 − R_2, R_2 − R_1$.
+- Two relations from $A$ to $B$ can be combined in any way two sets can be combined, such as $R_1 ∪ R_2, R_1 ∩ R_2, R_1 ⊕ R_2, R_1 − R_2, R_2 − R_1$.
 - Let $R$ be a relation from $A$ to $B$, and $S$ a relation from $B$ to $C$. The **composite** of $R$ and $S$ is the relation consisting of ordered pairs $(a, c)$, where $a ∈ A, c ∈ C$, and $\exists b ∈ B, (a, b) ∈ R, (b, c) ∈ S$. We denote the composite of $R$ and $S$ by $S \circ R$.
 - Let $R$ be a relation on the set $A$. The powers $R^n, n = 1, 2, 3, …$ , are defined recursively by $$R^1 = R, R^{n+1} = R^n \circ R $$
-  - A relation $R$ on a set $A$ is transitive if and only if $R^n \subseteq R$ for $n = 1, 2, 3, …$
-<br>
-
-- $M_{R_1 \cup R_2} = [c_{ij} \vee d_{ij}] = M_{R_1} \vee M_{R_2} $
-- $M_{R_1 \cap R_2} = [c_{ij} \land d_{ij}] = M_{R_1} \land M_{R_2} $
-- $M_{\bar{R}_1} = [\bar{c}_{ij}] $
-- $M_{R_1 - R_2} = [c_{ij} \land \bar{d}_{ij}] = M_{R_1 \land \bar{R}_2} $
+- **THEOREM :** A relation $R$ on a set $A$ is transitive if and only if $R^n \subseteq R$ for $n = 1, 2, 3, …$
 <br>
 
 - $\bar{R} = A\times B - R $
@@ -63,7 +60,7 @@ If $R = \left\{ (a, b) | a\in A, b\in B, aRb \right\}$, then define $$R^{-1} = \
 
 
 ### 9.2 n-ary Relations and Their Applications
-- Let $A_1, A_2, … , A_n$ be sets. An **n-ary relation** on these sets is a subset of $A1 × A2 × ⋯ × An$.
+- Let $A_1, A_2, … , A_n$ be sets. An **n-ary relation** on these sets is a subset of $A_1 × A_2 × ⋯ × A_n$.
 - The sets $A_1, A_2, … , A_n$ are called the **domains** of the relation, and $n$ is called its **degree**.
 <br>
 
@@ -91,6 +88,14 @@ $$
 - $R$ is reflexive if and only if all elements on the main diagonal of $M_R$ are equal to 1.
 - $R$ is symmetric if and only if $M_R = (M_R)^T$.
 - $R$ is antisymmetric if and only if $M_R$ has the property that if $m_{ij} = 1$ with $i ≠ j$, then $m_{ji} = 0$.
+<br>
+
+- $M_{R_1 \cup R_2} = [c_{ij} \vee d_{ij}] = M_{R_1} \vee M_{R_2} $
+- $M_{R_1 \cap R_2} = [c_{ij} \wedge d_{ij}] = M_{R_1} \wedge M_{R_2} $
+- $M_{\bar{R}_1} = [\bar{c}_{ij}] $
+- $M_{R_1 - R_2} = [c_{ij} \wedge \bar{d}_{ij}] = M_{R_1 \wedge \bar{R}_2} $
+- $M_{R_2 \circ R_1} = [\bigvee_{k=1}^n (c_{ik} \wedge d_{kj})] = M_{R_1} \odot M_{R_2} $
+- $M_{R^{-1}} = M_{R}^T $
 <br>
 
 - A **directed graph**, or **digraph**, consists of a set $V$ of *vertices* (or *nodes*) together with a set $E$ of ordered pairs of elements of $V$ called *edges* (or *arcs*). The vertex $a$ is called the *initial vertex* of the edge $(a, b)$, and the vertex $b$ is called the *terminal vertex* of this edge.
@@ -127,7 +132,7 @@ $$
 - If $|A| = n$, then $t(R) = R^* = R \cup R^2 \cup \cdots \cup R^n $.
 - Let $M_R$ be the zero–one matrix of the relation $R$ on a set with $n$ elements, then $$M_{R^∗} = M_R ∨ M^{[2]}_R ∨ M^{[3]}_R ∨ ⋯ ∨ M^{[n]}_R$$
 
-$\text{procedure } transitive \; closure (M_R : \text{zero–one } n × n \text{ matrix}) \\
+$\text{procedure } \textit{transitive closure } (M_R : \text{zero–one } n × n \text{ matrix}) \\
 A := M_R \\
 B := A \\
 \text{for } i := 2 \text{ to } n \\
@@ -144,6 +149,62 @@ This algorithm uses $n^2(2n−1)(n−1) + (n−1)n^2 = 2n^3(n−1)$, which is $O
 - If $a, x_1, x_2, … , x_{m−1}, b$ is a path, then its **interior vertices** are $x_1, x_2, … , x_{m−1}$
 - $W_0 = M_R, W_n = M_{R^∗}$, and $W_k =[w^{(k)}_{ij}]$, where $w^{(k)}_{ij} = 1$ if there is a path from $v_i$ to $v_j$ such that all the interior vertices of this path are in the set $\{v_1, v_2, … , v_k\}$ and is $0$ otherwise.
 - There is a path from $v_i$ to $v_j$ with no vertices other than $v_1, v_2, … , v_k$ as interior vertices if and only if either there is a path from $v_i$ to $v_j$ with its interior vertices among the first $k − 1$ vertices in the list, or there are paths from $v_i$ to $v_k$ and from $v_k$ to $v_j$ that have interior vertices only among the first $k − 1$ vertices in the list. So $$w^{[k]}_{ij} = w^{[k−1]}_{ij} ∨ (w^{[k−1]}_{ik} ∧ w^{[k−1]}_{kj} )$$
+
+
+
+
+
+
+
+### 9.5 Equivalence Relations
+#### Equivalence Relations
+**Definition of Equivalence Relation**
+A relation on a set $A$ is called an **equivalence relation** if it is *reflexive*, *symmetric*, and *transitive*.
+
+**Definition of Equivalent**
+Two elements $a$ and $b$ that are related by an equivalence relation are called **equivalent**, which is noted by $a ∼ b$.
+
+
+#### Equivalence Classes
+**Definition of Equivalence Class**
+If $R$ is an equivalence relation on a set $A$, **the equivalence class of the $a$ with respect to $R$** is $$[a]_R = \{s ∣ (a, s) ∈ R\}$$
+- When only one relation is under consideration, we can delete the subscript $R$ and write $[a]$ for this equivalence class.
+- If $b ∈ [a]_R$, then $b$ is called a representative of this equivalence class.
+
+**Theorem 1**
+Let $R$ be an equivalence relation on a set $A$. These statements for elements $a$ and $b$ of $A$ are equivalent:
+$\pod{1}\; aRb$
+$\pod{2}\; [a] = [b]$
+$\pod{3}\; [a] \cap [b] \neq \emptyset$
+ 
+$(2)\Rightarrow (3) : $
+$$
+\left.
+\begin{aligned}
+  [a] = [b] \\
+  R \text{ is reflexive} \Rightarrow [a] \text{ is nonempty} \\
+\end{aligned}
+\right\}
+\Rightarrow [a] \cap [b] \neq \emptyset
+$$
+
+
+#### Equivalence Classes and Partitions
+**Definition of Partition**
+A **partition** of a set $S$ is a collection of disjoint nonempty subsets of $S$ that have $S$ as their union.
+$\{A_i | i ∈ I\}$ (where $I$ is an index set) forms a partition of $S$ if and only if
+$$
+A_i \neq \emptyset \text{ for } i \in I \\
+A_i \cap A_j \neq \emptyset \text{ when } i \neq j \\
+\bigcup_{i\in I} A_i = S
+$$
+
+**Theorem 2**
+Let $R$ be an equivalence relation on a set $S$. Then the equivalence classes of $R$ form a partition of $S$.
+Conversely, given a partition $\{A_i ∣ i ∈ I\}$ of the set $S$, there is an equivalence relation $R$ that has the sets $A_i, i ∈ I$, as its equivalence classes.
+
+
+
 
 
 
