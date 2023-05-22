@@ -10,6 +10,13 @@
     - [Euclidean Algorithm](#euclidean-algorithm)
     - [Bezout’s Theorem](#bezouts-theorem)
     - [Uniqueness of Prime Factorization](#uniqueness-of-prime-factorization)
+  - [4.4 Solving Congruences](#44-solving-congruences)
+    - [Linear Congruences](#linear-congruences)
+    - [The Chinese Remainder Theorem](#the-chinese-remainder-theorem)
+    - [Back Substitution](#back-substitution)
+    - [Fermat’s Little Theorem](#fermats-little-theorem)
+    - [Pseudoprimes](#pseudoprimes)
+    - [Primitive Roots and Discrete Logarithms](#primitive-roots-and-discrete-logarithms)
 
 <!-- /TOC -->
 
@@ -65,9 +72,9 @@ $
 
 ### 4.3 Primes and Greatest Common Divisors
 #### Greatest Common Divisors and Least Common Multiples
-Let $a$ and $b$ be integers, not both zero. The largest integer $d$ such that $d ∣ a$ and $d ∣ b$ is called the **greatest common divisor** of $a$ and $b$, which is denoted by $\text{gcd}(a, b)$.
+Let $a$ and $b$ be integers, not both zero. The largest integer $d$ such that $d ∣ a$ and $d ∣ b$ is called the **greatest common divisor** of $a$ and $b$, which is denoted by $\gcd(a, b)$.
 $$
-\text{gcd}(a, b) = p_1^{\text{min}(a_1, b_1)} p_2^{\text{min}(a_2, b_2)} \cdots p_n^{\text{min}(a_n, b_n)}
+\gcd(a, b) = p_1^{\text{min}(a_1, b_1)} p_2^{\text{min}(a_2, b_2)} \cdots p_n^{\text{min}(a_n, b_n)}
 $$
 
 The integers $a$ and $b$ are **relatively prime** if their greatest common divisor is 1
@@ -78,12 +85,12 @@ $$
 $$
 
 **Theorem**
-Let $a$ and $b$ be positive integers. Then $$ab = \text{gcd}(a, b) \cdot \text{lcm}(a, b)$$
+Let $a$ and $b$ be positive integers. Then $$ab = \gcd(a, b) \cdot \text{lcm}(a, b)$$
 
 
 #### Euclidean Algorithm
 **Lemma 1**
-Let $a = bq + r$, where $a$, $b$, $q$, and $r$ are integers. Then $\text{gcd}(a, b) = \text{gcd}(b, r)$.
+Let $a = bq + r$, where $a$, $b$, $q$, and $r$ are integers. Then $\gcd(a, b) = \gcd(b, r)$.
 
 $
 \text{procedure } \textit{gcd } (a, b: \text{positive integers}) \\
@@ -93,11 +100,11 @@ y := b \\
 \quad r := x \textbf{ mod } y \\
 \quad x := y \\
 \quad y := r \\
-\text{return } x \{\text{gcd}(a, b) \text{ is } x\}
+\text{return } x \{\gcd(a, b) \text{ is } x\}
 $
 
 #### Bezout’s Theorem
-If $a$ and $b$ are positive integers, then there exist integers $s$ and $t$ such that $$\text{gcd}(a, b) = sa + tb$$
+If $a$ and $b$ are positive integers, then there exist integers $s$ and $t$ such that $$\gcd(a, b) = sa + tb$$
 
 **Extended Euclidean Algorithm**
 $
@@ -116,10 +123,10 @@ t_{j-1} := 1 \\
 \quad t_{j-1} = t_{j} \\
 \quad x := y \\
 \quad y := r \\
-\text{return } x, s_j, t_j \{\text{gcd}(a, b) = x = s_ja + t_jb \}
+\text{return } x, s_j, t_j \{\gcd(a, b) = x = s_ja + t_jb \}
 $
 
-> Express $\text{gcd}(252, 198) = 18$ as a linear combination of $252$ and $198$.
+> Express $\gcd(252, 198) = 18$ as a linear combination of $252$ and $198$.
 > **Solution1:** Working backwards through the steps of the Euclidean algorithm
 > $252 = 198\cdot 1 + 54 \Rightarrow 54 = 252 - 1\cdot 198$
 > $198 = 54\cdot 3 + 36 \Rightarrow 36 = 198 - 3\cdot 54$
@@ -135,7 +142,7 @@ $
 
 #### Uniqueness of Prime Factorization
 **Lemma 2**
-If $a$, $b$, and $c$ are positive integers such that $\text{gcd}(a, b) = 1$ and $a ∣ bc$, then $a ∣ c$.
+If $a$, $b$, and $c$ are positive integers such that $\gcd(a, b) = 1$ and $a ∣ bc$, then $a ∣ c$.
 $\text{Proof:}$
 By Bezout's Theorem, $$sa + tb = 1 \\ \Rightarrow sac + tbc = c$$
 
@@ -153,6 +160,84 @@ By Lemma 3, it follows that $p_{i_1}$ divides $q_{j_k}$ for some $k$.
 Because no prime divides another prime, this is impossible.  Consequently, there can be at most one factorization of $n$ into primes in nondecreasing order.
 
 **Theorem**
-Let $m$ be a positive integer and let $a$, $b$, and $c$ be integers. If $ac ≡ bc (\text{mod } m)$ and $\text{gcd}(c, m) = 1$, then $a ≡ b (\text{mod } m)$.
+Let $m$ be a positive integer and let $a$, $b$, and $c$ be integers. If $ac ≡ bc (\text{mod } m)$ and $\gcd(c, m) = 1$, then $a ≡ b (\text{mod } m)$.
+
+
+
+
+
+
+
+
+### 4.4 Solving Congruences
+#### Linear Congruences
+**Definition**
+A congruence of the form $$ax ≡ b (\text{mod } m)$$ where $m$ is a positive integer, $a$ and $b$ are integers, and $x$ is a variable, is called a **linear congruence**.
+
+An integer $\bar{a}$ such that $\bar{a}a ≡ 1 (\text{mod } m)$ is said to be an **inverse** of $a$ modulo $m$.
+
+**Theorem 1**
+If $a$ and $m$ are relatively prime integers and $m > 1$, then there is a unique positive integer $\bar a$ less than $m$ that is an inverse of $a$ modulo $m$, and every other inverse of $a$ modulo $m$ is congruent to $\bar a$ modulo $m$.
+
+To get an solution of a linear congruence $ax \equiv b (\text{mod } m)$, the procedures can be:
+1. Use the Euclidean algorithm to find that $\gcd(a, m) = 1$
+2. Find the Bezout coefficients for $a$ and $m$ by working backwards through these step, say, $sa + tm = 1$, then we can get $\bar a = s$
+3. Multiply both sides by $\bar a$, then we can get $x \equiv \bar ab(\text{mod } m)$
+4. Determine whether every $x$ with $x \equiv \bar ab(\text{mod } m)$ is a solution
+
+#### The Chinese Remainder Theorem
+Let $m_1, m_2, … , m_n$ be pairwise relatively prime positive integers greater than one and $a_1, a_2, … , a_n$ arbitrary integers. Then the system
+$$
+x \equiv a_1 (\text{mod } m_1) \\
+x \equiv a_2 (\text{mod } m_2) \\
+\cdots \\
+x \equiv a_n (\text{mod } m_n) \\
+$$ 
+
+has a unique solution modulo $m = m_1m_2 ⋯ m_n$.
+Let $M_k = m/m_k$, and $y_k$ an inverse of $M_k$ modulo $m_k$, then one solution of the system of linear congruences is $\sum_{i=1}^{n} a_iM_iy_i$.
+
+
+#### Back Substitution
+> Use the method of back substitution to find all integers $x$ such that $x\equiv 1(\text{mod } 5)$, $x\equiv 2(\text{mod } 6)$ and $x\equiv 3(\text{mod } 7)$.
+>
+> By the first congruence, get $x= 5t + 1$, where $t$ is an integer. 
+> Substituting $x = 5t + 1$ into the second congruence, get $5t + 1 \equiv 2 (\text{mod } 6)$.
+> $\Rightarrow 5t + 1 + 4= 2 + 4(\text{mod } 6) \Rightarrow 5(t + 1) = 0 (\text{mod } 6)$. 
+> 
+> So that $t \equiv 5 (\text{mod } 6)$, get $t= 6u + 5$, where $u$ is an integer. 
+> Substituting this back into $x = 5t + 1$, get $x = 30u+26$.
+> 
+> Substituting $x = 30t + 26$ into the third congruence, get $30u + 26 \equiv 3 (\text{mod } 7)$.
+> $\Rightarrow 30u + 26 + 4 \equiv 3 + 4(\text{mod } 7) \Rightarrow 30(u + 1) \equiv 0(\text{mod } 7)$
+> 
+> So that $u \equiv 6(\text{mod } 7)$, get $u = 7v + 6$, where $v$ is an integer. 
+> Substituting this back into $x = 30u + 26$, get $x = 210v + 206$.
+>
+> So the solution is $x$ with $x \equiv 206 (\text{mod } 210)$
+
+
+#### Fermat’s Little Theorem
+If $p$ is prime and $a$ is an integer not divisible by $p$, then $a^{p−1} ≡ 1 (\text{mod } p)$.
+Furthermore, for every integer $a$ we have $a^{p} ≡ a (\text{mod } p)$
+
+
+#### Pseudoprimes
+**Definition 1**
+Let $b$ be a positive integer. If $n$ is a composite positive integer, and $b^{n−1} ≡ 1 (\text{mod } n)$, then $n$ is called a **pseudoprime to the base $b$**.
+
+**Definition 2**
+A composite integer $n$ that satisfies the congruence $b^{n−1} ≡ 1 (\text{mod } n)$ for all positive integers $b$ with $\gcd(b, n) = 1$ is called a **Carmichael number**.
+
+
+#### Primitive Roots and Discrete Logarithms
+**Definition 3**
+A **primitive root** modulo a prime $p$ is an integer $r$ in $Z_p$ such that every nonzero element of $Z_p$ is a power of $r$.
+There is a primitive root modulo $p$ for every prime $p$.
+
+**Definition 4**
+Suppose that $p$ is a prime, $r$ is a primitive root modulo $p$, and $a$ is an integer between $1$ and $p − 1$ inclusive. If $r^e \textbf{ mod } p = a$ and $0 ≤ e ≤ p − 1$, we say that $e$ is the **discrete logarithm** of a modulo $p$ to the base $r$ and we write $\log_r a = e$.
+
+
 
 
