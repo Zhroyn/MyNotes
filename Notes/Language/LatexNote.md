@@ -174,12 +174,14 @@ y =
 $$
 
 $$
-\begin{cases}
+\begin{cases}\tag{1}
   a + b - c = 2 \\
   a - b = 4 \\
 \end{cases}
-\\~\\
-\left\{
+$$
+
+$$
+\left\{\tag{2}
   \begin{aligned}
     & a + b - c = 2 \\
     & a - b = 4 \\
