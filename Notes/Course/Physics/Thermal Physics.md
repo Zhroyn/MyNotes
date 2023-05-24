@@ -2,6 +2,7 @@
 
 - [Thermal Physics](#thermal-physics)
   - [Basic Concepts](#basic-concepts)
+    - [The Laws of Thermodynamics](#the-laws-of-thermodynamics)
     - [Temperature Scales](#temperature-scales)
     - [Thermal Expansion](#thermal-expansion)
     - [Ideal Gases](#ideal-gases)
@@ -16,10 +17,16 @@
 
 ## Thermal Physics
 ### Basic Concepts
-#### Temperature Scales
-Absolute temperature (Kelvin) scale: $\displaystyle T = T_{\text{triple}} \frac{p}{p_{\text{triple}}} \approx \frac{237.15}{610} p $
+#### The Laws of Thermodynamics
+**The Zeroth Law of Thermodynamics**: If two systems are in thermal equilibrium with a third system, then they must be in thermal equilibrium with each other.
 
-Celsius scale: $T_C = T - 237.15$
+**The Third Law of Thermodynamics**: It is impossible for any procedure to lead to the isotherm $T= 0$ in a finite number of steps.
+
+#### Temperature Scales
+Absolute temperature (Kelvin) scale: $\displaystyle T = T_{\text{triple}} \frac{p}{p_{\text{triple}}} \approx \frac{273.16}{610} p $
+$273.16$ is the difference between absolute zero and the temperature of the triple point of water .
+
+Celsius scale: $T_C = T - 273.15$
 
 Fahrenheit scale: $\displaystyle T_F = \frac{9}{5}T_C + 32^{\circ}F$
 
@@ -53,13 +60,13 @@ $$
 $$
 
 #### Real Gases
-The Van der Waals equation of state is
+The van der Waals equation of state is
 $$
 (P + \frac{an^2}{V^2})(V - nb) = nRT
 $$
 
-$a$ is about the attractive forces between the gas molecules
-$b$ is about the volume of gas molecule
+$a$ is about the attractive forces between the gas molecules.
+$b$ is about the volume of gas molecule.
 
 
 
