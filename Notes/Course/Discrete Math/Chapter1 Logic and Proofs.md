@@ -17,6 +17,7 @@
 
 
 
+
 ## Logic and Proofs
 
 ### 1.1 Propositional Logic
@@ -25,7 +26,7 @@
 
 - `negation` : $\neg p$
   - The truth value of the negation of a proposition in fuzzy logic is 1 minus the truth value of the proposition
-- `conjunction` : $p \land q$
+- `conjunction` : $p \wedge q$
   - The truth value of the conjunction of two propositions in fuzzy logic is the minimum of the truth values of the two propositions
 - `disjunction` : $p \vee q$
   - The truth value of the disjunction of two propositions in fuzzy logic is the maximum of the truth values of the two propositions
@@ -45,7 +46,7 @@
 |Operator| Precedence|
 | :-: | :-: |
 |$\neg$| 1 |
-|$\land$| 2 |
+|$\wedge$| 2 |
 |$\vee$| 3 |
 |$\rightarrow$| 4 |
 |$\leftrightarrow$| 5 |
@@ -53,8 +54,21 @@
 
 
 
+
+
+
+
+<br>
+
 ### 1.2 Applications of Propositional Logic
 - System specifications should be **consistent**, that is, they should not contain conflicting requirements that could be used to derive a contradiction
+
+
+
+
+
+
+<br>
 
 ### 1.3 Propositional Equivalences
 - A compound proposition that is always true, no matter what the truth values of the propositional variables that occur in it, is called a **tautology**
@@ -66,17 +80,17 @@
 - The notation $p \equiv q$ or $p \Leftrightarrow q$ denotes that p and q are logically equivalent
 <br>
 
-- Identity laws : $p \land T ≡ p$, $p \vee F ≡ p$
-- Domination laws : $p \vee T ≡ T$, $p \land F ≡ F$
-- Idempotent laws : $p \vee p ≡ p$, $p \land p ≡ p$
+- Identity laws : $p \wedge T ≡ p$, $p \vee F ≡ p$
+- Domination laws : $p \vee T ≡ T$, $p \wedge F ≡ F$
+- Idempotent laws : $p \vee p ≡ p$, $p \wedge p ≡ p$
 - Double negation law : $\neg (\neg p) ≡ p$ 
-- Commutative laws : $p \vee q ≡ q \vee p$, $p \land q ≡ q \land p$
-- Associative laws : $(p \vee q) \vee r ≡ p \vee (q \vee r)$, $(p \land q) \land r ≡ p \land (q \land r)$
-- Distributive laws : $p \vee (q \land r) ≡ (p \vee q) \land (p \vee r)$, $p \land (q \vee r) ≡ (p \land q) \vee (p \land r)$
-- De Morgan’s laws : $\neg (p \land q) ≡ \neg p \vee \neg q$, $\neg(p \vee q) ≡ \neg p \land \neg q$
-  - $\neg(\vee_{j=1}^n p_j) \equiv \land_{j=1}^n \neg p_j$, $\neg(\land_{j=1}^n p_j) \equiv \vee_{j=1}^n \neg p_j$
-- Absorption laws : $p \vee (p \land q) ≡ p$, $p \land (p \vee q) ≡ p$
-- Negation laws : $p \vee \neg p ≡ T$, $p \land \neg p ≡ F$
+- Commutative laws : $p \vee q ≡ q \vee p$, $p \wedge q ≡ q \wedge p$
+- Associative laws : $(p \vee q) \vee r ≡ p \vee (q \vee r)$, $(p \wedge q) \wedge r ≡ p \wedge (q \wedge r)$
+- Distributive laws : $p \vee (q \wedge r) ≡ (p \vee q) \wedge (p \vee r)$, $p \wedge (q \vee r) ≡ (p \wedge q) \vee (p \wedge r)$
+- De Morgan’s laws : $\neg (p \wedge q) ≡ \neg p \vee \neg q$, $\neg(p \vee q) ≡ \neg p \wedge \neg q$
+  - $\neg(\vee_{j=1}^n p_j) \equiv \wedge_{j=1}^n \neg p_j$, $\neg(\wedge_{j=1}^n p_j) \equiv \vee_{j=1}^n \neg p_j$
+- Absorption laws : $p \vee (p \wedge q) ≡ p$, $p \wedge (p \vee q) ≡ p$
+- Negation laws : $p \vee \neg p ≡ T$, $p \wedge \neg p ≡ F$
 <br>
 
 - $p → q ≡ ¬p ∨ q$
@@ -96,13 +110,18 @@
 - $¬(p \leftrightarrow q) ≡ p \leftrightarrow ¬q$
 <br>
 
-- $p \oplus q \equiv (p \land \neg q)\vee(\neg p \land q)$
+- $p \oplus q \equiv (p \wedge \neg q)\vee(\neg p \wedge q)$
 - $p \downarrow p \equiv \neg p$
 - $(p \downarrow q)\downarrow(p \downarrow q) \equiv p \vee q$
-- $(p \downarrow p)\downarrow(q \downarrow q) \equiv p \land q$
+- $(p \downarrow p)\downarrow(q \downarrow q) \equiv p \wedge q$
 
 
 
+
+
+
+
+<br>
 
 ### 1.4 Predicates and Quantifiers
 - Many mathematical statements assert that a property is true for all values of a variable in a particular domain, called the **domain of discourse**, often just referred to as the **domain**
@@ -121,7 +140,7 @@
 
 **Quantifiers with Restricted Domains**
 - An abbreviated notation is often used to restrict the domain of a quantifier.
-- In this notation, a condition a variable must satisfy is included after the quantifier, e.g. $\forall x < 0 (x^2 > 0) \equiv \forall x(x < 0 \rightarrow x^2 > 0)$, $\exists z > 0 (z^2 = 2) \equiv \exists z(z > 0 \land z^2 = 2) $
+- In this notation, a condition a variable must satisfy is included after the quantifier, e.g. $\forall x < 0 (x^2 > 0) \equiv \forall x(x < 0 \rightarrow x^2 > 0)$, $\exists z > 0 (z^2 = 2) \equiv \exists z(z > 0 \wedge z^2 = 2) $
 
 **Precedence of Quantifiers**
 - The quantifiers $∀$ and $∃$ have higher precedence than all logical operators from propositional calculus
@@ -141,12 +160,12 @@
 - $∀x(P(x) ∧ Q(x)) \equiv ∀xP(x) ∧ ∀xQ(x)$
 - $\exists x(P(x) \vee Q(x)) \equiv \exists xP(x) \vee \exists xQ(x)$
 - $∀xP(x) \vee ∀xQ(x) \Rightarrow ∀x(P(x) \vee Q(x))$
-- $\exists x(P(x) \land Q(x)) \Rightarrow \exists xP(x) \land \exists xQ(x)$
+- $\exists x(P(x) \wedge Q(x)) \Rightarrow \exists xP(x) \wedge \exists xQ(x)$
 <br>
 
-- $(\forall x P)\land Q \equiv \forall x(P\land Q) $
+- $(\forall x P)\wedge Q \equiv \forall x(P\wedge Q) $
 - $(\forall x P)\vee Q \equiv \forall x(P\vee Q) $
-- $(\exists x P)\land Q \equiv \exists x(P\land Q) $
+- $(\exists x P)\wedge Q \equiv \exists x(P\wedge Q) $
 - $(\exists x P)\vee Q \equiv \exists x(P\vee Q) $
 <br>
 
@@ -164,10 +183,15 @@ $$¬∀xP(x) ≡ ∃x ¬P(x)\\
 
 
 
+
+
+
+<br>
+
 ### 1.5 Nested Quantifiers and Normal Form
 **Nested Quantifier**
 - Two quantifiers are **nested** if one is within the scope of the other.
-- Everyone has exactly one best friend : $\forall x \exists y \forall z(B(x, y)\land ((z \neq y)\rightarrow \neg B(x, z)))$
+- Everyone has exactly one best friend : $\forall x \exists y \forall z(B(x, y)\wedge ((z \neq y)\rightarrow \neg B(x, z)))$
 - The order of nested quantifiers matters if quantifiers are of different types.
 
 **Normal Form**
@@ -176,8 +200,8 @@ $$¬∀xP(x) ≡ ∃x ¬P(x)\\
 - Disjunctive and conjunctive clauses are simply called clauses.
 <br>
 
-- A disjunction with conjunctive clauses as its disjuncts is said to be in **disjunctive normal form (DNF)** : $(A_{11} \land … \land A_{1n_1}) \vee … \vee (A_{k1} \land … \land A_{kn_k}).$
-- A conjunction with disjunctive clauses as its conjuncts is said to be in **conjunctive normal form (CNF)** : $(A_{11} \vee … \vee A_{1n_1}) \land … \land (A_{k1} \vee … \vee A_{kn_k}).$
+- A disjunction with conjunctive clauses as its disjuncts is said to be in **disjunctive normal form (DNF)** : $(A_{11} \wedge … \wedge A_{1n_1}) \vee … \vee (A_{k1} \wedge … \wedge A_{kn_k}).$
+- A conjunction with disjunctive clauses as its conjuncts is said to be in **conjunctive normal form (CNF)** : $(A_{11} \vee … \vee A_{1n_1}) \wedge … \wedge (A_{k1} \vee … \vee A_{kn_k}).$
 <br>
 
 - A minterm is a conjunction of literals in which each variable is represented exactly once.
@@ -185,11 +209,11 @@ $$¬∀xP(x) ≡ ∃x ¬P(x)\\
 - A disjunction of minterms is true if and only if one of its constituents minterms is true, so the number of cases when the statement is true is exactly the number of minterms.
 $$
 \begin{aligned}
-  & (p \land q)\vee(\neg p \land r)\vee(q \land r) \\
-  \equiv & (p \land q \land (r \vee \neg r))\vee(\neg p \land (q \vee \neg q) \land r)\vee((p \vee \neg p) \land q \land r) \\
-  \equiv & (p \land q \land r)\vee(p \land q \land \neg r)\vee(\neg p \land q \land r)\vee(\neg p \land \neg q \land r) \\
-  & \vee(p \land q \land r)\vee(\neg p \land q \land r) \\
-  \equiv & (p \land q \land r)\vee(p \land q \land \neg r)\vee(\neg p \land q \land r)\vee(\neg p \land \neg q \land r)
+  & (p \wedge q)\vee(\neg p \wedge r)\vee(q \wedge r) \\
+  \equiv & (p \wedge q \wedge (r \vee \neg r))\vee(\neg p \wedge (q \vee \neg q) \wedge r)\vee((p \vee \neg p) \wedge q \wedge r) \\
+  \equiv & (p \wedge q \wedge r)\vee(p \wedge q \wedge \neg r)\vee(\neg p \wedge q \wedge r)\vee(\neg p \wedge \neg q \wedge r) \\
+  & \vee(p \wedge q \wedge r)\vee(\neg p \wedge q \wedge r) \\
+  \equiv & (p \wedge q \wedge r)\vee(p \wedge q \wedge \neg r)\vee(\neg p \wedge q \wedge r)\vee(\neg p \wedge \neg q \wedge r)
 \end{aligned}
 $$
 
@@ -197,10 +221,10 @@ $$
 - A formula with no quantifiers is regarded as a trivial case of a prenex normal form.
 <br>
 
-- $\forall xP(x) \land \forall xQ(x) \equiv \forall x(P(x) \land Q(x))$
-- $\forall xP(x) \land \exists xQ(x) \equiv \forall x\exists y(P(x) \land Q(y))$
-- $\exists xP(x) \land \forall xQ(x) \equiv \exists x\forall y(P(x) \land Q(y))$
-- $\exists xP(x) \land \exists xQ(x) \equiv \exists x\exists y(P(x) \land Q(y))$
+- $\forall xP(x) \wedge \forall xQ(x) \equiv \forall x(P(x) \wedge Q(x))$
+- $\forall xP(x) \wedge \exists xQ(x) \equiv \forall x\exists y(P(x) \wedge Q(y))$
+- $\exists xP(x) \wedge \forall xQ(x) \equiv \exists x\forall y(P(x) \wedge Q(y))$
+- $\exists xP(x) \wedge \exists xQ(x) \equiv \exists x\exists y(P(x) \wedge Q(y))$
 <br>
 
 - $\forall xP(x) \vee \forall xQ(x) \equiv \forall x\forall y(P(x) \vee Q(y))$
@@ -212,6 +236,9 @@ $$
 
 
 
+
+
+<br>
 
 ### 1.6 Rules of Inference
 - An **argument** in propositional logic is a sequence of statements that end with a conclusion.
@@ -255,6 +282,10 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 
 
+
+
+<br>
+
 ### 1.7 Introduction to Proofs
 - A **direct proof** of a conditional statement $p → q$ is constructed when the first step is the assumption that $p$ is true, and then we show that $q$ must also be true
 <br>
@@ -269,6 +300,11 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 
 
+
+
+
+
+<br>
 
 ### 1.8 Proof Methods and Strategy
 - The original conditional statement with a hypothesis made up of a disjunction of the propositions $p_1, p_2, … , p_n$ can be proved by proving each of the n conditional statements $p_i → q, i = 1, 2, … , n$,  individually. Such an argument is called a **proof by cases**
@@ -294,6 +330,7 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 
 
+<br>
 
 ## Shorthand
 **Propositional Logic**
@@ -307,7 +344,7 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 - **contigency**
 <br>
 
-- Absorption laws : $p \vee (p \land q) ≡ p$, $p \land (p \vee q) ≡ p$
+- Absorption laws : $p \vee (p \wedge q) ≡ p$, $p \wedge (p \vee q) ≡ p$
 - $p → q ≡ ¬p ∨ q$
 - $p \leftrightarrow q ≡ (¬p ∨ q) ∧ (p ∨ ¬q) ≡ (p ∧ q) ∨ (¬p ∧ ¬q)$
 - $(p → q) ∧ (p → r) ≡ p → (q ∧ r)$
@@ -318,14 +355,14 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 - $p \downarrow p \equiv \neg p$
 - $(p \downarrow q)\downarrow(p \downarrow q) \equiv p \vee q$
-- $(p \downarrow p)\downarrow(q \downarrow q) \equiv p \land q$
+- $(p \downarrow p)\downarrow(q \downarrow q) \equiv p \wedge q$
 
 
 **Predicates and Quantifiers**
 - $∀x(P(x) ∧ Q(x)) \equiv ∀xP(x) ∧ ∀xQ(x)$
 - $\exists x(P(x) \vee Q(x)) \equiv \exists xP(x) \vee \exists xQ(x)$
 - $∀xP(x) \vee ∀xQ(x) \Rightarrow ∀x(P(x) \vee Q(x))$
-- $\exists x(P(x) \land Q(x)) \Rightarrow \exists xP(x) \land \exists xQ(x)$
+- $\exists x(P(x) \wedge Q(x)) \Rightarrow \exists xP(x) \wedge \exists xQ(x)$
 
 **Nested Quantifiers and Normal Form**
 - CNF

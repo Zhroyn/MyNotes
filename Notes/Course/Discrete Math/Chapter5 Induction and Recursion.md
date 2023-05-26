@@ -11,11 +11,18 @@
 
 
 
+
+
 ## Induction and Recursion
 ### 5.1 Mathematical Induction
 - **PRINCIPLE OF MATHEMATICAL INDUCTION** : To prove that $P(n)$ is true for all positive integers $n$, we complete two steps:
   - **BASIS STEP** : We verify that $P(1)$ is true
   - **INDUCTIVE STEP**: We show that the conditional statement $P(k) → P(k + 1)$ is true for all positive integers $k$
+
+
+
+
+<br>
 
 ### 5.2 Strong Induction and Well-Ordering
 - **STRONG INDUCTION** : To prove that $P(n)$ is true for all positive integers $n$, we complete two steps:
@@ -24,6 +31,11 @@
 - Strong induction is sometimes called the **second principle of mathematical induction** or **complete induction**
 - A polygon is called **simple** if no two nonconsecutive sides intersect
 - The validity of both the principle of mathematical induction and strong induction follows from a fundamental axiom of the set of integers, the **well-ordering property**. The well-ordering property states that every nonempty set of nonnegative integers has a least element
+
+
+
+
+<br>
 
 ### 5.3 Recursive Definitions and Structural Induction
 - We use two steps to define a function with the set of nonnegative integers as its domain, and such a definition is called a **recursive** or **inductive definition**:
@@ -34,6 +46,10 @@
   - **RECURSIVE STEP** : Show that if the statement is true for each of the elements used to construct new elements in the recursive step of the definition, the result holds for these new elements
 - We can extend mathematical induction to prove results about other sets that have the well-ordering property besides the set of integers
 
+
+
+
+<br>
 
 ### 5.4 Recursive Algorithms
 - An algorithm is called **recursive** if it solves a problem by reducing it to an instance of the same problem with smaller input

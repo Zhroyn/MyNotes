@@ -40,6 +40,7 @@ The operation $\cdot_m$ is defined as $a \cdot_m b = (a \cdot b) \textbf{ mod } 
 
 
 
+<br>
 
 ### 4.2 Integer Representations and Algorithms
 #### Representations of Integers
@@ -53,6 +54,8 @@ k := 0 \\
 \quad k := k + 1 \\
 \text{return } (a_{k−1},… , a_1, a_0) \{(a_{k−1} … a_1a_0)_b \text{ is the base } b \text{ expansion of } n\}
 $
+
+<br>
 
 #### Modular Exponentiation
 $
@@ -69,6 +72,10 @@ $
 
 
 
+
+
+
+<br>
 
 ### 4.3 Primes and Greatest Common Divisors
 #### Greatest Common Divisors and Least Common Multiples
@@ -87,6 +94,7 @@ $$
 **Theorem**
 Let $a$ and $b$ be positive integers. Then $$ab = \gcd(a, b) \cdot \text{lcm}(a, b)$$
 
+<br>
 
 #### Euclidean Algorithm
 **Lemma 1**
@@ -102,6 +110,8 @@ y := b \\
 \quad y := r \\
 \text{return } x \{\gcd(a, b) \text{ is } x\}
 $
+
+<br>
 
 #### Bezout’s Theorem
 If $a$ and $b$ are positive integers, then there exist integers $s$ and $t$ such that $$\gcd(a, b) = sa + tb$$
@@ -140,6 +150,8 @@ $
 > So
 > $$s_2 = 1 - 0\cdot 1 = 1, t_2 = 0 - 1\cdot 1 = -1 \\ s_3 = 0 - 1\cdot 3 = -3, t_3 = 1 - (-1)\cdot 3 = 4 \\ s_4 = 1 - (-3)\cdot 1 = 4, t_4 = -1 - 4\cdot 1 = -5 $$
 
+<br>
+
 #### Uniqueness of Prime Factorization
 **Lemma 2**
 If $a$, $b$, and $c$ are positive integers such that $\gcd(a, b) = 1$ and $a ∣ bc$, then $a ∣ c$.
@@ -167,6 +179,7 @@ Let $m$ be a positive integer and let $a$, $b$, and $c$ be integers. If $ac ≡ 
 
 
 
+<br>
 
 
 ### 4.4 Solving Congruences
@@ -185,6 +198,8 @@ To get an solution of a linear congruence $ax \equiv b (\text{mod } m)$, the pro
 3. Multiply both sides by $\bar a$, then we can get $x \equiv \bar ab(\text{mod } m)$
 4. Determine whether every $x$ with $x \equiv \bar ab(\text{mod } m)$ is a solution
 
+<br>
+
 #### The Chinese Remainder Theorem
 Let $m_1, m_2, … , m_n$ be pairwise relatively prime positive integers greater than one and $a_1, a_2, … , a_n$ arbitrary integers. Then the system
 $$
@@ -197,6 +212,7 @@ $$
 has a unique solution modulo $m = m_1m_2 ⋯ m_n$.
 Let $M_k = m/m_k$, and $y_k$ an inverse of $M_k$ modulo $m_k$, then one solution of the system of linear congruences is $\sum_{i=1}^{n} a_iM_iy_i$.
 
+<br>
 
 #### Back Substitution
 > Use the method of back substitution to find all integers $x$ such that $x\equiv 1(\text{mod } 5)$, $x\equiv 2(\text{mod } 6)$ and $x\equiv 3(\text{mod } 7)$.
@@ -216,11 +232,13 @@ Let $M_k = m/m_k$, and $y_k$ an inverse of $M_k$ modulo $m_k$, then one solution
 >
 > So the solution is $x$ with $x \equiv 206 (\text{mod } 210)$
 
+<br>
 
 #### Fermat’s Little Theorem
 If $p$ is prime and $a$ is an integer not divisible by $p$, then $a^{p−1} ≡ 1 (\text{mod } p)$.
 Furthermore, for every integer $a$ we have $a^{p} ≡ a (\text{mod } p)$
 
+<br>
 
 #### Pseudoprimes
 **Definition 1**

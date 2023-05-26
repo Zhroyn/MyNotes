@@ -5,9 +5,10 @@
   - [2.2 Set Operations](#22-set-operations)
   - [2.3 Functions](#23-functions)
   - [2.5 Cardinality of Sets](#25-cardinality-of-sets)
-    - [2.6 Matrices](#26-matrices)
+  - [2.6 Matrices](#26-matrices)
 
 <!-- /TOC -->
+
 
 
 
@@ -39,6 +40,13 @@
 - We define the **truth set** of $P$ to be the set of elements $x$ in $D$ for which $P(x)$ is true, which is denoted by $\{x ∈ D ∣ P(x)\}$
 
 
+
+
+
+
+
+<br>
+
 ### 2.2 Set Operations
 - **union** : $A ∪ B$
 - **intersection** : $A ∩ B$
@@ -65,6 +73,13 @@
 - In the **difference** of P and Q, the multiplicity is the difference of P less Q unless this difference is negative
 - In the **sum** of P and Q, the multiplicity is the sum of multiplicities in P and Q
 
+
+
+
+
+
+<br>
+
 ### 2.3 Functions
 - A **function** $f$ from $A$ to $B$ is an assignment of exactly one element of $B$ to each element of $A$.
 - We write $f(a) = b$ if $b$ is the unique element of $B$ assigned by the function $f$ to the element $a$ of $A$, and we say that $b$ is the **image** of $a$ and $a$ is a **preimage** of $b$. The **range**, or **image** of $f$, is the set of all images of elements of $A$
@@ -88,6 +103,11 @@
 
 
 
+
+
+
+<br>
+
 ### 2.5 Cardinality of Sets
 - The sets $A$ and $B$ have the same cardinality if and only if there is a one-to-one correspondence from $A$ to $B$, and this is denoted by $|A| = |B|$
 - If there is a one-to-one function from $A$ to $B$, we write $|A| ≤ |B|$
@@ -96,7 +116,14 @@
 - If $A$ and $B$ are countable sets, then $A ∪ B$ is also countable
 -  **Schröder-Bernstein theorem** :  If $A$ and $B$ are sets with $|A| ≤ |B|$ and $|B| ≤ |A|$, then $|A| = |B|$. In other words, if there are one-to-one functions $f$ from $A$ to $B$ and $g$ from $B$ to $A$, then there is a one-to-one correspondence between $A$ and $B$
 
-#### 2.6 Matrices
+
+
+
+
+
+<br>
+
+### 2.6 Matrices
 **Zero-One Matrices**
 - Let $A = [a_{ij}]$ and $B = [b_{ij}]$ be $m × n$ zero–one matrices, then:
 - The **join** of $A$ and $B$ is the zero–one matrix with $(i, j)$th entry $a_{ij} ∨ b_{ij}$. The join of $A$ and $B$ is denoted by $A ∨ B$.

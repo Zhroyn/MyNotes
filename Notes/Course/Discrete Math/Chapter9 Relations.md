@@ -28,6 +28,7 @@
 
 
 
+
 ## Relations
 ### 9.1 Relations and Their Properties
 - Let $A$ and $B$ be sets. A **binary relation from $A$ to $B$** is a subset of $A × B$.
@@ -35,11 +36,15 @@
 - Moreover, when $(a, b)$ belongs to $R$, $a$ is said to be **related to** $b$ by $R$.
 - A **relation on a set $A$** is a relation from $A$ to $A$.
 
+<br>
+
 #### Properties of Binary Relations
 - A relation $R$ on a set $A$ is called **reflexive** if $(a, a) ∈ R$ for every element $a ∈ A$.
 - A relation $R$ on a set $A$ is called **symmetric** if for all $a, b ∈ A$, $(b, a) ∈ R$ whenever $(a, b) ∈ R$.
 - A relation $R$ on a set $A$ is called **antisymmetric** if for all $a, b ∈ A$, if $(a, b) ∈ R$ and $(b, a) ∈ R$, then $a = b$.
 - A relation $R$ on a set $A$ is called **transitive** if for all $a, b ∈ A$, if $(a, b) ∈ R$ and $(b, c) ∈ R$, then $ (a, c) ∈ R$.
+
+<br>
 
 #### Combining Relations
 - Two relations from $A$ to $B$ can be combined in any way two sets can be combined, such as $R_1 ∪ R_2, R_1 ∩ R_2, R_1 ⊕ R_2, R_1 − R_2, R_2 − R_1$.
@@ -67,6 +72,9 @@ If $R = \left\{ (a, b) | a\in A, b\in B, aRb \right\}$, then define $$R^{-1} = \
 
 
 
+
+<br>
+
 ### 9.2 n-ary Relations and Their Applications
 - Let $A_1, A_2, … , A_n$ be sets. An **n-ary relation** on these sets is a subset of $A_1 × A_2 × ⋯ × A_n$.
 - The sets $A_1, A_2, … , A_n$ are called the **domains** of the relation, and $n$ is called its **degree**.
@@ -80,6 +88,8 @@ If $R = \left\{ (a, b) | a\in A, b\in B, aRb \right\}$, then define $$R^{-1} = \
 
 
 
+
+<br>
 
 ### 9.3 Representing Relations
 The relation $R$ can be represented by the matrix $M_R = [m_{ij}]$, where
@@ -115,6 +125,8 @@ $$
 
 
 
+<br>
+
 ### 9.4 Closures of Relations
 - If $R$ is a relation on a set $A$, then the closure of $R$ with respect to $P$, if it exists, is the relation $S$ on $A$ with property $P$ that contains $R$ and is a subset of every subset of $A × A$ containing $R$ with property $P$.
 - The closure of a relation $R$ with respect to property $P$ is the smallest relation with property $P$ containing $R$.
@@ -129,6 +141,8 @@ $$
 - We view the empty set of edges as a path of length zero from $a$ to $a$. 
 - A path of length $n ≥ 1$ that begins and ends at the same vertex is called a **circuit** or **cycle**.
 - There is a path of length $n$, where $n$ is a positive integer, from $a$ to $b$ if and only if $(a, b) ∈ R^n$.
+
+<br>
 
 #### Transitive Closures
 - The **connectivity relation** $R^∗$ consists of the pairs $(a, b)$ such that there is a path of length at least one from $a$ to $b$ in $R$, that is $$R^* = \bigcup_{n=0}^{\infty} R^n $$
@@ -150,6 +164,8 @@ B := A \\
 
 This algorithm uses $n^2(2n−1)(n−1) + (n−1)n^2 = 2n^3(n−1)$, which is $O(n^4)$ bit operations
 
+<br>
+
 #### Warshall’s Algorithm
 - Warshall’s algorithm is an efficient method for computing the transitive closure of a relation, using only $2n^3$ bit operations.
 <br>
@@ -163,6 +179,8 @@ This algorithm uses $n^2(2n−1)(n−1) + (n−1)n^2 = 2n^3(n−1)$, which is $O
 
 
 
+
+<br>
 
 ### 9.5 Equivalence Relations
 #### Equivalence Relations
@@ -196,6 +214,7 @@ $$
 \Rightarrow [a] \cap [b] \neq \emptyset
 $$
 
+<br>
 
 #### Equivalence Classes and Partitions
 **Definition of Partition**
@@ -211,6 +230,7 @@ $$
 Let $R$ be an equivalence relation on a set $S$. Then the equivalence classes of $R$ form a partition of $S$.
 Conversely, given a partition $\{A_i ∣ i ∈ I\}$ of the set $S$, there is an equivalence relation $R$ that has the sets $A_i, i ∈ I$, as its equivalence classes.
 
+<br>
 
 #### The Operations of Equivalence Class
 **Theorem 3**
@@ -224,6 +244,9 @@ If $R_1, R_2$ are equivalence relations on $A$, then $R_1 \cup R_2$ is reflexive
 
 
 
+
+
+<br>
 
 ### 9.6 Partial Orderings
 #### Definitions about Partial Ordering
@@ -252,10 +275,12 @@ $\text{Proof :}$ Suppose it is not the case that $P(x)$ is true for all $x ∈ S
 Because $S$ is well-ordered, $A$ has a least element $a$. By the choice of $a$ as a least element of $A$, we know that $P(x)$ is true for all $x ∈ S$ with $x \prec a$. This implies by the inductive step $P(a)$ is true.
 This contradiction shows that $P(x)$ must be true for all $x ∈ S$.
 
+<br>
 
 #### Lexicographic Order
 A **lexicographic ordering** can be defined on the Cartesian product of $n$ posets $(A_1, \preccurlyeq_{1}), (A_2, \preccurlyeq_{2}), … , (A_n, \preccurlyeq_{n})$. Define the partial ordering $\preccurlyeq$ on $A_1 × A_2 × ⋯ × A_n$ by $$(a_1, a_2, … , a_n) ≺ (b_1, b_2, … , b_n)$$ if $a_1 \prec_{1} b_1$, or if there is an integer $i > 0$ such that $a_1 = b_1, … , a_i = b_i$ and $a_{i+1} \prec_{i+1} b_{i+1}$
 
+<br>
 
 #### Hasse Diagrams
 The procedure of constructing a Hasse diagram of $(S, \preccurlyeq)$ is:
@@ -264,6 +289,7 @@ The procedure of constructing a Hasse diagram of $(S, \preccurlyeq)$ is:
 3. Eliminate all arcs that are redundant because of transitivity.
 4. Eliminate the arrows at the ends of arcs since everything points up.
 
+<br>
 
 #### Maximal and Minimal Elements
 $a$ is **maximal** in the poset $(S, \preccurlyeq )$ if there is no $b ∈ S$ such that $a \prec b$.
@@ -273,10 +299,12 @@ $a$ is the **greatest element** of the poset $(S, \preccurlyeq )$ if $b \preccur
 $a$ is the **least element** of the poset $(S, \preccurlyeq )$ if $a \preccurlyeq b$ for all $b ∈ S$.
 The greatest and least elements are unique.
 
+<br>
 
 #### Lattice
 A partially ordered set in which every pair of elements has both a least upper bound and a greatest lower bound is called a **lattice**.
 
+<br>
 
 #### Topological Sorting
 A total ordering $\preccurlyeq$ is said to be compatible with the partial ordering $R$ if $a \preccurlyeq b$ whenever $aRb$.

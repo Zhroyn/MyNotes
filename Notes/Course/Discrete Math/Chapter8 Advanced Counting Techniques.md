@@ -23,12 +23,17 @@
 
 
 
-## Advanced Counting Techniques
 
+## Advanced Counting Techniques
 ### 8.1 Applications of Recurrence Relations
 - A rule for determining subsequent terms from those that precede them, is called a **recurrence relation**
 
 
+
+
+
+
+<br>
 
 ### 8.2 Solving Linear Recurrence Relations
 #### Linear Homogeneous Recurrence Relations
@@ -56,6 +61,7 @@ Suppose that the characteristic equation $r^k − c_1r^{k−1} − ⋯ − c_k =
   &+ ⋯ + (\alpha_{t,0} + \alpha_{t,1}n + ⋯ + \alpha_{t,m_t-1}n^{m_t-1})r_t^n \end{aligned}$ 
   for $n = 0, 1, 2, …$
 
+<br>
 
 #### Linear Nonhomogeneous Recurrence Relations
 - A **linear nonhomogeneous recurrence relation with constant coefficients** is a recurrence relation of the form $a_n = c_1a_{n−1} + c_2a_{n−2} + ⋯ + c_ka_{n−k} + F(n)$.
@@ -79,6 +85,8 @@ When s is a root of this characteristic equation and its multiplicity is $m$, th
 
 
 
+<br>
+
 ### 8.4 Generating Functions
 - The **generating function** for the sequence $a_0, a_1, … , a_k, …$ of real numbers is the infinite series $\displaystyle G(x) = a_0 + a_1x + ⋯ + a_kx_k + ⋯ = \sum^∞_{k = 0} a_kx_k$.
 
@@ -101,6 +109,8 @@ $\displaystyle \begin{aligned}
 **THEOREM 2 (THE EXTENDED BINOMIAL THEOREM)** : 
 $\displaystyle (1 + x)^u = \sum^∞_{k = 0}\begin{pmatrix} u \\ k \end{pmatrix}x^k$
 
+<br>
+
 #### Useful Generating Functions
 | $a_k$ | $G(x)$ |
 |:---:|:---:|
@@ -118,11 +128,15 @@ $\displaystyle (1 + x)^u = \sum^∞_{k = 0}\begin{pmatrix} u \\ k \end{pmatrix}x
 | $\displaystyle \frac{1}{k!} $ | $e^x $ |
 | $\displaystyle \frac{(-1)^{k+1}}{k} $ | $\ln x $ |
 
+<br>
+
 #### Solving Counting Problems by Generating Functions
 > Determine the number of ways to insert tokens worth \$1, \$2 and \$5 into a vending machine to pay for an item that costs r dollars in both the cases when the order in which the tokens are inserted does not matter and when the order does matter
 > 
 >  When the order does not matter, $G(x) = (1 + x + x^2 + x^3 + \cdots)(1 + x^2 + x^4 + x^6 + \cdots)(1 + x^5 + x^{10} + x^{15} + \cdots) $
 >  When the order does matter, $G(x) = (x + x^2 + x^5)^n $
+
+<br>
 
 #### Solving Recurrence Relations by Generating Functions
 > Use generating functions to solve the recurrence relation $a_n = 2a_{n-1} + 3a_{n-2} + 4^n + 5n + 6 $ with initial conditions $a_0 = 20, a_1 = 60. $
@@ -131,6 +145,8 @@ $\displaystyle (1 + x)^u = \sum^∞_{k = 0}\begin{pmatrix} u \\ k \end{pmatrix}x
 > $\displaystyle \Rightarrow \sum_{n=2}^{\infty}a_nx^n = 2\sum_{n=2}^{\infty}a_{n-1}x^n + 3\sum_{n=2}^{\infty}a_{n-2}x^n + \sum_{n=2}^{\infty}4^nx^n + 5\sum_{n=2}^{\infty}nx^n + 6\sum_{n=2}^{\infty}x^n $
 > $\displaystyle \Rightarrow G(x) - a_0 - a_1x = 2x(G(x) - a_0) + 3x^2G(x) + \frac{1}{1-4x} - 1 - 4x + 5\left[\frac{x}{(1-x)^2} - x\right] + 6\left(\frac{1}{1-x} - 1 - x\right) $
 > &nbsp;
+
+<br>
 
 #### Proving Identities by Generating Functions
 > Prove $\displaystyle C(n, r) = C(n-1, r) + C(n-1, r-1) $ by $(1 + x)^n = (1 + x)^{n-1} + x(1 + x)^{n-1} $
@@ -141,6 +157,9 @@ $\displaystyle (1 + x)^u = \sum^∞_{k = 0}\begin{pmatrix} u \\ k \end{pmatrix}x
 
 
 
+
+
+<br>
 
 ### 8.5 Inclusion-Exclusion
 **THE PRINCIPLE OF INCLUSION–EXCLUSION**
@@ -164,6 +183,8 @@ $$ times. So every element in the left union is counted exactly once by the righ
 
 
 
+
+<br>
 
 ### 8.6 Applications of Inclusion–Exclusion
 #### An Alternative Form of Inclusion–Exclusion
@@ -198,6 +219,8 @@ $$\begin{aligned}
   = &\; 600 \\
 \end{aligned}$
 
+<br>
+
 #### The Sieve of Eratosthenes
 > How many primes are there that do not exceed $100$?
 > Let $P_1$ be the property that an integer is divisible by $2$, 
@@ -216,6 +239,8 @@ $$\begin{aligned}
   = &\; 21
 \end{aligned} $
 
+<br>
+
 #### The Number of Onto Functions
 The principle of inclusion–exclusion can also be used to determine the number of onto functions from a set with $m$ elements to a set with $n$ elements.
 
@@ -233,6 +258,8 @@ $$
     &− ⋯ + (−1)^{n-1}C(n, n − 1) ⋅ 1^m  \\
 \end{aligned}
 $$
+
+<br>
 
 #### Derangements
 The principle of inclusion–exclusion will be used to count dearangement.

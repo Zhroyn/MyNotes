@@ -11,6 +11,7 @@
 
 
 
+
 ## Algorithms
 ### 3.1 Algorithms
 - Algorithms that make what seems to be the best choice at each step are called **greedy algorithms**
@@ -24,6 +25,12 @@
 - $Effectiveness$. It must be possible to perform each step of an algorithm exactly and in a finite amount of time.
 - $Generality$. The procedure should be applicable for all problems of the desired form, not just for a particular set of input values.
 
+
+
+
+
+<br>
+
 ### 3.2 The Growth of Functions
 - We say that $f(x)$ is $O(g(x))$ if there are constants $C$ and $k$ such that $|f(x)| ≤ C|g(x)|$ whenever $x > k$. This is read as "$f(x)$ is big-oh of $g(x)$." The constants $C$ and $k$ in the definition of big-O notation are called **witnesses** to the relationship $f(x)$ is $O(g(x))$.
 - We say that $f(x)$ is $Ω(g(x))$ if there are constants $C$ and $k$ such that $|f(x)| ≥ C|g(x)|$ whenever $x > k$. This is read as "$f(x)$ is big-Omega of $g(x)$."
@@ -33,6 +40,12 @@
 - Suppose that $f_1(x)$ is $O(g_1(x))$ and that $f_2(x)$ is $O(g_2(x))$. Then $(f_1 + f_2)(x)$ is $O(g(x))$, where $g(x) = (max(|g_1(x)|, |g_2(x)|)$ for all $x$
 - Suppose that $f_1(x)$ is $O(g_1(x))$ and that $f_2(x)$ is $O(g_2(x))$. Then $(f_1f_2)(x)$ is $O(g_1(x)g_2(x))$
 - Let $f(x) = a_nx^n + a_{n−1}x^{n−1} + ⋯ + a_1x + a_0$, where $a_0, a_1, … , a_n$ are real numbers with $a_n ≠ 0$. Then $f(x)$ is of order $x_n$
+
+
+
+
+
+<br>
 
 ### 3.3 Complexity of Algorithms
 - An **algorithmic paradigm** is a general approach based on a particular concept that can be used to construct algorithms for solving a variety of problems

@@ -14,6 +14,7 @@
 
 
 
+
 ## Counting
 ### 6.1 The Basics of Counting
 - **THE PRODUCT RULE** : Suppose that a procedure can be broken down into a sequence of two tasks. If there are $n_1$ ways to do the first task, and for each of these ways of doing the first task, there are $n_2$ ways to do the second task, then there are $n_1n_2$ ways to do the procedure
@@ -21,6 +22,11 @@
 - **THE SUBTRACTION RULE** : If a task can be done in either $n_1$ ways or $n_2$ ways, then the number of ways to do the task is $n_1 + n_2$ minus the number of ways to do the task that are common to the two different ways. The subtraction rule is also known as the **principle of inclusion–exclusion**
 - **THE DIVISION RULE** : There are $n∕d$ ways to do a task if it can be done using a procedure that can be carried out in $n$ ways, and for every way $w$, exactly $d$ of the $n$ ways correspond to way $w$
 
+
+
+
+
+<br>
 
 ### 6.2 The Pigeonhole Principle
 - **THE PIGEONHOLE PRINCIPLE** : If $k$ is a positive integer and $k + 1$ or more objects are placed into $k$ boxes, then there is at least one box containing two or more of the objects
@@ -30,6 +36,11 @@
   - Thus, the total number of objects is less than $N$. This completes the proof by contraposition
 
 
+
+
+
+<br>
+
 ### 6.3 Permutations and Combinations
 - An ordered arrangement of $r$ elements of a set is called an **r-permutation**. If $n$ is a positive integer and $r$ is an integer with $1 ≤ r ≤ n$, then there are $\displaystyle P(n, r) = n(n − 1)(n − 2) ⋯ (n − r + 1) = \frac{n!}{(n-r)!}$
 - An **r-combination** of elements of a set is an unordered selection of r elements from the set. Thus, $\displaystyle C(n, r) = \frac{n!}{r!(n-r)!}$. $C(n, r)$ is also denoted by $\begin{pmatrix} n \\ r \end{pmatrix}$ and is called a **binomial coefficient**
@@ -37,6 +48,11 @@
 
 - A **combinatorial proof** of an identity is a proof that uses counting arguments to prove that both sides of the identity count the same objects but in different ways or a proof that is based on showing that there is a bijection between the sets of objects counted by the two sides of the identity. These two types of proofs are called **double counting proofs** and **bijective proofs**, respectively
 
+
+
+
+
+<br>
 
 ### 6.4 Binomial Coefficients and Identities
 - $\displaystyle (x+y)^n = \sum_{j=0}^n \begin{pmatrix} n \\ j \end{pmatrix}x^{n-j}y^j $
@@ -48,6 +64,11 @@
   - $\displaystyle \begin{pmatrix} 2n \\ n \end{pmatrix} = \sum_{k=0}^n \begin{pmatrix} n \\ k \end{pmatrix}^2$
 - $\displaystyle \begin{pmatrix} n+1 \\ r+1 \end{pmatrix} = \sum_{j=r}^n \begin{pmatrix} j \\ r \end{pmatrix}$
 
+
+
+
+
+<br>
 
 ### 6.5 Generalized Permutations and Combinations
 - **Permutations with Repetition** : The number of r-permutations of a set of $n$ objects with repetition allowed is $n^r$
@@ -64,6 +85,11 @@ type k, is $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
   - **Indistinguishable Objects and Indistinguishable Boxes** : No simple closed formula exists for this number.
 
 
+
+
+
+
+<br>
 
 ### 6.6 Generating Permutations and Combinations
 - A general method can be described for producing the next larger permutation in increasing order following a given permutation $a_1a_2 ⋯ a_n$:
