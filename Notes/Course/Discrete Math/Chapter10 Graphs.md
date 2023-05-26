@@ -10,6 +10,16 @@
     - [Some Special Simple Graphs](#some-special-simple-graphs)
     - [Bipartite Graphs](#bipartite-graphs)
     - [New Graphs from Old](#new-graphs-from-old)
+  - [10.3 Representing Graphs and Graph Isomorphism](#103-representing-graphs-and-graph-isomorphism)
+    - [Representing Graphs](#representing-graphs)
+    - [Isomorphism of Graphs](#isomorphism-of-graphs)
+  - [10.4 Connectivity](#104-connectivity)
+    - [Paths](#paths)
+    - [Connectedness in Undirected Graphs](#connectedness-in-undirected-graphs)
+    - [Connectedness in Directed Graphs](#connectedness-in-directed-graphs)
+  - [10.5 Euler and Hamilton Paths](#105-euler-and-hamilton-paths)
+    - [Euler Paths and Circuits](#euler-paths-and-circuits)
+    - [Hamilton Paths and Circuits](#hamilton-paths-and-circuits)
 
 <!-- /TOC -->
 
@@ -56,13 +66,13 @@ An edge $e$ connecting $u$ and $v$ is called **incident with the vertices $u$ an
 The set of all neighbors of a vertex $v$ is called the **neighborhood** of $v$, which is denoted by $N(v)$,.
 $N(A) = \bigcup_{v\in A}N(v)$, where $A$ is a subset of $V$.
 
-The **degree of a vertex in an undirected graph** is the number of edges incident with it, except that a loop at a vertex contributes twice to the degree of that vertex, which is denoted by $\text{deg}(v)$.
-If $\text{deg}(v) = 0$, $v$ is called **isolated**.
-If $\text{deg}(v) = 1$, $v$ is called **pendant**.
+The **degree of a vertex in an undirected graph** is the number of edges incident with it, except that a loop at a vertex contributes twice to the degree of that vertex, which is denoted by $\deg(v)$.
+If $\deg(v) = 0$, $v$ is called **isolated**.
+If $\deg(v) = 1$, $v$ is called **pendant**.
 
 **Theorem 1**
 Let $G = (V, E)$ be an undirected graph with $m$ edges. Then
-$$2m = \sum_{v\in V}\text{deg}(v)$$
+$$2m = \sum_{v\in V}\deg(v)$$
 
 **Theorem 2**
 An undirected graph has an even number of vertices of odd degree.
@@ -72,11 +82,11 @@ An undirected graph has an even number of vertices of odd degree.
 #### Terminology for Directed Graph
 If $(u, v)\in V$, $u$ is said to be **adjacent to** $v$ and $v$ is said to be **adjacent from** $u$. The vertex $u$ is called the **initial vertex** of $(u, v)$, and $v$ is called the **terminal** or **end vertex** of $(u, v)$.
 
-The **in-degree of a vertex $v$** is the number of edges which terminate at $v$, which is denoted by $\text{deg}^-(v)$.
-The **out-degree of a vertex $v$** is the number of edges which initiate at $v$, which is denoted by $\text{deg}^+(v)$.
+The **in-degree of a vertex $v$** is the number of edges which terminate at $v$, which is denoted by $\deg^-(v)$.
+The **out-degree of a vertex $v$** is the number of edges which initiate at $v$, which is denoted by $\deg^+(v)$.
 
 **Theorem 3**
-$$\sum_{v\in V} \text{deg}^-(v) = \sum_{v\in V} \text{deg}^+(v) = |E|$$
+$$\sum_{v\in V} \deg^-(v) = \sum_{v\in V} \deg^+(v) = |E|$$
 
 <br>
 
@@ -108,12 +118,154 @@ $H$ is a **subgraph** of $G$ if $W \subseteq V, F \subseteq E$.
 $H$ is a **proper subgraph** of $G$ if $H \neq G$.
 $H$ is a **spanning subgraph** of $G$ if $W = V, F \subseteq E$.
 
-The **union** of two simple graphs $G_1 = (V_1, E1)$ and $G_2 = (V_2, E2)$ is the simple graph with vertex set $V_1 ∪ V_2$ and edge set $E1 ∪ E2$, which is denoted by $G_1 ∪ G_2$.
+The **union** of two simple graphs $G_1 = (V_1, E_1)$ and $G_2 = (V_2, E_2)$ is the simple graph with vertex set $V_1 ∪ V_2$ and edge set $E_1 ∪ E_2$, which is denoted by $G_1 ∪ G_2$.
 
 > How many subgraphs with at least one vertex does $W_3$ have?
 > $= C(4,1) + C(4,2)\times 2 + C(4,3)\times 2^3 + C(4,4)\times 2^6 \\ = 128 $
 
 
+
+
+
+
+
+
+<br>
+
+### 10.3 Representing Graphs and Graph Isomorphism
+#### Representing Graphs
+**Adjacency Lists**
+For undirected graph, firstly, list a column for all verteices as *Vertex*, and then write down their corresponding neighbors as *Adjacent Vertices*.
+For directed graph, firstly, list a column for all verteices as *Inital Vertex*, and then write down their corresponding end vertices as *Terminal Vertex*.
+
+**Adjacency Matrices**
+$$
+A = [a_{ij}], \quad
+a_{ij} = \begin{cases}
+  1 & \text{if } (v_i, v_j) \in V \\
+  0 & \text{otherwise}
+\end{cases}
+$$
+
+To represent multiple edges, we can use matrices of nonnegative integers.
+For a undirected graph, the sum of $n$th row or column is the number of edges incident to the $n$th vertex, which is the same as degree minus the number of loops.
+For a directed graph, the sum of $n$th row is the out-degree of the $n$th vertex.
+For a directed graph, the sum of $n$th column is the in-degree of the $n$th vertex.
+
+**Incidence Matrices**
+$$
+M = [m_{ij}], \quad
+m_{ij} = \begin{cases}
+  1 & \text{if edge } e_j \text{ is incident with } v_i \\
+  0 & \text{otherwise}
+\end{cases}
+$$
+
+<br>
+
+#### Isomorphism of Graphs
+The simple graphs $G_1 = (V_1, E_1)$ and $G_2 = (V_2, E_2)$ are **isomorphic** if there exists a one-to-one and onto function $f$ from $V_1$ to $V_2$ with the property that $a$ and $b$ are adjacent in $G_1$ if and only if $f(a)$ and $f(b)$ are adjacent in $G_2$, for all $a$ and $b$ in $V_1$.
+Such a function f is called an **isomorphism**.
+Two simple graphs that are not isomorphic are called **nonisomorphic**.
+
+To proof $G$ and $H$ are isomorphic:
+1. Find a one-to-one and onto function $f$
+2. Show that $A_G = A_H$ with the rows and columns of the adjacency matrix of $H$ labeled by the images of the corresponding vertices in $G$
+
+
+
+
+
+
+
+
+<br>
+
+### 10.4 Connectivity
+#### Paths
+A **path of length $n(n\ge 0)$** in a *undirected graph* is a sequence of vertices $v_0, v_1, . . . , v_n$ such that $\{v_0, v_1\} , \{v_1, v_2\} , ..., \{v_{n-1}, v_n\}$ are $n$ edges in the graph.
+The path is a **circuit** if it begins and ends at the same vertex with length greater than zero.
+A path is **simple** if it does not contain the same edge more than once.
+
+A **path of length $n(n\ge 0)$** in a *directed graph* is a sequence of vertices $v_0, v_1, . . . , v_n$ such that $(v_0, v_1) , (v_1, v_2) , ..., (v_{n-1}, v_n)$ are $n$ directed edges in the graph.
+The path is a **circuit** or **cycle** if it begins and ends at the same vertex with length greater than zero.
+
+**Theorem 2**
+The number of different paths of length $r$ from $v_i$ to $v_j$ is equal to the $(i, j)$th entry of $A^r$, where $A$ is the adjacency matrix representing the graph consisting of vertices $v_1, v_2,\cdots, v_n$.
+
+To proof a graph is connected, show that in one matrix of $A, \cdots, A^{n-1}$, every off-diagonal entry is nonzero.
+To proof a graph is disconnected, show that in $A + \cdots + A^{n-1}$, there exists at least one zero off-diagonal entry.
+
+<br>
+
+#### Connectedness in Undirected Graphs
+An undirected graph is called **connected** if there is a path between every pair of distinct vertices of the graph.
+
+**Theorem 1**
+There is a simple path between every pair of distinct vertices of a connected undirected graph.
+
+The maximal connected subgraphs of $G$ are called the **connected components** or just the **components**. A graph $G$ that is not connected has two or more connected components that are disjoint and have $G$ as their union.
+A vertex is called a **cut vertex** or **articulation point**, if removing it and all edges incident with it results in more connected components than in the original graph.
+Similarly, an edge is called a **cut edge** or **bridge** if removing it results in more components.
+
+<br>
+
+#### Connectedness in Directed Graphs
+A directed graph is **strongly connected** if there is a path from $a$ to $b$ and from $b$ to $a$ for all vertices $a$ and $b$ in the graph.  
+A directed graph is **weakly connected** if the underlying undirected graph is connected.
+
+For directed graph, the maximal strongly connected subgraphs are called the **strongly connected components** or just the **strong components**.
+
+
+
+
+
+
+
+
+
+<br>
+
+### 10.5 Euler and Hamilton Paths
+#### Euler Paths and Circuits
+An **Euler path** is a simple path containing every edge of $G$.
+An **Euler circuit** is a simple circuit containing every edge of $G$.
+An **Euler graph** is a graph contains an Euler circuit.
+
+**Theorem 1**
+A connected multigraph has an Euler circuit if and only if each of its vertices has even degree.
+- Necessary Condition: The circuit contributes one to $\deg(a)$ when it begins at $a$, another one when it ends at $a$. And each time the circuit passes through a vertex, it contributes two to its degree. So for every vertex $v$, $\deg(v)$ must be even.
+- Sufficient Condition: 
+  First, we arbitrarily choose an edge incident with $a$ which is possible because $G$ is connected. Thus, we can build a simple path $x_0=a, x_1, … , x_n$ by successively adding edges one by one to the path, until we cannot add any more.
+  Where we terminate must be $a$, because we can leave every vertex other than $a$ due to their even degree.
+  Continue this process until all edges have been used, and then splice all the circuits we constuct.
+
+**Theorem 2**
+A connected multigraph has an Euler path but not an Euler circuit if and only if it has exactly two vertices of odd degree. (Consider the larger graph made up of the original graph with an additional edge $\{a, b\}$)
+
+**Theorem for Directed Graph**
+A directed multigraph has an Euler circuit if and only if 
+  -  the graph is weakly connected 
+  -  the in-degree and out-degree of each vertex are equal.
+
+A directed multigraph has an Euler path but not an Euler circuit if and only if 
+  -  the graph is weakly connected 
+  -  the in-degree and out-degree of each vertex are equal for all but two vertices, one that has in-degree 1 larger than its out-degree and the other that has out-degree 1 larger than its in-degree. 
+
+<br>
+
+#### Hamilton Paths and Circuits
+A **Hamilton path** is a simple path that passes through every vertex in $G$ exactly once.
+A **Hamilton circuit** is a simple circuit that passes through every vertex in $G$ exactly once except for the first vertex.
+A **Hamilton graph** is a graph contains an Hamilton circuit.
+
+**Theorem 3: Dirac's Theorem**
+If $G$ is a simple graph with $n$ vertices with $n\ge 3$ such that the degree of every vertex in $G$ is at least $n/2$, then $G$ has a Hamilton circuit. 
+
+**Theorem 4: Ore's Theorem**
+If $G$ is a simple graph with $n$ vertices with $n\ge 3$ such that
+$\deg(u) + \deg(v) \ge n$ for every pair of nonadjacent vertices 
+$u$ and $v$ in $G$ , then $G$ has a Hamilton circuit.
 
 
 
