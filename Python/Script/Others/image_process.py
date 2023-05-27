@@ -90,8 +90,8 @@ def change_line_space(src, factor):
         else:
             if n < 0:
                 n -= 1
-            elif n >= 3:
-                interval_h = int(np.floor(factor * n))
+            else:
+                interval_h = int(np.ceil(factor * n))
                 interval = np.full((interval_h, w, 3), bg_color)
                 im = np.concatenate((im, interval), axis=0)
                 n = -1
@@ -134,21 +134,22 @@ def image_process(impath, outpath, argv):
     cv2.imwrite(outpath, im)
 
 
-rm_stains = " si:2 sha:2 rst:200 gau:0.5 si:0.5"
-rm_stains_largen = " si:2 sha:2 si:2 rst:200 gau:0.5 si:0.5"
-clear_bg = " sha:2 si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
-clear_bg_blur = " si:2 sha:2 si:2 rbg:25 rst:200 col:1.6 si:0.5"
+
+rm_stains = " si:2 sha:2 rbg:200 gau:0.5 si:0.5"
 bolder = " sha:2 con:1.2"
-clearer = " si:2 sha:2 cbg:220 con:1.2 gau:0.7 con:1.2"
+clearer = " si:2 sha:2 con:1.2 cbg:220 gau:0.7 con:1.2"
+
 
 src_dir = "C:/Users/hrzhe/Pictures/Calculus/"
-argv = clearer + bolder + bolder + " cls:0.7"
-out_suffix = argv.replace(":", "").replace(".", "")
+argv = clearer + bolder + " cls:0.3"
+out_suffix = argv.replace(":", "").replace(".", "") 
 out_suffix = "_"
 # l = os.listdir(src_dir)
-l = [i for i in range(1,8)]
+l = [1]
 
 for i in l:
     impath, outpath = get_paths(src_dir, str(i), ".jpg", out_suffix)
     impath, outpath = get_paths(src_dir, str(i), ".png", out_suffix)
     image_process(impath, outpath, argv)
+
+
