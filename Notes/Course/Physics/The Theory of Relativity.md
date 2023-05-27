@@ -10,8 +10,13 @@
     - [Invariant Interval](#invariant-interval)
     - [Minkowski Diagram](#minkowski-diagram)
   - [Relativistic Doppler Effect](#relativistic-doppler-effect)
+  - [Energy and Momentum](#energy-and-momentum)
+    - [Velocity Transformation](#velocity-transformation)
+    - [Linear Momentum, Force and Acceleration](#linear-momentum-force-and-acceleration)
+    - [Relativistic Energy](#relativistic-energy)
 
 <!-- /TOC -->
+
 
 
 
@@ -69,6 +74,10 @@ $$
 
 
 
+
+
+<br>
+
 ### Synchronizing Clocks
 Now let's synchronize the clocks by emitting two opposite light pulses simultaneously.
 In the train frame, the light pulses reach both ends simultaneously, so we set clocks on the train to 0 when the light pulses reach them.
@@ -95,6 +104,8 @@ So, if two clocks are **synchronized** and **separated** in a proper frame, then
 
 
 
+
+<br>
 
 ### Moving Clocks and Sticks
 Let $v$ be the relative speed between the two frames, $s'$ the slowing-down factor, $s$ the shrinking factor, and $T$ the difference between the readings of the clock.
@@ -130,17 +141,17 @@ $$
 
 
 
-
+<br>
 
 ### Lorentz Transformation
-Suppose there are two frames, one stationary and one moving, and set the moving frame is moving at speed $v$.
-Set an event is $E(x, t)$ in the stationary frame, $E'(x', t')$ in the moving frame. We expect to find a linear map between them, that is
+Suppose there are two frames, one in rest and one moving, and set the moving frame is moving at speed $v$.
+Set an event is $E(x, t)$ in the rest frame, $E'(x', t')$ in the moving frame. We expect to find a linear map between them, that is
 $$
 t = At' + Bx' \\
 x = Ct' + Dx' \\
 $$
 
-First, for an event happening at the origin in the stationary frame, we can get
+First, for an event happening at the origin in the rest frame, we can get
 $$
 \begin{aligned}
   & (x = 0, t) \\
@@ -179,6 +190,8 @@ t' = \frac{t - vx / c^2}{\sqrt{1 - v^2 / c^2}},\quad
 x' = \frac{x - vt}{\sqrt{1 - v^2 / c^2}}
 $$
 
+<br>
+
 #### Time Dilation
 A clock is moving on a stick of length $L$ with speed $v$, then in the clock frame, there are 
 $$
@@ -187,6 +200,8 @@ t'_2 - t'_1 = \frac{sL}{v}
 $$
 
 So $$t_2 - t_1 = \frac{sL/v}{\sqrt{1 - v^2 / c^2}} = \frac{t'_2 - t'_1}{s} $$
+
+<br>
 
 #### Length Contraction
 A rod of length $L$ lying along the $x$-axis of an inertial frame $K$. An observer in system $K'$ moving with speed $v$ along the $x$-axis measures the length of the rod, then he can get
@@ -201,6 +216,7 @@ $$
 
 So $\displaystyle L' = sL = L\sqrt{1 - \frac{v^2}{c^2}}$.
 
+<br>
 
 #### Invariant Interval
 $$
@@ -218,6 +234,7 @@ So under Lorentz transformation, the interval between events, that is, $$(\Delta
 - When $s^2 < 0$, it's **spacelike separation**. It is possible to find a frame in which the two events happen at the same time but at different place. $|s|$ is called the *proper distance* or *proper length*.
 - When $s^2 = 0$, it's **lightlike separation**. In every frame a photon emitted at one of the events will arrive at the other. 
 
+<br>
 
 #### Minkowski Diagram
 Set $\displaystyle \beta = \frac{v}{c}, \gamma = \frac{1}{s} = \frac{1}{\sqrt{1 - \beta^2}}$, then
@@ -244,6 +261,7 @@ $$\gamma\sqrt{1 + \beta^2} = \sqrt{\frac{1 + \beta^2}{1 - \beta^2}}$$
 
 
 
+<br>
 
 ### Relativistic Doppler Effect
 Let $\Delta t_0, \Delta t'$ be the time interval between the emission of two adjacent wave crests in the source and observer frame respectively, $\Delta t$ the time interval between the reception of the adjacent wave crests in the observer frame.
@@ -260,4 +278,85 @@ $$f = \frac{\Delta t_0}{\Delta t}f_0 = \sqrt{\frac{1 + v/c}{1 - v/c}}f_0 $$
 - When the source is fixed and the observer approaches it with speed $v$, this result is also valid.
 - When the source is approaching, the wavelength is shifted toward shorter wavelengths, which is called **blueshift**.
 - When the source is receding, the wavelength is shifted toward longer wavelengths, which is called **redshift**.
+
+
+
+
+
+
+
+
+<br>
+
+### Energy and Momentum
+#### Velocity Transformation
+For the complete transfomation 
+$$
+\left\{
+\begin{aligned}
+  & t' = \gamma (t - \frac{vx}{c^2}) \\
+  & x' = \gamma (x - vt) \\
+  & y' = y \\
+  & z' = z 
+\end{aligned}
+\right.
+$$
+
+we can get
+$$
+u'_x = \frac{dx'}{dt'} = \frac{dx - vdt}{dt - \dfrac{v}{c^2}dx} = \frac{u_x - v}{1 - \dfrac{u_xv}{c^2}}
+\\~\\
+u'_y = \frac{dy'}{dt'} = \frac{dy}{\gamma (dt - \dfrac{v}{c^2}dx)} = \frac{u_y}{\gamma (1 - \dfrac{u_xv}{c^2})}
+\\~\\
+u'_z = \frac{dz'}{dt'} = \frac{dz}{\gamma (dt - \dfrac{v}{c^2}dx)} = \frac{u_z}{\gamma (1 - \dfrac{u_xv}{c^2})}
+$$
+
+<br>
+
+#### Linear Momentum, Force and Acceleration
+Redefine momentum as 
+$$\vec{\bm{p}} = \frac{m\vec{\bm{v}}}{\sqrt{1 - v^2 / c^2}} $$
+
+And thus Newton’s second law becomes
+$$
+\begin{aligned}
+  \vec{\bm{F}} 
+  &= \frac{d\vec{\bm{p}}}{dt} = \frac{d}{dt} \frac{m\vec{\bm{v}}}{\sqrt{1 - v^2 / c^2}} \\
+  &= k_1 \vec{\bm{a}} + k_2 \vec{\bm{v}}
+\end{aligned}
+$$
+
+So the force and acceleration may not be in the same direction.
+
+When $\bm{F}$ and $\bm{v}$ are along the same line, we can get
+$$
+F = \frac{m}{\left( 1 - \dfrac{v^2}{c^2} \right)^{3/2}} a \\~\\
+a = \frac{F}{m} \left( 1 - \frac{v^2}{c^2} \right)^{3/2}
+$$
+
+<br>
+
+#### Relativistic Energy
+Assume that a particle is accelerated from rest to some final speed $u$, then we can get
+$$
+\begin{aligned}
+  W &= \int_{x_1}^{x_2} Fdx = \int_{x_1}^{x_2} \frac{dp}{dt} dx \\~\\
+  &= \int_0^t \frac{m(du / dt)}{\left( 1 - \dfrac{u^2}{c^2} \right)^{3/2}} udt \\~\\
+  &= m \int_0^u \frac{u}{\left( 1 - \dfrac{u^2}{c^2} \right)^{3/2}} du \\~\\
+  &= \frac{mc^2}{\sqrt{1 - \dfrac{u^2}{c^2}}} - mc^2
+\end{aligned}
+$$
+
+So we define the relativistic kinetic energy $K$ as
+$$K = \gamma mc^2 - mc^2$$
+
+where the rest energy is $E_0 = mc^2$, total energy is $E = \gamma mc^2$.
+
+Moreover, we can deduce $$E^2 - p^2c^2 = m^2c^4$$
+
+So $m^2$ is an invariant. And thus we can define the *energy-momentum 4-vector*, or the *4-momentum* as
+$$P = (E/c, p_x, p_y, p_z)$$
+
+
+
 
