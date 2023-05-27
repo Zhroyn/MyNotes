@@ -9,6 +9,11 @@
   - [Multi-view Stereo](#multi-view-stereo)
     - [Plane-Sweep](#plane-sweep)
     - [Patch Match](#patch-match)
+- [3D Reconstruction](#3d-reconstruction)
+  - [3D Representations](#3d-representations)
+  - [3D Surface Reconstruction](#3d-surface-reconstruction)
+    - [Poisson Reconstruction](#poisson-reconstruction)
+    - [Marching Cubes](#marching-cubes)
 
 <!-- /TOC -->
 
@@ -117,8 +122,6 @@ Then we can get a better match by minimizing the global cost, i.e., performing d
 
 
 
-
-
 <br>
 
 ### Multi-view Stereo
@@ -139,6 +142,64 @@ It's an efficient algorithm for solving correspondence problems. Its steps are
 2. **Propagation**: Each pixels checks if the offsets from neighboring patches give a better matching patch. If so, adopt neighbor’s patch offset.
 3. **Random Search**: Each pixels searches for better patch offsets within a concentric radius around the current offset. The search radius starts with the size of the image and is halved each time until it is 1.
 4. Go to Step 2 until converge.
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+## 3D Reconstruction
+### 3D Representations
+The methods for 3D representation include
+- Point Cloud
+- Volume
+  - Occupancy
+  - Signed Distance
+- Mesh
+
+**Occupancy**
+$$
+V_{ijk} = \begin{cases}
+  1 & \text{if occupied} \\
+  0 & \text{if empty}
+\end{cases}
+$$
+
+**Signed Distance**
+- Signed Distance Function (**SDF**): The distance of a point to the shape boundary.
+- Truncated Signed Distance Function (**TSDF**): Truncate SDF’s distance value to $[−1, 1]$.
+
+<br>
+
+### 3D Surface Reconstruction
+The basic procedures are
+1. Use depth maps to get occupancy or TSDF volume through Poisson reconstruction, KinectFusion, etc.
+2. Use occupancy or TSDF volume to get mesh through Marching Cubes, etc.
+
+#### Poisson Reconstruction
+This method can convert depth maps into a 3D volume. Its steps are
+1. Convert depth map to point cloud.
+2. Compute normal vector for each point, and represent the oriented points by a vector field $\vec{V}$.
+3. Represent surface by the indicator (occupancy) function $$\mathcal{X}(p) = \begin{cases} 1 & \text{if } p\in M \\ 0 & \text{if } p\notin M \end{cases} $$
+   
+   And then find the function $\mathcal{X}$ whose gradient best approximates $\vec{V}$ by minimizing $$\underset{\mathcal{X}}{\text{min}} ||\Delta \mathcal{X} - \vec{V}||$$
+4. Solve this by Poisson equation.
+
+<br>
+
+#### Marching Cubes
+This method can extract 3D surface (mesh) from volumetric
+representation. Its steps are
+1. For each grid cell with a sign change, create one vertex on each grid edge with a sign change, and store their indices as the sign configuration of the grid cell.
+2. Connect vertices by triangles using the pre-computed look-up table and make sure that triangles do not intersect.
+
 
 
 
