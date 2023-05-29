@@ -20,6 +20,10 @@
   - [10.5 Euler and Hamilton Paths](#105-euler-and-hamilton-paths)
     - [Euler Paths and Circuits](#euler-paths-and-circuits)
     - [Hamilton Paths and Circuits](#hamilton-paths-and-circuits)
+  - [10.6 Shortest-Path Problems](#106-shortest-path-problems)
+  - [10.7 Planar Graphs](#107-planar-graphs)
+    - [Euler's Formula](#eulers-formula)
+    - [Kuratowski’s Theorem](#kuratowskis-theorem)
 
 <!-- /TOC -->
 
@@ -267,5 +271,94 @@ If $G$ is a simple graph with $n$ vertices with $n\ge 3$ such that
 $\deg(u) + \deg(v) \ge n$ for every pair of nonadjacent vertices 
 $u$ and $v$ in $G$ , then $G$ has a Hamilton circuit.
 
+
+
+
+
+
+
+
+
+<br>
+
+### 10.6 Shortest-Path Problems
+$
+\textbf{procedure } Dijkstra (G: \text{weighted connected simple graph, with} \\
+\qquad \text{all weights positive}) \\
+\{G \text{ has vertices } a = v_0, v_1,… , v_n = z \text{ and lengths } w(v_i, v_j) \\
+\qquad\text{where } w(v_i, v_j) = ∞ \text{ if } {v_i, v_j} \text{ is not an edge in } G\} \\
+\text{for } i := 1 \text{ to } n \\
+\qquad L(v_i) := ∞ \\
+L(a) := 0 \\
+S := ∅ \\
+\text{while } z ∉ S \\
+\qquad u := \text{a vertex not in } S \text{ with } L(u) \text{ minimal} \\
+\qquad S := S ∪ {u} \\
+\qquad \text{for all vertices } v \text{ not in } S \\
+\qquad \qquad \text{if } L(u) + w(u, v) < L(v) \text{ then } L(v) := L(u) + w(u, v) \\
+\text{return } L(z) \; \{L(z) = \text{length of a shortest path from } a \text{ to } z\}
+$
+
+**Theorem 1**
+Dijkstra’s algorithm finds the length of a shortest path between two vertices in a connected simple undirected weighted graph.
+
+**Theorem 2**
+Dijkstra’s algorithm uses $O(n^2)$ operations (additions and comparisons) to find the length of a shortest path between two vertices in a connected simple undirected weighted graph with $n$ vertices.
+
+
+
+
+
+
+
+
+
+<br>
+
+### 10.7 Planar Graphs
+A graph is called **planar** if it can be drawn in the plane without any edges crossing.
+Such a drawing is called a **planar representation** of the graph.
+
+<br>
+
+#### Euler's Formula
+**Theorem 1**
+Let $G$ be a connected planar simple graph with $e$ edges and $v$ vertices. Let $r$ be the number of regions in a planar epresentation of $G$. Then $r = e − v + 2$.
+
+$\text{Proof :}$ Use induction.
+
+<br>
+
+**Corollary 1**
+If $G$ is a connected planar simple graph with $e$ edges and $v$ vertices, where $v ≥ 3$, then $e ≤ 3v − 6$.
+
+$\text{Proof :}$
+$$
+2e = \sum_i \deg(R_i) \ge 3r = 3e - 3v + 6 \\~\\
+\Rightarrow e \le 3v - 6
+$$
+
+<br>
+
+**Corollary 2**
+If $G$ is a connected planar simple graph, then $G$ has a vertex of degree not exceeding five.
+
+$\text{Proof :}$
+If the degree of every vertex were at least six, then $$2e = \sum_i \deg(v_i) \ge 6v$$
+
+This contradicts the inequality $2e ≤ 6v − 12$. So there must be a vertex with degree no greater than five.
+
+<br>
+
+**Corollary 3**
+If a connected planar simple graph has $e$ edges and $v$ vertices with $v ≥ 3$ and no circuits of length three, then $e ≤ 2v − 4$.
+
+$\text{Proof :}$ The same as Corollary 1.
+
+<br>
+
+#### Kuratowski’s Theorem
+**Theorem 2**
+A graph is nonplanar if and only if it contains a subgraph homeomorphic to $K_{3,3}$ or $K_5$.
 
 
