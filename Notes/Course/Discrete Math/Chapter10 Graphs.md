@@ -24,6 +24,7 @@
   - [10.7 Planar Graphs](#107-planar-graphs)
     - [Euler's Formula](#eulers-formula)
     - [Kuratowski’s Theorem](#kuratowskis-theorem)
+  - [10.8 Graph Coloring](#108-graph-coloring)
 
 <!-- /TOC -->
 
@@ -325,14 +326,14 @@ Such a drawing is called a **planar representation** of the graph.
 **Theorem 1**
 Let $G$ be a connected planar simple graph with $e$ edges and $v$ vertices. Let $r$ be the number of regions in a planar epresentation of $G$. Then $r = e − v + 2$.
 
-$\text{Proof :}$ Use induction.
+$\texttt{Proof:}$ Use induction.
 
 <br>
 
 **Corollary 1**
 If $G$ is a connected planar simple graph with $e$ edges and $v$ vertices, where $v ≥ 3$, then $e ≤ 3v − 6$.
 
-$\text{Proof :}$
+$\texttt{Proof:}$
 $$
 2e = \sum_i \deg(R_i) \ge 3r = 3e - 3v + 6 \\~\\
 \Rightarrow e \le 3v - 6
@@ -343,7 +344,7 @@ $$
 **Corollary 2**
 If $G$ is a connected planar simple graph, then $G$ has a vertex of degree not exceeding five.
 
-$\text{Proof :}$
+$\texttt{Proof:}$
 If the degree of every vertex were at least six, then $$2e = \sum_i \deg(v_i) \ge 6v$$
 
 This contradicts the inequality $2e ≤ 6v − 12$. So there must be a vertex with degree no greater than five.
@@ -353,12 +354,50 @@ This contradicts the inequality $2e ≤ 6v − 12$. So there must be a vertex wi
 **Corollary 3**
 If a connected planar simple graph has $e$ edges and $v$ vertices with $v ≥ 3$ and no circuits of length three, then $e ≤ 2v − 4$.
 
-$\text{Proof :}$ The same as Corollary 1.
+$\texttt{Proof:}$ The same as Corollary 1.
 
 <br>
 
 #### Kuratowski’s Theorem
 **Theorem 2**
 A graph is nonplanar if and only if it contains a subgraph homeomorphic to $K_{3,3}$ or $K_5$.
+
+
+
+
+
+
+
+
+
+<br>
+
+### 10.8 Graph Coloring
+**Definition1**
+A **coloring** of a simple graph is the assignment of a color to each vertex of the graph so that no two adjacent vertices are assigned the same color.
+
+**Definition2**
+The **chromatic number** of a graph is the least number of colors needed for a coloring of this graph, which is denoted by $\chi(G)$.
+
+$$
+\begin{cases}
+  \chi(C_n) = 2 & \text{if } n \text{ is even} \\
+  \chi(C_n) = 3 & \text{if } n \text{ is odd} \\
+\end{cases} 
+\\~\\
+\chi(K_n) = n
+\\~\\
+\chi(K_{m,n}) = 2
+$$
+
+**The Four Color Theorem**
+The chromatic number of a planar graph is no greater than four.
+
+<br>
+
+The general procedures to find the chromatic number:
+1. Let the vertices of a graph represent the element, and then draw an edge between two vertices if the two elements cannot be connected.
+2. Compute the complementary graph.
+3. Align a color to a vertex if it is connected to all vertices with this color in the complementary graph.
 
 
