@@ -4,5 +4,6 @@
         "math.h": "c",
         "stdio.h": "c",
         "windows.h": "c"
-    }
+    },
+    "python.analysis.typeCheckingMode": "basic"
 }
