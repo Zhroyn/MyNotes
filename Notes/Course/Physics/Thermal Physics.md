@@ -12,6 +12,13 @@
     - [Heat Capacity](#heat-capacity)
     - [Maxwell Distribution](#maxwell-distribution)
     - [Characteristic Speed](#characteristic-speed)
+  - [Heat and The 1st Law of Thermodynamics](#heat-and-the-1st-law-of-thermodynamics)
+    - [Heat ,Latent Heat, and Specific Heat](#heat-latent-heat-and-specific-heat)
+    - [Heat Conduction](#heat-conduction)
+    - [Mean Free Path](#mean-free-path)
+    - [The 1st Law of Thermodynamics](#the-1st-law-of-thermodynamics)
+    - [Isothermal vs Free Expansion](#isothermal-vs-free-expansion)
+    - [Isobaric vs Isovolumetric Processes](#isobaric-vs-isovolumetric-processes)
 
 <!-- /TOC -->
 
@@ -27,6 +34,8 @@
 
 **The Third Law of Thermodynamics**: It is impossible for any procedure to lead to the isotherm $T= 0$ in a finite number of steps.
 
+<br>
+
 #### Temperature Scales
 Absolute temperature (Kelvin) scale: $\displaystyle T = T_{\text{triple}} \frac{p}{p_{\text{triple}}} \approx \frac{273.16}{610} p $
 $273.16$ is the difference between absolute zero and the temperature of the triple point of water .
@@ -35,6 +44,7 @@ Celsius scale: $T_C = T - 273.15$
 
 Fahrenheit scale: $\displaystyle T_F = \frac{9}{5}T_C + 32^{\circ}F$
 
+<br>
 
 #### Thermal Expansion
 Linear expansion: $\Delta L = \alpha L_0 \Delta T$
@@ -45,6 +55,7 @@ V = V_0(1 + \beta \Delta T) \\~\\
 \Rightarrow \beta = 3\alpha 
 $$
 
+<br>
 
 #### Ideal Gases
 Equation of state for an ideal gas:
@@ -64,6 +75,8 @@ $$
 = \frac{d(\ln T)}{dT} = \frac{1}{T}
 $$
 
+<br>
+
 #### Real Gases
 The van der Waals equation of state is
 $$
@@ -72,6 +85,7 @@ $$
 
 $a$ is about the attractive forces between the gas molecules.
 $b$ is about the volume of gas molecule.
+
 
 
 
@@ -133,6 +147,7 @@ Molar specific heat: $\displaystyle C_V = \frac{c_V}{n} = \frac{f}{2}R$
   - Rotation: $3$
   - Vibration: $3N - 6$
 
+For single atom, it only has three degrees of freedom.
 For solid, Each atom vibrates around its equilibrium position and has three degrees of freedom, so $f=6$.
 
 <br>
@@ -192,5 +207,139 @@ $$
   &= \sqrt{\frac{3k_BT}{m}}
 \end{aligned}
 $$
+
+
+
+
+
+
+
+
+
+<br>
+
+### Heat and The 1st Law of Thermodynamics
+#### Heat ,Latent Heat, and Specific Heat
+**Definition of Heat**
+Heat is defined as the transfer of energy across the boundary of a system due to a temperature difference between the system and its surroundings.
+
+The ways of heat transfer are **conduction**, **convection**, and **radiation**.
+
+Unit of heat includes $\mathrm{J}$ and $\mathrm{cal}$, where $1 \mathrm{cal} = 4.186\mathrm{J}$.
+
+<br>
+
+**Latent Heat**
+Latent heat is energy released or absorbed during a constant-temperature process.
+
+The latent heat of vaporization for a given substance is usually somewhat higher than the latent heat of fusion.
+
+The specific latent heat is defined as $$L = \frac{Q}{m}$$
+
+<br>
+
+**Specific Heat**
+Specific heat capacity is defined as $$c = \frac{1}{M} \cdot \frac{dQ}{dT}$$
+
+Molar heat capacity is defined as $$C = \frac{1}{n} \cdot \frac{dQ}{dT}$$
+
+Molar heat capacity at constant volume is denoted by $C_V$.
+Molar heat capacity at constant pressure is denoted by $C_p$.
+
+
+
+<br>
+
+#### Heat Conduction
+Fourier heat conduction law:
+$$\frac{Q}{\Delta t} = -\kappa_t A \frac{dT}{dx} $$
+
+
+<br>
+
+#### Mean Free Path
+Assume there is only one moving molecule. It will collide with the stationary molecules whose centers of mass are located within a cylinder of diameter $2d$.
+
+So during time interval $t$, the average number of collisions is $$z = n_v\pi d^2vt$$
+
+where $\displaystyle n_v = \frac{p}{k_B T}$ is the density of the molecules.
+
+Therefore, the mean free path is 
+$$
+l = \frac{vt}{n_V\pi d^2vt} = \frac{1}{n_V\pi d^2} = \frac{k_BT}{\pi d^2p}
+$$
+
+Because all molecules are actually moving, we must consider their relative motion when counting the number of collisions. By 
+$$
+|\mathbf{v}_1 - \mathbf{v}_2|^2 = |\mathbf{v}_1|^2 + |\mathbf{v}_2|^2 - 2\mathbf{v}_1\cdot \mathbf{v}_2
+$$
+
+We can conclude that the average relative speed is $\sqrt{2}v$. Hence,
+$$
+l = \frac{vt}{n_V\pi d^2(\sqrt{2}v)t} = \frac{1}{\sqrt{2}n_V\pi d^2} = \frac{k_BT}{\sqrt{2}\pi d^2p}
+$$
+
+And the average molecular separation is $$d = \frac{1}{n_V^{1/3}}$$
+
+<br>
+
+#### The 1st Law of Thermodynamics
+The change in the internal energy $U$ of the system can be expressed as:
+$$\Delta U = Q - W$$
+
+The work done by the gas is 
+$$
+dW = Fdy = PAdy = PdV 
+\\~\\
+W = \int_{V_i}^{V_f}PdV
+$$
+
+<br>
+
+#### Isothermal vs Free Expansion
+In isothermal expansion,
+$$
+W = \int_{V_i}^{V_f} \frac{Nk_BT}{V} dV = Nk_BT \ln \frac{V_f}{V_i} \\~\\
+Q = W
+$$
+
+In adiabatic free expansion,
+$$
+W = 0, Q = 0
+$$
+
+In adiabatic process,
+$$\Delta U = -W$$
+
+<br>
+
+#### Isobaric vs Isovolumetric Processes
+
+In isovolumetric process
+$$
+W = 0 \\~\\
+Q = nC_V\Delta T \\~\\
+\Delta U = Q = nC_V\Delta T
+$$
+
+In isobaric process,
+$$
+W = P\Delta V \\~\\
+Q = nC_P\Delta T \\~\\
+\Delta U = Q - W = n(C_P - R)\Delta T
+$$
+
+So 
+$$
+C_P = C_V + R
+\\~\\
+C_V = \frac{f}{2}R 
+\\~\\
+C_P = \frac{f+2}{2}R
+\\~\\
+\gamma = \frac{C_P}{C_V} = \frac{f+2}{f}
+$$
+
+
 
 
