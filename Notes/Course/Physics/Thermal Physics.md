@@ -17,8 +17,16 @@
     - [Heat Conduction](#heat-conduction)
     - [Mean Free Path](#mean-free-path)
     - [The 1st Law of Thermodynamics](#the-1st-law-of-thermodynamics)
+    - [Thermodynamic Processes](#thermodynamic-processes)
     - [Isothermal vs Free Expansion](#isothermal-vs-free-expansion)
     - [Isobaric vs Isovolumetric Processes](#isobaric-vs-isovolumetric-processes)
+    - [Adiabatic Equation](#adiabatic-equation)
+  - [Engines and The 2nd Law of Thermodynamics](#engines-and-the-2nd-law-of-thermodynamics)
+    - [Otto Cycle](#otto-cycle)
+    - [Diesel Engine](#diesel-engine)
+    - [Carnot Cycle](#carnot-cycle)
+    - [Heat Pumps](#heat-pumps)
+    - [The 2nd Law of Thermodynamics](#the-2nd-law-of-thermodynamics)
 
 <!-- /TOC -->
 
@@ -254,6 +262,8 @@ Molar heat capacity at constant pressure is denoted by $C_p$.
 Fourier heat conduction law:
 $$\frac{Q}{\Delta t} = -\kappa_t A \frac{dT}{dx} $$
 
+where $\lambda$ or $\kappa$ is coefficient of thermal conductivity.
+
 
 <br>
 
@@ -296,6 +306,15 @@ $$
 
 <br>
 
+#### Thermodynamic Processes
+A **quasi-static** process is one that is performed sufficiently slowly so that the system is always close to equilibrium.
+A **reversible** process is one that can be run backward in time by simply reversing its inputs and outputs.
+
+A reversible process must be quasi-static.
+A quasi-static process is not necessarily reversible (e.g., energy dissipation)
+
+<br>
+
 #### Isothermal vs Free Expansion
 In isothermal expansion,
 $$
@@ -303,19 +322,16 @@ W = \int_{V_i}^{V_f} \frac{Nk_BT}{V} dV = Nk_BT \ln \frac{V_f}{V_i} \\~\\
 Q = W
 $$
 
-In adiabatic free expansion,
+In free expansion, 
 $$
-W = 0, Q = 0
+P= 0, W = 0
 $$
-
-In adiabatic process,
-$$\Delta U = -W$$
 
 <br>
 
 #### Isobaric vs Isovolumetric Processes
 
-In isovolumetric process
+In isovolumetric (isochoric) process
 $$
 W = 0 \\~\\
 Q = nC_V\Delta T \\~\\
@@ -339,6 +355,103 @@ C_P = \frac{f+2}{2}R
 \\~\\
 \gamma = \frac{C_P}{C_V} = \frac{f+2}{f}
 $$
+
+<br>
+
+#### Adiabatic Equation
+In adiabatic process, no heat transfer into or out of the system, that is, 
+$$
+Q = 0
+\\~\\
+\Delta U = -W
+$$
+
+So
+$$
+dU = nC_VdT = -PdV = -\frac{nRT}{V} dV \\~\\
+\Rightarrow \frac{dT}{T} = -\frac{R}{C_V} \frac{dV}{V} \\~\\
+\Rightarrow TV^{\gamma-1} = \text{const} \\~\\
+\Rightarrow PV^{\gamma} = \text{const}
+$$
+
+
+
+
+
+
+
+
+
+
+<br>
+
+### Engines and The 2nd Law of Thermodynamics
+#### Otto Cycle
+Otto cycle is a four-stroke cycle consisting of two upstrokes and two downstrokes. It represents the gasoline engine.
+$$
+W = Q_h - Q_c \\~\\
+Q_h = nC_V(T_C - T_B) \\~\\
+Q_c = nC_V(T_D - T_A) \\~\\
+e = \frac{W}{Q_h} = 1 - \frac{Q_c}{Q_h} = 1 - \frac{T_D - T_A}{T_C - T_B}
+$$
+
+Because 
+$$
+\left( \frac{V_2}{V_1} \right)^{\gamma-1} = \frac{T_A}{T_B} = \frac{T_D}{T_C}
+$$
+
+We can get 
+$$
+e = 1 - \frac{T_A}{T_B} = 1 - \frac{T_D}{T_C} = 1 - \frac{1}{(V_1/V_2)^{\gamma-1}} = 1 - \frac{1}{r^{\gamma-1}}
+$$
+
+<br>
+
+#### Diesel Engine
+$$
+Q_h = nC_p(T_C - T_B) \\~\\
+Q_c = nC_V(T_D - T_A) \\~\\
+W_{\text{cycle}} = n[C_p(T_C - T_B) - C_V(T_D - T_A)]
+$$
+
+<br>
+
+#### Carnot Cycle
+Carnot cycle provides an upper limit on the efficiency of any classical thermodynamic engine, which consists of four steps: isothermal expansion, adiabatic expansion, isothermal compression, adiabatic compression.
+
+In isothermal processes,
+$$
+Q_h = W_{AB} = nRT_h \ln \frac{V_B}{V_A} \\~\\
+Q_c = |W_{CD}| = nRT_c \ln \frac{V_C}{V_D} \\~\\
+\Rightarrow \frac{Q_c}{Q_h} = \frac{T_c}{T_h} \frac{\ln(V_C/V_D)}{\ln(V_B/V_A)}
+$$
+
+In adiabatic processes,
+$$
+T_hV_B^{\gamma-1} = T_cV_C^{\gamma-1} \\~\\
+T_hV_A^{\gamma-1} = T_cV_D^{\gamma-1} \\~\\
+\Rightarrow \frac{Q_c}{Q_h} = \frac{T_c}{T_h}
+$$
+
+So the efficiency of Carnot engine is $$e_C = 1 - \frac{T_c}{T_h}$$
+
+<br>
+
+#### Heat Pumps
+The coefficient of performance at heating mode is
+$$\frac{Q_h}{W} = \frac{Q_h}{Q_h - Q_c} = \frac{1}{1 - \dfrac{Q_c}{Q_h}} = \frac{1}{1 - \dfrac{T_c}{T_h}} = \frac{T_h}{T_h - T_c}$$
+
+The coefficient of performance at cooling modet is
+$$\frac{Q_c}{W} = \frac{T_c}{T_h - T_c}$$
+
+<br>
+
+#### The 2nd Law of Thermodynamics
+**Clausius Statement**
+It is impossible to construct a cyclical machine whose sole effect is the continuous transfer of heatfrom one object to another object at a higher temperature without the input of energy by work.
+
+**Kelvin Statement**
+It is impossible to construct a heat engine that, operating in a cycle, produces no effect other than the absorption of heat from a reservoir and the performance of an equal amount of work.
 
 
 
