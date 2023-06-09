@@ -11,6 +11,13 @@
   - [11.3 Tree Traversal](#113-tree-traversal)
     - [Traversal Algorithms](#traversal-algorithms)
     - [Infix, Prefix, and Postfix Notation](#infix-prefix-and-postfix-notation)
+  - [11.4 Spanning Trees](#114-spanning-trees)
+    - [Depth-First Search](#depth-first-search)
+    - [Breadth-First Search](#breadth-first-search)
+    - [Backtracking Applications](#backtracking-applications)
+  - [11.5 Minimum Spanning Trees](#115-minimum-spanning-trees)
+    - [Prim’s Algorithm](#prims-algorithm)
+    - [Kruskal’s Algorithm](#kruskals-algorithm)
 
 <!-- /TOC -->
 
@@ -155,7 +162,8 @@ A binary expression tree is a special kind of binary tree in which:
 2. Each nonleaf node contains a single operator;
 3. The left and right subtrees of an operator node represent subexpressions that must be evaluated before applying the operator at the root of the subtree.
 
-We obtain the **infix form** of an expression when we traverse the binary expression tree in inorder, **prefix form** (Polish notation) when in preorder, **postfix form** (reverse Polish notation) when in postorder.
+The fully parenthesized expression obtained in inorder is said to be in **infix form**.
+We obtain the **prefix form** (Polish notation) of an expression when we traverse the binary expression tree in preorder, **postfix form** (reverse Polish notation) when in postorder.
 
 To evaluate a prefix expression, the steps is to start at the right, and then push when encounter operand, pop when encounter operator.
 To evaluate a postfix expression, the steps is to start at the left, and then push when encounter operand, pop when encounter operator.
@@ -167,5 +175,104 @@ To evaluate a postfix expression, the steps is to start at the left, and then pu
 
 
 
+
+
+
+
+
+
+
+<br>
+
+### 11.4 Spanning Trees
+Let $G$ be a simple graph. A **spanning tree** of $G$ is a subgraph of $G$ that is a tree containing every vertex of $G$.
+
+**Theorem 1**
+A simple graph is connected if and only if it has a spanning tree.
+
+Spanning trees can be built up by successively adding edges until the subgraph consists of all vertices.
+
+<br>
+
+#### Depth-First Search
+$
+\textbf{procedure } DFS(G: \text{connected graph with vertices } v_1, v_2,… , v_n) \\
+T := \text{tree consisting only of the vertex } v_1 \\
+visit(v_1) \\
+\\~\\
+\textbf{procedure } visit(v: \text{vertex of } G) \\
+\text{for each vertex } w \text{ adjacent to } v \text{ and not yet in } T \\
+\qquad \text{add vertex } w \text{ and edge } \{v, w\} \text{ to } T \\
+\qquad visit(w) \\
+$
+
+<br>
+
+#### Breadth-First Search
+$
+\textbf{procedure } BFS(G: \text{connected graph with vertices } v_1, v_2,… , v_n) \\
+T := \text{tree consisting only of vertex } v_1 \\
+L := \text{empty list} \\
+\text{put } v_1 \text{ in the list } L \text{ of unprocessed vertices} \\
+\text{while } L \text{ is not empty} \\
+\qquad \text{remove the first vertex } v \text{ from } L \\
+\qquad \text{for each neighbor } w \text{ of } v \\
+\qquad \qquad \text{if } w \text{ is not in } L \text{ and not in } T \text{ then} \\
+\qquad \qquad \qquad \text{add } w \text{ to the end of the list } L \\
+\qquad \qquad \qquad \text{add } w \text{ and edge } \{v, w\} \text{ to } T
+$
+
+<br>
+
+#### Backtracking Applications
+There are problems that can be solved only by performing an exhaustive search of all possible solutions.
+
+One way to search systematically for a solution is to use a decision tree, where each internal vertex represents a decision and each leaf a possible solution.
+
+To find a solution via backtracking, first make a sequence of decisions in an attempt to reach a solution as long as this is possible. The sequence of decisions can be represented by a path in the decision tree. Once it is known that no solution can result from any further sequence of decisions, backtrack to the parent of the current vertex and work toward a solution with another series of decisions
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+### 11.5 Minimum Spanning Trees
+A **minimum spanning tree** in a connected weighted graph is a spanning tree that has the smallest possible sum of weights of its edges.
+
+<br>
+
+#### Prim’s Algorithm
+$
+\textbf{procedure } Prim(G: \text{weighted connected undirected graph with } n \\
+\qquad\text{ vertices}) \\
+T := \text{a minimum-weight edge} \\
+\text{for } i := 1 \text{ to } n − 2 \\
+\qquad e := \text{an edge of minimum weight incident to a vertex in } T \text{ and not} \\
+\qquad \qquad \text{forming a simple circuit in } T \text{ if added to } T \\
+\qquad T := T \text{ with } e \text{ added} \\
+\text{return } T \;\{T \text{ is a minimum spanning tree of } G\}
+$
+
+<br>
+
+#### Kruskal’s Algorithm
+$
+\textbf{procedure } Kruskal(G: \text{weighted connected undirected graph with } n \\
+\qquad \text{ vertices}) \\
+T := \text{empty graph} \\
+\text{for } i := 1 \text{ to } n − 1 \\
+\qquad e := \text{any edge in } G \text{ with smallest weight that does not form a simple} \\
+\qquad \qquad \text{circuit when added to } T \\
+\qquad T := T \text{ with } e \text{ added} \\
+\text{return } T \;\{T \text{ is a minimum spanning tree of } G\}
+$
 
 
