@@ -27,6 +27,11 @@
     - [Carnot Cycle](#carnot-cycle)
     - [Heat Pumps](#heat-pumps)
     - [The 2nd Law of Thermodynamics](#the-2nd-law-of-thermodynamics)
+  - [Entropy and Information](#entropy-and-information)
+    - [The Function of Entropy](#the-function-of-entropy)
+    - [The Second Law in terms of Entropy](#the-second-law-in-terms-of-entropy)
+    - [Entropy: A Measure of Disorder](#entropy-a-measure-of-disorder)
+    - [Shannon Entropy](#shannon-entropy)
 
 <!-- /TOC -->
 
@@ -453,6 +458,83 @@ It is impossible to construct a cyclical machine whose sole effect is the contin
 **Kelvin Statement**
 It is impossible to construct a heat engine that, operating in a cycle, produces no effect other than the absorption of heat from a reservoir and the performance of an equal amount of work.
 
+
+
+
+
+
+
+
+
+
+
+<br>
+
+### Entropy and Information
+#### The Function of Entropy
+In a Carnot cycle, $\displaystyle \frac{Q_c}{Q_h} = \frac{T_c}{T_h}$, now put in the proper signs, we can get
+$$
+\frac{Q_h}{T_h} + \frac{Q_c}{T_c} = 0
+$$
+
+Any reversible process can be approximated by a sum of Carnot cycles, hence 
+$$
+\oint_{\text{reversible } C} \frac{dQ}{T} = 0
+$$
+
+Therefore, we can define **entropy** as a state function.
+
+The entropy of an ideal gas is
+$$
+dQ = dU + Pdv \\~\\
+\Rightarrow TdS = dU + PdV \\~\\
+\Rightarrow dS = \frac{nC_V^{mol}dT}{T} + \frac{RdV}{V} \\~\\
+\Rightarrow S(T, V) = S_0 + nC_V^{mol}\ln \frac{T}{T_0} + R\ln \frac{V}{V_0}
+$$
+
+<br>
+
+#### The Second Law in terms of Entropy
+If the path is arbitrary,
+$$
+1 - \frac{Q_c}{Q_h} \le 1 - \frac{T_c}{T_h} \\~\\
+\Rightarrow \frac{Q_h}{T_h} + \frac{Q_c}{T_c} \le 0
+$$
+
+Then we can get
+$$
+\oint_C \frac{dQ}{T} = \oint_{C_1} \frac{dQ}{T} + \oint_{C_2} \frac{dQ}{T} = \oint_{C_1} \frac{dQ}{T} + S(1) - S(2) \le 0
+\\~\\
+\Rightarrow \oint_{C_1} \frac{dQ}{T} \le S(2) - S(1)
+\\~\\
+\Rightarrow dS \ge \frac{dQ}{T}
+$$
+
+So the change in entropy of an isolated system must be greater than zero for an irreversible process and equal to zero for a reversible process.
+
+<br>
+
+#### Entropy: A Measure of Disorder
+Assume that each molecule occupies some microscopic volume $V_m$, and the number of molecules is $N$, then the number of microstates is
+$$
+W_i = \left( \frac{V_i}{V_m} \right)^N \\~\\
+W_f = \left( \frac{V_f}{V_m} \right)^N \\~\\
+\Rightarrow \frac{W_f}{W_i} = \left( \frac{V_f}{V_i} \right)^N
+$$
+
+Hence we can suggest
+$$S = k_B \ln W$$
+
+<br>
+
+#### Shannon Entropy
+Given a random variable $X \in \{ x_1, x_2, \cdots, x_n \}$, and its probability $P_x$, we can define Shannon entropy as
+$$
+S = -\sum_x P_x\log_2 P_x
+$$
+
+Shannon entropy quantifies the average information/uncertainty of the random variable.
+Shannon entropy also quantifies the resources needed to store the information.
 
 
 
