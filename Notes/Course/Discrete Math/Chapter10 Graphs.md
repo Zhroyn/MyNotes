@@ -25,6 +25,12 @@
     - [Euler's Formula](#eulers-formula)
     - [Kuratowski’s Theorem](#kuratowskis-theorem)
   - [10.8 Graph Coloring](#108-graph-coloring)
+  - [Network Flow](#network-flow)
+    - [Max Flow Problem](#max-flow-problem)
+    - [Max-Flow Min-cut Theorem](#max-flow-min-cut-theorem)
+    - [Residual Graph](#residual-graph)
+    - [Augmenting Path Algorithm](#augmenting-path-algorithm)
+    - [Ford-Fulkerson Algorithm](#ford-fulkerson-algorithm)
 
 <!-- /TOC -->
 
@@ -400,4 +406,89 @@ The general procedures to find the chromatic number:
 2. Compute the complementary graph.
 3. Align a color to a vertex if it is connected to all vertices with this color in the complementary graph.
 
+
+
+
+
+
+
+
+
+
+
+<br>
+
+### Network Flow
+#### Max Flow Problem
+A s-t flow is a function that satisfies
+$$
+\forall e\in E, 0 \le f(e) \le c(e) \\~\\
+\forall v\in V, \underset{e \text{ in to } v}{\sum}f(e) = \underset{e \text{ out of } v}{\sum}f(e) \\~\\
+$$
+
+The value of the flow $f$ is $$v(f) = \underset{e \text{ out of } S}{\sum}f(e)$$
+
+The max flow problem is to find the s-t flow of maximum value.
+
+<br>
+
+#### Max-Flow Min-cut Theorem
+A s-t cut is a partition $(S, T)$ of $V$ with $s\in S$ and $t\in T$. Define the capacity of a cut $(S, T)$ as $$\text{cap}(S, T) = \underset{e \text{ out of } S}{\sum} c(e)$$
+
+We can easily get
+$$
+v(f) = \underset{e \text{ out of } S}{\sum} f(e) - \underset{e \text{ in to } S}{\sum} f(e) \\~\\
+v(f) \le \text{cap}(S, T)
+$$
+
+**Max-Flow Min-cut Theorem**
+Let $f$ be any flow, and let $(S, T)$ be any cut. If $v(f) = \text{cap}(A, B)$, then $f$ is a max flow and $(S, T)$ is a min cut.
+
+<br>
+
+#### Residual Graph
+Given a flow graph $G$, then we can get the residual graph $G_R$ by for every $e \in E$ from $u$ to $v$,
+adding edge $e'$ from $u$ to $v$ with capacity $c - f$
+adding edge $e''$ from $v$ to $u$ with capacity $f$
+
+Set residual capacity as 
+$$
+c_f(e) = \begin{cases}
+  c(e) - f(e) & \text{if } e \in E \\
+  f(e) & \text{if } e^R \in E \\
+\end{cases}
+$$
+
+Then set $G_f = (V, E_f)$ as a residual graph with residual edges having positive residual capacity, that is, $E_f = \{e : f(e) < c(e)\} \cup \{e_R : f(e) > 0\}$.
+
+<br>
+
+#### Augmenting Path Algorithm
+An augmenting path is a path with $v_1 = s,  v_k = t$, and for each edge $e$ in the path, there are $c_f(e) > 0$.
+
+$
+\textbf{procedure } Augement \; (f : \text{flow}, P : \text{augment path}) \\
+b = \underset{e\in P}{\max}\; c_f(e) \\
+\text{for each } e \in P \\
+\qquad \text{if } e \in E \text{ then } f(e) = f(e) + b \\
+\qquad \text{else } f(e^R) = f(e^R) - b \\
+\text{return } f \; \{f \text{ is the flow with the path } P \text{ augmented}\}
+$
+
+**Augmenting Path Theorem**
+Flow $f$ is a max flow iff there are no augmenting paths.
+
+<br>
+
+#### Ford-Fulkerson Algorithm
+$
+\textbf{procedure } Ford-Fulkerson \; (G : \text{flow graph}) \\
+\text{for each } e \in P \\
+\qquad f(e) = 0 \\
+G_f = \text{the residual graph of } G \\
+\text{while there exists augmenting path } P \\
+\qquad f = Augment(f, P) \\
+\qquad \text{update } G_f \\
+\text{return } f \; \{f \text{ is the flow with max flow}\}
+$
 
