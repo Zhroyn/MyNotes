@@ -67,6 +67,7 @@ The directed edge associated with the ordered pair $(u, v)$ is said to **start**
 
 
 
+
 <br>
 
 ### 10.2 Graph Terminology and Special Types of Graphs
@@ -113,7 +114,7 @@ $$\sum_{v\in V} \deg^-(v) = \sum_{v\in V} \deg^+(v) = |E|$$
 <br>
 
 #### Bipartite Graphs
-A simple graph $G$ is called **bipartite** if $V$ can be partitioned into two disjoint sets $V_1$ and $V_2$ such that every edge connects a vertex in $V_1$ and a vertex in $V_2$ (so that no edge in $G$ connects either two vertices in $V_1$ or two vertices in $V_2$).
+A simple graph $G$ is called **bipartite** if $V$ can be partitioned into two disjoint sets $V_1$ and $V_2$ such that every edge connects a vertex in $V_1$ and a vertex in $V_2$ (so that no edge connects either two vertices in $V_1$ or two vertices in $V_2$).
 When this condition holds, we call the pair $(V_1, V_2)$ a **bipartition**.
 
 A **complete bipartite graph** is a bipartite graph that every vertex in $V_1$ is connected to every vertex in $V_2$, which is denoted by $K_{m,n}$, where $m = |V_1|, n = |V_2|$.
@@ -276,7 +277,7 @@ If $G$ is a simple graph with $n$ vertices with $n\ge 3$ such that the degree of
 **Theorem 4: Ore's Theorem**
 If $G$ is a simple graph with $n$ vertices with $n\ge 3$ such that
 $\deg(u) + \deg(v) \ge n$ for every pair of nonadjacent vertices 
-$u$ and $v$ in $G$ , then $G$ has a Hamilton circuit.
+$u$ and $v$ in $G$, then $G$ has a Hamilton circuit.
 
 
 
@@ -401,7 +402,7 @@ The chromatic number of a planar graph is no greater than four.
 
 <br>
 
-The general procedures to find the chromatic number:
+The general procedures to find the chromatic number are:
 1. Let the vertices of a graph represent the element, and then draw an edge between two vertices if the two elements cannot be connected.
 2. Compute the complementary graph.
 3. Align a color to a vertex if it is connected to all vertices with this color in the complementary graph.
