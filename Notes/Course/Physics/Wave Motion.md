@@ -5,7 +5,7 @@
   - [Wave Equation](#wave-equation)
   - [Linear Wave](#linear-wave)
     - [Phenomenon](#phenomenon)
-    - [Speed of Phonon in a Solid](#speed-of-phonon-in-a-solid)
+    - [Speed of Wave in a Solid](#speed-of-wave-in-a-solid)
   - [Sinusoidal Wave](#sinusoidal-wave)
     - [Sinusoidal Wave Function](#sinusoidal-wave-function)
     - [Speed of Wave on a String](#speed-of-wave-on-a-string)
@@ -41,10 +41,8 @@ The displacement $y$ depends on both $x$ and $t$. For this reason, it is often w
 ### Wave Equation
 Set $y = f(x + vt) = f(u) $, then
 $$
-\frac{\partial^2 y}{\partial t^2} = v^2 \frac{\partial^2 y}{\partial u^2}
-\\~\\
-\frac{\partial^2 y}{\partial x^2} = \frac{\partial^2 y}{\partial u^2} \\
-\\~\\
+\frac{\partial^2 y}{\partial t^2} = v^2 \frac{\partial^2 y}{\partial u^2} \\~\\
+\frac{\partial^2 y}{\partial x^2} = \frac{\partial^2 y}{\partial u^2} \\~\\
 \Rightarrow \frac{\partial^2 y}{\partial t^2} = v^2 \frac{\partial^2 y}{\partial x^2}
 $$
 
@@ -69,8 +67,9 @@ $$
   - When from soft to hard, the reflected wave is invertd.
   - When from hard to soft, the reflected wave is not invertd.
 
+<br>
 
-#### Speed of Phonon in a Solid
+#### Speed of Wave in a Solid
 Set $x_n$ to be the positions of atoms, and $X_n = na $ to be the equilibrium positions.
 Let the wave function be $u_n = u(X_n, t) $, then we can get $$
 U^{\text{harm}} = \frac{1}{2}K\sum_n (u_{n+1}-u_n)^2 $$
@@ -97,6 +96,8 @@ Therefore $$\displaystyle v = a\sqrt\frac{K}{M} $$
 
 
 
+<br>
+
 ### Sinusoidal Wave
 #### Sinusoidal Wave Function
 $$
@@ -115,6 +116,8 @@ k = \frac{2\pi}{\lambda} = \frac{2\pi f}{v}
 v = \frac{\omega}{k}
 $$
 
+<br>
+
 #### Speed of Wave on a String
 Set $\mu$ to be the linear density, then we can get
 
@@ -131,6 +134,7 @@ $$
 
 Therefore $$v = \sqrt{\frac{F}{\mu}} $$
 
+<br>
 
 #### Energy Transfer
 The power of energy transfer at a particular position and time is
@@ -144,9 +148,10 @@ $$
 
 So The average rate of energy transfer is $$P_{avg} = \frac{1}{2}Fk\omega A^2 = \frac{1}{2}\mu\omega^2 A^2v $$
 
+<br>
 
 #### Different Cases of Superposition
-**Interference**
+**Interference Case**
 $$
 \begin{aligned}
   y = y_1 + y_2 &= A\left[ \sin(kx - \omega t) + \sin(kx - \omega t + \phi) \right] \\
@@ -168,7 +173,7 @@ $$
 When $\displaystyle \cos\left( \frac{\phi}{2} \right) = \pm 1 $ or $\displaystyle \Delta r = (2n)\cdot \frac{\lambda}{2} $, the waves are said to be everywhere *in phase* and thus *interfere constructively*.
 When $\displaystyle \cos\left( \frac{\phi}{2} \right) = 0 $ or $\displaystyle \Delta r = (2n+1)\cdot \frac{\lambda}{2} $, the resultant wave has zero amplitude everywhere, as a consequence of *destructive interference*.
 
-**Beating**
+**Beating Case**
 Beating is the periodic variation in intensity at a given point due to the superposition of two waves having slightly different frequencies.
 Set
 $$
@@ -216,6 +221,9 @@ This series is called **harmonic series**. The frequency with $n=1$ is called **
 
 
 
+
+<br>
+
 ### Sound Wave
 - Sound waves in liquids and air are longitudinal waves.
 - Sound waves in solids can be either longitudinal or transverse. 
@@ -233,6 +241,7 @@ $$
 
 Hence $$\Delta p(x, t) = -B \frac{\text{d}V}{V} = -B \frac{\partial u(x,t)}{\partial x} $$
 
+<br>
 
 #### Speed of Sound in a Fluid
 We consider an idealized case of a sound wave confined to a tube.
@@ -252,6 +261,7 @@ I = Ft = \Delta p At = B \frac{Av_yt}{v}
 \Rightarrow v = \sqrt{\frac{B}{\rho}}
 $$
 
+<br>
 
 #### Sound Intensity
 Sound intensity $I$ is defined as the power carried by sound waves per unit area in a direction perpendicular to that area, that is to say, $\bm{I} = p\bm{v}$.
@@ -280,6 +290,7 @@ $$
 I_0 = 1.00\times 10^{-12} \text{ W}/\text{m}^2
 $$
 
+<br>
 
 #### Spherical Waves
 - **Wavefronts** are surfaces over which the oscillations have the same value.
@@ -290,6 +301,7 @@ I = \frac{\mathscr{P}_{avg}}{A} = \frac{\mathscr{P}_{avg}}{4\pi r^2} \\~\\
 \Rightarrow \phi(r, t) = \frac{s_0}{r}\sin(kr - \omega t)
 $$
 
+<br>
 
 #### Doppler Effect
 **Moving Observer, Stationary Source**
@@ -307,6 +319,8 @@ The speed of the sound the observer receive is $\displaystyle v' = v + v_O $, th
 $$
 f' = \frac{v'}{\lambda'} = \frac{v + v_O}{v - v_S} f
 $$
+
+<br>
 
 #### Shock Waves
 When $v_S$ is higher than the wave velocity $v$, the envelope surface of the wave surface is a cone, which is called **Mach cone**.
