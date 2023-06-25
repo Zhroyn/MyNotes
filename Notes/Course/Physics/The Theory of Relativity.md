@@ -267,7 +267,7 @@ $$\gamma\sqrt{1 + \beta^2} = \sqrt{\frac{1 + \beta^2}{1 - \beta^2}}$$
 Let $\Delta t_0, \Delta t'$ be the time interval between the emission of two adjacent wave crests in the source and observer frame respectively, $\Delta t$ the time interval between the reception of the adjacent wave crests in the observer frame.
 When the source is moving towards the observer at speed $v$, we can get
 $$
-\Delta t' = \gamma \Delta t \\~\\
+\Delta t' = \gamma \Delta t_0 \\~\\
 \Delta t = \frac{c\Delta t' - v\Delta t'}{c} = \frac{1 - v/c}{\sqrt{1 - v^2 / c^2}}\Delta t_0 = \sqrt{\frac{1 - v/c}{1 + v/c}}\Delta t_0
 $$
 
@@ -330,7 +330,7 @@ So the force and acceleration may not be in the same direction.
 
 When $\bm{F}$ and $\bm{v}$ are along the same line, we can get
 $$
-F = \frac{m}{\left( 1 - \dfrac{v^2}{c^2} \right)^{3/2}} a \\~\\
+F = \frac{m}{\left( 1 - v^2/c^2 \right)^{3/2}} a \\~\\
 a = \frac{F}{m} \left( 1 - \frac{v^2}{c^2} \right)^{3/2}
 $$
 

@@ -12,6 +12,7 @@
 
 
 
+
 ## Rotational Motion
 ### Velocity, Acceleration, Torque, Energy and Power
 **Constant Angular Acceleration**
@@ -52,6 +53,15 @@ $
 \end{aligned}
 $
 
+
+
+
+
+
+
+
+<br>
+
 ### Moment of Inertia of differernt Objects
 Thin rod around end : $\displaystyle I = \frac{1}{3}ML^2 $
 Thin rod around center : $\displaystyle I = \frac{M}{L} \int_{-L/2}^{L/2} x^2dx = \frac{1}{12}ML^2 = \frac{1}{3}MR^2 $
@@ -67,7 +77,7 @@ Hollow cylinder : $\displaystyle I = \int_{R_1}^{R_2} M\cdot \frac{2\pi r dr}{\p
 <br>
 
 Solid sphere : $\displaystyle I = \int_{-R}^{R} \frac{1}{2}\rho\pi (R^2-y^2)^2 dy = \frac{2}{5}\cdot (\frac{2}{3}\rho\pi R^3)\cdot R^2 = \frac{2}{5}MR^2 $
-Thin spherical shell : $\displaystyle I = \int_0^\pi \rho(R\text{d}\theta \cdot h \cdot 2\pi R \sin\theta)(R\sin\theta)^2 = \frac{2}{3}\cdot (4\pi R^2\cdot h)\cdot R^2 = \frac{2}{3}MR^2 $
+Thin spherical shell : $\displaystyle I = \int_0^\pi \rho(R\text{d}\theta \cdot h \cdot 2\pi R \sin\theta)(R\sin\theta)^2 = \frac{2}{3}\cdot (\rho \cdot 4\pi R^2\cdot h)\cdot R^2 = \frac{2}{3}MR^2 $
 
 
 **The Parallel-Axis Theorem**
@@ -81,11 +91,17 @@ I_P &= \sum m_i[(x_i - a)^2 + (y_i - b)^2] \\
 
 
 
-### Cross product and Coriolis force
-- The direction of angular velocity obeys **right-hand rule**
-- The direction of vector in cross product also obeys **right-hand rule**
 
-$\bm{C} = \bm{A\times B} = \hat{i}\begin{vmatrix}A_y & A_z \\ B_y & B_z \end{vmatrix} - \hat{j}\begin{vmatrix}A_x & A_z \\ B_x & B_z \end{vmatrix} + \hat{k}\begin{vmatrix}A_x & A_y \\ B_x & B_y \end{vmatrix} $
+
+
+
+<br>
+
+### Cross product and Coriolis force
+The direction of angular velocity obeys **right-hand rule**.
+The direction of vector in cross product also obeys **right-hand rule**.
+
+$\bm{C} = \bm{A\times B} = \hat{i}\begin{vmatrix}A_y & A_z \\ B_y & B_z \end{vmatrix} + \hat{j}\begin{vmatrix}A_z & A_x \\ B_z & B_x \end{vmatrix} + \hat{k}\begin{vmatrix}A_x & A_y \\ B_x & B_y \end{vmatrix} $
 
 $\displaystyle \frac{d}{dt} (\bm{A \times B}) = \bm{A \times} \frac{d\bm{B}}{dt} + \frac{d\bm{A}}{dt} \bm{\times B} $
 
@@ -126,6 +142,13 @@ $\vec{F}_R = \vec{F} - 2m\vec{\omega}\times \vec{v}_R - m \vec{\omega}\times(\ve
 \vec{F}_{\text{Centrifugal}} = - m \vec{\omega}\times(\vec{\omega}\times \vec{r}) $
 
 
+
+
+
+
+
+
+<br>
 
 ### Angular Momentum
 **Kinetic energy of rolling object**
