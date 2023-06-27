@@ -1,16 +1,11 @@
 <!-- TOC -->
 
-- [Oscillatory Motion](#oscillatory-motion)
-  - [Equilibrium](#equilibrium)
-  - [Simple Harmonic Oscillation](#simple-harmonic-oscillation)
-  - [Pendulum](#pendulum)
-    - [Simple Pendulum](#simple-pendulum)
-    - [Physical Pendulum](#physical-pendulum)
-    - [Torsional Pendulum](#torsional-pendulum)
-  - [Damped Oscillator](#damped-oscillator)
-  - [Forced Oscillation](#forced-oscillation)
-  - [Coupled Oscillators](#coupled-oscillators)
-  - [Elastic Properties](#elastic-properties)
+- [\\omega = \\sqrt{\\frac{mgd}{I}} \\~\\](#omega--sqrtfracmgdi-)
+      - [Torsional Pendulum](#torsional-pendulum)
+    - [Damped Oscillator](#damped-oscillator)
+    - [Forced Oscillation](#forced-oscillation)
+    - [Coupled Oscillators](#coupled-oscillators)
+    - [Elastic Properties](#elastic-properties)
 
 <!-- /TOC -->
 
