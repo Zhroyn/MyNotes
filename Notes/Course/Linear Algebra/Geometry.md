@@ -38,8 +38,7 @@
   - 当 $d = 0$ 时，平面经过原点
   - 当 $abcd\neq 0$ 时，$\displaystyle{\frac{x}{a_1}+\frac{y}{b_1}+\frac{z}{c_1}=1}$
 
-
-
+<br>
 
 ### 直线方程
 - 直线的参数方程：
@@ -61,6 +60,11 @@
 
 
 
+
+
+
+<br>
+
 ### 线性图形的位置关系
 #### 平面与平面的关系
 $\left\{ \begin{aligned}
@@ -71,6 +75,8 @@ $\left\{ \begin{aligned}
 - 当 $\text{r}(A) = \text{r}(A,b) = 2$ 时，方程组有无穷解，解空间为1维子空间，故两平面相交为一直线
 - 当 $\text{r}(A) = \text{r}(A,b) = 1$ 时，方程组有无穷解，解空间为2维子空间，故两平面重合
 - 当 $\text{r}(A) = 1, \text{r}(A,b) = 2$ 时，方程组无解，故两平面平行
+
+<br>
 
 #### 平面与直线的关系（三个平面的关系）
 $\left\{ \begin{aligned}
@@ -84,6 +90,8 @@ $\left\{ \begin{aligned}
 - 当 $\text{r}(A) = \text{r}(A,b) = 1$ 时，方程组有无穷解，解空间为2维子空间，故三个平面重合
 - 当 $\text{r}(A) = 1, \text{r}(A,b) = 2$ 时，方程组无解，三个平面平行且至少有两个不重合
 - 当 $\text{r}(A) = 2, \text{r}(A,b) = 3$ 时，方程组无解，直线平行于平面
+
+<br>
 
 #### 直线与直线的关系（四个平面的关系）
 $\left\{ \begin{aligned}
@@ -100,6 +108,8 @@ $\left\{ \begin{aligned}
 - 当 $\text{r}(A) = 2, \text{r}(A,b) = 3$ 时，方程组无解，此时四个平面的法向量共面，故两直线平行而不相交
 - 当 $\text{r}(A) = 3, \text{r}(A,b) = 4$ 时，方程组无解，两直线不平行也不相交
 
+<br>
+
 #### 多个平面的关系
 - 当方程组有解时
   - $m$ 个平面交于一点
@@ -114,6 +124,8 @@ $\left\{ \begin{aligned}
 
 
 
+<br>
+
 ### 线性图形的度量关系
 #### 点到平面的距离
 $$\displaystyle \bm{n}^0 = \frac{1}{\sqrt{a^2 + b^2 + c^2}}(a, b, c)
@@ -124,12 +136,16 @@ $$\displaystyle \bm{n}^0 = \frac{1}{\sqrt{a^2 + b^2 + c^2}}(a, b, c)
   &= \frac{|ax_1 + by_1 + cz_1 + d|}{\sqrt{a^2 + b^2 + c^2}} \\
 \end{aligned} $$
 
+<br>
+
 #### 点到直线的距离
 $$\begin{aligned}
   d &= |\overrightarrow{P_0P}|\cdot \sin\theta \\
   &= |\overrightarrow{P_0P}|\cdot \frac{|\bm{S}\times \overrightarrow{P_0P}|}{|\bm{S}|\cdot|\overrightarrow{P_0P}|} \\
   &= \frac{|\bm{S}\times \overrightarrow{P_0P}|}{|\bm{S}|}
 \end{aligned} $$
+
+<br>
 
 #### 平面与平面的距离和夹角
 $$
@@ -144,6 +160,8 @@ $$
 \end{aligned}
 $$
 
+<br>
+
 #### 直线与直线的距离和夹角
 当两条直线相交时，$d = 0$
 当两条直线平行时，$\displaystyle d = \frac{|\bm{S}_1\times \overrightarrow{P_1P_2}|}{|\bm{S}_1|}$
@@ -154,6 +172,8 @@ d = \frac{|\overrightarrow{P_1P_2}\cdot \bm{S}|}{|\bm{S}|} = |\overrightarrow{P_
 $$
 
 $$\theta = \arccos(\bm{S}_1^0 \cdot \bm{S}_2^0), 0 \le \theta \le \pi $$
+
+<br>
 
 #### 直线与平面的距离和夹角
 当直线与平面相交时，$d = 0$
@@ -168,6 +188,7 @@ $$\theta = \arcsin\frac{|\bm{n} \cdot \bm{s}|}{|\bm{n}|\cdot|\bm{s}|}, 0 \le \th
 
 
 
+<br>
 
 ## 二次曲线
 ### 二次曲线的一般方程
@@ -222,6 +243,8 @@ $$
 b_{11} = a_{11} + a_{12}\tan\theta, \quad b_{22} = a_{22} - a_{12}\tan\theta 
 $$
 
+<br>
+
 ### 二次曲线的不变量
 在直角坐标变换下，以下三个不变量不变：
 $$
@@ -233,6 +256,8 @@ I_3 = \begin{vmatrix}
   a_{1} & a_{2} & a_{0} \\
 \end{vmatrix}
 $$
+
+<br>
 
 ### 二次曲线的最简方程
 #### 椭圆型和双曲型曲线（有心二次曲线）
@@ -269,6 +294,8 @@ $$ 所以该方程必有两个不等或相等的实根，称为特征根。
 - 当 $I_2 = \lambda_1\lambda_2 \lt 0$ 时，曲线为双曲型
   - 若 $I_3 \neq 0$，则曲线为双曲线
   - 若 $I_3 = 0$，则曲线为一对相交直线
+
+<br>
 
 #### 抛物型曲线（无心二次曲线）
 此时，最简方程为 $b_{22}y_2^2 + 2b_1y_1 = 0$

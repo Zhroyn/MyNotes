@@ -21,9 +21,10 @@
 
 
 
+
 ##  正交变换与正交矩阵
 ### 定义及性质
-**定义（正交变换）**
+**定义：正交变换**
 设 $\sigma \in V(\mathbf{R})$，若 $\forall \alpha, \beta \in V$，都有
 $$(\sigma(\alpha), \sigma(\beta)) = (\alpha, \beta) $$ 则称 $\sigma$ 为一个正交变换。
 
@@ -35,17 +36,17 @@ $\text{Proof :} $
 $$|\sigma(\alpha + \beta)|^2 = |\sigma(\alpha)|^2 + |\sigma(\beta)|^2 + 2(\sigma(\alpha), \sigma(\beta)) \\
 |\alpha + \beta|^2 = |\alpha|^2 + |\beta|^2 + 2(\alpha, \beta) $$ 可得 $(\sigma(\alpha), \sigma(\beta)) = (\alpha, \beta)$。
 
-**定义（正交矩阵）**
-欧氏空间 $V(\mathbf{R})$ 的正交变换 $\sigma$ 在 $V$ 的单位正交基所对应的矩阵 $A$ 称为正交矩阵。
+**定义：正交矩阵**
+欧氏空间 $V(\mathbf{R})$ 的正交变换 $\sigma$ 在 $V$ 的规范正交基所对应的矩阵 $A$ 称为正交矩阵。
 
 
 
 
-**定理：判断是否为单位正交基的充要条件**
-$n$ 阶实矩阵的列向量组是 $\mathbf{R}^n$ 的一组单位正交基的充要条件是 $A^TA = E $
+**定理：判断是否为规范正交基的充要条件**
+$n$ 阶实矩阵的列向量组是 $\mathbf{R}^n$ 的一组规范正交基的充要条件是 $A^TA = E $
 
 **定理：正交矩阵的性质**
-若 $A$ 是正交变换 $\sigma$ 是关于单位正交基 $\{\epsilon_1, \epsilon_2, \cdots, \epsilon_n\}$ 的正交矩阵，则 $A$ 的列向量组是一组单位正交基。
+若 $A$ 是正交变换 $\sigma$ 是关于规范正交基 $\{\epsilon_1, \epsilon_2, \cdots, \epsilon_n\}$ 的正交矩阵，则 $A$ 的列向量组是一组规范正交基。
 $$\text{Proof :} \hspace{11cm} \\ 
 \displaystyle
 \begin{aligned}
@@ -53,7 +54,7 @@ $$\text{Proof :} \hspace{11cm} \\
     &= \sum_{k=1}^n a_{ki}a_{kj} = (\alpha_i, \alpha_j) = \delta_{ij}
 \end{aligned} $$
 
-若 $A$ 的列向量组 $\alpha_1, \alpha_2, \cdots, \alpha_n $ 是 $\mathbf{R}^n$ 的一组单位正交基，则 $A$ 在 $V$ 的单位正交基 $\{\epsilon_1, \epsilon_2, \cdots, \epsilon_n\}$ 下所对应的线性变换 $\sigma$ 是正交变换。
+若 $A$ 的列向量组 $\alpha_1, \alpha_2, \cdots, \alpha_n $ 是 $\mathbf{R}^n$ 的一组规范正交基，则 $A$ 在 $V$ 的规范正交基 $\{\epsilon_1, \epsilon_2, \cdots, \epsilon_n\}$ 下所对应的线性变换 $\sigma$ 是正交变换。
 $$\text{Proof :} \hspace{11cm} \\ 
 \displaystyle
 \begin{aligned}
@@ -65,7 +66,7 @@ $$\text{Proof :} \hspace{11cm} \\
     &= \sum_{i=1}^n a_{i}b_{i} = (\alpha, \beta)
 \end{aligned} $$
 
-综上，若 $n$ 阶实矩阵的列向量组是 $\mathbf{R}^n$ 的一组单位正交基或 $A^TA = E $，则称 $A$ 为正交矩阵。
+综上，若 $n$ 阶实矩阵的列向量组是 $\mathbf{R}^n$ 的一组规范正交基或 $A^TA = E $，则称 $A$ 为正交矩阵。
 正交矩阵有如下性质：
 1. 若 $A$ 为正交矩阵，则 $A^{-1} = A^T $ 也为正交矩阵
 2. 若 $A$ 为正交矩阵，则 $|A| = \pm 1 $
@@ -73,6 +74,7 @@ $$\text{Proof :} \hspace{11cm} \\
    - 行列式为 $-1$ 的正交矩阵所对应的正交变换称为第二类正交变换，如镜像变换
 3. 若 $A, B$ 为正交矩阵，则 $AB $ 也为正交矩阵
 
+<br>
 
 ### Q-R 分解
 若 $A$ 为可逆实矩阵，则存在正交矩阵 $Q$ 和主对角元为正数的上三角阵 $R$，使得
@@ -108,6 +110,8 @@ A = (\beta_1, \beta_2, \cdots, \beta_n)
 = QR
 $$
 
+<br>
+
 ### 哈达马（Hadamard）定理
 若 $A$ 为 $n$ 阶实矩阵，则
 $$|\text{det} A| \le \prod_{i=1}^{n}|\alpha_i| $$ 等号成立当且仅当 $\alpha_1, \alpha_2, \cdots, \alpha_n $ 为正交向量组。
@@ -124,21 +128,27 @@ $\text{Proof :}$
 
 
 
+
+
+<br>
+
 ## 特征值和特征向量
 ### 定义
-**定义（不变子空间）**
+**定义：不变子空间**
 设 $\sigma \in L(V)$，$U$ 为 $V$ 的子空间，
 若 $\forall u \in U, \sigma(u) \in U $，则称 $U$ 是 $V$ 的不变子空间，并称 $V$ 的子空间 $U$ 在 $\sigma $ 下不变。
 <br>
 
-**定义（特征值和特征向量）** 
+**定义：特征值和特征向量** 
 设 $\sigma \in L(V)$，若存在 $\lambda_0 \in F, \xi \in V$ 且 $\xi \neq 0$，使得 $$\sigma(\xi) = \lambda_0\xi $$ 则称 $\lambda_0$ 为 $\sigma$ 的一个特征值，$\xi$ 为 $\sigma $ 关于 $\lambda_0$ 的特征向量。
 
-**定义（特征子空间）**
+**定义：特征子空间**
 设 $V_{\lambda_0}$ 为 $\sigma$ 关于 $\lambda_0$ 的特征子空间，则：
 $$V_{\lambda_0} = \text{null}(\lambda_0 I - \sigma) $$ 且有 $\text{dim}(\text{null}(\lambda_0I-\sigma)) \ge 1, \text{dim}(\text{range}(\lambda_0I-\sigma)) \le n - 1 $
 
 若 $\sigma$ 关于基 $B$ 的矩阵为 $A$，则 $|\lambda_0E - A| = 0$。
+
+<br>
 
 ### 特征值和特征向量的求解
 
@@ -151,6 +161,8 @@ $(\lambda_j E - A)X = 0 $ 的解空间就是 $\sigma$ 关于 $\lambda_j$ 的特�
 $n$ 阶复矩阵的特征多项式在复数域上的 $n$ 个根都是矩阵的特征值，其 $k$ 重根叫做 $k$ 重特征值。
 
 $\Rightarrow$ $n$ 阶对角矩阵、上（下）三角矩阵的特征值就是其 $n$ 个主对角元。
+
+<br>
 
 ### 特征值和特征向量的性质
 **定理：** $n$ 阶矩阵 $A$ 的特征多项式为
@@ -165,6 +177,8 @@ $\text{Proof :}$
 $\displaystyle b_1 = -\sum_{i=1}^{n}a_{ii} = -\sum_{i=1}^{n}\lambda_i, \\
 b_n = (-1)^n|A| = (-1)^n \prod_{i=1}^{n}\lambda_i $
 
+---
+
 **定理：** 若矩阵 $A$ 与 $B$ 相似，则其特征多项式相等，即
 $$
 |\lambda E - A| = |\lambda E - P^{-1}BP| = |P^{-1}||\lambda E - B||P| = |\lambda E - B| 
@@ -176,6 +190,11 @@ $$ **推论：** 同一线性映射在不同基下的矩阵的特征值相同。
 
 
 
+
+
+
+
+<br>
 
 ## 相似矩阵 可对角化 相似标准型
 ### 相似的定义及性质
@@ -189,7 +208,7 @@ $$
 \Rightarrow B = C^{-1}AC
 $$ 由此，可得同一线性映射在不同基下的矩阵的关系。
 
-**定义（相似）**
+**定义：相似**
 对 $A,B \in M_n(F)$，若存在可逆矩阵 $C$ 使得
 $$B = C^{-1}AC $$ 则称 $A$ 相似于 $B$，记作 $A \sim B$
 
@@ -199,13 +218,14 @@ $\pod 2$ $C^{-1}(AB)C = (C^{-1}AC)(C^{-1}BC) $
 $\pod 3$ 若 $A\sim B$，则 $A^m \sim B^m $
 $\pod 4$ 若 $A\sim B$，则 $f(A) \sim f(B) $
 
+<br>
 
 ### 可对角化的条件
-**定义（可对角化与可对角化矩阵）**
+**定义：可对角化与可对角化矩阵**
 若有限维线性空间 $V(F)$ 的线性变换 $\sigma$ 在某个基下的矩阵是对角阵，则称其为可对角化的线性变换，
 与对角阵相似的矩阵 $A$ 称为可对角化矩阵。
 
-**定义（相似标准型）**
+**定义：相似标准型**
 若 $A$ 可对角化，则与 $A$ 相似的对角阵 $\Lambda$ 称为 $A$ 的相似标准型。
 
 **定理：特征值重数与特征子空间维数的关系**
@@ -215,6 +235,7 @@ $\sigma$ 的每个特征值 $\lambda_i$ 的重数大于等于其特征子空间 
 $\sigma$ 可对角化的充要条件为 $\sigma$ 有 $n$ 个线性无关的特征向量。
 $\sigma$ 可对角化的充要条件为 $\sigma$ 的每个特征值的重数等于其特征子空间的维数，且 $\sigma$ 的所有特征值的重数之和等于 $n$。
 
+<br>
 
 ### 实对称矩阵的对角化
 **定理：实对称矩阵的特征向量**
@@ -226,22 +247,22 @@ $$Q^{-1}AQ = \text{diag}(\lambda_1, \lambda_2, \cdots, \lambda_n) $$
 
 
 ## 二次型 相合标准型
-**定义（双线性函数与度量矩阵）**
+**定义：双线性函数与度量矩阵**
 
-**定义（二次型）**
+**定义：二次型**
 
-**定义（相合或合同）**
+**定义：相合或合同**
 对 $A,B \in M_n(F)$，若存在可逆矩阵 $C$ 使得
 $$B = C^TAC $$ 则称 $A$ 相合于 $B$，记作 $A \simeq B$
 
-**定义（相合标准型）**
+**定义：相合标准型**
 
 **定理：主轴定理**
 
 ### 二次型化为标准型的方法
 **特征值法**
 1. 求出 $n$ 个特征值
-2. 求出相应的特征向量，并用 $\text{Schmidt}$ 正交化方法化为单位正交基 $\xi_1, \cdots, \xi_n$
+2. 求出相应的特征向量，并用 $\text{Schmidt}$ 正交化方法化为规范正交基 $\xi_1, \cdots, \xi_n$
 3. 取 $Q = (\xi_1, \cdots, \xi_n)$ 为变换矩阵，$Q^TAQ$ 即为标准型
 
 **配方法**

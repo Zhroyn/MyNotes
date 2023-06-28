@@ -57,10 +57,10 @@ $$
 \Rightarrow Y = AX
 $$
 
-若 $A$ 是 $\sigma$ 关于单位正交基 $\left\{ e_1, \cdots, e_n \right\}$ 的矩阵，则由
+若 $A$ 是 $\sigma$ 关于规范正交基 $\left\{ e_1, \cdots, e_n \right\}$ 的矩阵，则由
 $$\sigma(e_1, \cdots, e_n) = (e_1, \cdots, e_n)A = EA = A $$ 可得 $A = (\sigma(e_1), \cdots, \sigma(e_n)) $
 
-故，易得，逆时针旋转 $\theta$ 角关于单位正交基的矩阵 $A = \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix} $
+故，易得，逆时针旋转 $\theta$ 角关于规范正交基的矩阵 $A = \begin{pmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{pmatrix} $
 
 
 ### 基的变换矩阵与坐标变换
