@@ -1,11 +1,15 @@
-<!-- TOC -->
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [Algorithms](#algorithms)
   - [3.1 Algorithms](#31-algorithms)
   - [3.2 The Growth of Functions](#32-the-growth-of-functions)
   - [3.3 Complexity of Algorithms](#33-complexity-of-algorithms)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
 
 
 

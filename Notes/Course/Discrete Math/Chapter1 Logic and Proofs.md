@@ -1,4 +1,7 @@
-<!-- TOC -->
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [Logic and Proofs](#logic-and-proofs)
   - [1.1 Propositional Logic](#11-propositional-logic)
@@ -11,7 +14,8 @@
   - [1.8 Proof Methods and Strategy](#18-proof-methods-and-strategy)
 - [Shorthand](#shorthand)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
 
 
 
@@ -193,6 +197,18 @@ $$¬∀xP(x) ≡ ∃x ¬P(x)\\
 - Two quantifiers are **nested** if one is within the scope of the other.
 - Everyone has exactly one best friend : $\forall x \exists y \forall z(B(x, y)\wedge ((z \neq y)\rightarrow \neg B(x, z)))$
 - The order of nested quantifiers matters if quantifiers are of different types.
+<br>
+
+- $\forall xP(x) \wedge \forall xQ(x) \equiv \forall x(P(x) \wedge Q(x))$
+- $\forall xP(x) \wedge \exists xQ(x) \equiv \forall x\exists y(P(x) \wedge Q(y))$
+- $\exists xP(x) \wedge \forall xQ(x) \equiv \exists x\forall y(P(x) \wedge Q(y))$
+- $\exists xP(x) \wedge \exists xQ(x) \equiv \exists x\exists y(P(x) \wedge Q(y))$
+<br>
+
+- $\forall xP(x) \vee \forall xQ(x) \equiv \forall x\forall y(P(x) \vee Q(y))$
+- $\forall xP(x) \vee \exists xQ(x) \equiv \forall x\exists y(P(x) \vee Q(y))$
+- $\exists xP(x) \vee \forall xQ(x) \equiv \exists x\forall y(P(x) \vee Q(y))$
+- $\exists xP(x) \vee \exists xQ(x) \equiv \exists x(P(x) \vee Q(x))$
 
 **Normal Form**
 - Disjunctions with literals as disjuncts are called **disjunctive clauses**.
@@ -219,18 +235,8 @@ $$
 
 - A statement is in **prenex normal form** if it is of the form $Q_1x_1\cdots Q_nx_nB$, where $Q_i$ is $\forall$ or $\exists$ and the predicate $B$ is quantifier free. 
 - A formula with no quantifiers is regarded as a trivial case of a prenex normal form.
-<br>
 
-- $\forall xP(x) \wedge \forall xQ(x) \equiv \forall x(P(x) \wedge Q(x))$
-- $\forall xP(x) \wedge \exists xQ(x) \equiv \forall x\exists y(P(x) \wedge Q(y))$
-- $\exists xP(x) \wedge \forall xQ(x) \equiv \exists x\forall y(P(x) \wedge Q(y))$
-- $\exists xP(x) \wedge \exists xQ(x) \equiv \exists x\exists y(P(x) \wedge Q(y))$
-<br>
 
-- $\forall xP(x) \vee \forall xQ(x) \equiv \forall x\forall y(P(x) \vee Q(y))$
-- $\forall xP(x) \vee \exists xQ(x) \equiv \forall x\exists y(P(x) \vee Q(y))$
-- $\exists xP(x) \vee \forall xQ(x) \equiv \exists x\forall y(P(x) \vee Q(y))$
-- $\exists xP(x) \vee \exists xQ(x) \equiv \exists x(P(x) \vee Q(x))$
 
 
 
@@ -389,8 +395,8 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 **Introduction to Proofs**
 - proof by contraposition
 - proofs by contradiction
-- vacuous proof : $p$ is true
-- trivial proof : $q$ is true
+- vacuous proof: a proof show that $p$ is false
+- trivial proof: a proof show that $q$ is true
 
 **Proof Methods and Strategy**
 - Existence proof

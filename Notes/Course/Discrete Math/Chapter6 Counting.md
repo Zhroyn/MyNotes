@@ -1,19 +1,30 @@
-<!-- TOC -->
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [Counting](#counting)
   - [6.2 The Pigeonhole Principle](#62-the-pigeonhole-principle)
+    - [The Pigeonhole Principle](#the-pigeonhole-principle)
+    - [The Generalized Pigeonhole Principle](#the-generalized-pigeonhole-principle)
+    - [Examples](#examples)
   - [6.3 Permutations and Combinations](#63-permutations-and-combinations)
     - [Permutations](#permutations)
     - [Combinations](#combinations)
     - [Combinatorial Proofs](#combinatorial-proofs)
   - [6.4 Binomial Coefficients and Identities](#64-binomial-coefficients-and-identities)
   - [6.5 Generalized Permutations and Combinations](#65-generalized-permutations-and-combinations)
+    - [Permutations with Repetition](#permutations-with-repetition)
+    - [Combinations with Repetition](#combinations-with-repetition)
+    - [Permutations with Indistinguishable Objects](#permutations-with-indistinguishable-objects)
     - [Distributing Objects into Boxes](#distributing-objects-into-boxes)
   - [6.6 Generating Permutations and Combinations](#66-generating-permutations-and-combinations)
     - [Generating Permutations](#generating-permutations)
     - [Generating Combinations](#generating-combinations)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
+
 
 
 
@@ -22,18 +33,22 @@
 
 ## Counting
 ### 6.2 The Pigeonhole Principle
-**The Pigeonhole Principle**
+#### The Pigeonhole Principle
 If $k$ is a positive integer and $k + 1$ or more objects are placed into $k$ boxes, then there is at least one box containing two or more of the objects.
 It is also called the **Dirichlet Drawer Principle**.
 
-**The Generalized Pigeonhole Principle**
+<br>
+
+#### The Generalized Pigeonhole Principle
 If $N$ objects are placed into $k$ boxes, then there is at least one box containing at least $⌈N/k⌉$ objects.
 
 $\texttt{Proof:}$
 Suppose that none of the boxes contains more than $⌈N/k⌉ − 1$ objects. Then, the total number of objects is at most $k(⌈N/k⌉ − 1) < k (N/k + 1 − 1) = N$
 Thus, the total number of objects is less than $N$. This completes the proof by contraposition
 
-**Examples**
+<br>
+
+#### Examples
 > Show that in a party of 2 or more people, there are 2 people with the same number of friends in the party. (Assuming you can’t be your own friend and that friendship is mutual.)
 
 > Show that among any $n+1$ positive integers not exceeding $2n$, there must be an integer that divides one of the other integers.
@@ -41,12 +56,12 @@ Thus, the total number of objects is less than $N$. This completes the proof by 
 > During 11 weeks football games will be held at least 1 game a day, but at most 12 games be arranged each week. Show that there must be a period of some number of consecutive days during which exactly 21 games must be played.
 > 
 > $\texttt{Proof:}$
-> Let $x_i$ be the number of football games held on the $i$th day, and set $a_i = \sum_{k=1}^i x_i, c_i = a_i + 21$.
-> Then we can get $$1\le a_1 \lt \cdots \lt a_{77} \le 12\times 11 = 132 \\ 22\le c_1 \lt \cdots \lt c_{77} \le 132 + 21 = 153 $$
+> Let $x_i$ be the number of football games held on the $i$th day, and set $a_i = \sum_{k=1}^i x_i, b_i = a_i + 21$.
+> Then we can get $$1\le a_1 \lt \cdots \lt a_{77} \le 12\times 11 = 132 \\ 22\le b_1 \lt \cdots \lt b_{77} \le 132 + 21 = 153 $$
 >
-> So $$22\le a_{22} \lt \cdots \lt a_{77} \le 132 \\ 22\le c_1 \lt \cdots \lt c_{56} \le 132 $$
+> So $$22\le a_{22} \lt \cdots \lt a_{77} \le 132 \\ 22\le b_1 \lt \cdots \lt b_{56} \le 132 $$
 > 
-> Set $A = \{a_{22},\cdots, a_{77},c_1,\cdots, c_{56}\}, B = \{22, 23, \cdots, 132 \} $.
+> Set $A = \{a_{22},\cdots, a_{77},c_1,\cdots, b_{56}\}, B = \{22, 23, \cdots, 132 \} $.
 > Because $|A| = 112 > 111 = |B|$, by the pigeonhole principle, we can get $\exists i\neq j, a_i = c_j$, and thus $x_{j+1} + x_{j+2} + \cdots + x_i = 21 $.
 >
 > Moreover, set $c_i = a_i + n$, then $|A| = 154 - 2n, |B| = 132 - n$. So when $n \le 21$, there must be a period of some number of consecutive days during which exactly $n$ games must be played.
@@ -72,30 +87,35 @@ Thus, the total number of objects is less than $N$. This completes the proof by 
 
 ### 6.3 Permutations and Combinations
 #### Permutations
-$\displaystyle P(n, r) = n(n − 1)(n − 2) ⋯ (n − r + 1) = \frac{n!}{(n-r)!}$
-$P(n, 0) = 1$
-$P(n, n) = P(n, n-1) = n!$
+$$
+P(n, r) = n(n − 1)(n − 2) ⋯ (n − r + 1) = \frac{n!}{(n-r)!} \\~\\
+P(n, 0) = 1, \quad
+P(n, n) = P(n, n-1) = n!
+$$
 
 <br>
 
 #### Combinations
-$\displaystyle C(n, r) = \begin{pmatrix} n \\ r \end{pmatrix} = \frac{n(n − 1)(n − 2) ⋯ (n − r + 1)}{r!} = \frac{n!}{r!(n-r)!}$
+$$C(n, r) = \begin{pmatrix} n \\ r \end{pmatrix} = \frac{n(n − 1)(n − 2) ⋯ (n − r + 1)}{r!} = \frac{n!}{r!(n-r)!}$$
 
-$\displaystyle \begin{aligned}
-\begin{pmatrix} -n \\ r \end{pmatrix}
-&= \frac{(-n)(-n-1)\cdots (-n-r+1)}{r!} \\
-&= \frac{(-1)^r n(n+1)\cdots (n+r-1)}{r!} \\
-&= \frac{(-1)^r (n+r-1)!}{r!(n-1)!} \\
-&= (-1)^r \begin{pmatrix} n+r-1 \\ r \end{pmatrix} \\
-&= (-1)^r C(n+r-1, r)
-\end{aligned} $
+By definition, there are
+$$
+\begin{aligned}
+  \begin{pmatrix} -n \\ r \end{pmatrix}
+  &= \frac{(-n)(-n-1)\cdots (-n-r+1)}{r!} \\
+  &= \frac{(-1)^r n(n+1)\cdots (n+r-1)}{r!} \\
+  &= \frac{(-1)^r (n+r-1)!}{r!(n-1)!} \\
+  &= (-1)^r \begin{pmatrix} n+r-1 \\ r \end{pmatrix} \\
+\end{aligned}
+$$
+
 <br>
 
 #### Combinatorial Proofs
 A **combinatorial proof** of an identity is a proof that  uses one of double counting proof or bijective proofs.
 
-A **double counting proof** uses counting arguments to prove that both sides of an identity count the same objects, but in different ways.
-A **bijective proof** shows that there is a bijection between the sets of objects counted by the two sides of the identity.
+- A **double counting proof** uses counting arguments to prove that both sides of an identity count the same objects, but in different ways.
+- A **bijective proof** shows that there is a bijection between the sets of objects counted by the two sides of the identity.
 
 
 
@@ -118,7 +138,7 @@ $$\begin{pmatrix} m+n \\ r \end{pmatrix} = \sum_{k=0}^r \begin{pmatrix} m \\ r-k
 
 $\texttt{Double Counting Proof:}$
 Let $A$ and $B$ be two disjoint sets with $|A|=m, |B|=n$, then $C(m + n，r)$ is the number of ways to pick $r$ elements from $A \cup B$.
-Another way to pick $r$ elements from $A \cup B$, is to pick $r-k$ elements from $A$ firstly, and then $k$ elements from $B$, where $0\le k\le r$, which can be done in $C(m，r-k) C(n，r)$.
+Another way to pick $r$ elements from $A \cup B$ is to firstly pick $r-k$ elements from $A$, and then $k$ elements from $B$, where $0\le k\le r$, which can be done in $C(m，r-k) C(n，r)$ ways.
 So both sides of the equation count the same objects.
 
 **Corollary**
@@ -137,27 +157,36 @@ $$\begin{pmatrix} n+1 \\ r+1 \end{pmatrix} = \sum_{j=r}^n \begin{pmatrix} j \\ r
 <br>
 
 ### 6.5 Generalized Permutations and Combinations
-**Theorem 1: Permutations with Repetition**
+#### Permutations with Repetition
 The number of r-permutations of a set of $n$ objects with repetition allowed is $n^r$.
 
-**Theorem 2: Combinations with Repetition**
-The number of r-combinations from a set with $n$ elements with repetition allowed is $C(n + r − 1, r) = C(n + r − 1, n − 1)$.
+<br>
 
+#### Combinations with Repetition
+The number of r-combinations from a set with $n$ elements with repetition allowed is 
+$$C(n + r − 1, r) = C(n + r − 1, n − 1)$$
+
+$\texttt{Proof:}$
 Just think about choosing $r$ stars or $n - 1$ bars from $n + r - 1$ cells. The bars will split stars into $n$ parts.
 
-**Theorem 3: Permutations with Indistinguishable Objects**
-The number of different permutations of $n$ objects, where there are $n_1$ indistinguishable objects of type$1$, $n_2$ indistinguishable objects of type$2$, … , and $n_k$ indistinguishable objects of type$k$, is $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$.
+<br>
+
+#### Permutations with Indistinguishable Objects
+The number of different permutations of $n$ objects, where there are $n_1$ indistinguishable objects of type $1$, $n_2$ indistinguishable objects of type $2$, … , and $n_k$ indistinguishable objects of type $k$, is 
+$$\frac{n!}{n_1! n_2! ⋯ n_k!}$$
 
 <br>
 
 #### Distributing Objects into Boxes
 **Distinguishable Objects and Distinguishable Boxes**
-The number of ways to distribute $n$ distinguishable objects into $k$ distinguishable boxes so that $n_i$ objects are placed into box $i$, $i = 1, 2, … , k$, equals $\displaystyle \frac{n!}{n_1! n_2! ⋯ n_k!}$
+The number of ways to distribute $n$ distinguishable objects into $k$ distinguishable boxes, so that $n_i$ objects are placed into box $i$, $i = 1, 2, … , k$, is equal to
+$$\frac{n!}{n_1! n_2! ⋯ n_k!}$$
 
 <br>
 
 **Indistinguishable Objects and Distinguishable Boxes**
-There are $C(n + r − 1, n − 1)$ ways to place $r$ indistinguishable objects into $n$ distinguishable boxes
+The number of ways to distribute $r$ indistinguishable objects into $n$ distinguishable boxes is equal to
+$$C(n + r − 1, r) = C(n + r − 1, n − 1)$$
 
 <br>
 

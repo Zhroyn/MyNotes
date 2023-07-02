@@ -1,4 +1,7 @@
-<!-- TOC -->
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [Trees](#trees)
   - [11.1 Introduction to Trees](#111-introduction-to-trees)
@@ -19,7 +22,8 @@
     - [Prim’s Algorithm](#prims-algorithm)
     - [Kruskal’s Algorithm](#kruskals-algorithm)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
 
 
 
@@ -169,7 +173,7 @@ To evaluate a prefix expression, the steps is to start at the right, and then pu
 To evaluate a postfix expression, the steps is to start at the left, and then push when encounter operand, pop when encounter operator.
 
 > For $((x + y) \uparrow 2) + ((x − 4)/3)$,
-> The prefix form is $ \uparrow +\; x\; y\; 2\; / − x\; 4\; 3$
+> The prefix form is $+ \uparrow +\; x\; y\; 2\; / − x\; 4\; 3$
 > The postfix form is $x\;y + 2 \uparrow x\; 4 − 3\; /\; +$
 
 

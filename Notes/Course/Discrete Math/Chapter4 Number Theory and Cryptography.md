@@ -1,4 +1,7 @@
-<!-- TOC -->
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [Number Theory and Cryptography](#number-theory-and-cryptography)
   - [4.1 Divisibility and Modular Arithmetic](#41-divisibility-and-modular-arithmetic)
@@ -19,7 +22,9 @@
     - [Pseudoprimes](#pseudoprimes)
     - [Primitive Roots and Discrete Logarithms](#primitive-roots-and-discrete-logarithms)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
+
 
 
 
@@ -87,7 +92,7 @@ $$
 \gcd(a, b) = p_1^{\text{min}(a_1, b_1)} p_2^{\text{min}(a_2, b_2)} \cdots p_n^{\text{min}(a_n, b_n)}
 $$
 
-The integers $a$ and $b$ are **relatively prime** if their greatest common divisor is 1
+The integers $a$ and $b$ are **relatively prime** if their greatest common divisor is 1.
 
 The **least common multiple** of the positive integers $a$ and $b$ is the smallest positive integer that is divisible by both $a$ and $b$, which is denoted by $\text{lcm}(a, b)$.
 $$
@@ -172,7 +177,7 @@ Suppose that the positive integer $n$ can be written as the product of primes in
 
 where each $p_i$ and $q_j$ is prime such that $$p_1 ≤ p_2 ≤ ⋯ ≤ p_s, q_1 ≤ q_2 ≤ ⋯ ≤ q_t$$
 
-When we remove all common primes from the two factorizations, we have
+After we remove all common primes from the two factorizations, we have
 $$p_{i_1}p_{i_2} ⋯ p_{i_u} = q_{j_1}q_{j_2} ⋯ q_{j_v}$$
 
 where no prime occurs on both sides of this equation and $u$ and $v$ are positive integers.
@@ -182,6 +187,7 @@ Consequently, there can be at most one factorization of $n$ into primes in nonde
 
 **Theorem**
 Let $m$ be a positive integer and let $a$, $b$, and $c$ be integers. If $ac ≡ bc (\text{mod } m)$ and $\gcd(c, m) = 1$, then $a ≡ b (\text{mod } m)$.
+
 
 
 
@@ -227,7 +233,7 @@ x \equiv a_n (\text{mod } m_n) \\
 $$ 
 
 has a unique solution modulo $m = m_1m_2 ⋯ m_n$.
-Let $M_k = m/m_k$, and $y_k$ an inverse of $M_k$ modulo $m_k$, then one solution of the system of linear congruences is $\sum_{i=1}^{n} a_iM_iy_i$.
+Let $M_k = m/m_k$, and $M^{-1}_k$ an inverse of $M_k$ modulo $m_k$, then one solution of the system of linear congruences is $\sum_{i=1}^{n} a_iM_iM^{-1}_i$.
 
 <br>
 

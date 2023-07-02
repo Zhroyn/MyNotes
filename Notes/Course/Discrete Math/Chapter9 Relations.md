@@ -1,4 +1,7 @@
-<!-- TOC -->
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [Relations](#relations)
   - [9.1 Relations and Their Properties](#91-relations-and-their-properties)
@@ -25,7 +28,9 @@
     - [Lattice](#lattice)
     - [Topological Sorting](#topological-sorting)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
+
 
 
 
@@ -68,7 +73,8 @@ A relation $R$ on a set $A$ is called **transitive** if $$\forall a, b, c\in A, 
 Let $R$ be a relation from $A$ to $B$, and $S$ a relation from $B$ to $C$, then the **composite** of $R$ and $S$ is
 $$S \circ R = \{ (a, c) | (a, b) \in R, (b, c) \in S \}$$
 
-The powers $R^n, n = 1, 2, 3, …$ , are defined recursively by $$R^1 = R, \quad R^{n+1} = R^n \circ R $$
+The powers $R^n, n = 1, 2, 3, …$ , are defined recursively by 
+$$R^1 = R, \quad R^{n+1} = R^n \circ R $$
 
 **Theorem 1**
 A relation $R$ on a set $A$ is transitive if and only if $R^n \subseteq R$ for $n = 1, 2, 3, …$
@@ -201,6 +207,41 @@ W_0 := M_R \\
 \qquad \qquad \qquad w^{[k]}_{ij} = w^{[k−1]}_{ij} ∨ (w^{[k−1]}_{ik} ∧ w^{[k−1]}_{kj} ) \\
 \text{return } W_n \; \{W_n \text{ is the zero–one matrix for } R^∗\}$
 
+> $W_0 = \begin{bmatrix}
+  0 & 1 & 1 & 0 & 1 \\
+  1 & 0 & 1 & 0 & 0 \\
+  1 & 1 & 0 & 0 & 0 \\
+  1 & 0 & 0 & 0 & 0 \\
+  0 & 0 & 0 & 1 & 0 \\
+\end{bmatrix}, W_1 = \begin{bmatrix}
+  0 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 0 & 1 \\
+  0 & 0 & 0 & 1 & 0 \\
+\end{bmatrix},$
+> 
+> $W_2 = \begin{bmatrix}
+  1 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 0 & 1 \\
+  0 & 0 & 0 & 1 & 0 \\
+\end{bmatrix} = W_3, W_4 = \begin{bmatrix}
+  1 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 0 & 1 \\
+  1 & 1 & 1 & 1 & 1 \\
+\end{bmatrix},$
+> 
+> $W_5 = \begin{bmatrix}
+  1 & 1 & 1 & 1 & 1 \\
+  1 & 1 & 1 & 1 & 1 \\
+  1 & 1 & 1 & 1 & 1 \\
+  1 & 1 & 1 & 1 & 1 \\
+  1 & 1 & 1 & 1 & 1 \\
+\end{bmatrix}$
 
 
 

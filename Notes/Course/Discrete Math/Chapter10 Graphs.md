@@ -1,4 +1,7 @@
-<!-- TOC -->
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [Graphs](#graphs)
   - [10.1 Graphs and Graph Models](#101-graphs-and-graph-models)
@@ -32,7 +35,11 @@
     - [Augmenting Path Algorithm](#augmenting-path-algorithm)
     - [Ford-Fulkerson Algorithm](#ford-fulkerson-algorithm)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
+
+
+
 
 
 
@@ -380,10 +387,10 @@ A graph is nonplanar if and only if it contains a subgraph homeomorphic to $K_{3
 <br>
 
 ### 10.8 Graph Coloring
-**Definition1**
+**Definition 1**
 A **coloring** of a simple graph is the assignment of a color to each vertex of the graph so that no two adjacent vertices are assigned the same color.
 
-**Definition2**
+**Definition 2**
 The **chromatic number** of a graph is the least number of colors needed for a coloring of this graph, which is denoted by $\chi(G)$.
 
 $$
@@ -427,7 +434,7 @@ $$
 \forall v\in V, \underset{e \text{ in to } v}{\sum}f(e) = \underset{e \text{ out of } v}{\sum}f(e) \\~\\
 $$
 
-The value of the flow $f$ is $$v(f) = \underset{e \text{ out of } S}{\sum}f(e)$$
+The value of the flow $f$ is $$v(f) = \underset{e \text{ out of } s}{\sum}f(e)$$
 
 The max flow problem is to find the s-t flow of maximum value.
 
@@ -469,7 +476,7 @@ An augmenting path is a path with $v_1 = s,  v_k = t$, and for each edge $e$ in 
 
 $
 \textbf{procedure } Augement \; (f : \text{flow}, P : \text{augment path}) \\
-b = \underset{e\in P}{\max}\; c_f(e) \\
+b = \underset{e\in P}{\min}\; c_f(e) \\
 \text{for each } e \in P \\
 \qquad \text{if } e \in E \text{ then } f(e) = f(e) + b \\
 \qquad \text{else } f(e^R) = f(e^R) - b \\
