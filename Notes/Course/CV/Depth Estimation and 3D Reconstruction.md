@@ -1,4 +1,7 @@
-<!-- TOC -->
+
+<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
+
+<!-- code_chunk_output -->
 
 - [Depth Estimation](#depth-estimation)
   - [Stereo Matching](#stereo-matching)
@@ -6,7 +9,7 @@
     - [Stereo Matching Algorithms](#stereo-matching-algorithms)
       - [Window-based Stereo Matching](#window-based-stereo-matching)
       - [MRF-based Stereo Matching](#mrf-based-stereo-matching)
-  - [Multi-view Stereo](#multi-view-stereo)
+  - [Multi-View Stereo (MVS)](#multi-view-stereo-mvs)
     - [Plane-Sweep](#plane-sweep)
     - [Patch Match](#patch-match)
 - [3D Reconstruction](#3d-reconstruction)
@@ -15,7 +18,9 @@
     - [Poisson Reconstruction](#poisson-reconstruction)
     - [Marching Cubes](#marching-cubes)
 
-<!-- /TOC -->
+<!-- /code_chunk_output -->
+
+
 
 
 
@@ -29,15 +34,24 @@ For a given stereo camera, suppose the relative pose of the two lenses is given,
 
 So here comes stereo matching, which helps match all pixels efficiently.
 
+<br>
+
 #### Stereo Image Rectification
-For every point, set $X, X_L$ and $X_R$.
-Given $X_L$, then we can get the equation of the epipolar line on the right image plane: 
+For every point, set $X_L$ and $X_R$.
+Given $X_L$, then the equation of the epipolar line on the right image plane is
 $$
 X_L^T F X_R = 0 \\~\\
 F = K_L^{{-1}^T} E K_R^{-1} = K_L^{{-1}^T} T_XR K_R^{-1} 
 $$
 
-When image planes of cameras are parallel to each other and to the baseline, $$R = E$$
+When image planes of cameras are parallel to each other and to the baseline, 
+$$
+R = \begin{bmatrix}
+  1 & 0 & 0 \\
+  0 & 1 & 0 \\
+  0 & 0 & 1 \\
+\end{bmatrix}
+$$
 
 When camera centers are at same height, 
 $$
@@ -68,7 +82,7 @@ $$
 
 Therefore, epipolar lines fall along the horizontal scan lines of the images at this time.
 
-Set $D = x_2 - x_1$ to be the disparity of pixel $(x_1, y_1)$, and $B$ to be the length of baseline, then we can get the depth $$z = f \cdot \frac{B}{D}$$
+Let $D = x_2 - x_1$ be the disparity of pixel $(x_1, y_1)$, and $B$ to be the length of baseline, then we can get the depth $$z = f \cdot \frac{B}{D}$$
 
 When these conditions are not satisfied, we can simply use two homographies to reproject the image planes onto a common plane parallel to the line between camera centers.
 
@@ -83,9 +97,8 @@ To get the dissimilarity between two points, we can calculate the matching score
 There are many kinds of matching scores, such as:
 - SSD (Sum of Squared Differences): $$\sum_{x, y}|W_1(x,y) - W_2(x,y)|^2 $$
 - SAD (Sum of Absolute Differences): $$\sum_{x, y}|W_1(x,y) - W_2(x,y)| $$
-- ZNCC (Zero-mean Normalized Cross Correlation): $$ \frac{\sum_{x,y}(W_1(x, y) - \overline{W_1})(W_2(x, y) - \overline{W_2})}{\sigma_{W_1}\sigma_{W_2}} $$
-  where $\displaystyle \overline{W_i} = \frac{1}{n}\sum_{x,y}W_i$, $\displaystyle \sigma_{W_i} = \sqrt{\frac{1}{n} \sum_{x,y}(W_i - \overline{W_i})^2} $.
-  This can reduce the influence of brightness.
+- ZNCC (Zero-mean Normalized Cross Correlation): $$ \frac{\sum_{x,y}(W_1(x, y) - \overline{W}_1)(W_2(x, y) - \overline{W}_2)}{\sigma_{W_1}\sigma_{W_2}} $$
+  where $\displaystyle \overline{W}_i = \frac{1}{n}\sum_{x,y}W_i$, $\displaystyle \sigma_{W_i} = \sqrt{\frac{1}{n} \sum_{x,y}(W_i - \overline{W}_i)^2} $. This can reduce the influence of brightness.
 
 For smaller window, there will be more detail, but also more noise.
 For larger window, there will be less noise, but also less detail.
@@ -97,12 +110,9 @@ Define the energy function as
 $$E(d) = E_d(d) + \lambda E_s(d) $$
 
 where $d$ is the disparity of each pixel.
-<br>
 
-The match cost is $\displaystyle E_d(d) = \sum_{(x,y)\in I} C(x, y, d(x, y)) $, where $C$ can be SSD, SAD, ZNCC, etc.
-<br>
-
-The smoothness cost is $\displaystyle E_s(d) = \sum_{(p,q)\in \epsilon} V(d_p, d_q) $, where $\epsilon$ is the set of neighboring pixels, $V$ can be $L_1$ distance $$V(d_p, d_q) = |d_p - d_q| $$
+The match cost is $E_d(d) = \sum_{(x,y)\in I} C(x, y, d(x, y)) $, where $C$ can be SSD, SAD, ZNCC, etc.
+The smoothness cost is $E_s(d) = \sum_{(p,q)\in \epsilon} V(d_p, d_q) $, where $\epsilon$ is the set of neighboring pixels, $V$ can be $L_1$ distance $$V(d_p, d_q) = |d_p - d_q| $$
 
 or "Potts model" 
 $$
@@ -122,19 +132,24 @@ Then we can get a better match by minimizing the global cost, i.e., performing d
 
 
 
+
 <br>
 
-### Multi-view Stereo
+### Multi-View Stereo (MVS)
 To get a proper depth value of a point from multiple reference images, the basic procedures are
 1. Assume a depth value and get the 3D coordinates.
 2. Project the coordinates to other cameras and compute the total error.
 3. For each point in the reference image, compute the error for each depth value, and find the depth value that gives the smallest error.
+
+<br>
 
 #### Plane-Sweep
 This method is to compute the errors of all pixels at all depths efficiently. Its steps are
 1. Assume the same depth for all pixels in the reference image, then we can get sweep family of planes parallel to the reference camera image plane.
 2. Project each plane to neighbors views via homography and compute errors, then we can get a cost volume which is a 3D array that stores the errors of all pixels at all depths.
 3. Get depth map from the cost volume.
+
+<br>
 
 #### Patch Match
 It's an efficient algorithm for solving correspondence problems. Its steps are
