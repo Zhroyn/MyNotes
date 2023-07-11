@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Optimization](#optimization)
   - [Model Fitting](#model-fitting)
   - [Numerical Methods](#numerical-methods)
@@ -16,7 +12,6 @@
     - [Graph Cut](#graph-cut)
     - [Segmentation by MRF](#segmentation-by-mrf)
 
-<!-- /code_chunk_output -->
 
 
 

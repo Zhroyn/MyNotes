@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Structure from Motion](#structure-from-motion)
   - [Camera Model](#camera-model)
     - [World-to-Camera Transformation](#world-to-camera-transformation)
@@ -18,7 +14,6 @@
       - [Linear Solution](#linear-solution)
       - [Non-Linear Solution](#non-linear-solution)
 
-<!-- /code_chunk_output -->
 
 
 

@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Deep Learning](#deep-learning)
   - [Linear Classfier](#linear-classfier)
   - [Neural Network](#neural-network)
@@ -20,7 +16,6 @@
     - [Data Augmentation](#data-augmentation)
     - [Batch Normalization](#batch-normalization)
 
-<!-- /code_chunk_output -->
 
 
 

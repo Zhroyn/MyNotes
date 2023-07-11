@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Depth Estimation](#depth-estimation)
   - [Stereo Matching](#stereo-matching)
     - [Stereo Image Rectification](#stereo-image-rectification)
@@ -18,7 +14,6 @@
     - [Poisson Reconstruction](#poisson-reconstruction)
     - [Marching Cubes](#marching-cubes)
 
-<!-- /code_chunk_output -->
 
 
 

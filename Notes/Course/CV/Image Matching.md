@@ -1,4 +1,3 @@
-<!-- TOC -->
 
 - [Image Matching](#image-matching)
   - [Detection](#detection)
@@ -11,7 +10,7 @@
     - [SIFT Descriptor](#sift-descriptor)
   - [Matching](#matching)
 
-<!-- /TOC -->
+
 
 
 

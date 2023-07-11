@@ -1,11 +1,9 @@
-<!-- TOC -->
 
 - [Image Stitching](#image-stitching)
   - [Affine Transformation](#affine-transformation)
   - [Projective Transformation](#projective-transformation)
   - [RANSAC](#ransac)
 
-<!-- /TOC -->
 
 
 

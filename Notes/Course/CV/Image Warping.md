@@ -1,11 +1,9 @@
-<!-- TOC -->
 
 - [Image Warping](#image-warping)
   - [Affine Transformation](#affine-transformation)
   - [Projective Transformation (Homography)](#projective-transformation-homography)
   - [Implement](#implement)
 
-<!-- /TOC -->
 
 
 
