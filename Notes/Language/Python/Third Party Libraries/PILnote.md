@@ -2,24 +2,17 @@
 <!-- TOC -->
 
 - [Image](#image)
-  - [Attributes](#attributes)
-  - [Methods](#methods)
-    - [Convert](#convert)
-    - [Split](#split)
-    - [Cut, Copy and Paste](#cut-copy-and-paste)
-    - [Resize](#resize)
-    - [Rotate](#rotate)
-    - [Pixel](#pixel)
-    - [Alpha](#alpha)
-    - [Filter](#filter)
-  - [Functions](#functions)
+  - [图像属性](#图像属性)
+  - [基本 I/O](#基本-io)
+  - [颜色转换](#颜色转换)
+  - [剪切粘贴](#剪切粘贴)
+  - [几何变换](#几何变换)
+  - [像素操作](#像素操作)
+  - [创建图像](#创建图像)
 - [ImageFilter](#imagefilter)
   - [MultibandFilter](#multibandfilter)
-    - [GaussianBlur](#gaussianblur)
-    - [BoxBlur](#boxblur)
     - [BuiltinFilter](#builtinfilter)
 - [ImageEnhance](#imageenhance)
-- [Shorthand](#shorthand)
 
 <!-- /TOC -->
 
@@ -29,237 +22,112 @@
 
 
 ### Image
-#### Attributes
-```py
->>> from PIL import Image
->>> im = Image.open('a.jpg')
->>> print(im.filename)
-a.jpg
->>> print(im.format)
-JPEG
->>> print(im.mode)
-RGB
->>> print(im.size)
-(2894, 4093)
->>> print(im.width)
-2894
->>> print(im.height)
-4093
-```
+#### 图像属性
+- `im.filename` 图像名
+- `im.format` 图像格式，如 JPEG, PNG
+- `im.size` 图像尺寸，形式为(宽, 高)
+- `im.width` 图像宽度
+- `im.height` 图像高度
+- `im.mode` 颜色模式
+    - `1` 1-bit 黑白
+    - `L` 8-bit 灰度
+    - `P` 8-bit 256色
+    - `RGB` 24-bit Red, Green, Blue
+    - `RGBA` 32-bit Red, Green, Blue, Alpha
+    - `CMYK` 32-bit Cyan, Magenta, Yellow, Key plate
+    - `YCbCr` 24-bit Luminance, Blue, Red
 
-#### Methods
-```py
-show(title=None)
-    Displays this image.
-load()
-    Allocates storage for the image and loads the pixel data
+<br>
 
-save(fp, format=None, **params)
-    Saves this image under the given filename.  If no format is
-    specified, the format to use is determined from the filename
-    extension, if possible.
-close()
-    Closes the file pointer, if possible.
-```
-##### Convert
-```py
-convert(mode=None, matrix=None, ...)
-    Returns a converted copy of this image.
-    "1" : 1-bit black and white
-    "L" : 8-bit grey
-    "P" : 8-bit color
-    "RGB" : 24-bit Red, Green, Blue
-    "RGBA" : 32-bit Red, Green, Blue, Alpha
-    "CMYK" : 32-bit Cyan, Magenta, Yellow, Key plate
-    "YCbCr" : 24-bit Luminance, Blue, Red
-```
+#### 基本 I/O
+- `Image.open(fp, mode='r', formats=None)` 打开图像
+- `im.save(fp, format=None)` 保存图片，格式默认由后缀名决定
+- `im.close()` 关闭图片
+<br>
 
-##### Split
-```py
-split()
-    Split this image into individual bands. This method returns a
-    tuple of individual image bands from an image.
-getchannel(channel)
-    Returns an image containing a single channel of the source image.
-    
-    :param channel: What channel to return. Could be index
-    (0 for "R" channel of "RGB") or channel name
-    ("A" for alpha channel of "RGBA").
-    :returns: An image in "L" mode.
+- `im.show()` 展示图片
+- `im.load()` 加载图片，返回可索引的对象
 
->>> r, g, b = im1.split()
->>> im2 = Image.merge('RGB', (b, g, r))
-```
+<br>
 
-##### Cut, Copy and Paste
-```py
-crop(box=None)
-    Returns a rectangular region from this image. The box is a
-    4-tuple defining the left, upper, right, and lower pixel
-    coordinate.
-copy(self)
-    Copies this image.
-paste(im, box=None, mask=None)
-    Pastes another image into this image.
-    :param im: Source image or pixel value (integer or tuple). Instead 
-        of an image, the source can be a integer or tuple containing 
-        pixel values.The method then fills the region with the given 
-        color.
-    :param box: The box argument is either a 2-tuple giving the upper 
-        left corner, a 4-tuple defining the left, upper, right, and 
-        lower pixel coordinate, or None (same as (0, 0)). If a 4-tuple 
-        is given, the size of the pasted image must  match the size of 
-        the region.
-    :param mask: If a mask is given, this method updates only the 
-        regions indicated by the mask. You can use either "1", "L", 
-        "LA", "RGBA" or "RGBa" images (if present, the alpha band is 
-        used as mask). If the modes don't match, the pasted image is 
-        converted to the mode of this image.
-        Where the mask is 255, the given image is copied as is. Where 
-        the mask is 0, the current value is preserved. Intermediate 
-        values will mix the two images together, including their alpha 
-        channels if they have them.
+#### 颜色转换
+- `im.convert(mode=None, ...)` 转换颜色模式，返回副本
+- `im.split()` 分离图像通道
+  - `r, g, b = im.split()`
+- `im.getchannel(channel)` 得到图像单个通道
+  - `channel` 索引或通道名
+- `im.putalpha(alpha)` 添加或替换透明度通道
+  - `alpha` 图像或整数。若为图像，则必须尺寸相同，颜色模式为 1 或 L
+<br>
 
->>> box = (100, 100, 300, 300)
->>> region = im.crop(box)
->>> im.paste(region, box)
-```
+- `Image.merge(mode, bands)` 混合通道
+  - `Image.merge("RGB", (b, g, r))`
 
-##### Resize
-```py
-resize(size, resample=None, box=None, reducing_gap=None)
-    Returns a resized copy of this image.
-    :param size: The requested size in pixels, as a 2-tuple:
-       (width, height).
-    :param resample: An optional resampling filter.
-    :param box: An optional 4-tuple of floats providing the source image region 
-       to be scaled.
-       The values must be within (0, 0, width, height) rectangle.
-       If omitted or None, the entire source is used.
+<br>
 
-```
+#### 剪切粘贴
+- `im.copy()` 返回图片副本
+- `im.crop(box=None)` 裁剪出矩形区域
+  - `box` 四元元组，形式为 (左, 上, 右, 下)
+- `im.paste(im, box=None, mask=None)` 将另一张图像粘贴至此图像，不返回副本
+  - `im` 图像或像素值
+  - `box` 包含左上角坐标的二元元组，或包含左上右下边界的四元元组，默认为图像左上角，尺寸应与被粘贴图像一致
+  - `mask` 掩膜尺寸应与被粘贴图像一致，颜色模式可为 1, L, RGBA 等，其中后者使用透明度通道
+    - 若掩膜值为 0，则原图像像素值不变
+    - 若掩膜值为 255，则采用被粘贴图像的像素值
+    - 若掩膜值介于两者之间，则采用原图像与被粘贴图像混合的像素值
 
-##### Rotate
-```py
-transpose(method)
-    Returns a flipped or rotated copy of this image.
-    :param method: :py:data:"Transpose.FLIP_LEFT_RIGHT",
-      :py:data:"Transpose.FLIP_TOP_BOTTOM", :py:data:"Transpose.ROTATE_90",
-      :py:data:"Transpose.ROTATE_180", :py:data:"Transpose.ROTATE_270",
-      :py:data:"Transpose.TRANSPOSE" or :py:data:"Transpose.TRANSVERSE".
-    If rotated, it will rotate counter clockwise around its centre.
+<br>
 
-rotate(angle, ..., expand=0, center=None, translate=None, fillcolor=None)
-    Returns a rotated copy of this image. This method returns a
-    copy of this image, rotated the given number of degrees counter
-    clockwise around its centre.
-    :param expand: Optional expansion flag.  If true, expands the output
-       image to make it large enough to hold the entire rotated image.
-    :param center: Optional center of rotation (a 2-tuple).  Origin is
-       the upper left corner.  Default is the center of the image.
-    :param translate: An optional post-rotate translation (a 2-tuple).
-    :param fillcolor: An optional color for area outside the rotated image.
+#### 几何变换
+- `im.resize(size, resample=None, box=None, reducing_gap=None)` 改变尺寸，返回副本
+  - `size` 图像尺寸，形式为 (宽, 高)
+  - `resample` 一般默认为 `Image.BICUBIC`
+  - `box` 被改变尺寸的区域，形式为 (左, 上, 右, 下)，可以用浮点数
+<br>
 
->>> im = im.transpose(Image.Transpose.ROTATE_90)
->>> im = im.rotate(-10, expand=True, translate=(100, 100), fillcolor="white")
-```
+- `im.transpose(method)` 翻转或旋转图像，返回副本
+  - `Image.Transpose.FLIP_LEFT_RIGHT` 左右翻转
+  - `Image.Transpose.FLIP_TOP_BOTTOM` 上下翻转
+  - `Image.Transpose.ROTATE_90` 逆时针旋转 90 度
+  - `Image.Transpose.ROTATE_180` 逆时针旋转 180 度
+  - `Image.Transpose.ROTATE_270` 逆时针旋转 270 度
+  - `Image.Transpose.TRANSPOSE` 转置
+  - `Image.Transpose.TRANSVERSE` 转置后旋转 180 度
+<br>
 
-##### Pixel
-```py
-getpixel(xy)
-    Returns the pixel value at a given position.
-putpixel(xy, value)
-    Modifies the pixel at the given position.
-point(lut, mode=None)
-    Map this image through a lookup table or function.
-    :param lut: A lookup table, containing 256 (or 65536 if
-       self.mode=="I" and mode == "L") values per band in the
-       image. A function can be used instead, it should take a
-       single argument. The function is called once for each
-       possible pixel value, and the resulting table is applied to
-       all bands of the image.
+- `im.rotate(angle, resample=<Resampling.NEAREST: 0>, expand=0, center=None, translate=None, fillcolor=None)` 逆时针旋转图像，返回副本
+  - `angle` 旋转角度，可以为负数或浮点数
+  - `expand` 若为 True，会扩张旋转后的图像
+  - `center` 默认为图像中心
+  - `translate` 在旋转之后进行平移，形式为 (横轴, 纵轴)
+  - `fillcolor` 填充颜色。若为整数，则为第一个通道的值，其余通道置零；若为元组，则大小应与通道数相同
 
->>> im.mode
-'RGB'
->>> new = im.point(lambda x: 0 if x < 128 else 255)
-```
+<br>
 
-##### Alpha
-```py
-putalpha(alpha)
-    Adds or replaces the alpha layer in this image.  If the image
-    does not have an alpha layer, it's converted to "LA" or "RGBA".
-    The new layer must be either "L" or "1".
-    :param alpha: The new alpha layer.  This can either be an "L" or 
-        "1" image having the same size as this image, or an integer or 
-        other color value.
-```
+#### 像素操作
+- `im.getpixel(xy)` 获得像素值
+  - `xy` 横轴为 x，纵轴为 y，形式为 (x, y)
+- `im.putpixel(xy, value)` 设置像素值
+<br>
 
-##### Filter
-```py
-filter(filter)
-    Filters this image using the given filter.  For a list of
-    available filters, see the :py:mod:`~PIL.ImageFilter` module.
+- `im.point(lut, mode=None)` 映射图像，返回副本
+  - `lut` 查找表或函数。若为函数，则输入一个像素值，返回一个像素值
+  - `im.point(lambda x: 0 if x < 128 else 255)`
+- `Image.eval(im, *args)` 对每个像素值应用一个函数
+  - `Image.eval(im, lambda x: 0 if x < 128 else 255)`
+<br>
 
-    :param filter: Filter kernel.
-    :returns: An :py:class:`~PIL.Image.Image` object.
-```
+- `im.filter(filter)` 对图像进行滤波，返回副本
+  - `im.filter(ImageFilter.GaussianBlur)`
 
+<br>
 
-
-
-
-
-
-
-#### Functions
-```py
-open(fp, mode='r', formats=None)
-    Opens and identifies the given image file.
-
-blend(im1, im2, alpha)
-    Creates a new image by interpolating between two input images, using
-    a constant alpha::
-
-        out = image1 * (1.0 - alpha) + image2 * alpha
-
-    :param im1: The first image.
-    :param im2: The second image.  Must have the same mode and size as
-       the first image.
-    :param alpha: The interpolation alpha factor.  If alpha is 0.0, a
-       copy of the first image is returned. If alpha is 1.0, a copy of
-       the second image is returned. There are no restrictions on the
-       alpha value. If necessary, the result is clipped to fit into
-       the allowed output range.
-merge(mode, bands)
-    Merge a set of single band images into a new multiband image.
-    
-    :param mode: The mode to use for the output image. See:
-        :ref:`concept-modes`.
-    :param bands: A sequence containing one single-band image for
-        each band in the output image.  All bands must have the
-        same size.
-new(mode, size, color=0)
-    Creates a new image with the given mode and size.
-    :param mode: The mode to use for the new image. See:
-    :param size: A 2-tuple, containing (width, height) in pixels.
-    :param color: What color to use for the image.  Default is black.
-       If given, this should be a single integer or floating point value
-       for single-band modes, and a tuple for multi-band modes (one value
-       per band).  When creating RGB images, you can also use color
-       strings as supported by the ImageColor module.  If the color is
-       None, the image is not initialised.
-
-eval(image, *args)
-    Applies the function (which should take one argument) to each pixel
-    in the given image. If the image has more than one band, the same
-    function is applied to each band. Note that the function is
-    evaluated once for each possible pixel value, so you cannot use
-    random components or other generators.
-    
-    :param image: The input image.
-    :param function: A function object, taking one integer argument.
-```
+#### 创建图像
+- `Image.new(mode, size, color=0)`
+- `Image.blend(im1, im2, alpha)` 融合两张图像
+  - 两张图像尺寸和颜色模式应相同
+  - 新的图像 = image1 * (1.0 - alpha) + image2 * alpha
 
 
 
@@ -269,89 +137,37 @@ eval(image, *args)
 
 
 
-
-
-
+<br>
 
 ### ImageFilter
-
 #### MultibandFilter
-##### GaussianBlur
-```py
-class GaussianBlur(MultibandFilter):
-    """Blurs the image with a sequence of extended box filters, which
-    approximates a Gaussian kernel.
+- `ImageFilter.GaussianBlur(radius=2)` 高斯滤波
+- `ImageFilter.BoxBlur(radius)` 方框滤波，取平均值
+<br>
 
-    :param radius: Standard deviation of the Gaussian kernel.
-    """
-
-    name = "GaussianBlur"
-
-    def __init__(self, radius=2):
-        self.radius = radius
-
-    def filter(self, image):
-        return image.gaussian_blur(self.radius)
-```
-
-##### BoxBlur
-```py
-class BoxBlur(MultibandFilter):
-    """Blurs the image by setting each pixel to the average value of the pixels
-    in a square box extending radius pixels in each direction.
-    Supports float radius of arbitrary size. Uses an optimized implementation
-    which runs in linear time relative to the size of the image
-    for any radius value.
-
-    :param radius: Size of the box in one direction. Radius 0 does not blur,
-                   returns an identical image. Radius 1 takes 1 pixel
-                   in each direction, i.e. 9 pixels in total.
-    """
-
-    name = "BoxBlur"
-
-    def __init__(self, radius):
-        self.radius = radius
-
-    def filter(self, image):
-        return image.box_blur(self.radius)
-```
+- 当 radius = 0 时，滤波不起作用
+- 当 radius = 1 时，卷积核大小为 3x3
+<br>
 
 ##### BuiltinFilter
 ```py
-def filter(self, image):
-    if image.mode == "P":
-        raise ValueError("cannot filter palette images")
-    return image.filter(*self.filterargs)
-
 class Kernel(BuiltinFilter):
-    """
-    Create a convolution kernel.  The current version only
-    supports 3x3 and 5x5 integer and floating point kernels.
-
-    In the current version, kernels can only be applied to
-    "L" and "RGB" images.
-
-    :param size: Kernel size, given as (width, height). In the current
-                    version, this must be (3,3) or (5,5).
-    :param kernel: A sequence containing kernel weights.
-    :param scale: Scale factor. If given, the result for each pixel is
-                    divided by this value.  The default is the sum of the
-                    kernel weights.
-    :param offset: Offset. If given, this value is added to the result,
-                    after it has been divided by the scale factor.
-    """
-
     name = "Kernel"
 
     def __init__(self, size, kernel, scale=None, offset=0):
         if scale is None:
-            # default scale is sum of kernel
             scale = functools.reduce(lambda a, b: a + b, kernel)
         if size[0] * size[1] != len(kernel):
             raise ValueError("not enough coefficients in kernel")
         self.filterargs = size, scale, offset, kernel
 ```
+- `size` 二元数组，形式为 (宽, 高)，宽高可以不同
+- `kelnel` 卷积核，展开为一维形式，支持整数或浮点数
+- `scale` 作为结果像素值的除数，默认为卷积核之和
+- `offset` 在除完以后作为偏移量，默认为 0
+
+<br>
+
 **BLUR**
 ```py
 filterargs = (5, 5), 16, 0, (
@@ -442,6 +258,8 @@ filterargs = (5, 5), 100, 0, (
 
 
 
+<br>
+
 ### ImageEnhance
 ```py
 class _Enhance:
@@ -497,27 +315,6 @@ class Sharpness(_Enhance):
             self.degenerate.putalpha(image.getchannel("A"))
 ```
 
-
-
-
-
-
-### Shorthand
-**Image Filter**
-- `ImageFilter.GaussianBlur` or `ImageFilter.GaussianBlur()` or `ImageFilter.GaussianBlur(radius)` The default is 2.
-- `ImageFilter.BoxBlur(radius)` Radius 0 does not blur, returns an identical image. Radius 1 takes 1 pixel in each direction, i.e. 9 pixels in total.
-- `ImageFilter.Kernel(size, kernel, scale=None, offset=0)` The size must be `(3,3)` or `(5,5)`.
-- `ImageFilter.BLUR` or `ImageFilter.BLUR()`
-- `ImageFilter.CONTOUR` Show outline on a white background.
-- `ImageFilter.DETAIL`
-- `ImageFilter.EDGE_ENHANCE`
-- `ImageFilter.EDGE_ENHANCE_MORE`
-- `ImageFilter.EMBOSS` Convert to a concave-convex image.
-- `ImageFilter.FIND_EDGES` Show edges in white on a black background.
-- `ImageFilter.SMOOTH`
-- `ImageFilter.SMOOTH_MORE`
-
-**Image Enhance**
 ```py
 enh_col = ImageEnhance.Color(image)
 im = enh_col.enhance(color)
@@ -531,3 +328,10 @@ im = enh_bri.enhance(brightness)
 enh_sha = ImageEnhance.Sharpness(image)
 im = enh_sha.enhance(sharpness)
 ```
+
+
+
+
+
+
+
