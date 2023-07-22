@@ -71,8 +71,8 @@ def main():
             (args.min_num_matches,))
         for row in cursor:
             pair_id = row[0]
-            inlier_matches = np.fromstring(row[1],
-                                           dtype=np.uint32).reshape(-1, 2) # type: ignore
+            inlier_matches = np.frombuffer(row[1],
+                                           dtype=np.uint32).reshape(-1, 2)
             image_id1, image_id2 = pair_id_to_image_ids(pair_id)
             image_name1 = images[image_id1]
             image_name2 = images[image_id2]

@@ -37,8 +37,8 @@ import argparse
 import sqlite3
 import shutil
 import gzip
+import struct
 import numpy as np
-
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -46,7 +46,7 @@ def parse_args():
     parser.add_argument("--image_path", required=True)
     parser.add_argument("--output_path", required=True)
     parser.add_argument("--min_num_matches", type=int, default=15)
-    parser.add_argument("--binary_feature_files", type=bool, default=True)
+    parser.add_argument("--binary_feature_files", type=bool, default=False)
     args = parser.parse_args()
     return args
 
@@ -72,7 +72,7 @@ def main():
     cursor.execute("SELECT camera_id, params FROM cameras;")
     for row in cursor:
         camera_id = row[0]
-        params = np.fromstring(row[1], dtype=np.double)
+        params = np.frombuffer(row[1], dtype=np.double)
         cameras[camera_id] = params
 
     images = {}
@@ -93,7 +93,7 @@ def main():
     sift_version_v4 = 808334422
     sift_eof_marker = 1179600383
 
-    for image_id, (image_idx, image_name) in images.iteritems():
+    for image_id, (image_idx, image_name) in images.items():
         print("Exporting key file for", image_name)
         base_name, ext = os.path.splitext(image_name)
         key_file_name = os.path.join(args.output_path, base_name + ".sift")
@@ -107,11 +107,11 @@ def main():
             keypoints = np.zeros((0, 6), dtype=np.float32)
             descriptors = np.zeros((0, 128), dtype=np.uint8)
         else:
-            keypoints = np.fromstring(row[0], dtype=np.float32).reshape(-1, 6)
+            keypoints = np.frombuffer(row[0], dtype=np.float32).reshape(-1, 6)
             cursor.execute("SELECT data FROM descriptors WHERE image_id=?;",
                            (image_id,))
             row = next(cursor)
-            descriptors = np.fromstring(row[0], dtype=np.uint8).reshape(-1, 128)
+            descriptors = np.frombuffer(row[0], dtype=np.uint8).reshape(-1, 128)
 
         if args.binary_feature_files:
             with open(key_file_name, "wb") as fid:
@@ -139,7 +139,7 @@ def main():
                        "WHERE rows>=?;", (args.min_num_matches,))
         for row in cursor:
             pair_id = row[0]
-            inlier_matches = np.fromstring(row[1],
+            inlier_matches = np.frombuffer(row[1],
                                            dtype=np.uint32).reshape(-1, 2)
             image_id1, image_id2 = pair_id_to_image_ids(pair_id)
             image_name1 = images[image_id1][1]
