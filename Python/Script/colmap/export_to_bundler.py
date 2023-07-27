@@ -120,7 +120,7 @@ def main():
 
         with open(key_file_name, "rb") as fid_in:
             with gzip.open(key_file_name + ".gz", "wb") as fid_out:
-                fid_out.writelines(fid_in)
+                fid_out.writelines(fid_in) # type: ignore
 
         os.remove(key_file_name)
 
