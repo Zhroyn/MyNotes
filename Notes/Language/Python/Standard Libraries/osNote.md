@@ -1,169 +1,123 @@
 
-<!-- TOC -->
-
-- [Datas](#datas)
-- [Functions](#functions)
-  - [Paths](#paths)
-  - [Files](#files)
-  - [Pipes](#pipes)
-- [Modules](#modules)
-  - [os.path](#ospath)
-
-<!-- /TOC -->
-
+- [属性](#属性)
+- [更改与查看路径](#更改与查看路径)
+- [列出文件](#列出文件)
+- [创建与删除文件夹](#创建与删除文件夹)
+- [删除与重命名文件](#删除与重命名文件)
+- [创建链接](#创建链接)
+- [执行命令](#执行命令)
+- [切割与合并路径](#切割与合并路径)
+- [判断文件与文件夹属性](#判断文件与文件夹属性)
+- [查看与修改文件权限](#查看与修改文件权限)
 
 
 
-### Datas
-```py
-os.path     # either posixpath or ntpath
-os.name     # either 'posix' or 'nt'
-os.environ  # environment varibles
-
-os.curdir   # a string representing the current directory (always '.')
-os.pardir   # a string representing the parent directory (always '..')
-
-os.sep      # the (or a most common) pathname separator ('/' or '\\')
-os.extsep   # the extension separator (always '.')
-os.altsep   # the alternate pathname separator (None or '/')
-os.pathsep  # the component separator used in $PATH etc (maybe ';')
-os.linesep  # the line separator in text files ('\r' or '\n' or '\r\n')
-
-os.defpath  # the default search path for executables ('.;C:\bin', etc.)
-os.devnull  # the file path of the null device ('nul', etc.)
-```
-
-### Functions
-#### Paths
-```py
-# Change the current working directory to the specified path.
-chdir(path)
-
-# Return a unicode string representing the current working directory.
-getcwd()
-# Return a list containing the names of the files in the directory.
-listdir(path=None)
-If path is None, uses the path='.'.
-# Directory tree generator.
-walk(top, topdown=True, onerror=None, followlinks=False)
-For each directory in the directory tree rooted at top (including top
-itself, but excluding '.' and '..'), yields a 3-tuple
-    dirpath, dirnames, filenames
-
-# Create a directory.
-mkdir(path, mode=511, *, dir_fd=None)
-# Create a leaf directory and all intermediate ones.
-makedirs(name)
 
 
-for root, dirs, files in os.walk('python/Lib/email'):
-    print(root, "consumes ")
-    print(sum(getsize(join(root, name)) for name in files), end=" ")
-    print("bytes in", len(files), "non-directory files")
-    if 'CVS' in dirs:
-        dirs.remove('CVS')  # don't visit CVS directories
-```
-
-#### Files
-```py
-# Remove a file (same as unlink()).
-remove(path, *, dir_fd=None)
-# Remove a directory.
-rmdir(path, *, dir_fd=None)
-# Remove a leaf directory and all empty intermediate ones.
-removedirs(name)
-# Remove a file (same as remove()).
-unlink(path, *, dir_fd=None)
-
-# Rename a file or directory.
-rename(src, dst, *, src_dir_fd=None, dst_dir_fd=None)
-# Create directories as necessary and delete any left empty.
-renames(old, new)
-# Rename a file or directory, overwriting the destination.
-replace(src, dst, *, src_dir_fd=None, dst_dir_fd=None)
-```
-```py
-# Use the real uid/gid to test for access to a path.
-access(path, mode)
-    os.F_OK : Exist
-    os.R_OK : Readable
-    os.W_OK : Writeable
-    os.X_OK : Executable
-
-# Change the access permissions of a file.
-chmod(path, mode)
-    stat.S_IREAD : Read by owner.
-    stat.S_IWRITE : Write by owner.
-    stat.S_IEXEC : Execute by owner.
-    stat.S_IRUSR : Read by owner
-    stat.S_IWUSR : Write by owner.
-    stat.S_IXUSR : Execute by owner.
-    stat.S_IRWXU : Read, write, and execute by owner
-
-    stat.S_IRGRP : Read by group
-    stat.S_IWGRP : Write by group
-    stat.S_IXGRP : Execute by group
-    stat.S_IRWXG : Read, write, and execute by group
-
-    stat.S_IROTH : Read by others
-    stat.S_IWOTH : Write by others
-    stat.S_IXOTH : Execute by others
-    stat.S_IRWXO : Read, write, and execute by others.
+### 属性
+- `os.name` 操作系统的类型，Windows 为 nt，Linux 为 posix
+- `os.environ` 环境变量，返回一个字典
+- `os.sep` 当前平台的路径分隔符，Windows 为 `\\`，Linux 为 `/`
+- `os.extsep` 扩展名分隔符
+- `os.pathsep` 当前平台环境变量不同路径之间的分隔符，Windows 为 `;`，Linux 为 `:`
+- `os.linesep` 当前平台的行分隔符，Windows 为 `\r\n`，Linux 为 `\n`
 
 
-# Create a hard link to a file.
-link(src, dst)
-# Create a symbolic link pointing to src named dst.
-symlink(src, dst, target_is_directory=False)
-```
+<br>
+
+### 更改与查看路径
+- `os.chdir(path)` 改变当前路径
+- `os.getcwd()` 得到当前路径
 
 
-#### Pipes
-```py
-# Return the result of the cmd
-popen(cmd, mode='r', buffering=-1)
+<br>
 
-# Execute the command in a subshell. Return 0, 1, or 2.
-system(command)
-```
+### 列出文件
+- `os.listdir(path=None)` 列出指定路径下的所有文件，默认为当前路径
+- `os.walk(top, topdown=True, onerror=None, followlinks=False)` 返回一个文件树生成器，里面的元素的形式为 (当前路径, 当前路径下的文件夹名列表, 当前路径下的文件名列表)
+
+
+<br>
+
+### 创建与删除文件夹
+- `os.mkdir(path, *, dir_fd=None)` 创建文件夹，若已存在会报错
+- `os.makedirs(name)` 创建文件夹，会连带创建所有的中间文件夹，若已存在会报错
+- `os.rmdir(path, *, dir_fd=None)` 删除文件夹，若文件夹内不为空会报错
+- `os.removedirs(name)` 删除文件夹，并删除所有的中间文件夹，除非中间文件夹内有其他文件，若底层文件夹不为空会报错
+
+
+<br>
+
+### 删除与重命名文件
+- `os.remove(path, *, dir_fd=None)` 删除文件，若不存在会报错
+- `os.rename(src, dst, *, src_dir_fd=None, dst_dir_fd=None)` 重命名文件或文件夹，若目标位置不存在会报错，在 Windows 下若目标路径已存在会报错
+- `os.renames(old, new)` 重命名文件或文件夹，若目标位置不存在会创建路径，在 Windows 下若目标路径已存在会报错
+- `os.replace(src, dst, *, src_dir_fd=None, dst_dir_fd=None)` 重命名文件或文件夹，若目标位置不存在会报错，若目标路径已存在会覆盖
 
 
 
-### Modules
-#### os.path
-```py
-# Return the absolute version of a path.
-abspath(path)
-# Returns the final component of a pathname
-basename(p)
-# Returns the directory component of a pathname
-dirname(p)
+<br>
 
-# Given a sequence of path names, returns the longest common sub-path.
-commonpath(paths)
-# Given a list of pathnames, returns the longest common leading component
-commonprefix(m)
+### 创建链接
+- `os.link(src, dst)` 创建一个硬链接，目标只能是文件
+- `os.symlink(src, dst, target_is_directory=False)` 创建一个符号链接
 
-# Test whether a path exists.  Returns False for broken symbolic links
-exists(path)
-# Test whether a path is absolute
-isabs(s)
-# Return true if the pathname refers to an existing directory.
-isdir(s)
-# Test whether a path is a regular file
-isfile(path)
-# Test whether a path is a symbolic link.
-islink(path)
 
-# Join paths, just simply concatenate
-join(path, *paths)
-# Split a pathname.
-split(p)
-Return tuple (head, tail) where tail is everything after the final slash.
-Either part may be empty.
-# Split the extension from a pathname.
-splitext(p)
-Extension is everything from the last dot to the end, ignoring
-leading dots.  Returns "(root, ext)"; ext may be empty.
-```
+
+<br>
+
+### 执行命令
+- `os.system(command)` 在一个子进程中执行命令并返回状态码，父进程会阻塞
+- `os.popen(cmd, mode='r', buffering=-1)` 创建一个管道并执行命令
+  - `pipe = os.popen("ls"); result = pipe.read()`
+
+
+
+<br>
+
+### 切割与合并路径
+- `os.path.abspath(path)` 返回绝对路径
+- `os.path.basename(path)` 返回最后一个路径分割符之后的内容
+- `os.path.dirname(path)` 返回最后一个路径分割符之前的内容
+- `os.path.split(p)` 返回最后一个路径分割符前后的内容，形式为 (head, tail)
+- `os.path.splitext(p)` 返回扩展名分割符前后的内容，形式为 (root, ext)，扩展名会包含 `.`
+- `os.path.join(path, *paths)` 将多个路径连接在一起，若最后一项为空，结果末尾会加上分隔符
+
+
+
+<br>
+
+### 判断文件与文件夹属性
+- `os.path.exists(path)` 判断是否存在
+- `os.path.isabs(s)` 判断是否是绝对路径
+- `os.path.isdir(s)` 判断是否是文件夹
+- `os.path.isfile(path)` 判断是否是文件
+- `os.path.islink(path)` 判断是否是符号链接
+
+
+
+<br>
+
+### 查看与修改文件权限
+- `os.access(path, mode)` 查看是否存在或查看权限
+  - `os.F_OK` 存在
+  - `os.R_OK` 可读
+  - `os.W_OK` 可写
+  - `os.X_OK` 可执行
+- `os.chmod(path, mode)` 修改文件权限
+  - `stat.S_IREAD` 所有者读权限
+  - `stat.S_IWRITE` 所有者写权限
+  - `stat.S_IEXEC` 所有者执行权限
+  - `stat.S_IRUSR` 所有者读权限
+  - `stat.S_IWUSR` 所有者写权限
+  - `stat.S_IXUSR` 所有者执行权限
+  - `stat.S_IRWXU` 所有者全部权限
+  - `stat.S_IRGRP` 组用户读权限
+  - `stat.S_IWGRP` 组用户写权限
+  - `stat.S_IXGRP` 组用户执行权限
+  - `stat.S_IRWXG` 组用户全部权限
+  - `stat.S_IROTH` 其他用户读权限
+  - `stat.S_IWOTH` 其他用户写权限
+  - `stat.S_IXOTH` 其他用户执行权限
+  - `stat.S_IRWXO` 其他用户全部权限
 
