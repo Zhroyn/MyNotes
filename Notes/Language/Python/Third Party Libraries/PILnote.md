@@ -13,6 +13,7 @@
   - [MultibandFilter](#multibandfilter)
     - [BuiltinFilter](#builtinfilter)
 - [ImageEnhance](#imageenhance)
+- [ImageGrab](#imagegrab)
 
 <!-- /TOC -->
 
@@ -125,10 +126,10 @@
 
 #### 创建图像
 - `Image.new(mode, size, color=0)`
+- `Image.fromarray(obj, mode=None)` 如果传入数组的 shape 为 (x, x, 3)，会当作 RGB 模式处理
 - `Image.blend(im1, im2, alpha)` 融合两张图像
   - 两张图像尺寸和颜色模式应相同
   - 新的图像 = image1 * (1.0 - alpha) + image2 * alpha
-
 
 
 
@@ -330,6 +331,16 @@ im = enh_sha.enhance(sharpness)
 ```
 
 
+
+
+
+
+
+<br>
+
+### ImageGrab
+- `ImageGrab.grab(bbox=None, include_layered_windows=False, all_screens=False, xdisplay=None)` 截取屏幕区域
+  - `bbox` 边界框，形式为 (左, 上, 右, 下)，默认为整个屏幕
 
 
 
