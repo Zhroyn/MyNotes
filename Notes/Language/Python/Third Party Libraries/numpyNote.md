@@ -19,6 +19,7 @@
 - [Random](#random)
   - [Generate random number](#generate-random-number)
   - [Choice Element](#choice-element)
+  - [Shuffle](#shuffle)
 
 <!-- /TOC -->
 
@@ -54,6 +55,14 @@
 
 
 
+
+
+
+
+
+
+
+<br>
 
 ## Array
 ### Attributes
@@ -571,20 +580,26 @@ endpoint : bool, optional
 ### Choice Element
 - `np.random.choice(a, size=None, replace=True, p=None)` Generates a random sample from a given 1-D array
   - `a` : 1-D array-like or int
-    - If an ndarray, a random sample is generated from its elements.
-    - If an int, the random sample is generated as if it were ``np.arange(a)``
+    If an ndarray, a random sample is generated from its elements.
+    If an int, the random sample is generated as if it were ``np.arange(a)``
   - `size` : int or tuple of ints, optional
-    - If the given shape is, e.g., ``(m, n, k)``, then ``m * n * k`` samples are drawn. 
-    - Default is None, in which case a single value is returned.
+    If the given shape is, e.g., ``(m, n, k)``, then ``m * n * k`` samples are drawn. 
+    Default is None, in which case a single value is returned.
   - `replace` : boolean, optional
-    - Whether the sample is with or without replacement.
-    - Default is True, meaning that a value can be selected multiple times.
+    Whether the sample is with or without replacement.
+    Default is True, meaning that a value can be selected multiple times.
   - `p` : 1-D array-like, optional
-    - The probabilities associated with each entry in a.
-    - If not given, the sample assumes a uniform distribution over all
+    The probabilities associated with each entry in a.
+    If not given, the sample assumes a uniform distribution over all
     entries in ``a``.
 
 
+### Shuffle
+- `np.random.shuffle(x)` Modify a sequence in-place by shuffling its contents.
+- `np.random.permutation(x)` Randomly permute a sequence, or return a permuted range.
+  - `x` : int or array_like
+    If `x` is an integer, randomly permute ``np.arange(x)``.
+    If `x` is an array, make a copy and shuffle the elements randomly.
 
 
 
