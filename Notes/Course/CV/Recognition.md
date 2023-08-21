@@ -7,6 +7,10 @@
     - [Faster R-CNN](#faster-r-cnn)
     - [Single-Stage Object Detection](#single-stage-object-detection)
   - [Instance Segmentation](#instance-segmentation)
+  - [Human Pose Estimation](#human-pose-estimation)
+    - [Top-down Method](#top-down-method)
+    - [Bottom-up Method](#bottom-up-method)
+  - [Other Tasks](#other-tasks)
 
 
 
@@ -102,5 +106,47 @@ RCNN, Fast RCNN and Faster RCNN are all two-stage object detection. For faster c
 One method of instance segmentation is to firstly perform object detection, and then predict a segmentation mask for each object.
 
 Beyond instance segmentation there is also **panoptic segmentation**, which labels all pixels in the image.
+
+
+
+
+
+
+
+<br>
+
+### Human Pose Estimation
+We can represent the pose of a human by locating a set of **keypoints**, such as nose, eyes, ears, shoulders, elbows, wrists, hips, knees and ankles, which sum up to 17 keypoints.
+
+<br>
+
+#### Top-down Method
+Top-down method detect humans firstly and then detect keypoints in each bbox. Its performance is usually better.
+
+For each human, it outputs a single heatmap for each type of joint, and then choose the location with the highest value as the coordinate of the keypoint.
+
+
+
+<br>
+
+#### Bottom-up Method
+Bottom-up method detect keypoints firstly and then group keypoints to form humans. It's usually faster.
+
+OpenPose firstly generates **part confidence maps (heatmaps)** and **part affinity fields (PAF)** from the input images, and then link parts based on part affinity fields.
+
+
+
+
+
+
+
+<br>
+
+### Other Tasks
+- **Video Classification**: Recognize actions
+- **Temporal Action Localization**: Given a long untrimmed video sequence, identify frames corresponding to different actions
+- **Spatial-temporal Detection**: Given a long untrimmed video, detect all the people in space and time and classify the activities they are performing
+- **Multi-object Tracking**: Identify and track objects belonging to one or more categories without any prior knowledge about the appearance and number of targets.
+
 
 
