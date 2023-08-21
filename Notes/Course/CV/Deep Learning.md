@@ -100,7 +100,7 @@ The size of output is: ImageSize – FilterSize + 1
 To change the size of output, we can use padding (adding zero pixels around the border) or stride (step size larger than 1 in convolution).
 Then the size of output is: (ImageSize – FilterSize + Padding * 2) / Stride + 1
 
-For multi-channel image, filters always extend the full depth of the input volume. And for multiple outputs, we can add the number of filters. The number of filters is the number of feature maps.
+For multi-channel image, filters always extend to the full depth of the input volume. And for multiple outputs, we can add the number of filters. The number of filters is the number of feature maps.
 
 For a convolution layer with kernel size $K$, each element in the output depends on a $K \times K$ receptive field in the input.
 For successive convolution with $K$ kernel size and $L$ layers, the receptive field is $1 + L * (K – 1)$
