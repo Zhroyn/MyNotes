@@ -1,24 +1,23 @@
-<!-- TOC -->
 
 - [Operators and motions](#operators-and-motions)
-        - [Operators](#operators)
-        - [Word motions](#word-motions)
-        - [Left-right motions](#left-right-motions)
-        - [Up-down motions](#up-down-motions)
-        - [Text object motions](#text-object-motions)
-        - [Text object selection](#text-object-selection)
-        - [Jumps](#jumps)
+  - [Operators](#operators)
+  - [Word motions](#word-motions)
+  - [Left-right motions](#left-right-motions)
+  - [Up-down motions](#up-down-motions)
+  - [Text object motions](#text-object-motions)
+  - [Text object selection](#text-object-selection)
+  - [Jumps](#jumps)
 - [Other Operator](#other-operator)
 - [Other Commands](#other-commands)
-        - [File](#file)
-        - [Fold](#fold)
-        - [Substitute](#substitute)
-        - [Mark](#mark)
-        - [Multiple Windows](#multiple-windows)
-        - [Macro](#macro)
-        - [Navigation](#navigation)
+  - [File](#file)
+  - [Fold](#fold)
+  - [Substitute](#substitute)
+  - [Mark](#mark)
+  - [Multiple Windows](#multiple-windows)
+  - [Macro](#macro)
+  - [Navigation](#navigation)
 
-<!-- /TOC -->
+
 
 
 
@@ -28,7 +27,7 @@
 - If the motion includes a count and the operator also had a count before it,the two counts are multiplied. For example: `2d3w` deletes six words.
 - Two repeated operators operate on the current line. For example: `g~~/guu/gUU` change case of all characters in a line
 
-##### Operators
+#### Operators
 - `d` delete
 - `c` change
 - `y` yank into register
@@ -37,13 +36,13 @@
 - `</>` shift left / right
 - `zf` define a fold
 
-##### Word motions
+#### Word motions
 - `w` next word (beginning)
 - `b` beginning of this word or previous word
 - `e` end of this word or next word
 - `ge` end of previous word
 
-##### Left-right motions
+#### Left-right motions
 - `0` To the first character of the line
 - `^` To the first non-blank character of the line
 - `$` To the end of the line
@@ -52,11 +51,11 @@
 - `;` Repeat latest `f, t, F or T` {count} times
 - `,` Repeat latest `f, t, F or T` in opposite direction {count} times
 
-##### Up-down motions
+#### Up-down motions
 - `{count}Enter/j/gj/+` {count} lines downward
 - `{count}Enter/k/gk/-` {count} lines upward
 
-##### Text object motions
+#### Text object motions
 - `( / )`	{count} sentences backward / forward
 - `{ / }`	{count} paragraphs backward / forward
 - `[[ / ]]` {count} sections backward / forward
@@ -64,7 +63,7 @@
 - A paragraph begins after each empty line.
 - A section begins after a form-feed (`<C-L>`) in the first column
 
-##### Text object selection
+#### Text object selection
 - `a/iw` around / inner word[sd[sdas]a]
 - `a/is` around / inner sentence
 - `a/ip` around / inner paragraph
@@ -74,7 +73,7 @@
 - `` a/i [/]/</>/'/"/` `` a / inner `...` block
 
 
-##### Jumps
+#### Jumps
 - `*` To the next occurrence of the word under the cursor
 - `#` To the previous occurrence of the word under the cursor
 - `/{string}` To the next occurrence of `{string}`
@@ -116,7 +115,7 @@
 
 
 ### Other Commands
-##### File
+#### File
 - `:e {relative path}` open or create a file
 - `:q` close window
 - `:w` save(write)
@@ -124,7 +123,7 @@
 - `:q!` force quit and unsave
 - `:wq!` force quit and save
 
-##### Fold
+#### Fold
 - `zo` open fold
 - `zc` close fold
 - `za` open / close fold
@@ -133,7 +132,7 @@
 - `zf` define a fold
 - `zd` delete a fold
 
-##### Substitute
+#### Substitute
 - `:{scope}s/{from}/{to}/{tag}`
 - `{scope}`: default is current line
   - `%` all lines in file
@@ -147,16 +146,16 @@
   - `c` prompt for each substitution
   - `i/I` case insensitive / sensitive
 
-##### Mark
+#### Mark
 - `m{a-z/A-Z}` Set mark at cursor position
 - `a-z` for in-file mark
 - `A-Z` for global mark
 
-##### Multiple Windows
+#### Multiple Windows
 - `:sp` split windows horizontally
 - `:vsp` split windows vertically
 
-##### Macro
+#### Macro
 - `q{a-z}` record a macro into register
 - `q` stop recording
 - `{count}@{a-z}` replay a macro {count} times
@@ -173,7 +172,7 @@
 ### 0r#jjdd
 ```
 
-##### Navigation
+#### Navigation
 - `gt/T` switch tab forward / backward
 - `{num}gt` switch to {num}'th tab
 - `{num}gT` switch num tabs backward
