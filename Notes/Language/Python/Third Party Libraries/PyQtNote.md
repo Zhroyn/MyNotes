@@ -7,6 +7,9 @@
   - [布局](#布局)
     - [QBoxLayout](#qboxlayout)
     - [QGroupBox](#qgroupbox)
+    - [QGridLayout](#qgridlayout)
+    - [QFormLayout](#qformlayout)
+    - [QStackedLayout](#qstackedlayout)
 
 
 
@@ -38,7 +41,14 @@ screen = QDesktopWidget()
 - `w.setWindowIcon(QIcon)` 设置窗口 icon
   - `QIcon = PyQt5.QtGui.QIcon(icon_path)` 图片会变形为正方形
 - `w.setLayout` 设置窗口布局
+- `w.setStyleSheet(styleSheet)` 设置窗口样式
+  - `w.setStyleSheet("background-color:green;")` 背景颜色会变为绿色
+<br>
+
 - `w.resize(w, h)` 调整窗口大小
+- `w.setFixedSize(w, h)` 设置固定尺寸
+- `w.setFixedWidth(w, h)` 设置固定宽度
+- `w.setFixedHeight(w, h)` 设置固定高度
 <br>
 
 - `w/screen.frameGeometry()` 获得 QRect 类
@@ -65,6 +75,7 @@ label = QLabel(text, w)
 ```
 - `label.setGeometry(x, y, w, h)` 设置控件位置
 - `label.setText(text)` 设置文本内容
+- `label.setFixedSize(w, h)` 设置固定尺寸
 
 <br>
 
@@ -82,6 +93,7 @@ edit = QLineEdit(text, w)
 ```
 - `edit.setGeometry(x, y, w, h)` 设置控件位置
 - `edit.setText(text)` 设置文本内容
+- `edit.setFixedSize(w, h)` 设置固定尺寸
 - `edit.setPlaceholderText(text)` 设置占位文本，在无文本时显示
 
 <br>
@@ -110,6 +122,7 @@ btn = QRadioButton(text, w)
 ```
 - `btn.setGeometry(x, y, w, h)` 设置控件位置
 - `btn.setText(text)` 设置文本内容
+- `btn.setFixedSize(w, h)` 设置固定尺寸
 <br>
 
 - `btn.clike.connect(slot)` 绑定鼠标左键按下
@@ -129,9 +142,10 @@ QHBoxLayout(parent: QWidget)
 v_layout = QVBoxLayout()
 h_layout = QHBoxLayout()
 ```
-- `layout.addWidget(widget, stretch=0, alignment=Qt.Alignment())` 添加控件
+- `box.addWidget(widget, alignment=Qt.Alignment())` 添加控件
   - 对齐标志在 `PyQt5.QtCore.Qt.AlignmentFlag`，包括 `AlignTop, AlignBottom, AlignLeft, AlignRight` `AlignCenter, AlignVCenter, AlignVCenter` 等
-- `layout.addStretch(stretch=0)` 添加伸缩量
+- `box.addStretch(stretch=0)` 添加伸缩量，用以控制控件之间距离的比例
+- `box.addLayout(layout)` 添加布局
 
 <br>
 
@@ -143,7 +157,7 @@ QGroupBox(
     parent: typing.Optional[QWidget] = None
 )
 
-# 可用于嵌套布局器，如
+# 可用于嵌套布局，如
 box1 = QGroupBox()
 vbox = QVBoxLayout()
 vbox.addWidget(widget)
@@ -161,3 +175,70 @@ layout.addWidget(box1)
 layout.addWidget(box2)
 w.setLayout(layout)
 ```
+
+<br>
+
+#### QGridLayout
+```py
+QGridLayout(parent: QWidget)
+QGridLayout()
+
+grid = QGridLayout()
+```
+- `grid.addWidget(widget)` 默认沿竖排排列
+- `grid.addWidget(widget, row, column[, alignment])`
+- `grid.addWidget(widget, row, column, rowSpan, columnSpan[, alignment])`
+<br>
+
+- `grid.addLayout(widget, row, column[, alignment])`
+- `grid.addLayout(widget, row, column, rowSpan, columnSpan[, alignment])`
+
+<br>
+
+#### QFormLayout
+```py
+QFormLayout(parent: typing.Optional[QWidget] = None)
+
+form_layout = QFormLayout()
+```
+- `form_layout.addRow(label, field)`
+- `form_layout.addRow(labelText, field)`
+
+<br>
+
+#### QStackedLayout
+```py
+QStackedLayout()
+QStackedLayout(parent: QWidget)
+QStackedLayout(parentLayout: QLayout)
+
+stacked_layout = QStackedLayout()
+
+# 将多个界面添加进布局中
+w1 = QWidget()
+w2 = QWidget()
+stacked_layout.addWidget(w1)
+stacked_layout.addWidget(w2)
+
+# 创建按钮用来切换界面
+btn_press1 = QPushButton("Main Interface")
+btn_press2 = QPushButton("Setting Interface")
+btn_press1.clicked.connect(btn_press1_clicked)
+btn_press2.clicked.connect(btn_press2_clicked)
+
+# 创建布局用来安放所有布局与控件
+layout = QVBoxLayout()
+layout.addLayout(stacked_layout)
+layout.addWidget(btn_press1)
+layout.addWidget(btn_press2)
+w.setLayout(layout)
+
+def btn_press1_clicked():
+    stacked_layout.setCurrentIndex(0)
+
+def btn_press2_clicked():
+    stacked_layout.setCurrentIndex(1)
+```
+
+
+
