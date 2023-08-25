@@ -1,5 +1,11 @@
 <!-- TOC -->
 
+- [内建函数](#内建函数)
+  - [迭代](#迭代)
+  - [转换](#转换)
+  - [算术](#算术)
+  - [对象](#对象)
+  - [输入输出](#输入输出)
 - [Command line and environment](#command-line-and-environment)
 - [Expressions](#expressions)
   - [Atoms](#atoms)
@@ -11,13 +17,6 @@
 - [Statements](#statements)
   - [Function definitions](#function-definitions)
     - [Decorator](#decorator)
-- [Built-in Functions](#built-in-functions)
-  - [Arith](#arith)
-  - [Conversion](#conversion)
-  - [Iteration](#iteration)
-  - [Judges](#judges)
-  - [Properties](#properties)
-  - [Others](#others)
 - [Built-in Types](#built-in-types)
   - [Numeric Types (int, float, complex)](#numeric-types-int-float-complex)
   - [Sequence Types (list, tuple, range)](#sequence-types-list-tuple-range)
@@ -41,6 +40,99 @@
 
 
 
+
+## 内建函数
+### 迭代
+- `all(iterable)` 若对所有项 bool(x) 均为 True 则返回 True
+- `any(iterable)` 若存在项使得 bool(x) 为 True 则返回 True
+<br>
+
+- `max/min(iterable, *[, default=obj, key=func])`
+- `max/min(arg1, arg2, *args, *[, key=func])`
+  - 若为一个可迭代对象，则返回其中的最大/最小值；若为多个参数，则返回多个参数中的最大/最小值
+  - `key` 单参数函数，返回的值用于排序
+  - `default` 当可迭代对象为 None 时返回的值
+  - `max(words, key=len)`
+  - `max(students, default={}, key=lambda x: x.get('grade'))`
+<br>
+
+- `sorted(iterable, /, *, key=None, reverse=False)` 返回一个新的升序排序的列表，不会改变原有可迭代对象
+  - `key` 单参数函数，返回的值用于排序
+  - `reverse` 若为 True 则变为降序排序
+- `reversed(seq)` 返回一个反转迭代器
+<br>
+
+- `map(func, *iterables)` 返回一个迭代器，对可迭代对象中的每一项应用指定函数，直至其中一个的可迭代对象被遍历完时停止
+  - `func` 参数个数必须与可迭代对象个数一致
+  - `map(str.lower, words)`
+  - `map(lambda x, y: x + y, [1, 2, 3], [0, 5, 3])`
+- `filter(function or None, iterable)` 返回一个迭代器，生成 function(item) 为 True 的对象，若 function 为 None，则生成 item 为 True 的对象
+  - `filter(lambda x: x % 2 == 0, numbers)`
+<br>
+
+- `enumerate(iterable, start=0)` 返回一个 enumerate 对象，每次生成一个 (count, value)，其中 count 为当前计数，value 为可迭代对象生成的值
+- `zip(*iterables, strict=False)` 返回一个 zip 对象，每次生成一个 n 元数组，直至其中一个的可迭代对象被遍历完时停止
+  - `strict` 若为 True，则会在可迭代对象长度不等时抛出 ValueError
+
+
+### 转换
+- `bin(number)` 将 number 转换为前缀为 0b 的二进制数字符串
+- `oct(number)` 将 number 转换为前缀为 0o 的八进制数字符串
+- `hex(number)` 将 number 转换为前缀为 0x 的十六进制数字符串
+<br>
+
+- `chr(i)` 返回一个序数为 i 的 Unicode 字符
+- `ord(c)` 返回一个单字符字符串的 Unicode 码点
+<br>
+
+- `eval(source, globals=None, locals=None)` 将 source 字符串当作 Python 表达式进行求值
+  - `globals` 默认为当前的全局命名空间
+  - `locals` 默认为当前的局部命名空间
+  - `eval("a + b", {"a": 1, "b": 2})`
+- `repr(obj)` 返回一个对象的规范字符串表示
+  - 在大多数情况下，eval(repr(obj)) == obj，否则返回一个用尖括号括起来的字符串，其中包含类型、名称、地址等信息，或者由 \_\_repr\_\_() 方法指定
+- `ascii(obj)` 类似 repr()，但会使用 \\x, \\u 或 \\U 转义序列来表示非 ASCII 字符
+
+
+### 算术
+- `abs(x)` 返回绝对值
+- `pow(base, exp, mod=None)` 返回 base**exp % mod
+- `divmod(x, y)` 返回一对商和余数，即 (x//y, x%y)，满足 div * y + mod == x
+- `round(number, ndigits=None)` 当 ndigits 为 None 时，返回整数，否则返回指定精度的小数
+  - `round(10.5)` 返回 10
+  - `round(10.5, 0)` 返回 10.0
+  - `round(10.5001, 1)` 返回 10.6
+
+
+### 对象
+- `id(obj)` 返回对象的标识，在 CPython 中为对象的内存地址
+- `hash(obj)` 返回对象的哈希值，比较起来相等的两个对象哈希值也相等，如不同类型的相等数字
+- `type(obj)` 返回对象的类型，不考虑继承关系，若 obj 为一个类则返回 type
+<br>
+
+- `issubclass(class, class_or_tuple)` 判断 cls 是否为后一个类或元组包含的多个类中任意类的子类，考虑继承关系，一个类是本身的子类
+- `isinstance(obj, class_or_tuple)` 判断 obj 是否为后一个类或元组包含的多个类中任意类的对象，考虑继承关系
+<br>
+
+- `hasattr(obj, name)` 若对象包含指定属性则返回 True
+- `getattr(obj, name[, default])` 返回对象的指定属性的值，若不存在则返回 default，若 default 未传入则抛出 AttributeError
+- `setattr(obj, name, value)` 设置对象的指定属性的值，该属性可以不存在
+
+
+### 输入输出
+- `input(prompt='')` 从标准输入读入一个字符串，会去除末尾的换行符，若用户输入 EOF 则会抛出 EOFError
+- `print(*objects, sep=' ', end='\n', file=None, flush=False)`
+  - `file` 输出的文件对象，默认为 sys.stdout
+  - `flush` 若为 True，则会立即刷新输出缓冲区
+
+
+
+
+
+
+
+
+<br>
 
 
 ## Command line and environment
@@ -387,127 +479,7 @@ class DecoratorAsClass:
 
 
 
-
-
-## Built-in Functions
-### Arith
-- `abs(x)` Return the absolute value of a number. The argument may be an integer, a floating point number, or an object implementing `__abs__()`. If the argument is a complex number, its magnitude is returned.
-- `divmod(a, b)` Take two (non-complex) numbers as arguments and return a pair of numbers consisting of their quotient and remainder when using integer division.
-  - With mixed operand types, the rules for binary arithmetic operators apply.
-  - For integers, the result is the same as `(a // b, a % b)`.
-  - For floating point numbers the result is `(q, a % b)`, where q is usually math.floor`(a / b)` but may be 1 less than that.
-  - If `a % b` is non-zero, it has the same sign as b.
-- `pow(base, exp, mod=None)` Return `base` to the power `exp`; if `mod` is present, return `base` to the power `exp`, modulo `mod`. If `mod` is present and `exp` is negative, `base` must be relatively prime to `mod`. In that case, `pow(inv_base, -exp, mod)` is returned, where `inv_base` is an inverse to `base` modulo `mod`.
-- `round(number, ndigits=None)` Return number rounded to ndigits precision after the decimal point. If ndigits is omitted or is None, it returns the nearest integer to its input.
 <br>
-
-- `len(s)` Return the length (the number of items) of an object. The argument may be a sequence (such as a string, bytes, tuple, list, or range) or a collection (such as a dictionary, set, or frozen set). In CPython, it will raises `OverflowError` on lengths larger than `sys.maxsize`.
-- `sum(iterable, /, start=0)` Sums start and the items of an iterable from left to right and returns the total.
-- `max(iterable, *, key=None)` or `min(iterable, *, key=None)`
-- `max(iterable, *, default, key=None)` or `min(iterable, *, default, key=None)`
-- `max(arg1, arg2, *args, key=None)` or `min(arg1, arg2, *args, key=None)`
-  - Return the largest/smallest item in an iterable, or the largest/smallest of two or more arguments.
-  - The `key` argument specifies a one-argument ordering function where comparison of iterable is performed based on its return value.
-  - The `default` argument specifies an object to return if the provided iterable is empty.
-<br>
-
-- `eval(expression, globals=None, locals=None)` The arguments are a string and optional globals and locals. If provided, globals must be a dictionary. If provided, locals can be any mapping object.
-- `sorted(iterable, /, *, key=None, reverse=False)` Return a new sorted list from the items in iterable.
-  - `key` specifies a function of one argument that is used to extract a comparison key from each element in iterable, e.g. `key=str.lower`. The default value is None (compare the elements directly).
-  - `reverse` is a boolean value. If set to True, then the list elements are sorted as if each comparison were reversed.
-
-### Conversion
-- `bin(x)` Convert an integer number to a binary string prefixed with "0b". If x is not a Python int object, it has to define an `__index__()` method that returns an integer.
-- `hex(x)` Convert an integer number to a lowercase hexadecimal string prefixed with "0x". If x is not a Python int object, it has to define an `__index__()` method that returns an integer.
-- `oct(x)` Convert an integer number to an octal string prefixed with "0o". The result is a valid Python expression. If x is not a Python int object, it has to define an `__index__()` method that returns an integer.
-- `format(value, format_spec='')` Convert a value to a “formatted” representation, as controlled by `format_spec`. The interpretation of `format_spec` will depend on the type of the value argument.
-<br>
-
-- `chr(i)` Return the string representing a character whose Unicode code point is the integer i.
-- `ord(c)` Given a string representing one Unicode character, return an integer representing the Unicode code point of that character.
-<br>
-
-- `repr(object)` Return a string containing a printable representation of an object.
-  - For many types, this function makes an attempt to return a string that would yield an object with the same value when passed to `eval()`.
-  - Otherwise, the representation is a string enclosed in angle brackets that contains the name of the type of the object together with additional information often including the name and address of the object.
-  - A class can control what this function returns for its instances by defining a `__repr__()` method. If `sys.displayhook()` is not accessible, this function will raise `RuntimeError`.
-- `ascii(object)` As `repr(),` return a string containing a printable representation of an object, but escape the non-ASCII characters in the string returned by `repr()` using `\x`, `\u`, or `\U` escapes.
-
-
-### Iteration
-- `iter(object)` or `iter(object, sentinel)`
-  - Return an iterator object. The first argument is interpreted very differently depending on the presence of the second argument.
-  - Without a second argument, object must be a collection object which supports the iterable protocol (the `__iter__()` method), or it must support the sequence protocol (the `__getitem__()` method with integer arguments starting at 0). If it does not support either of those protocols, `TypeError` is raised.
-  - If the second argument is given, then object must be a callable object. The iterator created in this case will call object with no arguments for each call to its `__next__()` method; if the value returned is equal to `sentinel`, `StopIteration` will be raised, otherwise the value will be returned.
-- `enumerate(iterable, start=0)`
-  - Return an enumerate object. `iterable` must be a sequence, an iterator, or some other object which supports iteration.
-  - The `__next__()` method of the iterator returned by `enumerate()` returns a tuple containing a count (from start which defaults to 0) and the values obtained from iterating over iterable.
-- `next(iterator)` or `next(iterator, default)`
-  - Retrieve the next item from the iterator by calling its `__next__()` method.
-  - If default is given, it is returned if the iterator is exhausted, otherwise `StopIteration` is raised.
-<br>
-
-- `filter(function, iterable)` Construct an iterator from those elements of iterable for which function returns true.
-  - If function is None, the identity function is assumed, that is, all elements of iterable that are false are removed.
-- `map(function, iterable, *iterables)` Return an iterator that applies function to every item of iterable, yielding the results.
-  - If additional iterables arguments are passed, function must take that many arguments and is applied to the items from all iterables in parallel.
-  - With multiple iterables, the iterator stops when the shortest iterable is exhausted.
-  - For example : `map(lambda x, y : x + y, [1, 2, 3], [0, 5, 3])`
-- `reversed(seq)` Return a reverse iterator. `seq` must be an object which has a `__reversed__()` method or supports the sequence protocol
-- `zip(*iterables, strict=False)` Iterate over several iterables in parallel, producing tuples with an item from each one.
-  - By default, `zip()` stops when the shortest iterable is exhausted. It will ignore the remaining items in the longer iterables.
-  - If `strict` is True, `zip()` will raise a `ValueError` if one iterable is exhausted before the others.
-  - With a single iterable argument, `zip()` returns an iterator of 1-tuples. With no arguments, it returns an empty iterator.
-
-
-### Judges
-- `all(iterable)` Return True if all elements of the iterable are true (or if the iterable is empty).
-- `any(iterable)` Return True if any element of the iterable is true. If the iterable is empty, return False.
-<br>
-
-- `callable(object)` Return True if the object argument appears callable, False if not. If this returns True, it is still possible that a call fails, but if it is False, calling object will never succeed. Note that classes are callable; instances are callable if their class has a `__call__()` method.
-- `hasattr(object, name)` The arguments are an object and a string. The result is True if the string is the name of one of the object’s attributes, False if not.
-- `isinstance(object, classinfo)` Return True if the object argument is an instance of the `classinfo` argument, or of a (direct, indirect, or virtual) subclass thereof.
-  - If classinfo is a tuple of type objects (or recursively, other such tuples) or a Union Type of multiple types, return True if object is an instance of any of the types.
-- `issubclass(class, classinfo)` Return True if class is a subclass (direct, indirect, or virtual) of `classinfo`.
-  - A class is considered a subclass of itself.
-  - `classinfo` may be a tuple of class objects (or recursively, other such tuples) or a Union Type, in which case return True if class is a subclass of any entry in it.
-
-
-### Properties
-- `getattr(object, name)` or `getattr(object, name, default)` Return the value of the named attribute of object. name must be a string. If the named attribute does not exist, default is returned if provided, otherwise `AttributeError` is raised. name need not be a Python identifier.
-- `setattr(object, name, value)` The arguments are an object, a string, and an arbitrary value. The string may name an existing attribute or a new attribute. The function assigns the value to the attribute, provided the object allows it.
-<br>
-
-- `hash(object)` Return the hash value of the object (if it has one). Hash values are integers. They are used to quickly compare dictionary keys during a dictionary lookup. Numeric values that compare equal have the same hash value (even if they are of different types, as is the case for 1 and 1.0).
-- `id(object)` Return the "identity" of an object. This is an integer which is guaranteed to be unique and constant for this object during its lifetime. In CPython, this is the address of the object in memory.
-- `type(object)` With one argument, return the type of an object. The return value is a type object and generally the same object as returned by `object.__class__`.
-<br>
-
-- `dir()` or `dir(object)` Without arguments, return the list of names in the current local scope. With an argument, attempt to return a list of valid attributes for that object. If the object has a method named `__dir__()`, this method will be called and must return the list of attributes.
-- `help()` or `help(request)` Invoke the built-in help system. If no argument is given, the interactive help system starts on the interpreter console.
-- `vars()` or `vars(object)` Return the `__dict__` attribute for a module, class, instance, or any other object with a `__dict__` attribute. Without an argument, `vars()` acts like `locals()`.
-- `globals()` Return the dictionary implementing the current module namespace.
-- `locals()` Update and return a dictionary representing the current local symbol table.
-
-
-### Others
-- `input()` or `input(prompt)` If the prompt argument is present, it is written to standard output without a trailing newline. The function then reads a line from input, converts it to a string (stripping a trailing newline), and returns that. When `EOF` is read, `EOFError` is raised.
-- `print(*objects, sep=' ', end='\n', file=None, flush=False)` Print objects to the text stream `file`, separated by `sep` and followed by `end`.
-  - All non-keyword arguments are converted to strings and written to the stream, separated by `sep` and followed by `end`.
-  - The `file` argument must be an object with a `write(string)` method; if it is not present or None, `sys.stdout` will be used. Since printed arguments are converted to text strings, `print()` cannot be used with binary mode file objects.
-  - Whether the output is buffered is usually determined by file, but if the `flush` keyword argument is true, the stream is forcibly flushed.
-<br>
-
-- `open(file, mode='r', buffering=- 1, encoding=None, errors=None, newline=None, closefd=True, opener=None)` Open file and return a corresponding file object. If the file cannot be opened, an `OSError` is raised.
-- `super(type, object_or_type=None)` Return a proxy object that delegates method calls to a parent or sibling class of type. The `object_or_type` determines the method resolution order to be searched. The search starts from the class right after the type.
-
-
-
-
-
-
-
 
 ## Built-in Types
 ### Numeric Types (int, float, complex)
