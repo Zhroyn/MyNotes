@@ -1,38 +1,41 @@
 <!-- TOC -->
 
-- [内建函数](#内建函数)
-  - [迭代](#迭代)
-  - [转换](#转换)
-  - [算术](#算术)
-  - [对象](#对象)
-  - [输入输出](#输入输出)
-- [Command line and environment](#command-line-and-environment)
-- [Expressions](#expressions)
-  - [Atoms](#atoms)
-    - [Comprehensions and Generator expressions](#comprehensions-and-generator-expressions)
-    - [Yields expressions and Generator functions](#yields-expressions-and-generator-functions)
-  - [Primaries](#primaries)
-  - [Operators](#operators)
-  - [Assignment, Conditional and Lambda Expressions](#assignment-conditional-and-lambda-expressions)
-- [Statements](#statements)
-  - [Function definitions](#function-definitions)
-    - [Decorator](#decorator)
-- [Built-in Types](#built-in-types)
-  - [Numeric Types (int, float, complex)](#numeric-types-int-float-complex)
-  - [Sequence Types (list, tuple, range)](#sequence-types-list-tuple-range)
-  - [Text Sequence Type (str)](#text-sequence-type-str)
-    - [Find and Delete](#find-and-delete)
-    - [Split and Join](#split-and-join)
-    - [Convert](#convert)
-    - [Testing](#testing)
-    - [printf-style String Formatting](#printf-style-string-formatting)
-    - [Format String Syntax](#format-string-syntax)
-    - [Formatted String Literals](#formatted-string-literals)
-  - [Byte Sequence Types (bytes, bytearray)](#byte-sequence-types-bytes-bytearray)
-  - [Set Types (set, frozenset)](#set-types-set-frozenset)
-  - [Mapping Types (dict)](#mapping-types-dict)
-  - [Iterator Types](#iterator-types)
-  - [Context Manager Types](#context-manager-types)
+- [Python 笔记](#python-笔记)
+  - [内建函数](#内建函数)
+    - [迭代](#迭代)
+    - [转换](#转换)
+    - [算术](#算术)
+    - [对象](#对象)
+    - [输入输出](#输入输出)
+  - [内建类型](#内建类型)
+    - [数字](#数字)
+    - [列表和元组](#列表和元组)
+    - [范围和切片](#范围和切片)
+    - [字符串](#字符串)
+      - [查找和删除](#查找和删除)
+      - [分割和合并](#分割和合并)
+      - [转换](#转换-1)
+      - [判断](#判断)
+      - [格式化](#格式化)
+        - [格式化运算符](#格式化运算符)
+        - [format 方法](#format-方法)
+        - [格式字符串字面量](#格式字符串字面量)
+    - [Byte Sequence Types (bytes, bytearray)](#byte-sequence-types-bytes-bytearray)
+    - [Set Types (set, frozenset)](#set-types-set-frozenset)
+    - [Mapping Types (dict)](#mapping-types-dict)
+    - [Iterator Types](#iterator-types)
+    - [Context Manager Types](#context-manager-types)
+  - [Command line and environment](#command-line-and-environment)
+  - [Expressions](#expressions)
+    - [Atoms](#atoms)
+      - [Comprehensions and Generator expressions](#comprehensions-and-generator-expressions)
+      - [Yields expressions and Generator functions](#yields-expressions-and-generator-functions)
+    - [Primaries](#primaries)
+    - [Operators](#operators)
+    - [Assignment, Conditional and Lambda Expressions](#assignment-conditional-and-lambda-expressions)
+  - [Statements](#statements)
+    - [Function definitions](#function-definitions)
+      - [Decorator](#decorator)
 
 <!-- /TOC -->
 
@@ -41,6 +44,7 @@
 
 
 
+# Python 笔记
 ## 内建函数
 ### 迭代
 - `all(iterable)` 若对所有项 bool(x) 均为 True 则返回 True
@@ -76,9 +80,9 @@
 
 
 ### 转换
-- `bin(number)` 将 number 转换为前缀为 0b 的二进制数字符串
-- `oct(number)` 将 number 转换为前缀为 0o 的八进制数字符串
-- `hex(number)` 将 number 转换为前缀为 0x 的十六进制数字符串
+- `bin(number)` 将 number 转换为前缀为 0b 的二进制字符串
+- `oct(number)` 将 number 转换为前缀为 0o 的八进制字符串
+- `hex(number)` 将 number 转换为前缀为 0x 的十六进制字符串
 <br>
 
 - `chr(i)` 返回一个序数为 i 的 Unicode 字符
@@ -132,8 +136,399 @@
 
 
 
+
+
+
 <br>
 
+## 内建类型
+### 数字
+- bool 是 int 的子类
+- 虚部末尾需要加上 j 或 J，可使用 z.real 和 z.imag 分别获得实部和虚部
+
+**整数方法**
+- `int(x=0)` `int(x, base=10)` 将字符串转换为整数，或者将数字向零取整
+<br>
+
+- `bit_count()` 返回二进制形式中 1 的个数
+- `bit_length()` 返回二进制形式的长度，不考虑符号
+- `to_bytes(length=1, byteorder='big', *, signed=False)` 返回一个表示该整数的 bytes
+  - `length` 字节序列的长度，若不足会抛出 OverflowError
+  - `byteorder` 若为 `'big'`，则为大端模式，低地址存放高字节；若为 `'little'`，则为小端模式，低地址存放低字节
+  - `signed` 若为 True，则会使用补码，否则传入负数会抛出 OverflowError
+- `from_bytes(bytes, byteorder='big', *, signed=False)` 返回 bytes 表示的整数
+
+**浮点数方法**
+- `float(x=0.0)` 将字符串或数字转换为浮点数
+- `is_integer()` 判断浮点数是否为整数
+- `hex()` 将浮点数转换为十六进制字符串，字符串开头为 0x，末尾为 p 型指数
+- `fromhex(string)` 返回十六进制字符串表示的浮点数，可以不包含 0x 和指数部分
+
+**复数方法**
+- `complex(real=0, imag=0)` `complex(string)` 将字符串或两个数字转换为复数
+- `conjugate()` 返回复数的共轭
+
+
+
+
+<br>
+
+### 列表和元组
+- 列表、元组、字符串等序列都支持 `+` (concatenation) 和 `*` (repetition) 操作符，可实现浅复制
+- 列表、元组、字符串等序列都支持 `in` 和 `not in` 操作符，字符串、bytes 和 bytearray 还额外支持子序列包含检查
+- 列表是 mutable 序列类型，不可使用 hash() 函数
+- 列表可通过给切片赋值 iterable，来插入、删除、修改批量元素
+```py
+>>> a = [1, 2, 3, 4, 5]
+>>> a[4:] = [6]
+>>> a
+[1, 2, 3, 4, 6]
+>>> a[4:4] = [7, 8]
+>>> a
+[1, 2, 3, 4, 7, 8, 6]
+>>> a[2:6] = []  
+>>> a
+[1, 2, 6]
+```
+
+**列表方法**
+- `index(value, start=0, stop=9223372036854775807)` 返回值的第一个索引，若不存在则抛出 ValueError
+- `count(value)` 返回值的出现次数
+<br>
+
+- `append(object)` 将一个元素附加到列表的末尾
+- `insert(index, object)` 在 index 之前插入元素，超出的索引会被截断
+- `extend(iterable)` 将 iterable 中的元素附加到列表末尾
+<br>
+
+- `pop(index=-1)` 删除并返回索引处的值，若列表为空或索引超出范围则会抛出 IndexError
+- `remove(value)` 删除第一个出现的值，若不存在则抛出 ValueError
+- `clear()` 删除列表所有的元素
+- `copy()` 返回列表的浅复制
+<br>
+
+- `sort(*, key=None, reverse=False)` 升序排序列表，返回 None
+  - 稳定排序，即值相同的两个元素的相对位置不变
+- `reverse()` 原地反转，返回 None
+
+**元组方法**
+- `index(value, start=0, stop=9223372036854775807)` 返回值的第一个索引，若不存在则抛出 ValueError
+- `count(value)` 返回值的出现次数
+
+
+
+
+<br>
+
+### 范围和切片
+- `range(stop)`
+- `range(start, stop, step=1)`
+- range 是 immutable 序列类型，表示相同序列的 range 相同
+<br>
+
+- `slice(stop)`
+- `slice(start, stop, step=1)`
+- 切片会创造一个浅复制，即只会构建一个包含原有元素索引的复合对象
+
+
+
+
+
+<br>
+
+### 字符串
+- 三个引号包裹的字符串允许使用单引号和双引号，还允许换行
+- r 或 R 开头的字符串被称为生字符串，内部的反斜杠会被当成文本
+
+#### 查找和删除
+- `index(sub[, start[, end]])` 返回子字符串的第一个索引，若不存在则抛出 ValueError
+- `rindex(sub[, start[, end]])` 返回子字符串的最后一个索引，若不存在则抛出 ValueError
+- `find(sub[, start[, end]])` 返回子字符串的第一个索引，若不存在则返回 -1
+- `rfind(sub[, start[, end]])` 返回子字符串的最后一个索引，若不存在则返回 -1
+- `count(sub[, start[, end]])` 返回子字符串的出现次数，每个子字符串不能重叠
+<br>
+
+- `strip(chars=None)` 返回副本，其开头和末尾的指定字符被移除，默认为空白字符
+- `lstrip(chars=None)` 返回副本，其开头的指定字符被移除
+- `rstrip(chars=None)` 返回副本，其末尾的指定字符被移除
+- `removeprefix(prefix)` 返回副本，若开头为 prefix 则删除开头 prefix
+- `removesuffix(suffix)` 返回副本，若末尾为 suffix 则删除末尾 suffix
+
+<br>
+
+#### 分割和合并
+- `split(sep=None, maxsplit=-1)` 返回一个列表，存放分割后的子字符串
+  - `seq` 分隔符，默认为空白字符
+  - `maxsplit` 最大分割次数，返回的列表长度最大为 maxsplit + 1
+- `rsplit(sep=None, maxsplit=-1)` 从末尾开始分割
+- `splitlines(keepends=False)` 返回一个用换行符分割的字符串列表，默认不保留末尾的换行符
+<br>
+
+- `partition(sep)` 若找到分隔符，则返回 (前, 分隔符, 后)，否则返回 (源字符串, '', '')
+- `rpartition(sep)` 从右边开始查找分隔符
+<br>
+
+- `join(iterable)` 以 self 为分隔符，将多个字符串连接起来
+
+<br>
+
+#### 转换
+- `capitalize()` 将第一个字母变为大写，其余变为小写
+- `title()` 将每个单词的第一个字母变为大写，其余变为小写
+- `lower()` 将所有字母变为小写
+- `upper()` 将所有字母变为大写
+- `swapcase()` 将所有字母转换大小写
+- `casefold()` 将所有字母变为小写，但适用于更多语言
+<br>
+
+- `center(width, fillchar=' ')` 将字符串原有内容居中，若 width 大于字符串长度则会用 fillchar 填充
+- `ljust(width, fillchar=' ')` 将字符串原有内容左对齐
+- `rjust(width, fillchar=' ')` 将字符串原有内容右对齐
+- `zfill(width)` 将字符串原有内容右对齐，若 width 大于字符串长度则会用零填充
+<br>
+
+- `replace(old, new, count=-1)` 替换 old 为 new，最多替换 count 次
+- `expandtabs(tabsize=8)` 将所有制表符转换为空格
+
+<br>
+
+#### 判断
+- `startswith(prefix[, start[, end]])` 若字符串开头为指定 prefix，则返回 True
+- `endswith(suffix[, start[, end]])` 若字符串末尾为指定 suffix，则返回 True
+  - `prefix` 可为一个字符串或由字符串组成元组
+  - `start` 开始检查的索引位置
+  - `end` 结束检查的索引位置
+<br>
+
+- `isalnum()` 若不为空字符串且所有字符均为字母数字，则返回 True
+- `isalpha()` 若不为空字符串且所有字符均为字母，则返回 True
+- `isdecimal()` 若不为空字符串且所有字符均为数字，则返回 True，包括 Unicode 数字和双字节全角数字
+- `isdigit()` 若不为空字符串且所有字符均为数字，则返回 True，包括 Unicode 数字、单字节数字和双字节全角数字
+- `isnumeric()` 若不为空字符串且所有字符均为数字，则返回 True，包括 Unicode 数字、双字节全角数字、罗马数字和汉字数字
+- `isspace()` 若不为空字符串且所有字符均为空白字符，则返回 True
+<br>
+
+- `islower()` 若不为空字符串且所有字母均小写，则返回 True
+- `isupper()` 若不为空字符串且所有字母均大写，则返回 True
+- `istitle()` 若不为空字符串且所有单词均只有开头大写，则返回 True
+<br>
+
+- `isascii()` 若所有字符均为 ASCII 字符，则返回 True，包括空字符串
+- `isprintable()` 若所有字符均为可打印，则返回 True，包括空字符串
+- `isidentifier()` 若为 Python 标识符，则返回 True，包括合法的变量名和保留的关键字
+
+<br>
+
+#### 格式化
+##### 格式化运算符
+运算符 `%` 可用于格式化字符串，其前面为字符串，后面为元组，元组长度对应于字符串中的转换说明符
+转换说明符的基本格式为 `%[flags][width][.precision][length]type`，以下为几个示例：
+- `"%+05d" % (1)` 的结果为 `"+0001"`
+- `"%-5d" % (1)` 的结果为 `"1    "`
+- `"%#06x" % (1)` 的结果为 `"0x0001"`
+- `"%5.2f" % (1.1)` 的结果为 `" 1.10"`
+- `"%*.*f" % (5, 2, 1.1)` 的结果为 `" 1.10"`
+
+<br>
+
+##### format 方法
+字符串自带的 format() 方法也可用于格式化，以下为几个示例：
+- `"{} are {} years old".format(name, age)`
+- `"{0} are {1} years old".format(name, age)`
+- `"{name} are {year} years old".format(name=name, age=age)`
+- `"{person.name} are {person.year} years old".format(person=person)`
+
+替换域中也可以在 `:` 后面使用格式说明符，其基本格式为：
+```C
+format_spec     ::=  [[fill]align][sign][z][#][0][width][grouping_option][.precision][type]
+fill            ::=  <any character>
+align           ::=  "<" | ">" | "=" | "^"
+sign            ::=  "+" | "-" | " "
+width           ::=  digit+
+grouping_option ::=  "_" | ","
+precision       ::=  digit+
+type            ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" | "o" | "s" | "x" | "X" | "%"
+```
+
+- align
+  - `<` 左对齐
+  - `>` 右对齐
+  - `=` 将填充字符放在符号之后
+  - `^` 居中对齐
+- sign
+  - `+` 正负数都应有符号
+  - `-` 只有负数有符号，默认
+  - ` ` 正数使用空格作符号，负数使用减号作符号
+- z, #, 0
+  - `z` 在浮点数四舍五入后，强制负的零变为正的零
+  - `#` 使用另一种替代形式，整数会加上前缀，浮点数会保留小数点
+  - `0` 会填充零并注意符号位置，相当于 `0=`
+- grouping_option
+  - `,` 使用逗号作为整数或浮点数的千位分隔符
+  - `_` 使用下划线作为整数或浮点数的千位分隔符，若整数不是十进制，则每四位用下划线分隔一次
+- type
+  - `n` 和 `d` 或 `g` 相同，除了在插入分隔符时会使用所在地区的设置
+  - `%` 和 `f` 相同，但会乘以一百并加上百分号
+<br>
+
+- `"{:^5}".format(1)` 的结果为 `"  1  "`
+- `"{:#^5}".format(1)` 的结果为 `"##1##"`
+- `"{:,}".format(1234567)` 的结果为 `"1,234,567"`
+- `"{:.2%}".format(0.2)` 的结果为 `"20.00%"`
+
+<br>
+
+##### 格式字符串字面量
+- f 或 F 开头的字符串被称为格式字符串字面量，也被称为 f-string
+- f-string 中的 `{}` 内可直接使用表达式，可在表达式后加上 `:` 再加上格式说明符
+- 可在表达式后使用 `=` 来得到赋值语句，空白会被保留，如 `f"{ a = :.2f} "` 的结果为 `" a = 1.00 "`
+
+
+
+
+<br>
+
+### Byte Sequence Types (bytes, bytearray)
+**constuctor**
+- `bytes(source=b''[, encoding[, errors]])` Return a bytes object which is an immutable sequence of integers in the range `0 <= x < 256`.
+- `bytearray(source=b''[, encoding[, errors]])` Return a new array of bytes which is a mutable sequence of integers in the range `0 <= x < 256`.
+- The optional source parameter can be used to initialize the array in a few different ways:
+  - If it is a string, you must also give the encoding (and optionally, errors) parameters; `bytes()` then converts the string to bytes using `str.encode()`.
+  - If it is an integer, the array will have that size and will be initialized with null bytes.
+  - If it is an object conforming to the buffer interface, a read-only buffer of the object will be used to initialize the bytes array.
+  - If it is an iterable, it must be an iterable of integers in the range `0 <= x < 256`.
+
+**bytes literal**
+- The syntax for bytes literals is largely the same as that for string literals, except that a `b` prefix is added.
+- Only ASCII characters are permitted in bytes literals.
+- As with string literals, bytes literals may also use a `r` prefix to disable processing of escape sequences.
+- While bytes literals and representations are based on ASCII text, bytes objects actually behave like immutable sequences of integers, with each value in the sequence restricted such that `0 <= x < 256`
+
+**methods**
+- `bytes` has most methods of `str` 
+- `bytearray` has most methods of `str` and `list` 
+- `fromhex(string)` The string must contain two hexadecimal digits per byte, with ASCII whitespace being ignored.
+- `hex([sep[, bytes_per_sep]])` Return a string object containing two hexadecimal digits for each byte in the instance.
+  - `sep` An optional single character or byte to separate hex bytes.
+  - `bytes_per_sep` How many bytes between separators. Positive values count from the right, negative values count from the left. The default is 1.
+<br>
+
+- `encode(encoding='utf-8', errors='strict')` Encode the string using the codec registered for encoding. It's the method of `str`.
+- `decode(encoding='utf-8', errors='strict')` Decode the bytes/bytearray using the codec registered for encoding. It's the method of `bytes` and `bytearray`.
+
+
+
+### Set Types (set, frozenset)
+- A set object is an unordered collection of distinct hashable objects.
+- The `set` type is mutable, so it has no hash value and cannot be used as either a dictionary key or as an element of another `set`.
+- The `frozenset` type is immutable and hashable, so it can therefore be used as a dictionary key or as an element of another `set`.
+
+**constructor**
+- `set(iterable)`
+- `frozenset(iterable)`
+- Return a new `set` or `frozenset` object, optionally with elements taken from `iterable`. The elements must be hashable.
+- `set` (not `frozensets`) can also be created by using a comma-separated list of elements within braces, or using a set comprehension, in addition to the set constructor.
+
+**commom set operations**
+- `len(set)`, `x in s`, `x not in s`
+- `isdisjoint(other)` Return True if the set has no elements in common with other.
+- `issubset(other)`
+  - `set <= other` Test whether every element in the set is in other.
+  - `set < other` Test whether the set is a proper subset of other, that is, `set <= other` and `set != other`.
+- `issuperset(other)`
+  - `set >= other` Test whether every element in other is in the set.
+  - `set > other` Test whether the set is a proper superset of other, that is, `set >= other` and `set != other`.
+<br>
+
+- `union(*others)` or `set | other | ...` Return a new set with elements from the set and all others.
+- `intersection(*others)` or `set & other & ...` Return a new set with elements common to the set and all others.
+- `difference(*others)` or `set - other - ...` Return a new set with elements in the set that are not in the others.
+- `symmetric_difference(other)` or `set ^ other` Return a new set with elements in either the set or other but not both.
+- `copy()` Return a shallow copy of the set.
+<br>
+
+- The non-operator versions of `union()`, `intersection()`, `difference()`, `symmetric_difference()`, `issubset()`, and `issuperset()` methods will accept any iterable as an argument.
+- Instances of `set` are compared to instances of `frozenset` based on their members. For example, `set('abc') == frozenset('abc')` returns True and so does `set('abc') in set([frozenset('abc')])`.
+- Operations that mix `set` instances with `frozenset` return the type of the first operand.
+
+**operations for set**
+- `add(elem)` Add element `elem` to the set.
+- `remove(elem)` Remove element `elem` from the set. Raises `KeyError` if `elem` is not contained in the set.
+- `discard(elem)` Remove element `elem` from the set if it is present.
+- `pop()` Remove and return an arbitrary element from the set. Raises `KeyError` if the set is empty.
+- `clear()` Remove all elements from the set.
+<br>
+
+- `update(*others)` or `set |= other | ...` Update a set with the union of itself and others.
+- `intersection_update(*others)` or `set &= other & ...` Update a set with the intersection of itself and another.
+- `difference_update(*others)` or `set -= other | ...` Remove all elements of another set from this set.
+- `symmetric_difference_update(other)` or `set ^= other` Update a set with the symmetric difference of itself and another.
+
+
+### Mapping Types (dict)
+- `list(dict)`, `set(dict)` and `iter(dict)` only return the keys of the dictionary.
+- The n number in worst-case complexities for copying and iterating the dictionary is the maximum size that the dictionary ever achieved.
+- `d | other` or `d |= other` Create a new dictionary with the merged keys and values of `d` and `other`, which must both be dictionaries. The values of `other` take priority when `d` and `other` share keys.
+- The objects returned by `dict.keys()`, `dict.values()` and `dict.items()` are view objects. They provide a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes.
+- Keys views are set-like since their entries are unique and hashable. For set-like views, all of the operations defined for the abstract base class `collections.abc.Set` are available, e.g. `==`, `<` and `^`.
+
+**constructor**
+- `dict(**kwarg)`
+- `dict(mapping, **kwarg)`
+- `dict(iterable, **kwarg)`
+- Return a new dictionary initialized from an optional positional argument and a possibly empty set of keyword arguments.
+  - If no positional argument is given, an empty dictionary is created.
+  - If a positional argument is given and it is a mapping object, a dictionary is created with the same key-value pairs as the mapping object.
+  - Otherwise, the positional argument must be an iterable object. Each item in the iterable must itself be an iterable with exactly two objects. The first object becomes a key and the second object the corresponding value.
+  - If a key occurs more than once, the last value for that key becomes the corresponding value in the new dictionary.
+  - If keyword arguments are given, the keyword arguments and their values are added to the dictionary created from the positional argument. If a key being added is already present, the value from the keyword argument replaces the value from the positional argument.
+- `dict` can also be created by using a comma-separated list of elements of `key: value` pairs within braces, or using a dict comprehension.
+
+**methods**
+- `clear()` Remove all items from the dictionary.
+- `copy()` Return a shallow copy of the dictionary.
+- `fromkeys(iterable, value=None)` Create a new dictionary with keys from `iterable` and values set to `value`. It is a class method that returns a new dictionary.
+- `get(key, default=None)` Return the value for key if key is in the dictionary, else default.
+- `pop(key, default=None)` If key is in the dictionary, remove it and return its value, else return default.
+- `popitem()` Remove and return a `(key, value)` pair from the dictionary. Pairs are returned in LIFO order. If the dictionary is empty, calling `popitem()` raises a `KeyError`.
+- `setdefault(key, default=None)` If key is in the dictionary, return its value. If not, insert key with a value of default and return default.
+- `update([other])` Update the dictionary with the key-value pairs from other, overwriting existing keys.
+  - `update()` accepts either another dictionary object or an iterable of key-value pairs (as tuples or other iterables of length two).
+  - If keyword arguments are specified, the dictionary is then updated with those key-value pairs.
+<br>
+
+- `items()` Return a new view of the dictionary’s items (`(key, value)` pairs).
+- `keys()` Return a new view of the dictionary’s keys.
+- `values()` Return a new view of the dictionary’s values. See the documentation of view objects. An equality comparison between one `dict.values()` view and another will always return False.
+
+
+### Iterator Types
+- Python supports a concept of iteration over containers. This is implemented using two distinct methods. Sequences always support the iteration methods.
+- One method needs to be defined for container objects to provide iterable support `container.__iter__()`, which return an iterator object. The iterator objects themselves are required to support the following two methods, which together form the iterator protocol:
+  - `iterator.__iter__()` Return the iterator object itself. This is required to allow both containers and iterators to be used with the `for` and `in` statements.
+  - `iterator.__next__()` Return the next item from the iterator. If there are no further items, raise the `StopIteration` exception.
+- Python’s generators provide a convenient way to implement the iterator protocol. If a container object’s `__iter__()` method is implemented as a generator, it will automatically return an iterator object (technically, a generator object) supplying the `__iter__()` and `__next__()` methods.
+
+
+### Context Manager Types
+- Python’s `with` statement supports the concept of a runtime context defined by a context manager. This is implemented using a pair of methods that allow user-defined classes to define a runtime context that is entered before the statement body is executed and exited when the statement ends:
+- `contextmanager.__enter__()` Enter the runtime context and return either this object or another object related to the runtime context.
+  - The value returned by this method is bound to the identifier in the `as` clause of `with` statements using this context manager.
+- `contextmanager.__exit__(exc_type, exc_val, exc_tb)` Exit the runtime context and return a Boolean flag indicating if any exception that occurred should be suppressed.
+  - If an exception occurred while executing the body of the with statement, the arguments contain the exception type, value and traceback information. Otherwise, all three arguments are None.
+  - Returning a true value from this method will cause the with statement to suppress the exception and continue execution with the statement immediately following the `with` statement.
+  - Otherwise the exception continues propagating after this method has finished executing.
+  - Exceptions that occur during execution of this method will replace any exception that occurred in the body of the `with` statement.
+
+
+
+
+
+
+
+
+
+<br>
 
 ## Command line and environment
 ```py
@@ -471,415 +866,6 @@ class DecoratorAsClass:
         # do some stuff after function call and return the result
         return result
 ```
-
-
-
-
-
-
-
-
-<br>
-
-## Built-in Types
-### Numeric Types (int, float, complex)
-- Appending 'j' or 'J' to a numeric literal yields an imaginary number. The real and imaginary part of the complex number are each a floating point number. To extract these parts from a complex number z, use `z.real` and `z.imag`.
-
-**constructor**
-- `bool(x=False)` Return a Boolean value. x is converted using the standard truth testing procedure. If x is false or omitted, this returns False; otherwise, it returns True.
-- `int(x=0)` or `int(x, base=10)` Return an integer object constructed from a number or string x, or return 0 if no arguments are given.
-  - For floating point numbers, this truncates towards zero.
-  - If base is given, then x must be a string, bytes, or bytearray instance representing an integer in radix base. Optionally, the string can be preceded by `+` or `-` (with no space in between), have leading zeros, be surrounded by whitespace, and have single underscores interspersed between digits.
-  - The allowed bases are 0 and 2–36. For base 0, the string is interpreted in a similar way to an integer literal in code, in that the actual base is 2, 8, 10, or 16 as determined by the prefix.
-- `float(x=0.0)` Return a floating point number constructed from a number or string x.
-- `complex(real=0, imag=0)` or `complex(string)` Return a complex number with the value `real` + `imag`*1j or convert a string or number to a complex number. If both arguments are omitted, returns `0j`.
-
-**methods of int**
-- `bit_count()` Return the number of ones in the binary representation of the absolute value of the integer.
-- `bit_length()` Return the number of bits necessary to represent an integer in binary, excluding the sign and leading zeros, e.g. `(-3).bit_length` is 2.
-- `to_bytes(length=1, byteorder='big', *, signed=False)` Return an array of bytes representing an integer.
-  - The integer is represented using `length` bytes. An `OverflowError` is raised if the integer is not representable with the given number of bytes.
-  - The `byteorder` argument determines the byte order used to represent the integer. If byteorder is `"big"`, the most significant byte is at the beginning of the byte array. If byteorder is `"little"`, the most significant byte is at the end of the byte array.
-  - The `signed` argument determines whether two’s complement is used to represent the integer. If `signed` is False and a negative integer is given, an `OverflowError` is raised.
-- `from_bytes(bytes, byteorder='big', *, signed=False)` Return the integer represented by the given array of bytes.
-- `as_integer_ratio()` Return a pair of integers, whose ratio is exactly equal to the original int and with a positive denominator.
-
-**methods of float**
-- `as_integer_ratio()` Return a pair of integers, whose ratio is exactly equal to the original float and with a positive denominator.
-- `is_integer()` Return True if the float instance is finite with integral value, and False otherwise
-- `hex()` Return a hexadecimal representation of a floating-point number. For finite floating-point numbers, this representation will always include a leading 0x and a trailing p and exponent.
-- `fromhex(string)` Create a floating-point number from a hexadecimal string.
-
-**methods of complex**
-- `conjugate()` Return the complex conjugate of its argument.
-
-
-### Sequence Types (list, tuple, range)
-**constructor**
-- `list(iterable)` Rather than being a function, list is actually a mutable sequence type.
-- `tuple(iterable)` Rather than being a function, tuple is actually an immutable sequence type.
-- `range(stop)` or `range(start, stop, step=1)` Rather than being a function, range is actually an immutable sequence type. Two range objects are considered equal if they represent the same sequence of values.
-- `slice(stop)` or `slice(start, stop, step=1)` Return a slice object representing the set of indices specified by `range(start, stop, step)`. Slice objects are also generated when extended indexing syntax is used, e.g. `a[start:stop:step]` or `a[start:stop, i]`.
-<br>
-
-**commom sequence operations**
-- `a + b` the concatenation of a and b
-- `a * n` or `n * a` equivalent to adding a to itself n times. 
-  - Replicating a list with `*` doesn’t create copies, it only creates references to the existing objects, i.e. after `a = [[0]] * 3; a[0][0] = 1`, a will be `[[1], [1], [1]]`.
-  - Some sequence types (such as `range`) only support item sequences that follow specific patterns, and hence don’t support sequence concatenation or repetition.
-- While the `in` and `not in` operations are used only for simple containment testing in the general case, some specialised sequences (such as `str`, `bytes` and `bytearray`) also use them for subsequence testing, e.g. `"gg" in "eggs"` is True.
-- Slicing will create a shallow copy, which constructs a new compound object and then inserts references into it to the objects found in the original.
-<br>
-
-- `index(value, start=0, stop=9223372036854775807)` Return first index of value.
-- `index(sub[, start[, end]])` Return the lowest index where substring/subsection sub is found.
-  - Optional arguments `start` and `end` are interpreted as in slice notation.
-  - Raises `ValueError` when the value/substring/subsection is not found.
-- `count(value)` Return number of occurrences of value.
-- `count(sub[, start[, end]])` Return the number of non-overlapping occurrences of substring sub in `S[start:end]`.
-  - Optional arguments start and end are interpreted as in slice notation.
-- The only operation that immutable sequence types generally implement that is not also implemented by mutable sequence types is support for the `hash()` built-in.
-
-```py
->>> a = [1, 2, 3, 4, 5]
->>> a[4:] = [6]
->>> a
-[1, 2, 3, 4, 6]
->>> a[4:4] = [7, 8]
->>> a
-[1, 2, 3, 4, 7, 8, 6]
->>> a[2:6] = []  
->>> a
-[1, 2, 6]
-```
-
-**methods of list**
-- `append(object)` Append object to the end of the list.
-- `clear()` Remove all items from list.
-- `copy()` Return a shallow copy of the list.
-- `extend(iterable)` Extend list by appending elements from the iterable.
-- `insert(index, object)` Insert object before index. If index is greater than `len(s)`, it's considered `len(s)`; if less than `-len(s)`, it's considered `-len(s)`.
-- `pop(index=-1)` Remove and return item at index (default last). Raises `IndexError` if list is empty or index is out of range.
-- `remove(value)` Remove first occurrence of value. Raises `ValueError` if the value is not present.
-- `reverse()` Reverse in place.
-- `sort(*, key=None, reverse=False)` Sort the list in ascending order and return None.
-  - The sort is in-place and stable, i.e. the order of two equal elements is maintained.
-  - If a `key` function is given, apply it once to each list item and sort them, ascending or descending, according to their function values.
-  - The `reverse` flag can be set to sort in descending order.
-
-### Text Sequence Type (str)
-- Strings are **immutable** sequences of Unicode code points.
-- String literals can be written in a variety of ways. Single quotes allow embedded double quotes, double quotes allow embedded single quotes, triple single quotes and double quotes allow both.
-- Triple quoted strings may span multiple lines. All associated whitespace will be included in the string literal.
-- String literals that are part of a single expression and have only whitespace between them will be implicitly converted to a single string literal.
-- Both string and bytes literals may optionally be prefixed with a letter `r` or `R`; such strings are called raw strings and treat backslashes as literal characters.
-
-**constructor**
-- `str(object='')`
-- `str(object=b'', encoding='utf-8', errors='strict')`
-- Return a string version of object. If object is not provided, returns the empty string. Otherwise, the behavior of `str()` depends on whether encoding or errors is given, as follows.
-  - If neither encoding nor errors is given, `str(object)` returns `type(object).__str__(object)`, which is the informal or nicely printable string representation of object. For string objects, this is the string itself. If object does not have a `__str__()` method, then `str()` falls back to returning `repr(object)`.
-  - If at least one of encoding or errors is given, object should be a bytes-like object. In this case, if object is a `bytes` or `bytearray` object, then `str(bytes, encoding, errors)` is equivalent to `bytes.decode(encoding, errors)`.
-  - Passing a bytes object to `str()` without the `encoding` or `errors` arguments falls under the first case of returning the informal string representation like `"b'abc'"`
-
-#### Find and Delete
-- `find(sub[, start[, end]])` Return -1 on failure, others are the same as `index()`.
-- `rfind(sub[, start[, end]])` Return the highest index where substring sub is found, and return -1 on failure.
-- `rindex(sub[, start[, end]])` Return the highest index where substring sub is found, and raises `ValueError` when the substring is not found.
-<br>
-
-- `strip(chars=None)` Return a copy of the string with leading and trailing whitespace removed. If `chars` is given and not None, remove characters in `chars` instead.
-- `lstrip(chars=None)` Return a copy of the string with leading whitespace removed.
-- `rstrip(chars=None)` Return a copy of the string with trailing whitespace removed.
-- `removeprefix(prefix)` Return a str with the given prefix string removed if present. If the string starts with the prefix string, return `string[len(prefix):]`. Otherwise, return a copy of the original string.
-- `removesuffix(suffix)` Return a str with the given suffix string removed if present. If the string ends with the suffix string and that suffix is not empty, return `string[:-len(suffix)]`. Otherwise, return a copy of the original string.
-
-#### Split and Join
-- `partition(sep)` Partition the string into three parts using the given separator.
-  - If the separator is found, returns a 3-tuple containing the part before the separator, the separator itself, and the part after it.
-  - If the separator is not found, returns a 3-tuple containing the original string and two empty strings.
-- `rpartition(sep)` Partition the string into three parts using the given separator. This will search for the separator in the string, starting at the end, others are the same as `partition()`
-<br>
-
-- `split(sep=None, maxsplit=-1)` Return a list of the substrings in the string, using sep as the separator string.
-  - When `seq` is None (the default value), it will split on any whitespace character (including `\n`, `\r`, `\t`, `\f` and spaces) and will discard empty strings from the result.
-  - `maxsplit` is the maximum number of splits (starting from the left), -1 (the default value) means no limit.
-- `rsplit(sep=None, maxsplit=-1)` Splitting starts at the end of the string and works to the front, others are the same as `split()`
-- `splitlines(keepends=False)` Return a list of the lines in the string, breaking at line boundaries (including `\n`, `\r`, `\r\n` and so on). Line breaks are not included in the resulting list unless `keepends` is true.
-<br>
-
-- `join(iterable)` Concatenate any number of strings. The string whose method is called is inserted in between each given string. The result is returned as a new string. Example: `'.'.join(['ab', 'pq', 'rs']) -> 'ab.pq.rs'`
-
-#### Convert
-- `capitalize()` Return a capitalized version of the string. More specifically, make the first character have upper case and the rest lower case.
-- `casefold()` Return a version of the string suitable for caseless comparisons.
-- `title()` Return a version of the string where each word is titlecased.
-- `lower()` Return a copy of the string converted to lowercase.
-- `upper()` Return a copy of the string converted to uppercase.
-- `swapcase()` Convert uppercase characters to lowercase and lowercase characters to uppercase.
-<br>
-
-- `center(width, fillchar=' ')` Return a centered string of length `width` with specified `fillcharacter`. The `width` can be less than `len(s)`
-- `ljust(width, fillchar=' ')` Return a left-justified string of length `width` with specified `fillcharacter`.
-- `rjust(width, fillchar=' ')` Return a right-justified string of length `width` with specified `fillcharacter`.
-- `zfill(width)` Pad a numeric string with zeros on the left, to fill a field of the given width. The string is never truncated.
-<br>
-
-- `replace(old, new, count=-1)` Return a copy with all occurrences of substring `old` replaced by `new`. `count` is the maximum number of occurrences to replace, -1 (the default value) means replace all occurrences.
-- `expandtabs(tabsize=8)` Return a copy where all tab characters are expanded using spaces.
-- `format(*args, **kwargs)` Return a formatted version of str, using substitutions from `args` and `kwargs`. The substitutions are identified by braces.
-- `format_map(mapping)` Return a formatted version of str, using substitutions from `mapping`. The substitutions are identified by braces.
-<br>
-
-- `translate(table)` Replace each character in the string using the given translation table, which must be a mapping of Unicode ordinals to Unicode ordinals, strings, or None. The table must implement lookup/indexing via `__getitem__()`, typically a mapping or sequence. If this operation raises `LookupError`, the character is left untouched. Characters mapped to None are deleted.
-- `maketrans(x[, y[, z])` Return a translation table usable for `str.translate()`. It's a static method.
-  - If there is only one argument, it must be a dictionary mapping Unicode ordinals (integers) or characters to Unicode ordinals, strings or None. Character keys will be then converted to ordinals.
-  - If there are two arguments, they must be strings of equal length, and in the resulting dictionary, each character in x will be mapped to the character at the same position in y.
-  - If there is a third argument, it must be a string, whose characters will be mapped to None in the result.
-
-#### Testing
-- `startswith(prefix[, start[, end]])` Return True if str starts with the specified prefix, False otherwise.
-  - With optional `start`, test str beginning at that position.
-  - With optional `end`, stop comparing str at that position.
-  - `prefix` can also be a tuple of strings to try.
-- `endswith(suffix[, start[, end]])` Return True if str ends with the specified suffix, False otherwise.
-<br>
-
-- `isalnum()` Return True if the string is an alpha-numeric string, False otherwise. A string is alpha-numeric if all characters in the string are alpha-numeric and there is at least one character in the string.
-- `isalpha()` Return True if the string is an alphabetic string, False otherwise.
-- `isascii()` Return True if all characters in the string are ASCII, False otherwise. ASCII characters have code points in the range `U+0000-U+007F`. Empty string is ASCII too.
-- `isdecimal()` Return True if the string is a decimal string, False otherwise.
-- `isdigit()` Return True if the string is a digit string, False otherwise.
-- `isidentifier()` Return True if the string is a valid Python identifier, False otherwise. Call `keyword.iskeyword(s)` to test whether string s is a reserved identifier, such as "def" or "class".
-- `islower()` Return True if the string is a lowercase string, False otherwise.
-- `isnumeric()` Return True if the string is a numeric string, False otherwise.
-- `isprintable()` Return True if the string is printable, False otherwise. A string is printable if all of its characters are considered printable in `repr()` or if it is empty.
-- `isspace()` Return True if the string is a whitespace string, False otherwise.
-- `istitle()` Return True if the string is a title-cased string, False otherwise. In a title-cased string, uppercase characters may only follow uncased characters and lowercase characters only cased ones.
-- `isupper()` Return True if the string is an uppercase string, False otherwise.
-
-#### printf-style String Formatting
-- String objects have one unique built-in operation: the `%` operator (modulo). This is also known as the string formatting or interpolation operator.
-- In `format % values`, if `format` requires a single argument, `values` may be a single non-tuple object. Otherwise, `values` must be a tuple with exactly the number of items specified by the format string, or a single mapping object.
-- A conversion specifier contains two or more characters and has the following components, which must occur in this order:
-  - The `%` character, which marks the start of the specifier.
-  - Mapping key (optional), consisting of a parenthesised sequence of characters (for example, `(somename)`).
-  - Conversion flags (optional), which affect the result of some conversion types.
-  - Minimum field width (optional). If specified as an `*`, the actual width is read from the next element of the tuple in values, and the object to convert comes after the minimum field width and optional precision.
-  - Precision (optional), given as a `.` followed by the precision. If specified as `*`, the actual precision is read from the next element of the tuple in values, and the value to convert comes after the precision.
-  - Length modifier (optional).
-  - Conversion type.
-
-#### Format String Syntax
-```C
-replacement_field ::=  "{" [field_name] ["!" conversion] [":" format_spec] "}"
-field_name        ::=  arg_name ("." attribute_name | "[" element_index "]")*
-arg_name          ::=  [identifier | digit+]
-attribute_name    ::=  identifier
-element_index     ::=  digit+ | index_string
-index_string      ::=  <any source character except "]"> +
-conversion        ::=  "r" | "s" | "a"
-
-format_spec     ::=  [[fill]align][sign][z][#][0][width][grouping_option][.precision][type]
-fill            ::=  <any character>
-align           ::=  "<" | ">" | "=" | "^"
-sign            ::=  "+" | "-" | " "
-width           ::=  digit+
-grouping_option ::=  "_" | ","
-precision       ::=  digit+
-type            ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" | "o" | "s" | "x" | "X" | "%"
-```
-- The `field_name` begins with an `arg_name` that is either a number or a keyword. If it’s a number, it refers to a positional argument, and if it’s a keyword, it refers to a named keyword argument.
-- If the numerical `arg_names` in a format string are 0, 1, 2, … in sequence, they can all be omitted (**not just some**) and the numbers 0, 1, 2, … will be automatically inserted in that order.
-- An expression of the form `.name` selects the named attribute using `getattr(),` while an expression of the form `[index]` does an index lookup using `__getitem__().`
-
-**align and fill**
-- If a valid `align` value is specified, it can be preceded by a `fill` character that can be any character and defaults to a space if omitted.
-- `<` Forces the field to be left-aligned (this is the default for most objects).
-- `>` Forces the field to be right-aligned (this is the default for numbers).
-- `=` Forces the padding to be placed after the sign (if any) but before the digits. This is used for printing fields in the form `+000000120`. This alignment option is only valid for numeric types. It becomes the default for numbers when `0` immediately precedes the field `width`.
-- `^` Forces the field to be centered within the available space.
-
-**sign**
-- `+` Indicates that a sign should be used for both positive as well as negative numbers.
-- `-` Indicates that a sign should be used only for negative numbers (this is the default behavior).
-- `space` Indicates that a leading space should be used on positive numbers, and a minus sign on negative numbers.
-
-**z, #, 0**
-- The `z` option forces negative zero floating-point values to positive zero after rounding to the format precision. This option is only valid for floating-point presentation types.
-- The `#` option causes the "alternate form" to be used for the conversion. This option is only valid for integer, float and complex types.
-  - For integers, when binary, octal, or hexadecimal output is used, this option adds the respective prefix `0b`, `0o`, `0x`, or `0X` to the output value.
-  - For float and complex the alternate form causes the result of the conversion to always contain a decimal-point character.
-  - In addition, for `g` and `G` conversions, trailing zeros are not removed from the result.
-- When no explicit alignment is given, preceding the width field by a `0` character enables sign-aware zero-padding for numeric types. This is equivalent to a fill character of `0` with an alignment type of `=`.
-
-**grouping_option**
-- The `,` option signals the use of a comma for a thousands separator. For a locale aware separator, use the `n` integer presentation type instead.
-- The `_` option signals the use of an underscore for a thousands separator for floating point presentation types and for integer presentation type `d`. For integer presentation types `b`, `o`, `x`, and `X`, underscores will be inserted every 4 digits. For other presentation types, specifying this option is an error.
-
-**type**
-- The available string presentation types are `s` and `None` (The same as `s`).
-- The available integer presentation types are `b`, `c`, `d`, `o`, `x`, `X`, `n` and `None` (The same as `d`).
-  - `n` Number. This is the same as `d`, except that it uses the current locale setting to insert the appropriate number separator characters.
-- The available float presentation types are `e`, `E`, `f`, `F`, `g`, `G`, `n`, `%` and `None` (The same as `g`).
-  - `n` Number. This is the same as `g`, except that it uses the current locale setting to insert the appropriate number separator characters.
-  - `%` Percentage. Multiplies the number by 100 and displays in fixed (`f`) format, followed by a percent sign.
-
-#### Formatted String Literals
-```C
-f_string          ::=  (literal_char | "{{" | "}}" | replacement_field)*
-replacement_field ::=  "{" f_expression ["="] ["!" conversion] [":" format_spec] "}"
-f_expression      ::=  (conditional_expression | "*" or_expr)
-                         ("," conditional_expression | "," "*" or_expr)* [","]
-                       | yield_expression
-conversion        ::=  "s" | "r" | "a"
-format_spec       ::=  (literal_char | NULL | replacement_field)*
-literal_char      ::=  <any code point except "{", "}" or NULL>
-```
-- A formatted string literal or f-string is a string literal that is prefixed with `f` or `F`. These strings may contain replacement fields, which are expressions delimited by curly braces `{}`.
-- `{{` or `}}` are replaced with the corresponding single curly brace.
-- Formatted string literals may be concatenated, but replacement fields cannot be split across literals.
-- An empty expression is not allowed, and both `lambda` and assignment expressions `:=` must be surrounded by explicit parentheses. Each expression is evaluated in the context where the formatted string literal appears, in order from left to right.
-- When the equal sign `=` is provided, the output will have the expression text, the `=` and the evaluated value. Spaces after the opening brace `{`, within the expression and after the `=` are all retained in the output.
-- By default, the `=` causes the repr() of the expression to be provided, unless there is a format specified. When a format is specified it defaults to the str() of the expression unless a conversion `!r` is declared.
-- The result is then formatted using the `format()` protocol. Top-level format specifiers may include nested replacement fields. These nested fields may include their own conversion fields and format specifiers, but may not include more deeply nested replacement fields.
-
-
-### Byte Sequence Types (bytes, bytearray)
-**constuctor**
-- `bytes(source=b''[, encoding[, errors]])` Return a bytes object which is an immutable sequence of integers in the range `0 <= x < 256`.
-- `bytearray(source=b''[, encoding[, errors]])` Return a new array of bytes which is a mutable sequence of integers in the range `0 <= x < 256`.
-- The optional source parameter can be used to initialize the array in a few different ways:
-  - If it is a string, you must also give the encoding (and optionally, errors) parameters; `bytes()` then converts the string to bytes using `str.encode()`.
-  - If it is an integer, the array will have that size and will be initialized with null bytes.
-  - If it is an object conforming to the buffer interface, a read-only buffer of the object will be used to initialize the bytes array.
-  - If it is an iterable, it must be an iterable of integers in the range `0 <= x < 256`.
-
-**bytes literal**
-- The syntax for bytes literals is largely the same as that for string literals, except that a `b` prefix is added.
-- Only ASCII characters are permitted in bytes literals.
-- As with string literals, bytes literals may also use a `r` prefix to disable processing of escape sequences.
-- While bytes literals and representations are based on ASCII text, bytes objects actually behave like immutable sequences of integers, with each value in the sequence restricted such that `0 <= x < 256`
-
-**methods**
-- `bytes` has most methods of `str` 
-- `bytearray` has most methods of `str` and `list` 
-- `fromhex(string)` The string must contain two hexadecimal digits per byte, with ASCII whitespace being ignored.
-- `hex([sep[, bytes_per_sep]])` Return a string object containing two hexadecimal digits for each byte in the instance.
-  - `sep` An optional single character or byte to separate hex bytes.
-  - `bytes_per_sep` How many bytes between separators. Positive values count from the right, negative values count from the left. The default is 1.
-<br>
-
-- `encode(encoding='utf-8', errors='strict')` Encode the string using the codec registered for encoding. It's the method of `str`.
-- `decode(encoding='utf-8', errors='strict')` Decode the bytes/bytearray using the codec registered for encoding. It's the method of `bytes` and `bytearray`.
-
-
-
-### Set Types (set, frozenset)
-- A set object is an unordered collection of distinct hashable objects.
-- The `set` type is mutable, so it has no hash value and cannot be used as either a dictionary key or as an element of another `set`.
-- The `frozenset` type is immutable and hashable, so it can therefore be used as a dictionary key or as an element of another `set`.
-
-**constructor**
-- `set(iterable)`
-- `frozenset(iterable)`
-- Return a new `set` or `frozenset` object, optionally with elements taken from `iterable`. The elements must be hashable.
-- `set` (not `frozensets`) can also be created by using a comma-separated list of elements within braces, or using a set comprehension, in addition to the set constructor.
-
-**commom set operations**
-- `len(set)`, `x in s`, `x not in s`
-- `isdisjoint(other)` Return True if the set has no elements in common with other.
-- `issubset(other)`
-  - `set <= other` Test whether every element in the set is in other.
-  - `set < other` Test whether the set is a proper subset of other, that is, `set <= other` and `set != other`.
-- `issuperset(other)`
-  - `set >= other` Test whether every element in other is in the set.
-  - `set > other` Test whether the set is a proper superset of other, that is, `set >= other` and `set != other`.
-<br>
-
-- `union(*others)` or `set | other | ...` Return a new set with elements from the set and all others.
-- `intersection(*others)` or `set & other & ...` Return a new set with elements common to the set and all others.
-- `difference(*others)` or `set - other - ...` Return a new set with elements in the set that are not in the others.
-- `symmetric_difference(other)` or `set ^ other` Return a new set with elements in either the set or other but not both.
-- `copy()` Return a shallow copy of the set.
-<br>
-
-- The non-operator versions of `union()`, `intersection()`, `difference()`, `symmetric_difference()`, `issubset()`, and `issuperset()` methods will accept any iterable as an argument.
-- Instances of `set` are compared to instances of `frozenset` based on their members. For example, `set('abc') == frozenset('abc')` returns True and so does `set('abc') in set([frozenset('abc')])`.
-- Operations that mix `set` instances with `frozenset` return the type of the first operand.
-
-**operations for set**
-- `add(elem)` Add element `elem` to the set.
-- `remove(elem)` Remove element `elem` from the set. Raises `KeyError` if `elem` is not contained in the set.
-- `discard(elem)` Remove element `elem` from the set if it is present.
-- `pop()` Remove and return an arbitrary element from the set. Raises `KeyError` if the set is empty.
-- `clear()` Remove all elements from the set.
-<br>
-
-- `update(*others)` or `set |= other | ...` Update a set with the union of itself and others.
-- `intersection_update(*others)` or `set &= other & ...` Update a set with the intersection of itself and another.
-- `difference_update(*others)` or `set -= other | ...` Remove all elements of another set from this set.
-- `symmetric_difference_update(other)` or `set ^= other` Update a set with the symmetric difference of itself and another.
-
-
-### Mapping Types (dict)
-- `list(dict)`, `set(dict)` and `iter(dict)` only return the keys of the dictionary.
-- The n number in worst-case complexities for copying and iterating the dictionary is the maximum size that the dictionary ever achieved.
-- `d | other` or `d |= other` Create a new dictionary with the merged keys and values of `d` and `other`, which must both be dictionaries. The values of `other` take priority when `d` and `other` share keys.
-- The objects returned by `dict.keys()`, `dict.values()` and `dict.items()` are view objects. They provide a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes.
-- Keys views are set-like since their entries are unique and hashable. For set-like views, all of the operations defined for the abstract base class `collections.abc.Set` are available, e.g. `==`, `<` and `^`.
-
-**constructor**
-- `dict(**kwarg)`
-- `dict(mapping, **kwarg)`
-- `dict(iterable, **kwarg)`
-- Return a new dictionary initialized from an optional positional argument and a possibly empty set of keyword arguments.
-  - If no positional argument is given, an empty dictionary is created.
-  - If a positional argument is given and it is a mapping object, a dictionary is created with the same key-value pairs as the mapping object.
-  - Otherwise, the positional argument must be an iterable object. Each item in the iterable must itself be an iterable with exactly two objects. The first object becomes a key and the second object the corresponding value.
-  - If a key occurs more than once, the last value for that key becomes the corresponding value in the new dictionary.
-  - If keyword arguments are given, the keyword arguments and their values are added to the dictionary created from the positional argument. If a key being added is already present, the value from the keyword argument replaces the value from the positional argument.
-- `dict` can also be created by using a comma-separated list of elements of `key: value` pairs within braces, or using a dict comprehension.
-
-**methods**
-- `clear()` Remove all items from the dictionary.
-- `copy()` Return a shallow copy of the dictionary.
-- `fromkeys(iterable, value=None)` Create a new dictionary with keys from `iterable` and values set to `value`. It is a class method that returns a new dictionary.
-- `get(key, default=None)` Return the value for key if key is in the dictionary, else default.
-- `pop(key, default=None)` If key is in the dictionary, remove it and return its value, else return default.
-- `popitem()` Remove and return a `(key, value)` pair from the dictionary. Pairs are returned in LIFO order. If the dictionary is empty, calling `popitem()` raises a `KeyError`.
-- `setdefault(key, default=None)` If key is in the dictionary, return its value. If not, insert key with a value of default and return default.
-- `update([other])` Update the dictionary with the key-value pairs from other, overwriting existing keys.
-  - `update()` accepts either another dictionary object or an iterable of key-value pairs (as tuples or other iterables of length two).
-  - If keyword arguments are specified, the dictionary is then updated with those key-value pairs.
-<br>
-
-- `items()` Return a new view of the dictionary’s items (`(key, value)` pairs).
-- `keys()` Return a new view of the dictionary’s keys.
-- `values()` Return a new view of the dictionary’s values. See the documentation of view objects. An equality comparison between one `dict.values()` view and another will always return False.
-
-
-### Iterator Types
-- Python supports a concept of iteration over containers. This is implemented using two distinct methods. Sequences always support the iteration methods.
-- One method needs to be defined for container objects to provide iterable support `container.__iter__()`, which return an iterator object. The iterator objects themselves are required to support the following two methods, which together form the iterator protocol:
-  - `iterator.__iter__()` Return the iterator object itself. This is required to allow both containers and iterators to be used with the `for` and `in` statements.
-  - `iterator.__next__()` Return the next item from the iterator. If there are no further items, raise the `StopIteration` exception.
-- Python’s generators provide a convenient way to implement the iterator protocol. If a container object’s `__iter__()` method is implemented as a generator, it will automatically return an iterator object (technically, a generator object) supplying the `__iter__()` and `__next__()` methods.
-
-
-### Context Manager Types
-- Python’s `with` statement supports the concept of a runtime context defined by a context manager. This is implemented using a pair of methods that allow user-defined classes to define a runtime context that is entered before the statement body is executed and exited when the statement ends:
-- `contextmanager.__enter__()` Enter the runtime context and return either this object or another object related to the runtime context.
-  - The value returned by this method is bound to the identifier in the `as` clause of `with` statements using this context manager.
-- `contextmanager.__exit__(exc_type, exc_val, exc_tb)` Exit the runtime context and return a Boolean flag indicating if any exception that occurred should be suppressed.
-  - If an exception occurred while executing the body of the with statement, the arguments contain the exception type, value and traceback information. Otherwise, all three arguments are None.
-  - Returning a true value from this method will cause the with statement to suppress the exception and continue execution with the statement immediately following the `with` statement.
-  - Otherwise the exception continues propagating after this method has finished executing.
-  - Exceptions that occur during execution of this method will replace any exception that occurred in the body of the `with` statement.
-
-
-
-
 
 
 
