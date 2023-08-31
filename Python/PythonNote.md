@@ -17,14 +17,10 @@
       - [转换](#转换-1)
       - [判断](#判断)
       - [格式化](#格式化)
-        - [格式化运算符](#格式化运算符)
-        - [format 方法](#format-方法)
-        - [格式字符串字面量](#格式字符串字面量)
-    - [Byte Sequence Types (bytes, bytearray)](#byte-sequence-types-bytes-bytearray)
-    - [Set Types (set, frozenset)](#set-types-set-frozenset)
-    - [Mapping Types (dict)](#mapping-types-dict)
-    - [Iterator Types](#iterator-types)
-    - [Context Manager Types](#context-manager-types)
+    - [字节序列](#字节序列)
+    - [集合](#集合)
+    - [字典](#字典)
+    - [文件](#文件)
   - [Command line and environment](#command-line-and-environment)
   - [Expressions](#expressions)
     - [Atoms](#atoms)
@@ -177,7 +173,7 @@
 - 列表、元组、字符串等序列都支持 `+` (concatenation) 和 `*` (repetition) 操作符，可实现浅复制
 - 列表、元组、字符串等序列都支持 `in` 和 `not in` 操作符，字符串、bytes 和 bytearray 还额外支持子序列包含检查
 - 列表是 mutable 序列类型，不可使用 hash() 函数
-- 列表可通过给切片赋值 iterable，来插入、删除、修改批量元素
+- 列表可通过给切片赋值 iterable，来插入、删除、修改批量元素，如：
 ```py
 >>> a = [1, 2, 3, 4, 5]
 >>> a[4:] = [6]
@@ -214,7 +210,6 @@
 **元组方法**
 - `index(value, start=0, stop=9223372036854775807)` 返回值的第一个索引，若不存在则抛出 ValueError
 - `count(value)` 返回值的出现次数
-
 
 
 
@@ -289,6 +284,8 @@
 
 - `replace(old, new, count=-1)` 替换 old 为 new，最多替换 count 次
 - `expandtabs(tabsize=8)` 将所有制表符转换为空格
+- `encode(encoding='utf-8', errors='strict')` 将字符串编码为 bytes 对象
+  - `error` 若为 `'ignore'` 则会忽略 UnicodeEncodeError
 
 <br>
 
@@ -320,7 +317,7 @@
 <br>
 
 #### 格式化
-##### 格式化运算符
+**格式化运算符**
 运算符 `%` 可用于格式化字符串，其前面为字符串，后面为元组，元组长度对应于字符串中的转换说明符
 转换说明符的基本格式为 `%[flags][width][.precision][length]type`，以下为几个示例：
 - `"%+05d" % (1)` 的结果为 `"+0001"`
@@ -331,7 +328,7 @@
 
 <br>
 
-##### format 方法
+**format 方法**
 字符串自带的 format() 方法也可用于格式化，以下为几个示例：
 - `"{} are {} years old".format(name, age)`
 - `"{0} are {1} years old".format(name, age)`
@@ -378,7 +375,7 @@ type            ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" |
 
 <br>
 
-##### 格式字符串字面量
+**格式字符串字面量**
 - f 或 F 开头的字符串被称为格式字符串字面量，也被称为 f-string
 - f-string 中的 `{}` 内可直接使用表达式，可在表达式后加上 `:` 再加上格式说明符
 - 可在表达式后使用 `=` 来得到赋值语句，空白会被保留，如 `f"{ a = :.2f} "` 的结果为 `" a = 1.00 "`
@@ -388,137 +385,168 @@ type            ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" |
 
 <br>
 
-### Byte Sequence Types (bytes, bytearray)
-**constuctor**
-- `bytes(source=b''[, encoding[, errors]])` Return a bytes object which is an immutable sequence of integers in the range `0 <= x < 256`.
-- `bytearray(source=b''[, encoding[, errors]])` Return a new array of bytes which is a mutable sequence of integers in the range `0 <= x < 256`.
-- The optional source parameter can be used to initialize the array in a few different ways:
-  - If it is a string, you must also give the encoding (and optionally, errors) parameters; `bytes()` then converts the string to bytes using `str.encode()`.
-  - If it is an integer, the array will have that size and will be initialized with null bytes.
-  - If it is an object conforming to the buffer interface, a read-only buffer of the object will be used to initialize the bytes array.
-  - If it is an iterable, it must be an iterable of integers in the range `0 <= x < 256`.
-
-**bytes literal**
-- The syntax for bytes literals is largely the same as that for string literals, except that a `b` prefix is added.
-- Only ASCII characters are permitted in bytes literals.
-- As with string literals, bytes literals may also use a `r` prefix to disable processing of escape sequences.
-- While bytes literals and representations are based on ASCII text, bytes objects actually behave like immutable sequences of integers, with each value in the sequence restricted such that `0 <= x < 256`
-
-**methods**
-- `bytes` has most methods of `str` 
-- `bytearray` has most methods of `str` and `list` 
-- `fromhex(string)` The string must contain two hexadecimal digits per byte, with ASCII whitespace being ignored.
-- `hex([sep[, bytes_per_sep]])` Return a string object containing two hexadecimal digits for each byte in the instance.
-  - `sep` An optional single character or byte to separate hex bytes.
-  - `bytes_per_sep` How many bytes between separators. Positive values count from the right, negative values count from the left. The default is 1.
+### 字节序列
+**构造函数**
+- `bytes(iterable_of_ints)` 返回由可迭代对象决定的 bytes 对象，可迭代对象中的整数应小于 256
+- `bytes(string, encoding[, errors])` 返回编码后的 bytes 对象
+- `bytes(bytes_or_buffer)` 返回 bytes 或 buffer 对象的**不可变**副本
+- `bytes(int)` 返回指定长度的由 null 初始化的 bytes 对象
+- `bytes()` 返回空 bytes 对象
 <br>
 
-- `encode(encoding='utf-8', errors='strict')` Encode the string using the codec registered for encoding. It's the method of `str`.
-- `decode(encoding='utf-8', errors='strict')` Decode the bytes/bytearray using the codec registered for encoding. It's the method of `bytes` and `bytearray`.
+- `bytearray(iterable_of_ints)` 返回由可迭代对象决定的 bytearray 对象，可迭代对象中的整数应小于 256
+- `bytearray(string, encoding[, errors])` 返回编码后的 bytearray 对象
+- `bytearray(bytes_or_buffer)` 返回 bytes 或 buffer 对象的**可变**副本
+- `bytearray(int)` 返回指定长度的由 null 初始化的 bytearray 对象
+- `bytearray()` 返回空 bytearray 对象
+
+**方法**
+- bytes 对象有着字符串的大多数方法，bytearray 对象有着字符串和列表的大多数方法
+- `fromhex(string)` 将字符串转换为对应的字节序列，不可带有前缀 0x，每个字节必须由两个字符组成，其间可以有空白字符
+- `hex([sep[, bytes_per_sep]])` 将字节序列转换为对应的十六进制字符串
+  - `sep` 分隔符，必须为单个字符或单个字节，默认为无
+  - `bytes_per_sep` 分隔符的间隔的字节数，若为正数则从右开始分隔，若为负数则从左开始分隔
+- `decode(encoding='utf-8', errors='strict')` 将字节序列解码为字符串
+  - `error` 若为 `'ignore'` 则会忽略 UnicodeDecodeError
 
 
 
-### Set Types (set, frozenset)
-- A set object is an unordered collection of distinct hashable objects.
-- The `set` type is mutable, so it has no hash value and cannot be used as either a dictionary key or as an element of another `set`.
-- The `frozenset` type is immutable and hashable, so it can therefore be used as a dictionary key or as an element of another `set`.
 
-**constructor**
-- `set(iterable)`
-- `frozenset(iterable)`
-- Return a new `set` or `frozenset` object, optionally with elements taken from `iterable`. The elements must be hashable.
-- `set` (not `frozensets`) can also be created by using a comma-separated list of elements within braces, or using a set comprehension, in addition to the set constructor.
-
-**commom set operations**
-- `len(set)`, `x in s`, `x not in s`
-- `isdisjoint(other)` Return True if the set has no elements in common with other.
-- `issubset(other)`
-  - `set <= other` Test whether every element in the set is in other.
-  - `set < other` Test whether the set is a proper subset of other, that is, `set <= other` and `set != other`.
-- `issuperset(other)`
-  - `set >= other` Test whether every element in other is in the set.
-  - `set > other` Test whether the set is a proper superset of other, that is, `set >= other` and `set != other`.
 <br>
 
-- `union(*others)` or `set | other | ...` Return a new set with elements from the set and all others.
-- `intersection(*others)` or `set & other & ...` Return a new set with elements common to the set and all others.
-- `difference(*others)` or `set - other - ...` Return a new set with elements in the set that are not in the others.
-- `symmetric_difference(other)` or `set ^ other` Return a new set with elements in either the set or other but not both.
-- `copy()` Return a shallow copy of the set.
+### 集合
+- 集合内的元素是无序且可哈希的，必须各不相同
+- set 和 frozenset 都是集合类型，其中 set 是可变的，不可哈希，frozenset 是不可变的，可哈希
+- set 可以使用花括号创建，不过花括号内必须有元素，否则会被当作 dict
+
+**set 方法**
+- `add(elem)` 添加元素
+- `remove(elem)` 删除元素，若不存在会抛出 KeyError
+- `discard(elem)` 删除元素，若不存在不会报错
+- `pop()` 弹出任意一个元素，若 set 为空则抛出 KeyError
+- `clear()` 删除所有元素
 <br>
 
-- The non-operator versions of `union()`, `intersection()`, `difference()`, `symmetric_difference()`, `issubset()`, and `issuperset()` methods will accept any iterable as an argument.
-- Instances of `set` are compared to instances of `frozenset` based on their members. For example, `set('abc') == frozenset('abc')` returns True and so does `set('abc') in set([frozenset('abc')])`.
-- Operations that mix `set` instances with `frozenset` return the type of the first operand.
+- `update(*others)` 更新为多个集合的并集
+  - 等效于 `set |= other | ...`
+- `intersection_update(*others)` `set &= other & ...` 更新为多个集合的交集
+  - 等效于 `set &= other & ...`
+- `difference_update(*others)` `set -= other | ...` 更新为多个集合的差集
+  - 等效于 `set -= other | ...`
+- `symmetric_difference_update(other)` `set ^= other` 更新为多个集合的异或
+  - 等效于 `set ^= other`
 
-**operations for set**
-- `add(elem)` Add element `elem` to the set.
-- `remove(elem)` Remove element `elem` from the set. Raises `KeyError` if `elem` is not contained in the set.
-- `discard(elem)` Remove element `elem` from the set if it is present.
-- `pop()` Remove and return an arbitrary element from the set. Raises `KeyError` if the set is empty.
-- `clear()` Remove all elements from the set.
+**集合方法**
+- `isdisjoint(other)` 若交集为空则返回 True
+- `issubset(other)` 若为 other 的子集则返回 True
+  - 等效于 `set <= other` 和 `set < other and set != other`
+- `issuperset(other)` 若为 other 的超集则返回 True
+  - 等效于 `set >= other` 和 `set > other and set != other`
 <br>
 
-- `update(*others)` or `set |= other | ...` Update a set with the union of itself and others.
-- `intersection_update(*others)` or `set &= other & ...` Update a set with the intersection of itself and another.
-- `difference_update(*others)` or `set -= other | ...` Remove all elements of another set from this set.
-- `symmetric_difference_update(other)` or `set ^= other` Update a set with the symmetric difference of itself and another.
+- `union(*others)` 取多个集合的并集
+  - 等效于 `set | other | ...`
+- `intersection(*others)` 取多个集合的交集
+  - 等效于 `set & other & ...`
+- `difference(*others)` 取多个集合的差集
+  - 等效于 `set - other - ...`
+- `symmetric_difference(other)` 取多个集合的异或
+  - 等效于 `set ^ other`
 
 
-### Mapping Types (dict)
-- `list(dict)`, `set(dict)` and `iter(dict)` only return the keys of the dictionary.
-- The n number in worst-case complexities for copying and iterating the dictionary is the maximum size that the dictionary ever achieved.
-- `d | other` or `d |= other` Create a new dictionary with the merged keys and values of `d` and `other`, which must both be dictionaries. The values of `other` take priority when `d` and `other` share keys.
-- The objects returned by `dict.keys()`, `dict.values()` and `dict.items()` are view objects. They provide a dynamic view on the dictionary’s entries, which means that when the dictionary changes, the view reflects these changes.
-- Keys views are set-like since their entries are unique and hashable. For set-like views, all of the operations defined for the abstract base class `collections.abc.Set` are available, e.g. `==`, `<` and `^`.
 
-**constructor**
-- `dict(**kwarg)`
-- `dict(mapping, **kwarg)`
-- `dict(iterable, **kwarg)`
-- Return a new dictionary initialized from an optional positional argument and a possibly empty set of keyword arguments.
-  - If no positional argument is given, an empty dictionary is created.
-  - If a positional argument is given and it is a mapping object, a dictionary is created with the same key-value pairs as the mapping object.
-  - Otherwise, the positional argument must be an iterable object. Each item in the iterable must itself be an iterable with exactly two objects. The first object becomes a key and the second object the corresponding value.
-  - If a key occurs more than once, the last value for that key becomes the corresponding value in the new dictionary.
-  - If keyword arguments are given, the keyword arguments and their values are added to the dictionary created from the positional argument. If a key being added is already present, the value from the keyword argument replaces the value from the positional argument.
-- `dict` can also be created by using a comma-separated list of elements of `key: value` pairs within braces, or using a dict comprehension.
 
-**methods**
-- `clear()` Remove all items from the dictionary.
-- `copy()` Return a shallow copy of the dictionary.
-- `fromkeys(iterable, value=None)` Create a new dictionary with keys from `iterable` and values set to `value`. It is a class method that returns a new dictionary.
-- `get(key, default=None)` Return the value for key if key is in the dictionary, else default.
-- `pop(key, default=None)` If key is in the dictionary, remove it and return its value, else return default.
-- `popitem()` Remove and return a `(key, value)` pair from the dictionary. Pairs are returned in LIFO order. If the dictionary is empty, calling `popitem()` raises a `KeyError`.
-- `setdefault(key, default=None)` If key is in the dictionary, return its value. If not, insert key with a value of default and return default.
-- `update([other])` Update the dictionary with the key-value pairs from other, overwriting existing keys.
-  - `update()` accepts either another dictionary object or an iterable of key-value pairs (as tuples or other iterables of length two).
-  - If keyword arguments are specified, the dictionary is then updated with those key-value pairs.
+
 <br>
 
-- `items()` Return a new view of the dictionary’s items (`(key, value)` pairs).
-- `keys()` Return a new view of the dictionary’s keys.
-- `values()` Return a new view of the dictionary’s values. See the documentation of view objects. An equality comparison between one `dict.values()` view and another will always return False.
+### 字典
+- `list(dict)`, `set(dict)` 和 `iter(dict)` 只能获得字典的键
+- 字典可以使用操作符 `|`，当键相同时，后面的字典优先级更高
+
+**字典方法**
+- `keys()` 返回字典的键的视图
+- `values()` 返回字典的值的视图
+- `items()` 返回字典的键值对的视图
+<br>
+
+- `clear()` 删除所有键值对
+- `copy()` 返回字典的浅复制
+<br>
+
+- `fromkeys(iterable, value=None)` 返回一个所有值均为 value 的字典
+- `get(key, default=None)` 返回指定键的值，若不存在则返回 default
+- `pop(key, default=None)` 弹出指定键的值，若不存在则返回 default
+- `popitem()` 弹出一个键值对，顺序为 LIFO，若字典为空则抛出 KeyError
 
 
-### Iterator Types
-- Python supports a concept of iteration over containers. This is implemented using two distinct methods. Sequences always support the iteration methods.
-- One method needs to be defined for container objects to provide iterable support `container.__iter__()`, which return an iterator object. The iterator objects themselves are required to support the following two methods, which together form the iterator protocol:
-  - `iterator.__iter__()` Return the iterator object itself. This is required to allow both containers and iterators to be used with the `for` and `in` statements.
-  - `iterator.__next__()` Return the next item from the iterator. If there are no further items, raise the `StopIteration` exception.
-- Python’s generators provide a convenient way to implement the iterator protocol. If a container object’s `__iter__()` method is implemented as a generator, it will automatically return an iterator object (technically, a generator object) supplying the `__iter__()` and `__next__()` methods.
 
 
-### Context Manager Types
-- Python’s `with` statement supports the concept of a runtime context defined by a context manager. This is implemented using a pair of methods that allow user-defined classes to define a runtime context that is entered before the statement body is executed and exited when the statement ends:
-- `contextmanager.__enter__()` Enter the runtime context and return either this object or another object related to the runtime context.
-  - The value returned by this method is bound to the identifier in the `as` clause of `with` statements using this context manager.
-- `contextmanager.__exit__(exc_type, exc_val, exc_tb)` Exit the runtime context and return a Boolean flag indicating if any exception that occurred should be suppressed.
-  - If an exception occurred while executing the body of the with statement, the arguments contain the exception type, value and traceback information. Otherwise, all three arguments are None.
-  - Returning a true value from this method will cause the with statement to suppress the exception and continue execution with the statement immediately following the `with` statement.
-  - Otherwise the exception continues propagating after this method has finished executing.
-  - Exceptions that occur during execution of this method will replace any exception that occurred in the body of the `with` statement.
+<br>
+
+### 文件
+```py
+open(
+    file,
+    mode='r',
+    buffering=-1,
+    encoding=None,
+    errors=None,
+    newline=None,
+    closefd=True,
+    opener=None,
+)
+```
+- `mode` 指定打开模式，各个字符之间的顺序不重要
+  - `r` 只读模式，不可写，若文件不存在会抛出 FileNotFoundError
+  - `w` 写入模式，不可读，若文件不存在会新建文件，若文件已存在会清空原有文件
+  - `a` 追加模式，不可读，若文件不存在会新建文件，若文件已存在会移至文件末尾
+  - `x` 创建模式，不可读，若文件已存在会抛出 FileExistsError
+  - `+` 读写模式，与上述模式一起使用
+  - `t` 文本模式，与上述模式一起使用，默认
+  - `b` 二进制模式，与上述模式一起使用
+- `errors` 指定在编解码错误时的处理方式
+  - `strict` 默认，会抛出错误，中断程序执行
+  - `ignore` 会忽略错误字符
+  - `replace` 会替换为 Unicode 替换字符 U+FFFD
+  - `xmlcharrefreplace` 会替换为相应的 XML 字符引用
+  - `backslashreplace` 会替换为 Python 字符串转义序列
+- `newline` 指定换行符的处理方式
+  - `None` 默认，在读取和写入时使用当前操作系统的格式
+  - `""` 禁用换行转换，保持原有格式
+  - `"\n"` 在读取和写入时使用 \\n
+  - `"\r\n"` 在读取和写入时使用 \\r\\n
+
+<br>
+
+**文件方法**
+- `read(size=-1)` 读取文件，最多读取 size 个字符，默认为读取全部
+- `readline(size=-1)` 读取整行，包括末尾的换行符，最多读取 size 个字符
+- `readlines(size=-1)` 读取所有行并返回一个列表，最多读取 size 个字符
+<br>
+
+- `write(text)` 将文本写入文件，返回写入的字符数
+- `writelines(lines)` 将列表里的文本写入文件，不会自动加上换行符
+- `flush()` 刷新文件缓冲区，强制将数据写入文件
+<br>
+
+- `tell()` 返回文件当前的位置
+- `seek(offset, whence=0)` 移动到指定位置
+  - `whence` 若为 0，则从文件开头开始偏移；若为 1，则从当前位置开始偏移；若为 2，则从文件末尾开始偏移
+
+<br>
+
+**文件属性**
+- `file.name` 文件的名称，可能包括路径
+- `file.mode` 文件的打开方式
+- `file.closed` 文件是否已被关闭
+- `file.encoding` 文件的编码方式，仅用于文本模式
+- `file.newline` 文件读取时遇到的换行符列表，仅用于文本模式
+- `file.errors` 文件遇到编解码错误时的处理方式，仅用于文本模式
+- `file.buffer` 文件的缓冲区对象，仅用于文本模式
+
+
+
+
 
 
 
