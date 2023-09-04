@@ -1,282 +1,47 @@
-<!-- TOC -->
 
-- [Process control](#process-control)
-        - [jobs, ps, pgrep](#jobs-ps-pgrep)
-        - [kill, pkill](#kill-pkill)
-        - [nohup, bg, fg](#nohup-bg-fg)
-- [Terminal multiplexer](#terminal-multiplexer)
-        - [tmux](#tmux)
-- [Remote Connect](#remote-connect)
-        - [ssh-keygen](#ssh-keygen)
-- [Files and Directory](#files-and-directory)
-        - [mv, cp, rm](#mv-cp-rm)
-        - [ls, ln, mkdir](#ls-ln-mkdir)
-        - [touch, chmod](#touch-chmod)
-- [Print like](#print-like)
-        - [echo, cat, tee](#echo-cat-tee)
-        - [cut, head, tail](#cut-head-tail)
-        - [wc](#wc)
-- [Data Wrangling](#data-wrangling)
-        - [sort](#sort)
-        - [uniq](#uniq)
-        - [find](#find)
-        - [grep](#grep)
-        - [sed](#sed)
-        - [awk](#awk)
-- [Info](#info)
-        - [date](#date)
-        - [which](#which)
-        - [who](#who)
-- [Other Programs](#other-programs)
-        - [curl](#curl)
-        - [xargs](#xargs)
-        - [tar](#tar)
-        - [less](#less)
+- [文件管理](#文件管理)
+  - [mv, cp, rm](#mv-cp-rm)
+  - [ls, ln, mkdir](#ls-ln-mkdir)
+  - [touch, chmod](#touch-chmod)
+  - [find, which](#find-which)
+- [输出](#输出)
+  - [echo, cat, tee](#echo-cat-tee)
+  - [cut, head, tail](#cut-head-tail)
+  - [wc](#wc)
+- [数据处理](#数据处理)
+  - [sort](#sort)
+  - [uniq](#uniq)
+  - [grep](#grep)
+  - [sed](#sed)
+  - [awk](#awk)
+- [终端复用器](#终端复用器)
+  - [tmux](#tmux)
+- [进程控制](#进程控制)
+  - [jobs, ps, pgrep](#jobs-ps-pgrep)
+  - [kill, pkill](#kill-pkill)
+  - [nohup, bg, fg](#nohup-bg-fg)
+- [远程控制](#远程控制)
+  - [ssh-keygen](#ssh-keygen)
+- [其他](#其他)
+  - [date](#date)
+  - [who](#who)
+  - [curl](#curl)
+  - [xargs](#xargs)
+  - [tar](#tar)
+  - [less](#less)
 - [Packages](#packages)
-        - [apt](#apt)
-- [Configuration](#configuration)
-        - [Mirror Source](#mirror-source)
-
-<!-- /TOC -->
-
-
-
-## Process control
-#### jobs, ps, pgrep
-**jobs**
-```shell
-# Display status of jobs.
-
--l  #lists process IDs in addition to the normal information
--p  #lists process IDs only
--n  #lists only processes that have changed status since the last notification
--r  #restrict output to running jobs
--s  #restrict output to stopped jobs
-```
-**ps**
-```shell
-# Display information about a selection of the active processes.
-This version(wsl2) of ps accepts several kinds of options:
-1   UNIX options, which may be grouped and must be preceded by a dash.
-2   BSD options, which may be grouped and must not be used with a dash.
-3   GNU long options, which are preceded by two dashes.
-
-a   list all processes within a terminal, or list all processes when with 'x'
-x   list all processes owned by you, or list all processes when with 'a'
-u   Display user-oriented format.
-l   Display BSD long format, conflict with 'u'.
-w   Wide output. Use this option twice for unlimited width.
-f   ASCII art process hierarchy (forest)
-
--A, -e  Select all processes
--a  Select all processes except session leaders
-
-o, -o, --format format   Specify user-defined format.
---sort spec              Specify sorting order.
--f     Do full-format listing.
--F     Extra full format.
--l     Long format.
-
-# List all running processes:
-ps aux
-# List all running processes including the full command string:
-ps auxww
-# List all processes of the current user in extra full format:
-ps --user $(id -u) -F
-# List all processes of the current user as a tree:
-ps --user $(id -u) f
-# Get the parent PID of a process:
-ps -o ppid= -p pid
-# Sort processes by memory consumption:
-ps --sort size
-```
-**pgrep**
-```shell
--f, --full              use full process name to match
--u, --euid <ID,...>     match by effective user IDs
-
-# Return PIDs of any running processes with a matching command string:
-pgrep process_name
-# Search for processes including their command-line options:
-pgrep --full "process_name parameter"
-# Search for processes run by a specific user:
-pgrep --euid root process_name
-```
-
-#### kill, pkill
-**kill**
-- `SIGINT` (interrupt): `Ctrl + C`
-- `SIGQUIT` (quit): `Ctrl + \`
-- `SIGSTOP` (stop): `Ctrl + Z`
-
-```shell
-# Send a signal to a job.
-# If neither SIGSPEC nor SIGNUM is present, then SIGTERM is assumed.
-kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... 
-kill -l [sigspec]
-
--s sig    #SIG is a signal name
--n sig    #SIG is a signal number
--l        #list the signal names
--L        #synonym for -l
-
-# Terminate a program using the default SIGTERM (terminate) signal:
-kill process_id
-# Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating::
-kill -HUP process_id
-# Terminate a program using the SIGINT (interrupt) signal:
-kill -INT process_id
-# Signal the operating system to immediately terminate a program (which gets no chance to capture the signal):
-kill -KILL process_id
-# Signal the operating system to pause a program:
-kill -STOP process_id
-# Signal the operating system to continue a program:
-kill -CONT process_id
-```
-**pkill**
-```shell
--SIGNAL, --signal SIGNAL
-      Defines the signal to send to each matched process. 
-      Either the numeric or the symbolic signal name can be used.
--f, --full      use full process name to match
--n, --newest
-      Select only the newest(most recently started) of the matching processes.
--o, --oldest
-      Select only the oldest(least recently started) of the matching processes.
-
-# Kill all processes which match:
-pkill "process_name"
-# Kill all processes which match full command instead of just process name:
-pkill -f "command_name"
-# Force kill matching processes (can't be blocked):
-pkill -9/KILL "process_name"
-# Send SIGUSR1 signal to processes which match:
-pkill -USR1 "process_name"
-# Kill the main firefox process to close the browser:
-pkill --oldest "firefox"
-```
-#### nohup, bg, fg
-**nohup**
-```shell
-# Run a process that can live beyond the terminal:
-nohup command argument1 argument2 ...
-# Launch nohup in background mode:
-nohup command argument1 argument2 ... &
-# Run a shell script that can live beyond the terminal:
-nohup path/to/script.sh &
-# Run a process and write the output to a specific file:
-nohup command argument1 argument2 ... > path/to/output_file &
-```
-**bg**
-```shell
-## Resumes jobs that have been suspended, and run them in the background.
-
-# Resume the most recently suspended job and run it in the background:
-bg
-# Resume a specific job and run it in the background:
-bg %job_id
-```
-**fg**
-```shell
-## Run jobs in foreground.
-
-# Bring most recently suspended or running background job to foreground:
-fg
-# Bring a specific job to foreground:
-fg %job_id
-```
+  - [apt](#apt)
+- [配置](#配置)
+  - [镜像源](#镜像源)
 
 
 
 
 
-## Terminal multiplexer
-#### tmux
-- Sessions
-  - `tmux` start a new session.
-  - `tmux new -s NAME` start a new session with `NAME`.
-  - `tmux ls` list the current sessions
-  - `<C-b> d` detaches the current session
-  - `tmux a/attach-session` attach the last session
-  - `tmux a/attach-session -t NAME` attach the specified session
-  - `tmux kill-session` kill the last or current attached session
-  - `tmux kill-session -t NAME` kill the specfied session
-  - `tmux kill-session -a` kill all sessions except the last or current attached one
-- Windows
-  - `<C-b> c` Creates a new window 
-  - `<C-b> p` Goes to the previous window
-  - `<C-b> n` Goes to the next window
-  - `<C-b> N` Go to the N th window
-  - `<C-b> ,` Rename the current window
-  - `<C-b> w` List current sessions and windows, and move
-- Panes
-  - `<C-b> "` Split the current pane horizontally
-  - `<C-b> %` Split the current pane vertically
-  - `<C-b> <direction>` Move to the pane in the specified direction
-  - `<C-b> z` Toggle zoom for the current pane
-  - `<C-b> <space>` Cycle through pane arrangements.
-  - `<C-b> [` Start scrollback. You can then press <space> to start a selection and <enter> to copy that selection.
-  - `<C-d>` Close pane except only one left
-  - `<C-b> x` Kill pane with prompt
 
 
-
-
-
-## Remote Connect
-
-#### ssh-keygen
-```shell
-Normally this program generates the key and asks for a file in which to store 
-the private key. The public key is stored in a file with the same name but 
-“.pub” appended.
-ssh-keygen will by default write keys in an OpenSSH-specific format, which 
-offers better protection and allow storage of key comments within the private 
-key file.
-
--f filename
-      Specifies the filename of the key file.
--t dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa
-      Specifies the type of key to create. The default is RSA.
--a rounds
-      Specifies the number of KDF (key derivation function) rounds used.
-      The default is 16 rounds.
--b bits
-      Specifies the number of bits in the key to create. 
-      For RSA keys, the minimum size is 1024 bits and the default is 3072 bits.
--C comment
-      Provides a new comment.
--c    Requests changing the comment in the private and public key files.
-      The program will prompt for the file containing the private keys, 
-      for the passphrase if the key has one, and for the new comment.
--P passphrase
-      Provides the (old) passphrase.
--p    Requests changing the passphrase of a private key file instead of 
-      creating a new private key.  The program will prompt for the file 
-      containing the private key, for the old passphrase, and twice for 
-      the new passphrase.
--R hostname | [hostname]:port
-      Removes all keys belonging to the specified hostname (with optional 
-      port number) from a known_hosts file. This option is useful when a 
-      known host has a new key.
-
-# Generate a key interactively:
-ssh-keygen
-# Specify file in which to save the key:
-ssh-keygen -f ~/.ssh/filename
-# Generate an ed25519 key with 100 key derivation function rounds:
-ssh-keygen -t ed25519 -a 100
-# Generate an RSA 4096-bit key with email as a comment:
-ssh-keygen -t dsa|ecdsa|ed25519|rsa -b 4096 -C "comment|email"
-# Change the password of a key:
-ssh-keygen -p -f ~/.ssh/filename
-```
-
-
-
-
-## Files and Directory
-#### mv, cp, rm
+## 文件管理
+### mv, cp, rm
 **mv**
 ```shell
 # Move or rename files and directories
@@ -318,7 +83,7 @@ rm -rf path/to/directory
 # Remove files in verbose mode, printing a message for each removed file
 rm -v path/to/directory/*
 ```
-#### ls, ln, mkdir
+### ls, ln, mkdir
 **ls**
 ```shell
 ls -1   # List files one per line
@@ -350,7 +115,7 @@ mkdir directory_1 directory_2 ...
 # Create directories recursively (useful for creating nested dirs)
 mkdir -p path/to/directory
 ```
-#### touch, chmod
+### touch, chmod
 **touch**
 ```shell
 # Change a file access and modification times
@@ -377,13 +142,37 @@ chmod g-x path/to/file
 # Give [a]ll users rights to [r]ead and e[x]ecute:
 chmod a+rx path/to/file
 ```
+### find, which
+**find**
+```shell
+# Find files by extension:
+find root_path -name '*.ext'
+# Find files matching multiple path/name patterns:
+find root_path -path '**/path/**/*.ext' -or -name '*pattern*'
+# Find directories matching a given name, in case-insensitive mode:
+find root_path -type d -iname '*lib*'
+# Find files matching a given pattern, excluding specific paths:
+find root_path -name '*.py' -not -path '*/site-packages/*'
+# Find files matching a given size range, limiting the recursive depth to "1":
+find root_path -maxdepth 1 -size +500k -size -10M
+# Delete all files with .tmp extension
+find root_path -name '*.tmp' -exec rm {} \;
+```
+**which**
+```shell
+# Locate a program in the user's path
+which which             # >>> /usr/bin/which
+```
 
 
 
 
 
-## Print like
-#### echo, cat, tee
+
+<br>
+
+## 输出
+### echo, cat, tee
 **echo**
 ```shell
 -e     enable interpretation of backslash escapes
@@ -423,7 +212,7 @@ echo "example" | tee -a path/to/file
 # Print standard input to the terminal, and also pipe it into another program:
 echo "example" | tee /dev/tty | xargs printf "[%s]"
 ```
-#### cut, head, tail
+### cut, head, tail
 **cut**
 ```shell
 # Print selected parts of lines from each FILE to standard output
@@ -467,7 +256,7 @@ tail -n/--lines +count path/to/file
 # Print a specific count of bytes from the end of a given file:
 tail -c/--bytes count path/to/file
 ```
-#### wc
+### wc
 **wc**
 ```shell
 # Print newline, word, and byte counts for each FILE
@@ -481,8 +270,13 @@ wc -m/--chars path/to/file
 
 
 
-## Data Wrangling
-#### sort
+
+
+
+<br>
+
+## 数据处理
+### sort
 ```shell
 # Sort a file in ascending order
 sort path/to/file
@@ -499,7 +293,7 @@ sort -u/--unique path/to/file
 # Sort a file, printing the output to the specified output file (can be in-place)
 sort -o/--output=path/to/file path/to/file
 ```
-#### uniq
+### uniq
 ```shell
 # Display each line once:
 sort file | uniq
@@ -512,23 +306,8 @@ sort file | uniq -c
 # Display number of occurrences of each line, sorted by the most frequent:
 sort file | uniq -c | sort -nr
 ```
-#### find
-```shell
-# Find files by extension:
-find root_path -name '*.ext'
-# Find files matching multiple path/name patterns:
-find root_path -path '**/path/**/*.ext' -or -name '*pattern*'
-# Find directories matching a given name, in case-insensitive mode:
-find root_path -type d -iname '*lib*'
-# Find files matching a given pattern, excluding specific paths:
-find root_path -name '*.py' -not -path '*/site-packages/*'
-# Find files matching a given size range, limiting the recursive depth to "1":
-find root_path -maxdepth 1 -size +500k -size -10M
-# Delete all files with .tmp extension
-find root_path -name '*.tmp' -exec rm {} \;
-```
 
-#### grep
+### grep
 **Anchoring**
 - The caret `^` matchs the empty string at the beginning of a line
 - The dollar sign `$` matchs the empty string at end of a line
@@ -603,7 +382,7 @@ grep -r/--recursive "search_pattern" path/to/directory
 ```
 
 
-#### sed
+### sed
 - If no addresses are given, the command is performed on all lines.
 - `NUM` matchs the `NUM'th` line
 - `$` matches the last line of input
@@ -671,7 +450,7 @@ grep -r/--recursive "search_pattern" path/to/directory
 'I' Match REGEXP in a case-insensitive manner.
 ```
 
-#### awk
+### awk
 ```shell
 NR  #Number of Record
 NF  #Number of Field
@@ -701,8 +480,261 @@ awk '{ for(i=1;i<=NF;i++) a[i]+=$i } END{ for(j=1;j<=NF;j++) printf a[j]/NR"\t";
 
 
 
-## Info
-#### date
+
+
+<br>
+
+## 终端复用器
+### tmux
+- Sessions
+  - `tmux` start a new session.
+  - `tmux new -s NAME` start a new session with `NAME`.
+  - `tmux ls` list the current sessions
+  - `<C-b> d` detaches the current session
+  - `tmux a/attach-session` attach the last session
+  - `tmux a/attach-session -t NAME` attach the specified session
+  - `tmux kill-session` kill the last or current attached session
+  - `tmux kill-session -t NAME` kill the specfied session
+  - `tmux kill-session -a` kill all sessions except the last or current attached one
+- Windows
+  - `<C-b> c` Creates a new window 
+  - `<C-b> p` Goes to the previous window
+  - `<C-b> n` Goes to the next window
+  - `<C-b> N` Go to the N th window
+  - `<C-b> ,` Rename the current window
+  - `<C-b> w` List current sessions and windows, and move
+- Panes
+  - `<C-b> "` Split the current pane horizontally
+  - `<C-b> %` Split the current pane vertically
+  - `<C-b> <direction>` Move to the pane in the specified direction
+  - `<C-b> z` Toggle zoom for the current pane
+  - `<C-b> <space>` Cycle through pane arrangements.
+  - `<C-b> [` Start scrollback. You can then press <space> to start a selection and <enter> to copy that selection.
+  - `<C-d>` Close pane except only one left
+  - `<C-b> x` Kill pane with prompt
+
+
+
+
+
+
+
+
+
+<br>
+
+## 进程控制
+### jobs, ps, pgrep
+**jobs**
+```shell
+# Display status of jobs.
+
+-l  #lists process IDs in addition to the normal information
+-p  #lists process IDs only
+-n  #lists only processes that have changed status since the last notification
+-r  #restrict output to running jobs
+-s  #restrict output to stopped jobs
+```
+**ps**
+```shell
+# Display information about a selection of the active processes.
+This version(wsl2) of ps accepts several kinds of options:
+1   UNIX options, which may be grouped and must be preceded by a dash.
+2   BSD options, which may be grouped and must not be used with a dash.
+3   GNU long options, which are preceded by two dashes.
+
+a   list all processes within a terminal, or list all processes when with 'x'
+x   list all processes owned by you, or list all processes when with 'a'
+u   Display user-oriented format.
+l   Display BSD long format, conflict with 'u'.
+w   Wide output. Use this option twice for unlimited width.
+f   ASCII art process hierarchy (forest)
+
+-A, -e  Select all processes
+-a  Select all processes except session leaders
+
+o, -o, --format format   Specify user-defined format.
+--sort spec              Specify sorting order.
+-f     Do full-format listing.
+-F     Extra full format.
+-l     Long format.
+
+# List all running processes:
+ps aux
+# List all running processes including the full command string:
+ps auxww
+# List all processes of the current user in extra full format:
+ps --user $(id -u) -F
+# List all processes of the current user as a tree:
+ps --user $(id -u) f
+# Get the parent PID of a process:
+ps -o ppid= -p pid
+# Sort processes by memory consumption:
+ps --sort size
+```
+**pgrep**
+```shell
+-f, --full              use full process name to match
+-u, --euid <ID,...>     match by effective user IDs
+
+# Return PIDs of any running processes with a matching command string:
+pgrep process_name
+# Search for processes including their command-line options:
+pgrep --full "process_name parameter"
+# Search for processes run by a specific user:
+pgrep --euid root process_name
+```
+
+### kill, pkill
+**kill**
+- `SIGINT` (interrupt): `Ctrl + C`
+- `SIGQUIT` (quit): `Ctrl + \`
+- `SIGSTOP` (stop): `Ctrl + Z`
+
+```shell
+# Send a signal to a job.
+# If neither SIGSPEC nor SIGNUM is present, then SIGTERM is assumed.
+kill [-s sigspec | -n signum | -sigspec] pid | jobspec ... 
+kill -l [sigspec]
+
+-s sig    #SIG is a signal name
+-n sig    #SIG is a signal number
+-l        #list the signal names
+-L        #synonym for -l
+
+# Terminate a program using the default SIGTERM (terminate) signal:
+kill process_id
+# Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating::
+kill -HUP process_id
+# Terminate a program using the SIGINT (interrupt) signal:
+kill -INT process_id
+# Signal the operating system to immediately terminate a program (which gets no chance to capture the signal):
+kill -KILL process_id
+# Signal the operating system to pause a program:
+kill -STOP process_id
+# Signal the operating system to continue a program:
+kill -CONT process_id
+```
+**pkill**
+```shell
+-SIGNAL, --signal SIGNAL
+      Defines the signal to send to each matched process. 
+      Either the numeric or the symbolic signal name can be used.
+-f, --full      use full process name to match
+-n, --newest
+      Select only the newest(most recently started) of the matching processes.
+-o, --oldest
+      Select only the oldest(least recently started) of the matching processes.
+
+# Kill all processes which match:
+pkill "process_name"
+# Kill all processes which match full command instead of just process name:
+pkill -f "command_name"
+# Force kill matching processes (can't be blocked):
+pkill -9/KILL "process_name"
+# Send SIGUSR1 signal to processes which match:
+pkill -USR1 "process_name"
+# Kill the main firefox process to close the browser:
+pkill --oldest "firefox"
+```
+### nohup, bg, fg
+**nohup**
+```shell
+# Run a process that can live beyond the terminal:
+nohup command argument1 argument2 ...
+# Launch nohup in background mode:
+nohup command argument1 argument2 ... &
+# Run a shell script that can live beyond the terminal:
+nohup path/to/script.sh &
+# Run a process and write the output to a specific file:
+nohup command argument1 argument2 ... > path/to/output_file &
+```
+**bg**
+```shell
+## Resumes jobs that have been suspended, and run them in the background.
+
+# Resume the most recently suspended job and run it in the background:
+bg
+# Resume a specific job and run it in the background:
+bg %job_id
+```
+**fg**
+```shell
+## Run jobs in foreground.
+
+# Bring most recently suspended or running background job to foreground:
+fg
+# Bring a specific job to foreground:
+fg %job_id
+```
+
+
+
+
+
+
+
+<br>
+
+## 远程控制
+### ssh-keygen
+```shell
+Normally this program generates the key and asks for a file in which to store 
+the private key. The public key is stored in a file with the same name but 
+“.pub” appended.
+ssh-keygen will by default write keys in an OpenSSH-specific format, which 
+offers better protection and allow storage of key comments within the private 
+key file.
+
+-f filename
+      Specifies the filename of the key file.
+-t dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa
+      Specifies the type of key to create. The default is RSA.
+-a rounds
+      Specifies the number of KDF (key derivation function) rounds used.
+      The default is 16 rounds.
+-b bits
+      Specifies the number of bits in the key to create. 
+      For RSA keys, the minimum size is 1024 bits and the default is 3072 bits.
+-C comment
+      Provides a new comment.
+-c    Requests changing the comment in the private and public key files.
+      The program will prompt for the file containing the private keys, 
+      for the passphrase if the key has one, and for the new comment.
+-P passphrase
+      Provides the (old) passphrase.
+-p    Requests changing the passphrase of a private key file instead of 
+      creating a new private key.  The program will prompt for the file 
+      containing the private key, for the old passphrase, and twice for 
+      the new passphrase.
+-R hostname | [hostname]:port
+      Removes all keys belonging to the specified hostname (with optional 
+      port number) from a known_hosts file. This option is useful when a 
+      known host has a new key.
+
+# Generate a key interactively:
+ssh-keygen
+# Specify file in which to save the key:
+ssh-keygen -f ~/.ssh/filename
+# Generate an ed25519 key with 100 key derivation function rounds:
+ssh-keygen -t ed25519 -a 100
+# Generate an RSA 4096-bit key with email as a comment:
+ssh-keygen -t dsa|ecdsa|ed25519|rsa -b 4096 -C "comment|email"
+# Change the password of a key:
+ssh-keygen -p -f ~/.ssh/filename
+```
+
+
+
+
+
+
+
+
+<br>
+
+## 其他
+### date
 ```shell
 # Print the current date and time
 
@@ -716,12 +748,8 @@ date +'%Y/%m/%d - %H:%M:%S'     # >>> 2022/11/09 - 15:22:08
 # %X   locale's time representation
 # %y   last two digits of year
 ```
-#### which
-```shell
-# Locate a program in the user's path
-which which             # >>> /usr/bin/which
-```
-#### who
+
+### who
 ```shell
 # Print information about users who are currently logged in
 
@@ -732,14 +760,7 @@ who am i
 # Display all available information:
 who -a
 ```
-
-
-
-
-
-
-## Other Programs
-#### curl
+### curl
 ```shell
 # Transfers data from or to a server.
 # Supports most protocols, including HTTP, FTP, and POP3
@@ -753,13 +774,13 @@ curl http://example.com -o/--output filename
 # Download a file, saving the output under the filename indicated by the URL:
 curl -O/--remote-name http://example.com/filename
 ```
-#### xargs
+### xargs
 ```shell
 # Delete all files with a .backup extension
 # -print0 uses a null character to split file names, and -0 uses it as delimiter
 find . -name '*.backup' -print0 | xargs -0 rm -v
 ```
-#### tar
+### tar
 ```shell
 -c, --create #create a new archive.Directories are archived recursively
 -r, --append #append files to the end of an archive(uncompressed)
@@ -782,7 +803,7 @@ tar tf source.tar
 # E[x]tract files matching a pattern from an archive [f]ile:
 tar xf source.tar --wildcards "*.html"
 ```
-#### less
+### less
 ```shell
 # Open a file:
 less source_file
@@ -804,7 +825,7 @@ v
 
 
 ## Packages
-#### apt
+### apt
 ```shell
 # Update the list of available packages and versions
 sudo apt update
@@ -827,63 +848,20 @@ apt list --installed    #list installed packages
 
 
 
-## Configuration
-#### Mirror Source
+
+<br>
+
+## 配置
+### 镜像源
+更新镜像源可进行以下命令：
 ```shell
-sudo vim /etc/apt/source.list
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
+sudo vim /etc/apt/sources.list
 sudo apt update
 sudo apt upgrade
 ```
-**Ubuntu20.04**
-```shell
-# 清华源
-# 默认注释了源码镜像以提高 apt update 速度
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
-deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-security main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ focal-security main restricted universe multiverse
 
-# 阿里源
-deb http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-security main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ focal-backports main restricted universe multiverse
-
-# 中科大源
-deb https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-updates main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-backports main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ focal-security main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-security main restricted universe multiverse
-deb https://mirrors.ustc.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
-deb-src https://mirrors.ustc.edu.cn/ubuntu/ focal-proposed main restricted universe multiverse
-
-# 网易163源
-deb http://mirrors.163.com/ubuntu/ focal main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ focal-security main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ focal-updates main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ focal-proposed main restricted universe multiverse
-deb http://mirrors.163.com/ubuntu/ focal-backports main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ focal main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ focal-security main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ focal-updates main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ focal-proposed main restricted universe multiverse
-deb-src http://mirrors.163.com/ubuntu/ focal-backports main restricted universe multiverse
-```
-**Ubuntu20.04**
+Ubuntu22.04 的源有：
 ```shell
 # 清华源
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
@@ -895,10 +873,6 @@ deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
 # deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
-
-# 预发布软件源，不建议启用
-# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
-# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
 
 # 阿里源
 deb http://mirrors.aliyun.com/ubuntu/ jammy main restricted universe multiverse
