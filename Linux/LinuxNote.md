@@ -1,9 +1,10 @@
 
 - [文件管理](#文件管理)
+  - [ls, pwd](#ls-pwd)
   - [mv, cp, rm](#mv-cp-rm)
-  - [ls, ln, mkdir](#ls-ln-mkdir)
-  - [touch, chmod](#touch-chmod)
-  - [find, which](#find-which)
+  - [ln, touch, mkdir](#ln-touch-mkdir)
+  - [chmod, chown, chgrp](#chmod-chown-chgrp)
+  - [which, find, locate](#which-find-locate)
 - [输出](#输出)
   - [echo, cat, tee](#echo-cat-tee)
   - [cut, head, tail](#cut-head-tail)
@@ -41,87 +42,117 @@
 
 
 ## 文件管理
-### mv, cp, rm
-**mv**
-```shell
-# Move or rename files and directories
-
-# Move a file or files to an location and overwrite automatically
-mv source ... target
-# Prompt for confirmation before overwriting existing files
-mv -i source target
-# Do not prompt for confirmation before overwriting existing files
-mv -f source target
-# Do not overwrite an existing file
-mv -n source target
-# Move files in verbose mode, showing files after they are moved
-mv -v source target
-```
-**cp**
-```shell
-# Copy files and directories
-# will overwrite target if existed
-# will report error if trying to overwrite source itself
-
-# Copy a file to another location
-cp path/to/source_file.ext path/to/target_file.ext
-# Copy a file into another directory, keeping the filename
-cp path/to/source_file.ext path/to/target_parent_directory
-
-# Recursively copy a directory's contents to another location 
-# if the destination exists, the directory is copied inside it
-cp -r path/to/source_directory path/to/target_directory
-```
-**rm**
-```shell
-# Remove a file or files from arbitrary locations
-rm path/to/file ...
-# Recursively remove a directory and all its subdirectories
-rm -r path/to/directory
-# Forcibly remove a directory, without prompting
-rm -rf path/to/directory
-# Remove files in verbose mode, printing a message for each removed file
-rm -v path/to/directory/*
-```
-### ls, ln, mkdir
+### ls, pwd
 **ls**
 ```shell
-ls -1   # List files one per line
-ls -a   # List all files, including hidden files
-ls -F   # List all files, with trailing '/' added to directory names
-ls -R   # List subdirectories recursively
-
--l      #use a long listing format
--t      #sort by modification time, newest first
--S      #sort by file size, largest first
--X      #sort alphabetically by entry extension
--r      #reverse order while sorting
+ls    # 列出当前路径下的所有文件和目录
 ```
+- `-1` 每行一个文件
+- `-a` 列出所有文件，包括隐藏文件
+- `-R` 递归列出每个子目录下的所有文件和目录
+- `-F` 给列出的目录末尾加上 `/`
+<br>
+
+- `-t` 以时间排序，新的在最前面
+- `-S` 以大小排序，大的在最前面
+- `-X` 以扩展名排序
+- `-r` 逆序列出
+<br>
+
+- `-l` 使用长列表模式
+
+长列表格式从左到右依次为：文件类型和权限、硬链接计数、文件所有者、文件所属组、文件大小、修改时间、名称。
+
+文件类型和权限共十个字符，第一个为文件类型字符，常见的文件类型包括：
+- `-` 普通文件
+- `d` 目录
+- `l` 符号链接 (软链接)
+- `c` 字符设备文件
+- `b` 块设备文件
+- `p` 命名管道 (FIFO)
+- `s` 套接字 (Socket)
+
+接下来九个权限字符分三组，分别表示文件所有者的权限、文件所属组的权限和其他用户的权限，`r` 表示读权限，`w` 表示写权限，`x` 表示执行权限
+
+---
+**pwd**
+```shell
+pwd   # 显示当前目录
+```
+- 相当于执行 `echo $PWD`
+
+<br>
+
+### mv, cp, rm
+这三个命令都有以下选项：
+- `-f` 强制覆盖/删除，不会提示
+- `-i` 在覆盖/删除前提示
+- `-v` 显示所作操作
+
+**mv**
+```shell
+# 重命名文件或目录
+mv path/to/source path/to/target
+
+# 移动文件或目录到另一个目录
+mv path/to/source path/to/existing_directory
+mv path/to/source1 path/to/source2 ... path/to/existing_directory
+```
+- 若目标文件是只读的，会提示用户是否覆盖，否则会自动覆盖
+- `-n` 不会覆盖原有文件
+
+---
+**cp**
+```shell
+# 将文件复制到目标路径
+cp path/to/source_file.ext path/to/target_file.ext
+
+# 将文件复制到目标目录，文件名不变
+cp path/to/source_file.ext path/to/target_parent_directory
+
+# 递归复制源目录到目标目录，若目标目录已存在，则将源目录复制到其内
+cp -r/-R path/to/source_directory path/to/target_directory
+
+# 复制多个文件到目标目录
+cp -t path/to/destination_directory path/to/file1 path/to/file2 ...
+```
+- 若目标文件是只读的，会提示用户是否覆盖，否则会自动覆盖
+- `-n` 不会覆盖原有文件
+- `-r/R` 递归地复制目录
+- `-t DIRECTORY` 将所有文件复制到目标目录
+- `-l` 创建硬链接而不是复制文件
+- `-L` 在复制前跟随符号链接
+
+---
+**rm**
+```shell
+# 删除指定文件
+rm path/to/file1 path/to/file2 ...
+
+# 递归删除指定文件或目录
+rm -r path/to/file_or_directory1 path/to/file_or_directory2 ...
+```
+- 默认无法删除目录
+- `-r/R` 递归地删除目录
+
+<br>
+
+### ln, touch, mkdir
 **ln**
 ```shell
-# Create a symbolic link to a file or directory:
-ln -s /path/to/file_or_directory path/to/symlink
-
-# Overwrite an existing symbolic link to point to a different file:
-ln -sf /path/to/new_file path/to/symlink
-
-# Create a hard link to a file:
+# 创建一个硬链接
 ln /path/to/file path/to/hardlink
+
+# 创建一个符号链接
+ln -s /path/to/file_or_directory path/to/symlink
 ```
-**mkdir**
-```shell
-# Create multiple directories in the current directory
-mkdir directory_1 directory_2 ...
-# Create directories recursively (useful for creating nested dirs)
-mkdir -p path/to/directory
-```
-### touch, chmod
+- `-f` 若创建的链接的路径已存在，则覆盖目标文件
+
+---
 **touch**
 ```shell
-# Change a file access and modification times
-
-# Create a new empty file(s) or change the times to current time:
-touch path/to/file{1,2,3}.txt
+# 创建空文件，或更新时间戳为当前时间
+touch path/to/file1 path/to/file2 ...
 # Set the times on a file to a specific date and time:
 touch -t YYYYMMDDHHMM.SS path/to/file
 # Set the time on a file to one hour in the past:
@@ -129,40 +160,131 @@ touch -d "-1 hour" path/to/file
 # Use the times from a file to set the times on a second file:
 touch -r path/to/file1 path/to/file2
 ```
+- `-c` 不创建文件
+- `-a` 只改变访问时间
+- `-m` 只改变修改时间
+- `-r FILE` 使用指定文件的时间戳，而不是当前时间
+<br>
+
+- `-d STRING` 使用指定的日期时间
+  - `-d "2023-09-04T12:30:30Z"`
+  - `-d "2023-09-04 12:30:30"`
+  - `-d "2023-9-4 12"` 必须包含年月日时，分和秒默认为零
+  - `-d "yesterday"` 昨天的当前时间
+  - `-d "1 hour ago"/"-1 hour"` 一个小时前的当前时间
+  - `-d "3 day"/"+3 day"` 三天后的当前时间
+  - `-d "next month"/"+1 month"` 下个月的第一天的当前时间
+<br>
+
+- `-t STAMP` 使用自定义的时间戳，格式必须为 `[[CC]YY]MMDDhhmm[.ss]`
+  - `-t 202309041230.30`
+  - `-t $(date "+%Y%m%d%H%M.%S")`
+
+---
+**mkdir**
+```shell
+# 创建目录
+mkdir path/to/directory1 path/to/directory2 ...
+```
+- `-p` 递归地创建目录
+- `-m` 指定权限，若不使用该选项则默认为 `rwxr-xr-x`
+
+<br>
+
+### chmod, chown, chgrp
 **chmod**
 ```shell
-# Change the access permissions of a file or directory.
+# 改变文件或目录的权限
+chmod mode path/to/file_or_directory
 
-# Give the [u]ser who owns a file the right to e[x]ecute it:
-chmod u+x path/to/file
-# Give the [u]ser rights to [r]ead and [w]rite to a file/directory:
-chmod u+rw path/to/file_or_directory
-# Remove e[x]ecutable rights from the [g]roup:
-chmod g-x path/to/file
-# Give [a]ll users rights to [r]ead and e[x]ecute:
-chmod a+rx path/to/file
+# 为所有者添加所有权限，移除其他人的读权限
+chmod u+rwx,o-r path/to/file_or_directory
 ```
-### find, which
-**find**
+- 符号模式使用 `u` 表示用户，`g` 表示组，`o` 表示其他用户，`a` 表示所有用户，在不指定时默认为所有用户
+- 符号模式使用 `+` 表示添加权限，`-` 表示移除权限
+<br>
+
+- `-R` 递归地修改权限
+- `--reference=RFILE` 使用指定文件的权限
+
+---
+**chown, chgrp**
 ```shell
-# Find files by extension:
-find root_path -name '*.ext'
-# Find files matching multiple path/name patterns:
-find root_path -path '**/path/**/*.ext' -or -name '*pattern*'
-# Find directories matching a given name, in case-insensitive mode:
-find root_path -type d -iname '*lib*'
-# Find files matching a given pattern, excluding specific paths:
-find root_path -name '*.py' -not -path '*/site-packages/*'
-# Find files matching a given size range, limiting the recursive depth to "1":
-find root_path -maxdepth 1 -size +500k -size -10M
-# Delete all files with .tmp extension
-find root_path -name '*.tmp' -exec rm {} \;
+# 改变文件或目录的所有者
+chown user path/to/file_or_directory
+
+# 改变文件或目录的所有者和所属组
+chown user:group path/to/file_or_directory
+
+# 改变文件或目录的所属组
+chgrp group path/to/file_or_directory
 ```
+- `-R` 递归地改变所有者或所属组
+- `-h` 改变符号链接的所有者和所属组，而不是其指向的文件或目录
+- `--reference=RFILE` 使用指定文件的所有者和所属组
+
+<br>
+
+### which, find, locate
 **which**
 ```shell
-# Locate a program in the user's path
-which which             # >>> /usr/bin/which
+# 搜索环境变量，显示可执行文件的位置
+which executable
+
+# 显示所有的可执行文件的位置
+which -a executable
 ```
+---
+**find**
+```shell
+# 查找当前目录及其子目录下的所有文件和目录
+find
+
+# 查找所有扩展名为 .py 的文件，除了 site-packages 目录
+find root_path -name '*.py' -not -path '*/site-packages/*'
+
+# 删除所有扩展名为 .tmp 的文件
+find root_path -name '*.tmp' -exec rm -f {} \;
+```
+- `-name PATTERN` 根据文件名进行匹配搜索
+- `-iname PATTERN` 根据文件名进行匹配搜索，不区分大小写
+- `-path PATTERN` 根据路径进行匹配搜索
+- `-ipath PATTERN` 根据路径进行匹配搜索，不区分大小写
+<br>
+
+- `-type [bcdpflsD]` 根据文件类型进行匹配搜索，`f` 表示普通文件，`d` 表示目录，`i` 表示普符号链接
+- `-xtype [bcdpfls]` 根据文件类型进行匹配搜索，但是考虑符号链接指向的目标文件的类型
+- `-maxdepth n` 限制搜索的最大深度
+- `-mindepth n` 限制搜索的最小深度
+- `-size [sign]n[bcwkMG]` 根据文件大小搜索
+  - `+` 表示大于，`-` 表示小于，不带符号表示等于
+  - `c` 表示字节，`k` 表示千字节，`M` 表示兆字节，`G` 表示千兆字节
+<br>
+
+- `-atime n` 根据文件的最后访问时间搜索，单位为日
+- `-ctime n` 根据文件的最后更改时间搜索，单位为日
+- `-mtime n` 根据文件的最后修改时间搜索，单位为日
+- `-amin n` 根据文件的最后访问时间搜索，单位为分钟
+- `-cmin n` 根据文件的最后更改时间搜索，单位为分钟
+- `-mmin n` 根据文件的最后修改时间搜索，单位为分钟
+  - `+` 表示在那之前，`-` 表示在那之后，不带符号表示刚好在那时
+<br>
+
+- `!` 和 `-not` 表示非操作，`-a` 和 `-and` 表示与操作，`-o` 和 `-or` 表示或操作
+- 可用 `\(` 和 `\)` 包裹条件来明确优先级
+
+---
+**locate**
+```shell
+# 在数据库中进行模糊匹配
+locate PATTERN
+
+# 更新数据库
+sudo updatedb
+```
+- `--localpaths='dir1 dir2...'` 指定 updatedb 的更新路径
+
+
 
 
 
