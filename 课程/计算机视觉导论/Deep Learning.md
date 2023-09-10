@@ -100,7 +100,8 @@ The size of output is: ImageSize – FilterSize + 1
 To change the size of output, we can use padding (adding zero pixels around the border) or stride (step size larger than 1 in convolution).
 Then the size of output is: (ImageSize – FilterSize + Padding * 2) / Stride + 1
 
-For multi-channel image, filters always extend to the full depth of the input volume. And for multiple outputs, we can add the number of filters. The number of filters is the number of feature maps.
+For multi-channel image, filters always extend to the full depth of the input volume, and only output one featur map.
+For multiple outputs, we can add the number of filters. The number of filters is the number of feature maps.
 
 For a convolution layer with kernel size $K$, each element in the output depends on a $K \times K$ receptive field in the input.
 For successive convolution with $K$ kernel size and $L$ layers, the receptive field is $1 + L * (K – 1)$
@@ -139,6 +140,17 @@ where $y_i$ are its true training labels, $f_{\bm{x}}(\bm{x}_i)$ are its estimat
 $$\bm{w}^{t+1} = \bm{w}^t - \eta_t \frac{\partial L}{\partial \bm{w}}(\bm{w}^t)$$
 
 where $\eta_t$ are learing rates.
+
+Here is a simple example of backpropagation. For $f(x, W) = \left\| W \cdot x \right\|^2 $, let $q = W \cdot x$, then the gradient is 
+$$
+q_k = \sum_j W_{k,j} x_j
+\\~\\
+\frac{\partial f}{\partial W_{i, j}} = \sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial W_{i, j}} = 2q_i x_j
+\quad \Rightarrow \quad \Delta_W f = 2q \cdot x^T
+\\~\\
+\frac{\partial f}{\partial x_j} = \sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial x_j} = \sum_k 2q_k W_{k,j}
+\quad \Rightarrow \quad \Delta_x f = 2W^T \cdot q
+$$
 
 <br>
 
