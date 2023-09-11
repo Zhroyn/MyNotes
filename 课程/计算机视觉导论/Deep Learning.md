@@ -10,11 +10,13 @@
     - [Pooling Layer](#pooling-layer)
   - [Training Neural Network](#training-neural-network)
     - [Backpropagation](#backpropagation)
-    - [Stochastic Gradient Descent (SGD)](#stochastic-gradient-descent-sgd)
+    - [Weight Initialization](#weight-initialization)
+      - [Xavier Initialization](#xavier-initialization)
+      - [Kaiming Initialization](#kaiming-initialization)
+    - [Batch Normalization](#batch-normalization)
     - [Cross Validation and Early Stop](#cross-validation-and-early-stop)
     - [Regularization and Dropout](#regularization-and-dropout)
     - [Data Augmentation](#data-augmentation)
-    - [Batch Normalization](#batch-normalization)
 
 
 
@@ -55,11 +57,25 @@ $$f(x) = \sigma(w^Tx + b)$$
 For multiple outputs, we can use
 $$f(x) = \sigma(Wx + b) $$
 
-Rectified Linear Unit (ReLU):
-$$\sigma(z) = \max(0, z)$$
-
-Sigmoid:
-$$\sigma(z) = \frac{1}{1 + e^{-z}}$$
+- Sigmoid: $$\sigma(x) = \frac{1}{1 + e^{-x}}$$
+  - Problems: Saturated neurons kill the gradients; outputs are not zero-centered; compute expensive
+- tanh: $$\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$$
+  - Advantages: zero centered
+  - Problems: still kills gradients when saturated
+- Rectified Linear Unit (ReLU): $$\max(0, x)$$
+  - Advantages: Does not saturate; Very computationally efficient; Converges much faster than sigmoid/tanh in practice
+  - Problems: Not zero-centered; big learning rate may cause dead ReLU problem 
+- Leaky ReLU or Parametric Rectifier (PReLU, $\alpha$ is learned): $$\max(0.01x, x), \quad \max(\alpha x, x)$$
+  - Advantages: Does not saturate; Computationally efficient; Converges much faster than sigmoid/tanh in practice; will not die
+  - Problems: Not zero-centered; big learning rate may cause dead ReLU problem 
+- Exponential Linear Unit (ELU): $$\begin{cases} x & x \gt 0 \\ \alpha(e^x - 1) & x \le 0 \end{cases}$$
+  - Advantages: All benefits of ReLU; Closer to zero mean outputs; Negative saturation regime compared with Leaky ReLU adds some robustness to noise
+  - Problems: Computation requires exp()
+- Scaled Exponential Linear Unit (SELU): $$\begin{cases} \lambda x & x \gt 0 \\ \lambda\alpha(e^x - 1) & x \le 0 \end{cases}$$
+  - Advantages: Works better for deep networks; "Self-normalizing" property; Can train deep SELU networks without BatchNorm
+- Maxout: $$\max(w_1^Tx + b_1, w_2^Tx + b_2)$$
+  - Advantages: Generalizes ReLU and Leaky ReLU; Linear Regime; Does not saturate; Does not die
+  - Problems: Doubles the number of parameters/neuron
 
 <br>
 
@@ -129,10 +145,7 @@ Pooling operators:
 Define a CNN as a composition of functions
 $$f_{\bm{w}}(\bm{x}) = f_L(\dots(f_2(f_1(\bm{x};\bm{w}_1);\bm{w}_2)\dots;\bm{w}_L))$$
 
-Its parameter is
-$$\bm{w} = (\bm{w}_1, \bm{w}_2, \dots, \bm{w}_L)$$
-
-Its loss function is
+Its parameter is $\bm{w} = (\bm{w}_1, \bm{w}_2, \dots, \bm{w}_L)$, and its loss function is
 $$L(\bm{w}) = \frac{1}{n} \sum_i l(y_i, f_{\bm{w}}(\bm{x}_i))$$
 
 where $y_i$ are its true training labels, $f_{\bm{x}}(\bm{x}_i)$ are its estimated labels. Then the gradient descent is
@@ -141,27 +154,86 @@ $$\bm{w}^{t+1} = \bm{w}^t - \eta_t \frac{\partial L}{\partial \bm{w}}(\bm{w}^t)$
 
 where $\eta_t$ are learing rates.
 
-Here is a simple example of backpropagation. For $f(x, W) = \left\| W \cdot x \right\|^2 $, let $q = W \cdot x$, then the gradient is 
-$$
-q_k = \sum_j W_{k,j} x_j
-\\~\\
-\frac{\partial f}{\partial W_{i, j}} = \sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial W_{i, j}} = 2q_i x_j
-\quad \Rightarrow \quad \Delta_W f = 2q \cdot x^T
-\\~\\
-\frac{\partial f}{\partial x_j} = \sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial x_j} = \sum_k 2q_k W_{k,j}
-\quad \Rightarrow \quad \Delta_x f = 2W^T \cdot q
-$$
-
-<br>
-
-#### Stochastic Gradient Descent (SGD)
-Stochastic gradient descent only calcualte loss and gradients on a batch of randomly sampled images, that is,
+In practice, we usually only use Stochastic Gradient Descent (SGD), which only calcualte loss and gradients on a batch of randomly sampled images, that is,
 $$
 \hat{L}(\bm{w}) = \frac{1}{n} \sum_{i\in \Omega} l(y_i, f_{\bm{w}}(\bm{x}_i)) \\~\\
 SG = \frac{\partial \hat{L}}{\partial \bm{w}}(\bm{w}^t)
 $$
 
 Stochastic gradients approximate the real gradients.
+
+---
+Here is a simple example of backpropagation. For $f(x, W) = \left\| W \cdot x \right\|^2 $, let $q = W \cdot x$, then the gradient is 
+$$
+q_k = \sum_j W_{k,j} x_j
+\\~\\
+\frac{\partial f}{\partial W_{i, j}} = \sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial W_{i, j}} = 2q_i x_j
+\quad \Rightarrow \quad \nabla_W f = 2q \cdot x^T
+\\~\\
+\frac{\partial f}{\partial x_j} = \sum_k \frac{\partial f}{\partial q_k} \frac{\partial q_k}{\partial x_j} = \sum_k 2q_k W_{k,j}
+\quad \Rightarrow \quad \nabla_x f = 2W^T \cdot q
+$$
+
+Furthermore, for $f(x) = \left\| \tanh(W_2 \cdot \tanh(W_1 x + b_1) + b_2) \right\|^2 $, let's suppose
+$$
+y_1 = W_1 x + b_1, y_2 = \tanh y_1, \\
+y_3 = W_2 y_2 + b_2, y_4 = \tanh y_3
+$$
+
+Then we can get
+$$
+\frac{\partial f}{\partial y_3} = 2(1 + y_4)(1 - y_4),
+\quad \frac{\partial f}{\partial y_2} = W_2^T \cdot \nabla_{y_3} f,
+\quad \frac{\partial f}{\partial W_2} = \nabla_{y_3} f \cdot y_2^T
+\\~\\
+\frac{\partial f}{\partial y_1} = \nabla_{y_2} f \odot (1 + y_2)(1 - y_2),
+\quad \frac{\partial f}{\partial x} = W_1^T \cdot \nabla_{y_1} f,
+\quad \frac{\partial f}{\partial W_1} = \nabla_{y_1} f \cdot x^T
+$$
+
+<br>
+
+#### Weight Initialization
+##### Xavier Initialization
+Let $s = \sum_i^n w_i x_i$, assume $E(w) = 0, E(x) = 0$, then the variance of $s$ is
+$$
+\begin{aligned}
+  \text{Var}(s) &= \text{Var}(\sum_i^n w_i x_i) \\
+  &= \sum_i^n \text{Var}(w_ix_i) \\
+  &= \sum_i^n [E(w_i)]^2\text{Var}(x_i) + [E(x_i)]^2\text{Var}(w_i) + \text{Var}(x_i)\text{Var}(w_i) \\
+  &= \sum_i^n \text{Var}(x_i)\text{Var}(w_i) \\
+  &= (n \text{Var}(w)) \text{Var}(x) \\
+\end{aligned}
+$$
+
+Because $\text{Var}(aX) = a^2\text{Var}(X)$, to keep $\text{Var}(s) = \text{Var}(x)$, we can initialize with
+```py
+W = np.random.randn(Din, Dout) / np.sqrt(Din)
+```
+For conv layers, Din is filter_size^2 * input_channels
+
+<br>
+
+##### Kaiming Initialization
+In the ReLU network, it is assumed that half of the neurons in each layer are activated and the other half is 0, to maintain the variance, simply divide by 2 based on Xavier
+```py
+W = np.random.randn(Din, Dout) / np.sqrt(2/Din)
+```
+
+<br>
+
+#### Batch Normalization
+We often do batch normalization to the outputs of a layer before the activation function so they have zero mean and unit variance.
+
+To do this, we firstly compute the empirical mean and variance independently for each dimension and then normalize:
+$$\hat{x}^{(k)} = \frac{x^{(k)} - E[x^{(k)}]}{\sqrt{\text{Var}[x^{(k)}] + \epsilon}}$$
+
+Here $x$ is the values of the same dimension from different training examples in a mini-batch. As for convolutional layers, we normalize not only across all the training examples, but also cross the whole activation map, that is, per activation map have one mean and one standard deviation in a mini-batch.
+
+Then, the network can still learn to change the distribution by
+$$y^{(k)} = \gamma^{(k)} \hat{x}^{(k)} + \beta^{(k)}$$
+
+Batch Normalization makes neural network much easier to train, more robust to initialization, allows higher learning rate and faster convergence, and acts as a form of regularization due to the randomness of the mean and variance of each mini-batch.
 
 <br>
 
@@ -190,12 +262,5 @@ Another method is to randomly omit some weights during the training process, whi
 #### Data Augmentation
 Another way to avoid overfitting is to largen the data set. We can do this by changing brightness of images, rollovering images, randomly cropping and scaling images, etc.
 
-<br>
-
-#### Batch Normalization
-We also often normalize the outputs of a layer so they have zero mean and unit variance
-$$\hat{x}^{(k)} = \frac{x^{(k)} - E[x^{(k)}]}{\sqrt{\text{Var}[x^{(k)}]}}$$
-
-It makes neural network much easier to train, more robust to initialization, and allows higher learning rate and faster convergence.
 
 
