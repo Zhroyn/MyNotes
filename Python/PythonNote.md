@@ -21,7 +21,7 @@
     - [集合](#集合)
     - [字典](#字典)
     - [文件](#文件)
-  - [Command line and environment](#command-line-and-environment)
+  - [命令行选项](#命令行选项)
   - [Expressions](#expressions)
     - [Atoms](#atoms)
       - [Comprehensions and Generator expressions](#comprehensions-and-generator-expressions)
@@ -558,45 +558,39 @@ open(
 
 <br>
 
-## Command line and environment
-```py
-python [-bBdEhiIOqsSuvVWx?] [-c cmd | -m mod | script | - ] [args]
+## 命令行选项
+```powershell
+python [-bBdEhiIOqsSuvVWx?] [-c cmd | -m mod | file | - ] [args]
 ```
-- `-b` Issue warnings when comparing `bytes` or `bytearray` with str or `bytes` with int. Issue an error when the option is given twice (`-bb`).
-- `-B` Don't write `.pyc` files on the import of source modules; also `PYTHONDONTWRITEBYTECODE=x`
-- `-d` Turn on parser debugging output (for experts only, only works on debug builds); also `PYTHONDEBUG=x`
-- `-E` Ignore `PYTHON*` environment variables, that might be set.
-- `-h` Print help message and exit (also `-?` or `--help`)
-- `-i` Inspect interactively after running script; forces a prompt even if stdin does not appear to be a terminal; also PYTHONINSPECT=x
-- `-I` Isolate Python from the user's environment (implies `-E` and `-s`)
-- `-O` Remove assert statements and any code conditional on the value of `__debug__`; add `.opt-1` before `.pyc` extension; also `PYTHONOPTIMIZE=x`
-- `-OO` Do `-O` changes and also discard docstrings; add `.opt-2` before `.pyc` extension
-- `-P` Don't prepend a potentially unsafe path to sys.path
-- `-q` Don't print version and copyright messages on interactive startup
-- `-s` Don't add user site directory to sys.path; also `PYTHONNOUSERSITE`
-- `-S` Don't imply `import site` on initialization
-- `-u` Force the stdout and stderr streams to be unbuffered; this option has no effect on stdin; also `PYTHONUNBUFFERED=x`
-- `-v` Verbose (trace import statements). Print a message each time a module is initialized, showing the place (filename or built-in module) from which it is loaded. When given twice (`-vv`), print a message for each file that is checked for when searching for a module. Also provides information on module cleanup at exit; also `PYTHONVERBOSE=x` can be supplied multiple times to increase verbosity
-- `-V` Print the Python version number and exit (also `--version`); when given twice, print more information about the build
-- `-W arg` Warning control; arg is `action:message:category:module:lineno`; also `PYTHONWARNINGS=arg`
-- `-x` Skip first line of source, allowing use of non-Unix forms of #!cmd
-- `-X opt` Set implementation-specific option
-- `--check-hash-based-pycs always|default|never` Control how Python invalidates hash-based `.pyc` files
-- `--help-env` Print help about Python environment variables and exit
-- `--help-xoptions` Print help about implementation-specific `-X` options and exit
-- `--help-all` Print complete help information and exit
+- `-c cmd` 在命令行中直接运行提供的代码
+- `-m mod` 将 Python 模块作为脚本运行
+- `-` 从标准输入读取代码执行
 <br>
 
-- `-c cmd` Program passed in as string (terminates option list)
-- `-m mod` Run library module as a script (terminates option list)
-- `script` program read from script file
-- `-` program read from stdin (default; interactive mode if a tty)
-- `arg ...` arguments passed to program in `sys.argv[1:]`
+- `-b` 在解释脚本之前，将脚本编译成字节码文件，提高脚本的执行速度
+- `-B` 禁用字节码生成，不会生成 .pyc 文件
+- `-i` 运行脚本后进入交互模式
+- `-O` 以优化模式运行脚本
+- `-V` 显示 Python 解释器的版本信息
+
+<br>
+
+常用命令行打开的一个模块是 pydoc，其使用如下：
+```powershell
+ python -m pydoc -b
+```
+- `-b` 在任意未被使用的端口上打开 HTTP 服务器，并自动打开浏览器
+- `-p <port>` 在指定端口打开 HTTP 服务器
 
 
 
 
 
+
+
+
+
+<br>
 
 ## Expressions
 
