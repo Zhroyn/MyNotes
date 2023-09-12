@@ -2,6 +2,7 @@
 
 - [Common usage](#common-usage)
   - [Redo commit](#redo-commit)
+  - [修改 commit 注释](#修改-commit-注释)
   - [Unstage](#unstage)
   - [Discard changes](#discard-changes)
   - [Untrack files](#untrack-files)
@@ -54,6 +55,11 @@
 - `git restore <file>... -S -s HEAD^` Restore accidentally staged files in index to their previous version before the last commit
 - `git commit --amend -C HEAD` Change the last commit with the current index and the same commit message
 - `git commit --amend -c HEAD` Change the last commit with the current index and the wanted commit message
+
+#### 修改 commit 注释
+- `git rebase -i HEAD~2` 修改倒数 2 次的 commit。将想要修改的 commit 前的 pick 改为 edit，保存退出
+- `git commit --amend` 修改 commit 注释，保存退出
+- `git rebase --continue` 完成修改
 
 #### Unstage
 - `git restore --staged <file>...`
