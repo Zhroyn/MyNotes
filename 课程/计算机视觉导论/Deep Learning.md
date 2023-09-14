@@ -10,13 +10,16 @@
     - [Pooling Layer](#pooling-layer)
   - [Training Neural Network](#training-neural-network)
     - [Backpropagation](#backpropagation)
+    - [Optimizer](#optimizer)
     - [Weight Initialization](#weight-initialization)
       - [Xavier Initialization](#xavier-initialization)
       - [Kaiming Initialization](#kaiming-initialization)
     - [Batch Normalization](#batch-normalization)
-    - [Cross Validation and Early Stop](#cross-validation-and-early-stop)
-    - [Regularization and Dropout](#regularization-and-dropout)
+    - [Regularization](#regularization)
     - [Data Augmentation](#data-augmentation)
+  - [Babysitting Learning](#babysitting-learning)
+    - [Sanity Check](#sanity-check)
+    - [Hyperparameter Optimization](#hyperparameter-optimization)
 
 
 
@@ -193,6 +196,66 @@ $$
 
 <br>
 
+#### Optimizer
+**SGD with Momentum**
+$$
+v_{t+1} = \rho v_t - \alpha \nabla f(x_t) \\
+x_{t+1} = x_t + v_{t+1}
+$$
+
+The typical value of $\rho$ is about 0.9. When cross-validated, this parameter is usually set to values such as [0.5, 0.9, 0.95, 0.99].
+Optimization can sometimes benefit a little from momentum schedules, where the momentum is increased in later stages of learning. A typical setting is to start with momentum of about 0.5 and anneal it to 0.99 or so over multiple epochs.
+
+**Nesterov Momentum**
+$$
+\begin{aligned}
+  v_{t+1} &= \rho v_t - \alpha \nabla f(x_t + \rho v_t) \\
+  x_{t+1} &= x_t + v_{t+1}
+\end{aligned}
+$$
+
+To update in terms of $x_t, \nabla f(x_t)$, we can set $\tilde{x}_t = x_t + \rho v_t$ and rearrange:
+$$
+\begin{aligned}
+  v_{t+1} &= \rho v_t - \alpha \nabla f(\tilde{x}) \\
+  \tilde{x}_{t+1} &= \tilde{x}_t - \rho v_t + (1 + \rho)v_{t+1} \\
+  &= \tilde{x}_t + v_{t+1} + \rho(v_{t+1} - v_t)
+\end{aligned}
+$$
+
+**AdaGrad**
+```py
+cache += dx**2
+x += - learning_rate * dx / (np.sqrt(cache) + eps)
+```
+Adagrad is an **adaptive learning rate method**. The weights that receive high gradients will have their effective learning rate reduced, while weights that receive small or infrequent updates will have their effective learning rate increased.
+A downside of Adagrad is that in case of deep learning, the monotonic learning rate usually proves too aggressive and stops learning too early.
+
+**RMSProp**
+```py
+cache = decay_rate * cache + (1 - decay_rate) * dx**2
+x += - learning_rate * dx / (np.sqrt(cache) + eps)
+```
+decay_rate is a hyperparameter and typical values are [0.9, 0.99, 0.999].
+
+**Adam**
+```py
+m = beta1*m + (1-beta1)*dx
+v = beta2*v + (1-beta2)*(dx**2)
+x += - learning_rate * m / (np.sqrt(v) + eps)
+```
+Recommended values in the paper are eps = 1e-8, beta1 = 0.9, beta2 = 0.999.
+The full Adam update also includes a bias correction mechanism, which compensates for the fact that in the first few time steps the vectors m,v are both initialized and therefore biased at zero:
+```py
+m = beta1*m + (1-beta1)*dx
+mt = m / (1-beta1**t)
+v = beta2*v + (1-beta2)*(dx**2)
+vt = v / (1-beta2**t)
+x += - learning_rate * mt / (np.sqrt(vt) + eps)
+```
+
+<br>
+
 #### Weight Initialization
 ##### Xavier Initialization
 Let $s = \sum_i^n w_i x_i$, assume $E(w) = 0, E(x) = 0$, then the variance of $s$ is
@@ -237,25 +300,27 @@ Batch Normalization makes neural network much easier to train, more robust to in
 
 <br>
 
-#### Cross Validation and Early Stop
-We often split data into train, validation and test sets. This method is called **cross validation**.
-
-The model is initially fit on the **train set**.
-Then, the fitted model is used to predict the responses on the **validation set**, the result of which is used to tune the model's hyperparameters. When the validation loss begins to increase, it's usually the time to early stop.
-Finally, the **test set** is used to provide an evaluation of the final model fit.
-
-<br>
-
-#### Regularization and Dropout
+#### Regularization
 To avoid overfitting, we may hope less or smaller parameters, so here comes regularization.
 
-One method is to explicitly add a term to the optimization problem
-$$L = \frac{1}{N}\sum_{i=1}^{N} \sum_{j\neq y_i}\max(0, f(\bm{x}_i;W)_j - f(\bm{x}_i;W)_{y_i} + 1) + \lambda R(W)$$
+**L1 and L2 Regularization**
+One method is to add a regularization term to the loss function
+$$L(W) = \frac{1}{N}\sum_{i=1}^{N} L_i(f(x_i, W), y_i) + \lambda R(W)$$
 
-- L1: $R(W) = \sum_i \sum_j |W_{ij}|$
-- L2: $R(W) = \sum_i \sum_j W_{ij}^2$
+- **L1 regularization**: $R(W) = \sum_i \sum_j |W_{ij}|$
+  - L1 regularization tends to generate sparse solutions, that is, causing more weights to become 0
+- **L2 regularization**: $R(W) = \sum_i \sum_j W_{ij}^2$
+  - L2 regularization likes to spread out the weights
+- Elastic net (L1 + L2): $R(W) = \sum_i \sum_j \beta W_{ij}^2 + |W_{ij}|$
 
-Another method is to randomly omit some weights during the training process, which is called **dropout**.
+**Max Norm Constraints**
+Another form of regularization is to enforce an absolute upper bound on the magnitude of the weight vector for every neuron, and use projected gradient descent to enforce the constraint.
+In practice, this corresponds to performing the parameter update as normal, and then enforcing the constraint by clamping the weight vector $w$ of every neuron to satisfy $\left\| w \right\|_2 < c$. Typical values of $c$ are on orders of 3 or 4.
+
+**Dropout**
+While training, we keep a neuron active with some probability $p$, or set it to zero otherwise.
+While predicting, we need to multiply the output of neurons by $p$ to have the same output as they had during training time.
+To make the model predict faster, we can use **inverted dropout**, that is, scale the output of neurons with $1/p$ during training time, leaving the forward pass at test time untouched.
 
 <br>
 
@@ -263,4 +328,42 @@ Another method is to randomly omit some weights during the training process, whi
 Another way to avoid overfitting is to largen the data set. We can do this by changing brightness of images, rollovering images, randomly cropping and scaling images, etc.
 
 
+
+
+
+
+
+
+
+
+<br>
+
+### Babysitting Learning
+#### Sanity Check
+First, before the formal training, we can initialize the network, do a forward pass through it and make sure the loss is reasonable (with and without regularization).
+
+As a second sanity check, increasing the regularization strength should increase the loss.
+
+Then, we can overfit a tiny subset of data, and make sure we can achieve zero cost (without regularization).
+
+<br>
+
+#### Hyperparameter Optimization
+The most common hyperparameters in context of Neural Networks include:
+- Initial learning rate
+- Learning rate decay schedule (such as the decay constant)
+- Regularization strength (L2 penalty, dropout strength)
+
+First, start to find a suiable learning rate with small regularization. If the training takes a long time, we can decide it by watching loss curve:
+If the loss barely change, the lr is too low; if the loss change sharply, the lr is too high;
+If there is a steep fall but then a high plateau, the lr may be too high;
+If the loss curve keeps flat for a while and then start descending suddenly, it may be due to bad initialization.
+
+For other hyperparameters, we'd better use **cross validation**. We can firstly run coarse search for a few epochs and then run fine search.
+For learning rate, it's best to run coarse search in log space.
+For multiple hyperparameters, it's a better method to do hyperparameters optimization by random search.
+
+If the gap between the benchmark of train set and validation set is too big, it indicates the network is overfitting, we can increase regularization strength. If there is no gap, it indicates we may be able to increase model capacity.
+
+During the training process, we can also watch the ratio between updated values and initial weights, which is expected to be somewhere around 0.001 or so.
 
