@@ -1,10 +1,8 @@
-<!-- TOC -->
 
-- [Data Type](#data-type)
 - [Array](#array)
-  - [Attributes](#attributes)
-  - [Create Array](#create-array)
-  - [Convert Array](#convert-array)
+  - [属性](#属性)
+  - [生成数组](#生成数组)
+  - [转换类型](#转换类型)
   - [Basic Operators](#basic-operators)
     - [Index](#index)
   - [Search and count](#search-and-count)
@@ -21,102 +19,81 @@
   - [Choice Element](#choice-element)
   - [Shuffle](#shuffle)
 
-<!-- /TOC -->
 
 
 
 
 
-
-## Data Type
-- `b1` is `bool`
-- `b` is `int8`, `i` is `int32`
-- `i1, i2, i4, i8` is `int8, int16, int32, int64`
-- `u1, u2, u4, u8` is `uint8, uint16, uint32, uint64`
-- `f, f2, f4, f8` is `float32, float16, float32, float64`
-- `c8, c16` is `complex64, complex128`
-- `m, m8` is `timedelta64`
-- `M, M8` is `datetime64`
-- `O, O8` is `object`
-- `c` is `|S1`
-- `S, S1, S2, ...` is `|S1, |S1, |S2, ...`
-- `a, a1, a2, ...` is `|S1, |S1, |S2, ...`
-- `U, U1, U2, ...` is `<U1, <U1, <U2, ...`
-<br>
-
-- `np.bool_` is `bool`
-- `np.int_, np.intc` is `int32`, `np.intp` is `int64`
-- `np.int8, np.int16, np.int32, np.int64` is corresponding integer
-- `np.uint8, np.uint16, np.uint32, np.uint64` is corresponding integer
-- `np.float_` is `float64`
-- `np.float16, np.float32, np.float64` is corresponding float number
-- `np.complex_` is `complex128`
-- `np.complex64, np.complex128` is corresponding complex number
-
-
-
-
-
-
-
-
-
-
-<br>
 
 ## Array
-### Attributes
-- `ndarray.data` Python buffer object pointing to the start of the array's data
-- `ndarray.flags` Information about the memory layout of the array
-- `ndarray.itemsize` Length of one array element in bytes
-- `ndarray.ndim` Number of array dimensions
-- `ndarray.size` Number of elements in the array
-- `ndarray.shape` Tuple of array dimensions
-- `ndarray.strides` Tuple of bytes to step in each dimension when traversing array
-
-
-### Create Array
-- `np.array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0, like=None)`
-  - `object` : An array, any object exposing the array interface, an object whose `__array__` method returns an array, or any (nested) sequence. If object is a scalar, a 0-dimensional array containing object is returned.
-  - `dtype` : If not given, then the type will be determined as the minimum type required to hold the objects.
-  - `copy` : If true (default), then the object is copied.  Otherwise, a copy will only be made if `__array__` returns a copy, if obj is a nested sequence, or if a copy is needed to satisfy any of the other requirements (`dtype`, `order`, etc.).
-  - `order` : `{'K', 'A', 'C', 'F'}`, optional. If object is not an array, the newly created array will be in C order.
-  - `subok` : If True, then sub-classes will be passed-through, otherwise the returned array will be forced to be a base-class `array`.
-    - `np.array(m, copy=False, subok=True)` will not return a copy.
-  - `ndmin` : Specifies the minimum number of dimensions that the resulting array should have. Ones will be pre-pended to the shape as needed to meet this requirement.
+### 属性
+- `ndarray.dtype` 数组的数据类型
+- `ndarray.flags` 返回内存布局的信息
+- `ndarray.itemsize` 每个元素的字节长度
+- `ndarray.ndim` 数组的维度数
+- `ndarray.size` 数组的元素数
+- `ndarray.shape` 各维度的长度组成的元组
+- `ndarray.strides` 各维度前进一步所需跨越的字节数组成的元组
 <br>
 
-- `np.empty(shape, dtype=float, order='C', *, like=None)`
-  - `shape` : int or tuple of int, `np.empty(3)` is equivalent to `np.empty([3])`
-- `np.zeros(shape, dtype=float, order='C', *, like=None)`
-- `np.ones(shape, dtype=None, order='C', *, like=None)`
-  - `dtype` : Default is `numpy.float64`.
-- `np.full(shape, fill_value, dtype=None, order='C', *, like=None)`
-  - `dtype` : The default, None, means `np.array(fill_value).dtype`.
+- `ndarray.data` 返回指向数据块的 buffer 对象
+- `ndarray.flat` 返回数组的 flatitier 对象
+
+
+
+<br>
+
+### 生成数组
+- `np.array(object, dtype=None, *, copy=True, order='K', subok=False, ndmin=0, like=None)`
+  - `dtype` 数据类型
+    - `'u1'` 等效于 `'uint8'` 和 `np.uint8`
+    - `'i'` `'i4'` 等效于 `'int32'` 和 `np.int32`
+    - `'f'` `'f4'` 等效于 `'float32'` 和 `np.float32`
+  - `copy` 若为 True 则深拷贝 object，否则视情况而决定是否拷贝
+  - `order` 内存布局，若 object 非数组则默认为 C 顺序
+  - `subok` 若为 True 则 array 的子类的类别会被保留，否则会强制转换
+  - `ndmin` 最小的维度数，1 会被用来填充空白
+<br>
+
+- `np.empty(shape, dtype=float, order='C', *, like=None)` 返回未初始化的数组
+- `np.zeros(shape, dtype=float, order='C', *, like=None)` 返回初始化为 0 的数组
+- `np.ones(shape, dtype=float, order='C', *, like=None)` 返回初始化为 1 的数组
+- `np.full(shape, fill_value, dtype=None, order='C', *, like=None)` 返回初始化为指定值的数组
+  - `dtype` 默认为 `np.array(fill_value).dtype`
 <br>
 
 - `np.arange([start,] stop[, step,], dtype=None, *, like=None)`
-  - `start` : integer or real. The interval includes this value.  The default start value is 0.
-  - `stop` : integer or real. The interval does not include this value, except in some cases where `step` is not an integer and floating point round-off affects the length of `out`.
-  - `step` : integer or real. The default step size is 1.  If `step` is specified as a position argument, `start` must also be given.
-  - `dtype` : If is not given, infer the data type from the other input arguments.
+  - `start`, `stop` 和 `step` 支持使用浮点数
+  - `dtype` 若为 None 则从其他参数中推断
 - `np.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis=0)`
-  - `num` : Number of samples to generate. Default is 50. Must be non-negative.
-  - `endpoint` : If True, `stop` is the last sample. Otherwise, it is not included.
-  - `retstep` : If True, return (`samples`, `step`), where `step` is the spacing between samples.
-  - `dtype` : If is not given, the data type is inferred from `start` and `stop`. The inferred dtype will never be an integer.
+  - `num` 生成的样本数，默认为 50
+  - `endpoint` 若为 True 则会包含 `stop`
+  - `retstep` 若为 True 则返回的是 (样本, 步长)
+  - `dtype` 若为 None 则从其他参数中推断，但绝不会是整数
+<br>
 
-### Convert Array
-- `np.asarray(a, dtype=None, order=None, *, like=None)`
-  - `a` : Input data, in any form that can be converted to an array.  This includes lists, lists of tuples, tuples, tuples of tuples, tuples of lists and ndarrays.
-  - `dtype` : By default, the data-type is inferred from the input data.
-  - `order` : Memory layout.  'A' and 'K' depend on the order of input array a.
-  - Like `np.array(a, copy=False)`, existing arrays are not copied. If `dtype` is set, array is copied only if dtype does not match
-- `np.asanyarray(a, dtype=None, order=None, *, like=None)`
-  - Like `np.array(a, copy=False, subok=True)`, convert the input to an ndarray, but pass ndarray subclasses through.
-- `np.asfarray(a, dtype=<class 'numpy.float64'>)`
+- `np.meshgrid(*xi, copy=True, sparse=False, indexing='xy')` 生成网格点坐标矩阵，返回的坐标矩阵数等于输入的坐标向量数
+  - `copy` 若为 False，则只会返回原有数组的视图
+  - `indexing` 坐标矩阵的索引方式，假设坐标向量的长度依次为 M, N, P
+    - `'xy'` 网格点先沿横轴展开，坐标矩阵的形状为 (M, N) 或 (M, N, P)
+    - `'ij'` 网格点先沿纵轴展开，坐标矩阵的形状为 (N, M) 或 (N, M, P)
 
 
+<br>
+
+### 转换类型
+- `np.asarray(a, dtype=None, order=None, *, like=None)` 将输入数据转换为数组
+  - 已存在的数组不会被拷贝
+  - 若设置了 `dtype`，则只有当数据类型不匹配时会拷贝
+- `np.asfarray(a, dtype=<class 'numpy.float64'>)` 强制转换为数据类型为 float64 的数组
+  - 只有当数据类型不匹配时会拷贝
+<br>
+
+- `a.astype(dtype, order='K', casting='unsafe', subok=True, copy=True)` 返回数组的副本，已被转换为指定数据类型
+
+
+
+<br>
 
 ### Basic Operators
 #### Index
