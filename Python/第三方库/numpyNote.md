@@ -15,9 +15,9 @@
   - [Transpose](#transpose)
   - [Basic operations](#basic-operations)
 - [Random](#random)
-  - [Generate random number](#generate-random-number)
-  - [Choice Element](#choice-element)
-  - [Shuffle](#shuffle)
+  - [生成随机数](#生成随机数)
+  - [随机选择](#随机选择)
+  - [随机排序](#随机排序)
 
 
 
@@ -496,87 +496,41 @@ array([[ 4,  8, 12],
 
 
 
+
+
+<br>
+
 ## Random
-### Generate random number
-```py
-# Return a sample (or samples) from the "standard normal" distribution.
-np.random.randn(d0, d1, ..., dn)
+### 生成随机数
+- `np.random.rand(d0, d1, ..., dn)` 生成均匀分布的随机数数组，取值范围为 [0, 1)，若无参数则返回单个浮点数
+- `np.random.random(size=None)` 生成取值范围为 [0, 1) 的随机数
+- `np.random.random_sample(size=None)` 生成取值范围为 [0, 1) 的随机数
+- `np.random.uniform(low=0.0, high=1.0, size=None)` 生成均匀分布的随机数
+  - `size` 若为 None，则返回一个数；若为整数或元组，则返回一个数组
+<br>
 
-If positive int_like arguments are provided, an arra of shape ``(d0, d1,
-..., dn)``, is returned
-If no argument is provided, a single float randomly sampled from the 
-distribution is returned
-```
-```py
-# Construct a new Generator with the default BitGenerator (PCG64).
-numpy.random.default_rng(...)
+- `np.random.randn(d0, d1, ..., dn)` 生成标准正态分布的随机数数组，若无参数则返回单个浮点数
+- `np.normal(loc=0.0, scale=1.0, size=None)` 生成标准分布的随机数
+<br>
 
->>> rng = np.random.default_rng()
->>> type(rng)
-<class 'numpy.random._generator.Generator'>
+- `np.randint(low, high=None, size=None, dtype=int)` 返回指定范围内的随机整数
+  - `high` 若为 None，则取值范围为 [0, low)，否则为 [low, high)
 
+<br>
 
-# Draw samples from a standard Normal distribution (mean=0, stdev=1).
-rng.standard_normal(size=None, dtype=np.float64, out=None)
-size : int or tuple of ints, optional
-       Output shape.  If the given shape is, e.g., ``(m, n, k)``, then
-       ``m * n * k`` samples are drawn.  Default is None, in which case a
-       single value is returned.
-dtype : dtype, optional
-       Desired dtype of the result,only `float64` and `float32` are supported
-out : ndarray, optional
-       Alternative output array in which to place the result.
+### 随机选择
+- `np.random.choice(a, size=None, replace=True, p=None)` 随机选择一维数组的元素
+  - `a` 若为一维数组，则从中选择元素；若为整数，则视为使用 `np.arange(a)`
+  - `size` 若为 None，则只返回一个元素，否则返回指定形状的数组
+  - `replace` 若为 True，则同一元素可被多次选择
+  - `p` 一维数组，表示每个元素的概率，必须和为 1
 
-# Return random floats in the half-open interval [0.0, 1.0).
-rng.random(size=None, dtype=np.float64, out=None)
-size : int or tuple of ints, optional
-       Output shape. Default is None,in which case a single value is returned
-dtype : dtype, optional
-       Desired dtype of the result,only `float64` and `float32` are supported
+<br>
 
-# Return random integers
-rng.integers(low, high=None, size=None, dtype=np.int64, endpoint=False)
-low : int or array-like of ints
-       Lowest (signed) integers to be drawn (unless ``high=None``, in which 
-       case this parameter is 0 and this value is used for `high`).
-high : int or array-like of ints, optional
-       If provided, one above the largest (signed) integer to be drawn
-       from the distribution.
-       If array-like, must contain integer values
-size : int or tuple of ints, optional
-       Output shape.
-dtype : dtype, optional
-       Desired dtype of the result. Byteorder must be native.
-       The default value is np.int64.
-endpoint : bool, optional
-       If true, sample from the interval [low, high] instead of the
-       default [low, high)
-```
-
-
-### Choice Element
-- `np.random.choice(a, size=None, replace=True, p=None)` Generates a random sample from a given 1-D array
-  - `a` : 1-D array-like or int
-    If an ndarray, a random sample is generated from its elements.
-    If an int, the random sample is generated as if it were ``np.arange(a)``
-  - `size` : int or tuple of ints, optional
-    If the given shape is, e.g., ``(m, n, k)``, then ``m * n * k`` samples are drawn. 
-    Default is None, in which case a single value is returned.
-  - `replace` : boolean, optional
-    Whether the sample is with or without replacement.
-    Default is True, meaning that a value can be selected multiple times.
-  - `p` : 1-D array-like, optional
-    The probabilities associated with each entry in a.
-    If not given, the sample assumes a uniform distribution over all
-    entries in ``a``.
-
-
-### Shuffle
-- `np.random.shuffle(x)` Modify a sequence in-place by shuffling its contents.
-- `np.random.permutation(x)` Randomly permute a sequence, or return a permuted range.
-  - `x` : int or array_like
-    If `x` is an integer, randomly permute ``np.arange(x)``.
-    If `x` is an array, make a copy and shuffle the elements randomly.
+### 随机排序
+- `np.random.shuffle(x)` 沿第一个轴打乱序列顺序，原序列变化，返回 None
+- `np.random.permutation(x)` 沿第一个轴随机排列序列，原序列不变，返回副本
+  - `x` 若为数组，则会进行拷贝；若为整数，则视为使用 `np.arange(a)`
 
 
 
