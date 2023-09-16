@@ -1,19 +1,19 @@
-<!-- TOC -->
 
 - [模型](#模型)
   - [保存和加载模型](#保存和加载模型)
   - [使用模型](#使用模型)
-- [数据集](#数据集)
-  - [下载数据集](#下载数据集)
-    - [CIFAR10](#cifar10)
-    - [ImageNet](#imagenet)
-  - [加载数据集](#加载数据集)
+- [数据](#数据)
+  - [Dataset](#dataset)
+    - [自定义数据集](#自定义数据集)
+    - [下载数据集](#下载数据集)
+  - [Sampler](#sampler)
+  - [DataLoader](#dataloader)
 - [神经网络](#神经网络)
   - [卷积层](#卷积层)
   - [池化层](#池化层)
   - [BN 层](#bn-层)
 
-<!-- /TOC -->
+
 
 
 
@@ -21,9 +21,10 @@
 ## 模型
 ### 保存和加载模型
 ```py
-# 保存整个模型网络结构和参数
+# 保存整个模型的结构和参数
 torch.save(model, path)
 
+# 加载整个模型的结构和参数
 model = torch.load(path)
 model.eval()
 ```
@@ -33,13 +34,11 @@ model.eval()
 model = nn.Model()
 torch.save(model.state_dict(), path)
 
+# 加载保存的参数到模型中
 model = nn.Model()
 model.load_state_dict(torch.load(path))
 model.eval()
 ```
-
-
-
 
 
 <br>
@@ -76,11 +75,23 @@ predicted_label = labels[predicted_index.item()]
 
 
 
+
+
 <br>
 
-## 数据集
-### 下载数据集
-#### CIFAR10
+## 数据
+### Dataset
+#### 自定义数据集
+PyTorch 支持两种不同类型的数据集。
+
+映射式数据集继承 torch.utils.data.Dataset，它必须重写 \_\_getitem\_\_() 方法，用以返回指定键的数据样本，同时可以可选地重写 \_\_len\_\_()，用以返回数据集的大小。
+
+可迭代式数据集继承 torch.utils.data.IterableDataset，它必须重写 \_\_iter\_\_() 方法，用以返回数据样本的迭代器。这适用于随机读取代价很大，以及批量大小取决于获取的数据的情况。
+
+<br>
+
+#### 下载数据集
+**CIFAR10**
 ```py
 torchvision.datasets.CIFAR10(
     root: str,
@@ -98,7 +109,7 @@ torchvision.datasets.CIFAR10(
 
 <br>
 
-#### ImageNet
+**ImageNet**
 ```py
 torchvision.datasets.ImageNet(
     root: str,
@@ -113,12 +124,25 @@ torchvision.datasets.ImageNet(
 
 
 
+<br>
 
+### Sampler
+PyTorch 所有的采样器都是 torch.utils.data.Sampler 的子类，都要重写 \_\_iter\_\_()，用以返回一个迭代器，遍历数据集的所有索引；重写 \_\_len\_\_()，用以返回返回的迭代器的长度。
 
+采样器不可用于可迭代式数据集，因为其不可使用索引。
+
+- `torch.utils.data.SequentialSampler(data_source)` 按原有顺序采样，每次返回一个索引
+- `torch.utils.data.RandomSampler(data_source, replacement=False, num_samples=None, generator=None)` 随机采样，每次返回一个索引
+  - `replacement` 若为 True，则可以返回相同的索引
+  - `num_samples` 可以生成的样本数，默认为数据集的大小
+<br>
+
+- `torch.utils.data.BatchSampler(sampler, batch_size, drop_last)` 批次采样，每次返回一批索引
+  - `drop_last` 若为 True，则会在最后一个批次的长度不足 `batch_size` 时抛弃该批次
 
 <br>
 
-### 加载数据集
+### DataLoader
 ```py
 torch.utils.data.DataLoader(
     dataset: torch.utils.data.dataset.Dataset[+T_co],
@@ -140,25 +164,20 @@ torch.utils.data.DataLoader(
     pin_memory_device: str = '',
 )
 ```
-- `dataset` 加载数据的数据集
-- `batch-size` 每个批次加载的样本数
-- `shuffle` 若为 True，则在每个 epoch 后重新排列数据
-- `num_workers` 用于加载数据的子进程数
+DataLoader 支持通过参数 batch_size, shuffle, batch_sampler, drop_last 和 collate_fn 实现自动批处理，将单个获取的数据样本整理成批次：
+- `shuffle` 若为 True，则会使用随机采样器
+- `sampler` 用于 `batch_sampler` 的构建，可由自己指定，不可与 `shuffle` 冲突
+- `batch_sampler` 可由自己指定，不可与 `batch_size`, `shuffle`, `sampler` 和 `drop_last` 冲突
+- `collate_fn` 用于处理每批从数据集加载的数据
 
-<br>
+当 batch_size 和 batch_sampler 都为 None 时，自动批处理会被禁止，DataLoader 会逐个返回样本。
 
-```py
-def imshow(img):
-    img = img / 2 + 0.5
-    npimg = img.numpy()
-    plt.imshow(np.transpose(npimg, (1, 2, 0)))
-    plt.show()
+DataLoader 默认使用单进程数据加载。当 num_workers 为正整数时，会打开相同数量的子进程，进行多进程数据加载，此时 dataset, collate_fn 和 worker_init_fn 会被传递给每个子进程，用于初始化和处理数据。
 
-for step, data in enumerate(trainloader, 0):
-    if step < 3:
-        images, labels = data
-        imshow(torchvision.utils.make_grid(images))
-```
+对于映射式数据集，每个子进程要加载的数据的索引是由主进程的采样器分发的。对于可迭代式数据集，需要使用 `torch.utils.data.get_worker_info()` 或 `worker_init_fn` 来改变每个子进程迭代的数据范围，否则会返回重复的数据。
+
+
+
 
 
 
