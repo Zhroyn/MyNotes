@@ -9,9 +9,12 @@
   - [Sampler](#sampler)
   - [DataLoader](#dataloader)
 - [神经网络](#神经网络)
+  - [自定义神经网络](#自定义神经网络)
   - [卷积层](#卷积层)
   - [池化层](#池化层)
   - [BN 层](#bn-层)
+  - [激活函数](#激活函数)
+  - [损失函数](#损失函数)
 
 
 
@@ -69,6 +72,7 @@ output = model(img_input)
 predicted_index = torch.max(output, 1)[1]
 predicted_label = labels[predicted_index.item()]
 ```
+
 
 
 
@@ -184,9 +188,66 @@ DataLoader 默认使用单进程数据加载。当 num_workers 为正整数时�
 
 
 
+
 <br>
 
 ## 神经网络
+### 自定义神经网络
+PyTorch 提供了多种类用于自定义神经网络，其中最基础的就是 torch.nn.Module。所有神经网络都是 Module 的子类，必须重写 \_\_init\_\_() 和 forward() 方法。
+
+此外，还有 Sequential, ModuleList, ModuleDict 等容器可用于快速构建网络。其中，Sequential 可用于顺序串联各层，直接构建网络：
+```py
+model = nn.Sequential(
+          nn.Conv2d(1,20,5),
+          nn.ReLU(),
+          nn.Conv2d(20,64,5),
+          nn.ReLU()
+        )
+
+model = nn.Sequential(OrderedDict([
+          ('conv1', nn.Conv2d(1,20,5)),
+          ('relu1', nn.ReLU()),
+          ('conv2', nn.Conv2d(20,64,5)),
+          ('relu2', nn.ReLU())
+        ]))
+```
+
+ModuleList 可用于构建具有重复特性的网络，可像列表一样使用索引，其包含的模块会被正确注册：
+```py
+class MyModule(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.linears = nn.ModuleList([nn.Linear(10, 10) for i in range(10)])
+
+    def forward(self, x):
+        for i, l in enumerate(self.linears):
+            x = self.linears[i // 2](x) + l(x)
+        return x
+```
+
+ModuleDict 可用于构建动态网络，可像字典一样使用索引，其包含的模块会被正确注册：
+```py
+class MyModule(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.choices = nn.ModuleDict({
+                'conv': nn.Conv2d(10, 10, 3),
+                'pool': nn.MaxPool2d(3)
+        })
+        self.activations = nn.ModuleDict([
+                ['lrelu', nn.LeakyReLU()],
+                ['prelu', nn.PReLU()]
+        ])
+
+    def forward(self, x, choice, act):
+        x = self.choices[choice](x)
+        x = self.activations[act](x)
+        return x
+```
+
+
+<br>
+
 ### 卷积层
 ```py
 nn.Conv2d(
@@ -205,6 +266,7 @@ nn.Conv2d(
 ```
 - `kernel_size` 若卷积核的宽和高相同，则可以用 int，否则必须用 tuple
 
+
 <br>
 
 ### 池化层
@@ -220,6 +282,7 @@ nn.MaxPool2d(
 ```
 - `stride` 默认值为 `kernel_size`
 
+
 <br>
 
 ### BN 层
@@ -234,7 +297,41 @@ nn.BatchNorm2d(
     dtype=None,
 ) -> None
 ```
-- `num_features` 特征的通道数
+- `num_features` 特征数，对于全连接层来说是向量长度，对于卷积层来说是通道数
 - `eps` 用来防止归一化时除零
+
+
+<br>
+
+### 激活函数
+- `torch.nn.ReLU(inplace=False)`
+  - `inplace` 若为 True，则会改变输入的原有值
+- `torch.nn.LeakyReLU(negative_slope=0.01, inplace=False)`
+- `torch.nn.ELU(alpha=1.0, inplace=False)`
+  - `alpha` 小于零时的系数
+- `torch.nn.PReLU(num_parameters=1, init=0.25, device=None, dtype=None)`
+  - `num_parameters` 要学习的 $a$ (小于零时的系数) 的数量，只能等于 1 或者输入的通道数
+  - `init` $a$ 的初始值
+<br>
+
+- `torch.nn.Softmax(dim=None)`
+
+
+<br>
+
+### 损失函数
+- `torch.nn.L1Loss(size_average=None, reduce=None, reduction='mean')` L1 范数损失 $$l_n = |x_n - y_n|$$
+  - `size_average` 已弃用
+  - `reduce` 已弃用
+  - `reduction` 指定对输出的处理
+    - `'none'` 不做处理，保持原有形状
+    - `'mean'` 取平均值
+    - `'sum'` 取总和
+<br>
+
+- `torch.nn.MSELoss(size_average=None, reduce=None, reduction='mean')` 均方误差损失 $$l_n = (x_n - y_n)^2$$
+<br>
+
+- `torch.nn.CrossEntropyLoss(weight=None, size_average=None, ignore_index=- 100, reduce=None, reduction='mean', label_smoothing=0.0)` 交叉熵损失 $$l_n = -w_{y_n} \log \frac{\exp(x_{n,y_n})}{\sum_{c=1}^C \exp(x_{n,c})} $$
 
 
