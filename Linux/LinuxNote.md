@@ -9,6 +9,9 @@
   - [echo, cat, tee](#echo-cat-tee)
   - [cut, head, tail](#cut-head-tail)
   - [wc](#wc)
+- [网络远程](#网络远程)
+  - [wget, curl](#wget-curl)
+  - [hostname, ip, ifconfig](#hostname-ip-ifconfig)
 - [数据处理](#数据处理)
   - [sort](#sort)
   - [uniq](#uniq)
@@ -21,12 +24,9 @@
   - [jobs, ps, pgrep](#jobs-ps-pgrep)
   - [kill, pkill](#kill-pkill)
   - [nohup, bg, fg](#nohup-bg-fg)
-- [远程控制](#远程控制)
-  - [ssh-keygen](#ssh-keygen)
 - [其他](#其他)
   - [date](#date)
   - [who](#who)
-  - [curl](#curl)
   - [xargs](#xargs)
   - [tar](#tar)
   - [less](#less)
@@ -388,6 +388,112 @@ wc -c/--bytes path/to/file
 wc -m/--chars path/to/file
 ```
 
+
+
+
+
+
+
+<br>
+
+## 网络远程
+### wget, curl
+**wget**
+```shell
+# 下载链接内容并保存到当前目录，文件名为 foo
+wget https://example.com/foo
+```
+- `-O/--output-document FILE` 指定保存的文件的名称
+- `-P/--directory-prefix PREFIX` 指定保存到的目录，不可与 `-O` 一起使用
+- `-i/--input-file FILE` 从指定文件中的链接下载内容
+- `-c/--continue` 若保存位置已有部分下载的文件，则断点续传，否则重新下载
+- `-r` 递归地下载链接中的所有文件
+<br>
+
+- `-b` 后台下载，若未指定则默认将进度输出到当前目录下的 wget-log 文件
+- `-o/--output-file FILE` 将 log 输出到指定文件，若已存在则覆盖
+- `-a/append-file FILE` 将 log 信息附加到指定文件
+<br>
+
+- `--limit-rate=RATE` 限制下载速度，`k` 为千字节每秒，`M` 为兆字节每秒
+- `--user=USER` 提供验证用户名
+- `--password=PASS` 提供验证密码
+
+---
+**curl**
+```shell
+# 下载链接内容并发送到标准输出
+curl https://example.com
+# 下载链接内容并保存到指定路径
+curl url1 -o path/to/file1 url2 -o path/to/file2
+# 下载链接内容并保存到当前目录，文件名为 URL 中的名称
+curl url1 -O url2 -O
+# 只显示响应头信息，而不下载内容
+curl -I https://example.com
+
+# 向 URL 发送一个 PUT 请求，请求添加了自定义的头部信息
+curl --header 'X-My-Header: 123' --request PUT https://example.com
+```
+- curl 可以并行处理多个 url
+- `-o/--output <file>` 保存文件到指定路径，而不是发送到标准输出
+- `-O/--remote-name` 保存文件到当前目录，文件名为 URL 中的名称
+- `-I/--head` 只显示响应头信息，而不下载内容
+- `-L/--location` 跟随重定向
+- `-#/--progress-bar` 不再显示传输详细信息，转而显示传输进度条
+- `-C/--continue-at -` 恢复传输进度
+- `--limit-rate <speed>` 限制传输速度
+<br>
+
+- `-x/--proxy [protocol://]host[:port]` 使用指定代理
+- `-u/--user <user:password>` 服务器的用户名和密码
+- `-U/--proxy-user <user:password>` 代理的用户名和密码
+- `-k/--key <key>` 指定本地私钥路径
+- `-E/--cert <certificate[:password]>` 指定客户端证书文件和密码
+<br>
+
+- `-d/--data <data>` 指定数据，用于向 URL 发送一个 POST 请求
+- `-H/--header <header/@file>` 添加自定义的 HTTP 头部信息到请求中
+- `-X/--request <method>` 指定 HTTP 请求方法，默认为 GET
+- `-T/--upload-file <file>` 上传本地文件
+
+<br>
+
+### hostname, ip, ifconfig
+**hostname**
+```shell
+# 显示主机名
+hostname
+# 显示主机名对应的 ip 地址，为本地回环地址
+hostname -i/--ip-address
+# 显示主机的所有网络接口的 ip 地址
+hostname -I/--all-ip-address
+```
+---
+**ip**
+```shell
+# 显示所有网络接口的信息
+ip addr
+# 只显示 eth0 接口的信息
+ip addr show eth0
+
+# 显示路由表
+ip route
+# 显示邻居 (APR) 表
+ip neigh
+
+# 启用/禁用网络接口
+ip link set {{interface}} up/down
+```
+---
+**ifconfig**
+```shell
+# 显示所有启用的网络接口的信息
+ifconfig
+# 只显示 lo 接口的信息
+ifconfig lo
+# 启用/禁用网络接口
+ifconfig {{interface}} up/down
+```
 
 
 
@@ -796,59 +902,6 @@ fg %job_id
 
 
 
-<br>
-
-## 远程控制
-### ssh-keygen
-```shell
-Normally this program generates the key and asks for a file in which to store 
-the private key. The public key is stored in a file with the same name but 
-“.pub” appended.
-ssh-keygen will by default write keys in an OpenSSH-specific format, which 
-offers better protection and allow storage of key comments within the private 
-key file.
-
--f filename
-      Specifies the filename of the key file.
--t dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa
-      Specifies the type of key to create. The default is RSA.
--a rounds
-      Specifies the number of KDF (key derivation function) rounds used.
-      The default is 16 rounds.
--b bits
-      Specifies the number of bits in the key to create. 
-      For RSA keys, the minimum size is 1024 bits and the default is 3072 bits.
--C comment
-      Provides a new comment.
--c    Requests changing the comment in the private and public key files.
-      The program will prompt for the file containing the private keys, 
-      for the passphrase if the key has one, and for the new comment.
--P passphrase
-      Provides the (old) passphrase.
--p    Requests changing the passphrase of a private key file instead of 
-      creating a new private key.  The program will prompt for the file 
-      containing the private key, for the old passphrase, and twice for 
-      the new passphrase.
--R hostname | [hostname]:port
-      Removes all keys belonging to the specified hostname (with optional 
-      port number) from a known_hosts file. This option is useful when a 
-      known host has a new key.
-
-# Generate a key interactively:
-ssh-keygen
-# Specify file in which to save the key:
-ssh-keygen -f ~/.ssh/filename
-# Generate an ed25519 key with 100 key derivation function rounds:
-ssh-keygen -t ed25519 -a 100
-# Generate an RSA 4096-bit key with email as a comment:
-ssh-keygen -t dsa|ecdsa|ed25519|rsa -b 4096 -C "comment|email"
-# Change the password of a key:
-ssh-keygen -p -f ~/.ssh/filename
-```
-
-
-
-
 
 
 
@@ -881,20 +934,6 @@ who
 who am i
 # Display all available information:
 who -a
-```
-### curl
-```shell
-# Transfers data from or to a server.
-# Supports most protocols, including HTTP, FTP, and POP3
-
-# Send GET request to get link content to standard output
-curl http://example.com
-# Only show the head of HTTP
-curl -I/--head http://example.com
-# Download the contents of a URL to a file:
-curl http://example.com -o/--output filename
-# Download a file, saving the output under the filename indicated by the URL:
-curl -O/--remote-name http://example.com/filename
 ```
 ### xargs
 ```shell
