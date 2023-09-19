@@ -3,17 +3,11 @@
   - [属性](#属性)
   - [生成数组](#生成数组)
   - [转换类型](#转换类型)
-  - [Basic Operators](#basic-operators)
-    - [Index](#index)
-  - [Search and count](#search-and-count)
-  - [Sort](#sort)
-  - [Concatenate](#concatenate)
-  - [Stack](#stack)
-  - [Split](#split)
-  - [Reshape](#reshape)
-  - [Expand dimension](#expand-dimension)
-  - [Transpose](#transpose)
-  - [Basic operations](#basic-operations)
+  - [合并拆分](#合并拆分)
+  - [改变形状](#改变形状)
+  - [转置翻转](#转置翻转)
+  - [数值计算](#数值计算)
+  - [其他方法](#其他方法)
 - [Random](#random)
   - [生成随机数](#生成随机数)
   - [随机选择](#随机选择)
@@ -27,18 +21,21 @@
 
 ## Array
 ### 属性
-- `ndarray.dtype` 数组的数据类型
-- `ndarray.flags` 返回内存布局的信息
-- `ndarray.itemsize` 每个元素的字节长度
-- `ndarray.ndim` 数组的维度数
-- `ndarray.size` 数组的元素数
-- `ndarray.shape` 各维度的长度组成的元组
-- `ndarray.strides` 各维度前进一步所需跨越的字节数组成的元组
+- `a.dtype` 数组的数据类型
+- `a.flags` 返回内存布局的信息
+- `a.itemsize` 每个元素的字节长度
+- `a.ndim` 数组的维度数
+- `a.size` 数组的元素数
+- `a.shape` 各维度的长度组成的元组
+- `a.strides` 各维度前进一步所需跨越的字节数组成的元组
 <br>
 
-- `ndarray.data` 返回指向数据块的 buffer 对象
-- `ndarray.flat` 返回数组的 flatitier 对象
+- `a.data` 返回指向数据块的 buffer 对象
+- `a.flat` 返回数组的 flatitier 对象
+- `a.base` 若使用的内存来自别的对象，则返回原对象，否则返回 None
+<br>
 
+- `a.__array_interface__` 返回 (数据块地址, 是否只读)
 
 
 <br>
@@ -95,402 +92,124 @@
 
 <br>
 
-### Basic Operators
-#### Index
-- Support multi-dimension index : `a[1][1]` or `a[1, 1]`
-- Slice each dimension independently : `a[:, :, ::-1]` or `a[2:4, 2::-1, 1]`
-  - Return a view instead of a copy
+### 合并拆分
+- `np.concatenate((a1, a2, ...), axis=0, out=None, dtype=None, casting="same_kind")` 沿指定维度连接多个数组，返回副本
+  - `a1, a2, ...` 除了 `axis` 指定的维度，其他维度必须相同
+  - `axis` 用于连接的维度的索引，若为 None 则会先展平数组
+  - `out` 结果输出的数组，形状需与输出相同，此时返回的也是该数组
+<br>
 
+- `np.stack(arrays, axis=0, out=None, *, dtype=None, casting='same_kind')` 沿新的维度连接多个数组，返回副本
+  - `arrays` 所有数组应有相同的形状
+  - `axis` 新的维度的索引
+- `np.vstack(tup, *, dtype=None, casting='same_kind')` 沿第一个维度连接多个数组，返回副本，一维数组的形状会转换为 (1, N)
+  - `tup` 除了第一个维度，其他维度必须相同，若为一维数组则必须长度相同
+- `np.hstack(tup, *, dtype=None, casting='same_kind')` 沿第二个维度连接多个数组，返回副本，一维数组会直接拼接
+  - `tup` 除了第二个维度，其他维度必须相同
+<br>
+
+- `np.split(ary, indices_or_sections, axis=0)` 沿指定维度切割数组，返回视图
+  - `indices_or_sections` 整数或一维数组
+    - 若为整数 N，则会平分为 N 份，无法平分则报错
+    - 若为一维数组，例如 (M, N, P)，则会取索引 [0: M], [M: N], [N: P], [P, len(ary.shape[axis])]，若不存在则会返回空数组
+- `np.vsplit(ary, indices_or_sections)` 沿第一个维度切割数组，返回视图
+- `np.hsplit(ary, indices_or_sections)` 沿第二个维度切割数组，返回视图，一维数组会沿第一个维度切割
+
+
+<br>
+
+### 改变形状
+- `np.reshape(a, newshape, order='C')` 改变数组形状，返回视图，仅在必要时返回副本
+  - `newshape` 若为整数，则会转换为一维数组；若为数组，其中一个维度可以使用 -1，其具体值由其他值推断出
+- `a.reshape(shape, order='C')` 改变数组形状，返回视图，仅在必要时返回副本
+  - `shape` 若为数组，其元素可直接分开传入
+<br>
+
+- `a.flatten(order='C')` 展平数组，返回副本
+- `a/np.ravel(a, order='C')` 展平数组，返回视图，仅在必要时返回副本
+<br>
+
+- `a/np.squeeze(axis=None)` 除去数组中长度为一的维度
+  - `axis` None 或整数或整数元组，若指定的维度长度不为一则报错
+<br>
+
+- `np.expand_dims(a, axis)` 扩展维度，返回视图
+  - `axis` 整数或整数元组，指定的索引会插入新的维度
+- 此外，还可以使用 np.newaxis (None) 来扩展维度：
 ```py
-# 
->>> a[1][1] or a[1, 1]
-5
-# Support index list or index array
->>> a[ [0, 0, 1, 1], [0, 0, 2, 1] ]
-array([1, 1, 6, 5])
-# Return a view instead of a copy
->>> a[:, 1]
-array([2, 5])
-
-
->>> (a > 5) | (a == 5)
-array([[False, False, False],
-       [False,  True,  True]])
->>> a[(a > 5) | (a == 5)]
-array([5, 6])
->>> a[a % 2 == 0]
-array([2, 4, 6])
->> a[(a > 2) & (a <= 5)]
-array([3, 4, 5])
-
->>> np.nonzero(a < 5)
-(array([0, 0, 0, 1], dtype=int64), array([0, 1, 2, 0], dtype=int64))
->>> a[np.nonzero(a < 5)]
-array([1, 2, 3, 4])
-```
-### Search and count
-```py
-# Return the indices of the elements that are non-zero
-numpy.nonzero(a)
-
->>> a = np.array([[3, 0, 0], [0, 4, 0], [5, 6, 0]])
->>> a
-array([[3, 0, 0],
-       [0, 4, 0],
-       [5, 6, 0]])
->>> np.nonzero(a)
-(array([0, 1, 2, 2]), array([0, 1, 0, 1]))
->>> a[np.nonzero(a)]
-array([3, 4, 5, 6])
->>> np.transpose(np.nonzero(a))
-array([[0, 0],
-       [1, 1],
-       [2, 0],
-       [2, 1]])
-```
-
-### Sort
-```py
-# Sort an array in-place
-ndarray.sort(axis=-1, kind=None, order=None)
-# Return a sorted copy of an array
-numpy.sort(a, axis=-1, kind=None, order=None)
-
-axis : int or None, optional
-       Axis along which to sort. If None, the array is flattened before
-       sorting. The default is -1, which sorts along the last axis.
-kind : {'quicksort', 'mergesort', 'heapsort', 'stable'}, optional
-       Sorting algorithm. The default is 'quicksort'.
-order : str or list of str, optional
-       When 'a' is an array with fields defined, this argument 
-       specifies which fields to compare first, second, etc.
-
-
->>> a = np.array([[1,4],[3,1]])
->>> np.sort(a)            # sort along the last axis
-array([[1, 4],
-       [1, 3]])
->>> np.sort(a, axis=None) # sort the flattened array
-array([1, 1, 3, 4])
->>> np.sort(a, axis=0)    # sort along the first axis
-array([[1, 1],
-       [3, 4]])
-
->>> dtype = [('name', 'S10'), ('height', float), ('age', int)]
->>> values = [('Arthur', 1.8, 41), ('Lancelot', 1.9, 38), ('Galahad', 1.7, 38)]
->>> a = np.array(values, dtype=dtype) # create a structured array
-# Sort by height:
->>> np.sort(a, order='height')
-# Sort by age, then height if ages are equal:
->>> np.sort(a, order=['age', 'height'])
-```
-
-### Concatenate
-```py
-# Join a sequence of arrays along an existing axis
-numpy.concatenate((a1, a2, ...), axis=0, out=None, dtype=None, ...)
-axis : int, optional
-       The axis along which the arrays will be joined.  If axis is None,
-       arrays are flattened before use.  Default is 0.
-out : ndarray, optional
-       If provided, the destination to place the result. The shape must be
-       correct, matching that of what concatenate would have returned if no
-       out argument were specified.
-dtype : str or dtype
-       If provided, the destination array will have this dtype. Cannot be
-       provided together with 'out'.
-
->>> a = np.array([[1, 2], [3, 4]])
->>> b = np.array([[5, 6]])
->>> np.concatenate((a, b), axis=0)
-array([[1, 2],
-       [3, 4],
-       [5, 6]])
->>> np.concatenate((a, b.T), axis=1)
-array([[1, 2, 5],
-       [3, 4, 6]])
->>> np.concatenate((a, b), axis=None)
-array([1, 2, 3, 4, 5, 6])
-```
-### Stack
-```py
-# Stack arrays in sequence vertically (row wise).
-numpy.vstack(tup)
-This is equivalent to concatenation along the first axis after 1-D arrays
-of shape `(N,)` have been reshaped to `(1,N)`.
-tup : sequence of ndarrays
-       The arrays must have the same shape along all but the first axis.
-       1-D arrays must have the same length.
-
-# Stack arrays in sequence horizontally (column wise).
-numpy.hstack(tup)
-This is equivalent to concatenation along the second axis, except for 1-D
-arrays where it concatenates along the first axis.
-tup : sequence of ndarrays
-       The arrays must have the same shape along all but the second axis,
-       except 1-D arrays which can be any length.
-
-# Join a sequence of arrays along a new axis.
-numpy.stack(arrays, axis=0, out=None)
-arrays : sequence of array_like
-       Each array must have the same shape.
-axis : int, optional
-       The axis in the result array along which the input arrays are stacked.
-out : ndarray, optional
-       The destination to place the result. The shape must be correct.
-
-
->>> a = np.array([1, 2, 3])
->>> b = np.array([4, 5, 6])
->>> np.vstack((a,b))
-array([[1, 2, 3],
-       [4, 5, 6]])
->>> np.hstack((a,b))
-array([1, 2, 3, 4, 5, 6])
->>> np.stack((a, b))
-array([[1, 2, 3],
-       [4, 5, 6]])
->>> np.stack((a, b), axis=-1)
-array([[1, 4],
-       [2, 5],
-       [3, 6]])
-```
-### Split
-```py
-# Split an array into multiple sub-arrays vertically (row-wise).
-numpy.vsplit(ary, indices_or_sections)
-'vsplit' is equivalent to 'split' with 'axis=0' (default), the array is
- always split along the first axis regardless of the array dimension.
-
-# Split an array into multiple sub-arrays horizontally (column-wise).
-numpy.hsplit(ary, indices_or_sections)
-'hsplit' is equivalent to 'split' with 'axis=1', the array is always split
- along the second axis except for 1-D arrays, where it is split at 'axis=0'.
-
-# Split an array into multiple sub-arrays as views into `ary`.
-numpy.split(ary, indices_or_sections, axis=0)
-indices_or_sections : int or 1-D array
-       If `indices_or_sections` is an integer, N, the array will be divided
-       into N equal arrays along `axis`.  If such a split is not possible,
-       an error is raised.
-       If `indices_or_sections` is a 1-D array of sorted integers, the entries
-       indicate where along `axis` the array is split. If an index exceeds 
-       the dimension of `axis`, an empty sub-array is returned correspondingly.
-
-
->>> x = np.arange(9.0)
->>> np.split(x, 3)
-[array([0.,  1.,  2.]), array([3.,  4.,  5.]), array([6.,  7.,  8.])]
-
->>> np.split(x, [3, 5, 6, 10])
-[array([0.,  1.,  2.]),
-array([3.,  4.]),
-array([5.]),
-array([6.,  8.]),
-array([], dtype=float64)]
-
->>> np.split(x.reshape(3, 3), [1, 3])
-[array([[0., 1., 2.]]),
-array([[3., 4., 5.],
-       [6., 7., 8.]]),
-array([], shape=(0, 3), dtype=float64)]
-```
-### Reshape
-```py
-# Returns an array containing the same data with a new shape.
-ndarray.reshape(shape, order='C')
-numpy.reshape(a, newshape, order='C')
-### Notes: "ndarray.reshape" allows the elements of
-### the shape parameter to be passed in as separate arguments
-
->>> a = np.arange(6)
->>> a.reshape(3, 2)
-array([[0, 1],
-       [2, 3],
-       [4, 5]])
->>> np.reshape(a, newshape=(1, 6))
-array([[0, 1, 2, 3, 4, 5]])
-```
-```py
-# Change shape and size of array in-place.
-ndarray.resize(new_shape, refcheck=True)
-# Return a new array with the specified shape.
-numpy.resize(a, new_shape)
-
->>> a = np.array([[0,1],[2,3]])
->>> a.ravel()
-array([0, 1, 2, 3])
->>> np.resize(a,(2,3))
-array([[0, 1, 2],
-       [3, 0, 1]])
->>> np.resize(a,(2,4))
-array([[0, 1, 2, 3],
-       [0, 1, 2, 3]])
-```
-```py
-# Return a copy of the array collapsed into one dimension.
-ndarray.flatten(order='C')
-
-# Return a flattened array.
-ndarray.ravel()
-# Return a contiguous flattened array.
-numpy.ravel(a, order='C')
-
-### When using `flatten`, changes to new array won’t change the parent array.
-### When using `ravel`, changes to new array will affect the parent array.
 >>> a = np.arange(6).reshape(2, 3)
->>> b = a.flatten()
->>> b[0] = 9
->>> a
-array([[0, 1, 2],
-       [3, 4, 5]])
->>> b = a.ravel() or np.ravel(a)
->>> b[0] = 9
->>> a
-array([[9, 1, 2],
-       [3, 4, 5]])
-```
-### Expand dimension
-```py
-# Insert a new axis that will appear at the 'np.newaxis' position
->>> a = np.array([1, 2, 3, 4, 5, 6])
->>> a.shape
-(6,)
->>> row_vector = a[np.newaxis, :]
->>> row_vector.shape
-(1, 6)
->>> col_vector = a[:, np.newaxis]
->>> col_vector.shape
-(6, 1)
-
-
-# Insert a new axis that will appear at the 'axis' position
-numpy.expand_dims(a, axis)
-axis : int or tuple of ints
-
->>> np.expand_dims(a, axis=1).shape
-(6, 1)
->>> np.expand_dims(a, axis=0).shape
-(1, 6)
->>> a = np.arange(6).reshape((2, 3))
->>> np.expand_dims(a, (0, 1)).shape
-(1, 1, 2, 3)
->>> np.expand_dims(a, (1, 0)).shape
-(1, 1, 2, 3)
->>> np.expand_dims(a, (0, 2)).shape
+>>> a[np.newaxis, :, np.newaxis].shape
 (1, 2, 1, 3)
-```
-### Transpose
-```py
-# Reverse or permute the axes of an array; returns the modified array
-numpy.transpose(a, axes=None)
-a : array_like
-       Input array.
-axes : tuple or list of ints, optional
-       If not specified, defaults to ``range(a.ndim)[::-1]``, which
-       reverses the order of the axes.
-
->>> np.transpose(np.arange(4).reshape(2, 2))
-array([[0, 2],
-       [1, 3]])
->>> a = np.ones((2, 3, 4, 5))
->>> np.transpose(a).shape
-(5, 4, 3, 2)
->>> a = np.ones((1, 2, 3))
->>> np.transpose(a, (1, 0, 2)).shape
-(2, 1, 3)
-```
-```py
-# Reverse the order of elements in an array along the given axis.
-flip(m, axis=None)
-m : array_like
-       Input array.
-axis : None or int or tuple of ints, optional
-       Axis or axes along which to flip over. The default,
-       axis=None, will flip over all of the axes of the input array.
-       If axis is negative it counts from the last to the first axis.
-
-       If axis is a tuple of ints, flipping is performed on all of the axes
-       specified in the tuple.
-
->>> A = np.arange(8).reshape((2,2,2))
->>> np.flip(A)
-array([[[7, 6],
-       [5, 4]],
-       [[3, 2],
-       [1, 0]]])
->>> np.flip(A, (0, 2))
-array([[[5, 4],
-       [7, 6]],
-       [[1, 0],
-       [3, 2]]])
+>>> a[np.newaxis, :, :, np.newaxis].shape
+(1, 2, 3, 1)
 ```
 
-### Basic operations
-```py
->>> data = np.array([1, 2])
->>> ones = np.ones(2, dtype=int)
 
-### Operation between a array and a scalar
->>> data + 1
-array([2, 3])
->>> data - 1
-array([0, 1])
->>> data * 2
-array([2, 4])
->>> data / 2
-array([0.5, 1. ])
+<br>
 
-### Operation between arrays with the same shape
->>> data + ones
-array([2, 3])
->>> data - ones
-array([0, 1])
->>> data * data
-array([1, 4])
->>> data / data
-array([1., 1.])
-
-### Operation between arrays with different shapes
->>> a = np.arange(1, 25, dtype='i4').reshape(2, 3, 4)
->>> a + np.ones(4, 'i4').reshape(4)
-array([[[ 2,  4,  6,  8],
-        [ 6,  8, 10, 12],
-        [10, 12, 14, 16]],
-
-       [[14, 16, 18, 20],
-        [18, 20, 22, 24],
-        [22, 24, 26, 28]]])
->>> a + np.ones(12, 'i4').reshape(3, 4)
-array([[[ 2,  3,  4,  5],
-        [ 6,  7,  8,  9],
-        [10, 11, 12, 13]],
-
-       [[14, 15, 16, 17],
-        [18, 19, 20, 21],
-        [22, 23, 24, 25]]])
+### 转置翻转
+- `np.transpose(a, axes=None)` 转置数组，返回视图
+  - `axes` 必须为 [0,1,...,N-1] 的一个排列，默认为 a.shape[::-1]
+- `np.flip(m, axis=None)` 沿指定轴翻转数组，返回视图
+  - `axis` 若为 None，则沿所有轴翻转；若为整数或整数元组，则沿指定轴翻转
 
 
-### More operations
->>> a.sum()
-300
->>> a.sum(0)
-array([[14, 16, 18, 20],
-       [22, 24, 26, 28],
-       [30, 32, 34, 36]])
->>> a.sum(1)
-array([[15, 18, 21, 24],
-       [51, 54, 57, 60]])
+<br>
 
->>> a.min()
-1
->>> a.min(2)
-array([[ 1,  5,  9],
-       [13, 17, 21]])
->>> a.max(2)
-array([[ 4,  8, 12],
-       [16, 20, 24]])
-```
+### 数值计算
+- `a/np.all(axis=None, out=None, keepdims=False, *, where=True)` 若所有元素的计算结果均为 True，则返回 True
+- `a/np.any(axis=None, out=None, keepdims=False, *, where=True)` 若任意元素的计算结果为 True，则返回 True
+  - `axis` None 或整数或整数元组
+    - 若为 None，则会沿所有维度移动做逻辑运算，返回一个布尔值
+    - 若指定维度，则会保持其他维度不变，沿指定维度移动做逻辑运算，运算结果保存在其他维度指定的位置，返回一个维度数减少的数组
+  - `keepdims` 若为 True，则被消去的维度会保留，其长度变为一
+  - `where` 布尔数组，只有为 True 的元素参与逻辑运算
+<br>
+
+- `a/np.max(axis=None, out=None, keepdims=False, initial=<no value>, where=True)` 返回沿指定轴的最大值
+- `a/np.min(axis=None, out=None, keepdims=False, initial=<no value>, where=True)` 返回沿指定轴的最小值
+  - `axis` None 或整数或整数元组
+  - `initial` 输出值的最小/大值
+<br>
+
+- `a/np.sum(axis=None, dtype=None, out=None, keepdims=False, initial=0, where=True)` 返回沿指定轴的累加值
+- `a/np.prod(axis=None, dtype=None, out=None, keepdims=False, initial=1, where=True)` 返回沿指定轴的累乘值
+  - `dtype` 默认使用原数组的数据类型，除非原数组的数据类型是整数类型，且精度不足平台默认整型精度，此时会使用平台默认整型
+  - `initial` 计算累加/乘值的起始值
+- `a/np.mean(axis=None, dtype=None, out=None, keepdims=False, *, where=True)` 返回沿指定轴的平均值
+  - `dtype` 默认情况下，整数数组的输出类型为 float64，浮点数数组的输出类型保持不变
+<br>
+
+- `a/np.cumsum(axis=None, dtype=None, out=None)` 返回沿指定轴的累积和
+- `a/np.cumprod(axis=None, dtype=None, out=None)` 返回沿指定轴的累积乘积
+  - `axis` None 或整数
+    - 若为 None，则会先展平数组，返回一个一维数组
+    - 若指定维度，则会保持其他维度不变，沿指定维度移动做累加/累积，运算结果保存在原来位置，返回一个形状不变的数组
+<br>
+
+- `a/np.dot(b, out=None)` 返回 a 与 b 的乘积
+  - 若 a 与 b 均为一维数组，则作内积
+  - 若 a 与 b 均为二维数组，则作矩阵乘法
+  - 若 a 或 b 为标量，则作简单相乘
+  - 若 a 为 N 维数组，b 为一维数组，则沿最后一个维度作和积，返回的数组的维度数减一
+  - 若 a 为 N 维数组，b 为 M(M>=2) 维数组，则沿 a 的最后一个维度和 b 的倒数第二个维度作和积，返回的数组的维度数减二，如：$$\text{dot}(a, b)[i,j,k,m] = \text{sum}(a[i,j,:] * b[k,:,m])$$
+
+
+<br>
+
+### 其他方法
+- `np.copy(a, order='K', subok=False)` 拷贝数组
+- `np.copyto(dst, src, casting='same_kind', where=True)` 拷贝 src 到 dst，可用于选择性复制
+- `a.copy(order='C')` 返回数组的副本，更为推荐使用
+- `a.view([dtype][, type])` 返回数组的视图
+<br>
+
+- `a.tobytes(order='C')` 将数组转换为字节序列，返回副本
+- `a.tolist()` 将数组转换为列表，返回副本，若数组零维则返回一个标量
+<br>
+
+- `a.fill(value)` 用一个标量填充数组
+
 
 
 
