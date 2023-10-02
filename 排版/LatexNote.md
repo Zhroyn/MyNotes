@@ -1,83 +1,174 @@
-<!-- TOC -->
 
-- [Preamble](#preamble)
-- [Document structure](#document-structure)
-  - [Abstract](#abstract)
-  - [Paragraph and new lines](#paragraph-and-new-lines)
-  - [Chapters and sections](#chapters-and-sections)
-  - [Adding a Table of Contents](#adding-a-table-of-contents)
-- [Font](#font)
-- [Math](#math)
+- [基本使用](#基本使用)
+  - [定义文档类](#定义文档类)
+  - [加载宏包](#加载宏包)
+  - [特殊字符](#特殊字符)
+  - [空白换行](#空白换行)
+- [文档结构](#文档结构)
+  - [标题摘要](#标题摘要)
+  - [章节目录](#章节目录)
+  - [参考文献](#参考文献)
+- [字体](#字体)
+- [数学](#数学)
   - [Additional Component](#additional-component)
   - [Operators](#operators)
   - [Symbols](#symbols)
   - [Equations and Alignment](#equations-and-alignment)
   - [Matrix](#matrix)
   - [Greek Alphabet](#greek-alphabet)
-- [Image](#image)
-- [List](#list)
-- [Table](#table)
-- [Package](#package)
-
-<!-- /TOC -->
+- [图像](#图像)
+- [列表](#列表)
+- [表格](#表格)
+- [包](#包)
 
 
 
-### Preamble
 
+
+
+
+## 基本使用
+### 定义文档类
+在导言区 (Preamble) 中可以使用 `\documentclass[options]{class}` 命令定义文档类，其选项如下：
+- `10pt|11pt|...` 指定字体大小，默认为 10pt
+- `letterpaper|a4paper|a5paper|b5paper|...` 指定页面大小，默认为 letterpaper
+- `titlepage|notitlepage` 指定是否生成标题页，article 默认为 notitlepage，report 和 book 默认为 titlepage
+- `oneside|twoside` 指定是单面还是双面，article 和 report 默认为 onepage，report 默认为 twopage
+- `onecolumn|twocolumn` 指定是单栏排版还是双栏排版，默认为 onecolumn
+- `fleqn` 指定行间公式为左对齐，默认为居中对齐
+- `leqno` 指定公式编号为左对齐，默认为右对齐
+- `landscape` 指定排版方向为横向，默认为纵向
+
+<br>
+
+### 加载宏包
+可用 `\usepackage[options]{pkg}` 命令加载宏包，若要加载多个宏包可以使用多次命令，或用逗号分隔多个宏包。
+
+多个选项要用逗号分隔，某些选项可以传递参数，如 `spacing=1.5`。
+
+所有 `\documentclass` 命令中指定文档类不认识的选项，会传递给 `\usepackage` 加载的宏包。
+
+<br>
+
+### 特殊字符
+$\#$ $\$$ $\%$ $\&$ $\{$ $\}$ $\_$ $\^{}$ $\~{}$ 等特殊字符分别可以使用 \\#, \\$, \\%, \\&, \\{, \\}, \\_, \\^{}, \\~{} 表示。
+
+- `` ` `` 表示左单引号
+- `'` 表示右单引号
+- ` `` ` 表示左双引号
+- `''` 和 `"` 表示右双引号
+<br>
+
+- `-` 表示用于连接单词的连字号
+- `--` 表示用于数字范围的起止号
+- `---` 表示破折号。
+<br>
+
+- `\textasciiacute` 表示尖音符号 $\acute{}$
+- `\textasciigrave` 表示重音符号 $\grave{}$
+- `\textasciitilde` 表示波浪号 $\tilde{}$
+
+<br>
+
+### 空白换行
+- `~` 等效于标准空格，长度为 1/3em，且不会被压缩或断行
+- `\ ` 等效于标准空格，长度为 1/3em，且不会被压缩
+- `\;` 等效于 `\thickspace`，长度为 5/18em
+- `\:` 等效于 `\medspace`，长度为 4/18em
+- `\,` 等效于 `\thinspace`，长度为 3/18em
+- `\!` 等效于 `\negthinspace`，长度为 -3/18em
+- `\quad` 长度为 1em
+- `\qquad` 长度为 2em
+- `\hspace{length}` 自定义长度，可为负数
+<br>
+
+- 空行或 `\par` 会换行并开始新的段落，有首行缩进
+- `\\` 或 `\newline` 会换行，但没有首行缩进
+- `\\[morespace]` 换行并指定行间距
+- `\newpage` 换页
+- `\noindent` 用于段首，取消缩进
+<br>
+
+- `\setlength{\parindent}{amount}` 设置首行缩进长度
+- `\setlength{\parskip}{amount}` 设置段间距
+- `\setlength{\baselineskip}{amount}` 设置行间距
+<br>
+
+使用 setspace 宏包可以更方便地设置行间距：
+- `\singlespacing` 设置单倍行距
+- `\onehalfspacing` 设置 1.5 倍行距
+- `\doublespacing` 设置双倍行距
+- `\setstretch{factor}` 自定义行间距
+
+setspace 宏包还支持使用 `\begin{singlespace}...` `\begin{onehalfspace}...` `\begin{doublespace}...` `\begin{spacing}{factor}...` 等命令来设置局部行间距。
+
+setspace 宏包还支持传入 `singlespacing` `onehalfspacing` `doublespacing` 等选项来改变全局行间距。
+
+
+
+
+
+
+
+
+
+
+<br>
+
+## 文档结构
+### 标题摘要
+`\title{}`, `\author{}`, `\date{}` 命令分别用来设置标题、作者和日期，可在导言区或正文区使用。
+
+`\maketitle` 用于显示标题，在正文区使用。若 `\date{}` 的参数为空，则不显示日期信息；若未出现 `\date{}` 命令，则默认显示当前日期。
+
+`\begin{abstract}...\end{abstract}` 用于插入摘要，一般在 `\maketitle` 命令之后使用。若要自定义摘要标题，可使用 `\renewcommand{\abstractname}{define}` 命令。
+
+<br>
+
+### 章节目录
+章节命令的级别依次如下：
+- `\part{}` -1 (book, report), 0 (article)
+- `\chapter{}` 0，article 不可用
+- `\section{}` 1
+- `\subsection{}` 2
+- `\subsubsection{}` 3
+- `\paragraph{}` 4
+- `\subparagraph{}` 5
+
+以上各命令可带上 * 号，这样便不会被自动编号，也不会出现在目录中。
+
+`\tableofcontents` 可用于插入目录。若要自定义目录标题，可使用 `\renewcommand{\contentsname}{define}` 命令。
+
+`\setcounter{secnumdepth}{level}` 可用于设置编号深度，级别小于等于 secnumdepth 的章节将会被编号，article 默认为 3，book 和 report 默认为 2
+`\setcounter{tocdepth}{level}` 可用于设置目录深度，级别小于等于 tocdepth 的章节将会被列入目录，article 默认为 3，book 和 report 默认为 2
+
+载入 hyperref 宏包可让目录自动生成跳转链接。
+
+<br>
+
+### 参考文献
+参考文献编写如下：
 ```latex
-\documentclass[12pt, letterpaper]{article}  %the default size is 10pt
-\documentclass[a4paper, total={6in, 8in}]{geometry}
-
-\title{One test LaTeX document}
-
-\author{Zheng Haoren\thanks{Learn from Overleaf.}}
-
-\date{August 2022}
-\data{today}
-
-\begin{document}
-\maketitle %used within the body and could only function when first used
-\end{document}
+\begin{thebibliography}{99}
+  \bibitem{ref1} Author A, Author B. Title of the Article. Journal Name, 2022, 10(2): 100-120.
+  \bibitem{ref2} Author C, Author D. Title of the Book. Publisher, 2022.
+\end{thebibliography}
 ```
+- `\begin{thebibliography}{widestlabel}...` 设置标签的最大宽度，以便正确对齐
+- `\bibitem[label]{citekey}` lable 默认为自动数字编号，citykey 用于在引用时指定参考文献
+
+若要在正文中引用文献，可使用 `\cite{keylist}`。若要引用多个参考文献，可用逗号分隔。
 
 
 
-### Document structure
-
-#### Abstract
-```latex
-\begin{document}
-\begin{abstract}
-This is a simple paragraph at the beginning of the 
-document. A brief introduction about the main subject.
-\end{abstract}
-\end{document}
-```
-#### Paragraph and new lines
-- blank lines will automatically intent paragraph
-- `\\` or `\newline` can be used to create new lines
-- `~\\` can add blank lines anyway
-
-#### Chapters and sections
-```latex
-\part{part}
-\section{section}
-\subsection{subsection}
-\subsubsection{subsubsection}
-\paragraph{paragraph}
-\subparagraph{subparagraph}
-```
-
-#### Adding a Table of Contents
-```latex
-\begin{document}
-\tableofcontents
-\end{document}
-```
 
 
-### Font
+
+
+
+<br>
+
+## 字体
 $$
 text \\
 \textit{text} \\
@@ -100,8 +191,8 @@ math \\
 \mathbb{L}, \mathcal{L}, \mathscr{L} \\
 $$
 
-### Math
-#### Additional Component
+## 数学
+### Additional Component
 **Subscript and Supscript**
 $$
 a_i^2, a_{j-1,j}^{n+1} \\~\\
@@ -130,7 +221,7 @@ $$
 \overset{a}{\text{overset}}, \underset{a}{\text{underset}} \\~\\
 $$
 
-#### Operators
+### Operators
 **Binary Operators**
 $$
 \pm, \mp, \oplus, \setminus \\~\\
@@ -153,7 +244,7 @@ f^{'},
 $$
 
 
-#### Symbols
+### Symbols
 $$\lt, \le, \leq, \leqq, \leqslant, \not\lt$$
 $$\gt, \ge, \geq, \geqq, \geqslant, \not\gt$$
 $$\prec, \preceq, \preccurlyeq, \precapprox, \precnapprox, \precsim, \precnsim $$
@@ -163,7 +254,7 @@ $$\to, \rightarrow, \leftarrow, \Rightarrow, \Leftarrow, \iff$$
 $$\forall, \exists, \mapsto, \because, \therefore$$
 
 
-#### Equations and Alignment
+### Equations and Alignment
 $$
 y =
 \begin{cases}
@@ -198,7 +289,7 @@ f(x) &= 2x+1 \\
 $$
 
 
-#### Matrix
+### Matrix
 $$
 \left(
 \left[
@@ -235,7 +326,7 @@ $$
 \end{vmatrix}, 
 $$
 
-#### Greek Alphabet
+### Greek Alphabet
 |form|letter|form|letter|
 |---|---|---|---|
 |\alpha	|α |\Alpha	|A|
@@ -268,7 +359,7 @@ $$
 
 
 
-### Image
+## 图像
 ```latex
 \documentclass{article}
 \usepackage{graphicx}
@@ -294,7 +385,7 @@ The figure \ref{fig:Eevee} is on page \pageref{fig:Eevee}.
 
 
 
-### List
+## 列表
 
 ```latex
 % Unordered List
@@ -311,7 +402,7 @@ The figure \ref{fig:Eevee} is on page \pageref{fig:Eevee}.
 ```
 
 
-### Table
+## 表格
 
 ```latex
 \begin{center}
@@ -356,7 +447,7 @@ Table \ref{table:data} shows how to add a table caption and reference a table.
 
 
 
-### Package
+## 包
 ```latex
 \usepackage[options]{somepackage}
 ```
