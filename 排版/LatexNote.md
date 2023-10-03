@@ -8,6 +8,10 @@
   - [标题摘要](#标题摘要)
   - [章节目录](#章节目录)
   - [参考文献](#参考文献)
+- [插入元素](#插入元素)
+  - [列表](#列表)
+  - [表格](#表格)
+  - [图像](#图像)
 - [字体](#字体)
 - [数学](#数学)
   - [Additional Component](#additional-component)
@@ -16,10 +20,6 @@
   - [Equations and Alignment](#equations-and-alignment)
   - [Matrix](#matrix)
   - [Greek Alphabet](#greek-alphabet)
-- [图像](#图像)
-- [列表](#列表)
-- [表格](#表格)
-- [包](#包)
 
 
 
@@ -135,7 +135,7 @@ setspace 宏包还支持传入 `singlespacing` `onehalfspacing` `doublespacing` 
 - `\paragraph{}` 4
 - `\subparagraph{}` 5
 
-以上各命令可带上 * 号，这样便不会被自动编号，也不会出现在目录中。
+以上各命令可在花括号前加上 * 号，这样便不会被自动编号，也不会出现在目录中。
 
 `\tableofcontents` 可用于插入目录。若要自定义目录标题，可使用 `\renewcommand{\contentsname}{define}` 命令。
 
@@ -158,6 +158,145 @@ setspace 宏包还支持传入 `singlespacing` `onehalfspacing` `doublespacing` 
 - `\bibitem[label]{citekey}` lable 默认为自动数字编号，citykey 用于在引用时指定参考文献
 
 若要在正文中引用文献，可使用 `\cite{keylist}`。若要引用多个参考文献，可用逗号分隔。
+
+
+
+
+
+
+
+
+<br>
+
+## 插入元素
+### 列表
+无序列表、有序列表和描述列表的环境依次为 `itemize` `enumerate` 和 `discription`，写法基本如下：
+```latex
+\begin{itemize}
+  \item[optional label of first item] text of first item
+  \item[optional label of second item] text of second item
+  ...
+\end{itemize}
+```
+无序列表和有序列表各级别的默认标签依次如下：
+| 级别 | 无序列表 | 有序列表 |
+|:---:|--------|--------|
+| 1 | $\bullet$ \textbullet | 阿拉伯数字加点号 |
+| 2 | $\bf{-}$ \normalfont\bfseries\textendash | 小写字母加括号 |
+| 3 | $*$ \textasteriskcentered | 小写罗马数字加点号 |
+| 4 | $\cdot$ \textperiodcentered | 大写字母加点号 |
+
+---
+若要改变列表的标签样式，可以使用 `\renewcommand` 命令：
+
+对于无序列表，若要修改默认标签，则各级别对应的命令依次为 `\labelitemi` `\labelitemii` `\labelitemiii` `\labelitemiv`，比较好看的有 $\diamond$, $\diamonds$, $\circ$, $\triangledown$, $\triangle$, $\blacktriangledown$, $\blacktriangle$, $\square$, $\blacksquare$, $\star$ 等。
+
+对于有序列表，若要修改默认标签，则各级别对应的命令依次为 `\labelenumi` `\labelenumii` `\labelenumiii` `\labelenumiv`，每个级别对应的计数器依次为 `enumi` `enumii` `enumiii` `enumiv`，使用范例为：`\renewcommand{\labelenumi}{(\textbf{\Alph{enumi}})}`。比较常用的计数命令有：
+- `\arabic{counter}` `\arabic*` 阿拉伯数字
+- `\alph{counter}` `\alph*` 小写字母
+- `\Alph{counter}` `\Alph*` 大写字母
+- `\roman{counter}` `\roman*` 小写罗马数字
+- `\Roman{counter}` `\Roman*` 大写罗马数字
+
+---
+使用 enumitem 宏包可以更方便地修改列表的样式。单独修改列表样式的方法如下：
+```latex
+\begin{enumerate}[label=step \arabic*, itemsep=5pt]
+  \item first item
+  \item second item
+\end{enumerate}
+```
+
+全局修改列表样式可使用 `\setitemize` `\setenumerate` `\setdiscription` 命令。以下命令分别修改了所有级别和第一个级别：
+```latex
+\setenumerate{itemsep=0pt, labelsep=0pt}
+\setenumerate[1]{leftmargin=10pt}
+```
+
+常见的各间距的含义为：
+- `itemsep` 条目之间的垂直距离
+- `labelsep` 标签与文本之间的水平距离
+- `parsep` 条目内的段间距
+- `topsep` 列表上下两侧的额外距离
+- `leftmargin` 列表左侧的空白距离
+- `rightmargin` 列表右侧的空白距离
+
+
+
+
+<br>
+
+### 表格
+使用 `\begin{tabular}[pos]{cols}` 环境可以写出基本的表格：
+```latex
+\begin{tabular}{||cc|c||} 
+  Col1 & Col2 & Col3 \\
+  \hline\hline
+  2 & 7 & 78 \\
+\end{tabular}
+```
+- `c` 代表居中对齐，`l` 代表左对齐，`r` 代表右对齐
+- `|` 代表竖线，`\hline` 代表横线，可叠加使用
+- cols 参数还可以使用 `@{}` 说明符，如 `@{\hspace{2em}}`。若两个说明符之间没有 @ 表达式，则每列的两侧都会放上 `\tabcolsep` 长度的空格，否则会放上 @ 表达式中的内容
+
+若要跨列合并单元格，可以使用 `\multicolumn{numcols}{cols}{text}` 命令。cols 参数会覆盖原有参数，故若要保持竖线，则必须使用 `|`。
+
+若要跨行合并单元格，可以使用 multirow 宏包中的 `\multirow{numrows}{width}{text}` 命令。width 参数代表表格宽度，一般填 * 代表自动宽度。
+
+若要改变行间距，可以使用 `\renewcommand{\arraystretch}{factor}` 命令。
+若要改变列间距，可以使用 `\setlength{\tabcolsep}{length}` 命令，或使用 `@{}`。
+
+---
+使用 `\begin{table}[placement]` 环境可以更方便地使表格居中，并添加标题、标签：
+```latex
+\begin{table}
+  \centering
+  \begin{tabular}{c|ccc}
+    \multirow{2}{*}{Method} & \multicolumn{3}{|c}{PSNR} \\
+                            & Room & Fern & Leaves \\ \hline
+    SRN & 27.29 & 21.37 & 18.24 \\
+    LLFF & 28.42 & 22.85 & 19.52 \\
+    Ours & 32.70 & 25.17 & 20.92 
+  \end{tabular}
+  \caption{Per-scene quantitative results from real image dataset}
+  \label{tab:psnr}
+\end{table}
+```
+
+表格标题会自动编号并显示。可以使用 `\ref{key}` 来引用表格，引用处会显示编号。
+
+placement 选项默认为 `tbp`，各选项含义如下：
+- `h` 将表格尽可能地放置在当前位置，若空间不足则会自动添加 `t` 选项
+- `t` 将表格放置在页面顶部
+- `b` 将表格放置在页面底部
+- `p` 将表格作为单独的浮动页面放置，而不是嵌入到正文中
+- `!` 忽略 LaTeX 默认的表格放置限制
+- 各选项的顺序不重要，未出现的选项不会被尝试，也就是说，Latex 默认不会将表格放置在当前位置
+
+
+
+
+<br>
+
+### 图像
+可以使用 graphicx 宏包中的 `\includegraphic[options]{filename}` 命令来导入图片，常见的选项有：
+- `width` 图像宽度，如 `0.5\textwidth`，代表页面宽度的一半
+- `height` 图像高度，如 `0.5\paperheight`，代表纸张高度的一半
+- `scale` 缩放因数
+
+此外，还可以使用 graphicx 宏包中的 `\graphicspath{list of directories}` 命令来添加搜索路径，其中的每个路径都要包裹在花括号中。
+
+与表格类似，图像也有浮动环境 figure，其使用示例如下：
+```latex
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=0.5\textwidth]{CTANlion.png}
+  \caption{The CTAN lion, by Duane Bibby}
+  \label{fig:lion}
+\end{figure}
+```
+
+
 
 
 
@@ -357,97 +496,3 @@ $$
 
 
 
-
-
-## 图像
-```latex
-\documentclass{article}
-\usepackage{graphicx}
-\graphicspath{{C:/Users/hrzhe/Pictures/head profile/Pokemon}}
-%the path cannot use '\'
-
-
-\begin{document}
-
-\includegraphics[height=10cm,width=10cm]{Eevee}
-\includegraphics{C:/Users/hrzhe/Pictures/head profile/Pokemon/Eevee}
-
-\begin{figure}
-    \centering
-    \includegraphics[width=0.75\textwidth]{Eevee}
-    \caption{A cute creature.}
-    \label{fig:Eevee}
-\end{figure}
- 
-The figure \ref{fig:Eevee} is on page \pageref{fig:Eevee}.
-\end{document}
-```
-
-
-
-## 列表
-
-```latex
-% Unordered List
-\begin{itemize}
-  \item The individual entries are indicated with a black dot, a so-called bullet.
-  \item The text in the entries may be of any length.
-\end{itemize}
-
-% Ordered List
-\begin{enumerate}
-  \item This is the first entry in our list.
-  \item The list numbers increase with each entry we add.
-\end{enumerate}
-```
-
-
-## 表格
-
-```latex
-\begin{center}
-\begin{tabular}{||c c c c||} 
-% c-center, l-left, r-right
-  \hline
-  Col1 & Col2 & Col2 & Col3 \\ [0.5ex] 
-  % 1 em is 10.06667 pixels, and 1 ex is 6 pixels
-  \hline\hline
-  1 & 6 & 87837 & 787 \\ 
-  \hline
-  2 & 7 & 78 & 5415 \\
-  \hline
-  3 & 545 & 778 & 7507 \\ [1ex] 
-  \hline
-\end{tabular}
-\end{center}
-```
-or
-```latex
-Table \ref{table:data} shows how to add a table caption and reference a table.
-
-\begin{table}[h!]
-
-\centering
-\begin{tabular}{||c c c c||} 
-  \hline
-  Col1 & Col2 & Col2 & Col3 \\ [0.5ex] 
-  \hline\hline
-  1 & 6 & 87837 & 787 \\ 
-  2 & 7 & 78 & 5415 \\
-  3 & 545 & 778 & 7507 \\
-  4 & 545 & 18744 & 7560 \\
-  5 & 88 & 788 & 6344 \\ [1ex] 
-  \hline
-\end{tabular}
-\caption{Table to test captions and labels.}
-\label{table:data}
-
-\end{table}
-```
-
-
-
-## 包
-```latex
-\usepackage[options]{somepackage}
-```
