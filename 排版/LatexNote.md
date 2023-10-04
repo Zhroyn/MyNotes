@@ -12,6 +12,8 @@
   - [列表](#列表)
   - [表格](#表格)
   - [图像](#图像)
+  - [伪代码](#伪代码)
+  - [代码块](#代码块)
 - [字体](#字体)
 - [数学](#数学)
   - [Additional Component](#additional-component)
@@ -295,6 +297,135 @@ placement 选项默认为 `tbp`，各选项含义如下：
   \label{fig:lion}
 \end{figure}
 ```
+
+
+
+<br>
+
+### 伪代码
+可以使用 algorithm2e 宏包来编写伪代码，其导入选项有：
+- 环境设置
+  - `plain` 默认
+  - `boxed` 用方框包围算法
+  - `ruled` 在算法的顶部和底部绘制水平线，并让标题从底部中央到左上方
+- 块设置
+  - `noline` 默认，不在块内打印竖线
+  - `lined` 在块内打印竖线
+  - `vlined` 在块内打印竖线，并在末尾有一小段横线，形如 $\lfloor$
+- 注释
+  - `scright` 默认，右对齐注释
+  - `scleft` 左对齐注释
+  - `fillcomment` 默认，注释的结束标志会右对齐
+  - `nofillcomment` 注释的结束标志紧跟注释之后
+- 行号
+  - `linesnumbered` 为每行代码添加行号
+- end 关键字
+  - `noend` 不打印 end 关键字
+  - `shortend` 默认，每个宏的 end 关键字都只是 end
+  - `longend` 每个宏的 end 关键字都更长且不同
+
+---
+以下为一些常用关键字：
+- 基本关键字
+  - `\KwIn{input}`
+  - `\KwOut{output}`
+  - `\KwData{input}`
+  - `\KwResult{output}`
+  - `\KwTo`
+  - `\KwRet{[value]}` `\Return{[value]}`
+- 注释
+  - `\tcp{comments}` 为一行添加注释，紧跟在代码后，默认样式为 `//`
+  - `\tcp*{comments}` 为一行添加注释，注释靠右侧对齐
+  - `\tcc{comments}` 为多行添加注释，默认样式为 `/* */`
+  - `\tcc*{comments}` 为多行添加注释，注释靠右侧对齐
+  - `\tcp|\tcc*[alignment]{comments}` 对齐标志有：
+    - `r` 默认，右对齐且有换行
+    - `l` 左对齐且有换行
+    - `f` 右对齐且无换行
+    - `h` 左对齐且无换行
+- 判断语句
+  - `\If(comment){condition}{then block}`
+  - `\ElseIf(comment){condition}{then block}`
+  - `\Else(comment){else block}`
+  - 以上命令，若加上前缀 `u` 则不会打印 end 语句，若加上前缀 `l` 则不会换行也不会有 end 语句
+  - `\eIf(then comment){condition}{then block}(else comment){else block}`
+  - `\leIf(comment){condition}{then block}{else block}` 所有块都在一行内
+- 循环语句
+  - `\For(comment){condition}{do block}`
+  - `\While(comment){condition}{do block}`
+  - `\ForEach(comment){condition}{do block}`
+  - `\ForAll(comment){condition}{do block}`
+  - 以上命令，若加上前缀 `l` 则不会换行也不会有 end 语句
+
+---
+可以使用以下命令自定义宏，这样在使用自定义宏时，会以命令对应的样式打印文本：
+- `\SetKwInput{csname}{text}` 定义输入输出宏，可接收一个参数
+- `\SetKwInOut{csname}{text}` 定义冒号会对齐的输入输出宏，可接收一个参数
+- `\SetKw{csname}{text}` 定义一个关键字宏，可接收一个参数
+- `\SetKwData{csname}{text}` 定义一个变量宏
+- `\SetKwFunction{csname}{text}` 定义一个函数宏，可接收一个参数
+<br>
+
+- `\SetKwComment{csname}{begin text}{end text}` 定义一个注释宏，用法同 \tcp 和 \tcc 命令
+- `\SetKwIF{if csname}{elseif csname}{else csname}{if text}{then text}{elseif text}{else text}{endif text}` 定义一个判断语句宏，可以加上前缀
+- `\SetKwFor{csname}{for text}{do text}{endfor text}` 定义一个循环语句宏，可以加上前缀
+- `\SetKwProg{csname}{title text}{begin text}{end text}` 定义一个程序宏，可用于定义函数。该宏可接收两个参数，分别为函数原型和函数体，打印时，函数原型前后分别为 title text 和 begin text，函数体后为 end text
+
+Python 风格：
+```latex
+\SetStartEndCondition{ }{}{}
+\SetKwProg{Fn}{def}{:}{}
+\SetKwFunction{Range}{range}
+\SetKw{KwTo}{in}
+\SetKwIF{If}{ElseIf}{Else}{if}{:}{elif}{else:}{}
+\SetKwFor{For}{for}{\string:}{}
+\SetKwFor{While}{while}{:}{}
+\AlgoDontDisplayBlockMarkers\SetAlgoNoEnd\SetAlgoNoLine
+```
+C 风格：
+```latex
+\SetStartEndCondition{ (}{)}{)}
+\SetAlgoBlockMarkers{}{\}}
+\SetKwProg{Fn}{}{ \{}{}
+\SetKwFunction{FRecurs}{void FnRecursive}
+\SetKwFor{For}{for}{ \{}{}
+\SetKwIF{If}{ElseIf}{Else}{if}{ \{}{elif}{else \{}{}
+\SetKwFor{While}{while}{ \{}{}
+\SetKwRepeat{Repeat}{repeat\{}{until}
+\AlgoDisplayBlockMarkers\SetAlgoNoLine
+```
+
+
+
+<br>
+
+### 代码块
+可以使用 minted 宏包来编写代码块。在使用 minted 宏包前，需要先给 Python 安装 Pygments 库，还需要在编译时添加 `-shell-escape` 选项。
+
+代码块的基本写法如下：
+```latex
+\begin{minted}[options]{language}
+<code>
+\end{minted}
+```
+若要插入单行代码块，可以使用缩写 `\mint{language}|code|`。还可以使用 `\mintinline[options]{language}|code|` 命令插入行内代码。
+
+另一种插入代码块的方法是导入外部文件，需要使用命令 `\inputminted[options]{language}{file}`，其中 file 参数支持相对路径。
+
+常用的选项有：
+- `bgcolor=<string>` 设置代码块背景颜色，常用的有 black, gray, lightgray, white 等。此外，还可以使用 `\definecolor{name}{model}{color}` 命令自定义颜色，如 `\definecolor{bg}{RGB}{242, 242, 242}`
+- `style=<string>` 设置配色风格，常用的有 bw, sas, staroffice, xcode, default, monokai, lightbulb, github-dark, rrt 等。此外，还可以在导言区使用 `\usemintedstyle[language]{pygments style}` 命令设置全局配色
+- `fontsize=<font size>` 设置字体大小，常用的有 \small 和 \footnotesize
+- `baselinestretch=<factor>` 设置块内行间距
+- `linenos[=true]` 显示行号
+- `numbersep=<length>` 设置行号和代码块之间的距离
+
+若要修改字体类别，可以先导入 fontspec 宏包，再使用 `\setmonofont{}` 命令，如 `\setmonofont{FiraCode-Regular.ttf}`。
+
+若要修改行号样式，可以使用 `\renewcommand{\theFancyVerbLine}{define}` 命令，一个示例为 `\renewcommand{\theFancyVerbLine}{\sffamily\textcolor{gray}{\scriptsize\arabic{FancyVerbLine}}}`
+
+若要修改全局设置，可以在导言区使用 `\setminted[language]{options}` 命令。若要单独修改行内代码的全局设置，可以使用命令 `\setmintedinline[language]{options}`。若省略了 language 选项，则会对所有语言应用设置。
+
 
 
 
