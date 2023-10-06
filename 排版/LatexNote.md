@@ -14,7 +14,9 @@
   - [图像](#图像)
   - [伪代码](#伪代码)
   - [代码块](#代码块)
-- [字体](#字体)
+- [格式调整](#格式调整)
+  - [字体样式](#字体样式)
+  - [页面布局](#页面布局)
 - [数学](#数学)
   - [Additional Component](#additional-component)
   - [Operators](#operators)
@@ -32,14 +34,14 @@
 ## 基本使用
 ### 定义文档类
 在导言区 (Preamble) 中可以使用 `\documentclass[options]{class}` 命令定义文档类，其选项如下：
-- `10pt|11pt|...` 指定字体大小，默认为 10pt
-- `letterpaper|a4paper|a5paper|b5paper|...` 指定页面大小，默认为 letterpaper
-- `titlepage|notitlepage` 指定是否生成标题页，article 默认为 notitlepage，report 和 book 默认为 titlepage
-- `oneside|twoside` 指定是单面还是双面，article 和 report 默认为 onepage，report 默认为 twopage
-- `onecolumn|twocolumn` 指定是单栏排版还是双栏排版，默认为 onecolumn
-- `fleqn` 指定行间公式为左对齐，默认为居中对齐
-- `leqno` 指定公式编号为左对齐，默认为右对齐
-- `landscape` 指定排版方向为横向，默认为纵向
+- `10pt|11pt|...` 设置字体大小，默认为 10pt
+- `letterpaper|a4paper|a5paper|b5paper|...` 设置纸张大小，默认为 letterpaper
+- `titlepage|notitlepage` 设置是否生成标题页，article 默认为 notitlepage，report 和 book 默认为 titlepage
+- `oneside|twoside` 设置是单面还是双面，article 和 report 默认为 onepage，report 默认为 twopage
+- `onecolumn|twocolumn` 设置页面布局为单栏/双栏排版，默认为 onecolumn
+- `fleqn` 设置行间公式为左对齐，默认为居中对齐
+- `leqno` 设置公式编号为左对齐，默认为右对齐
+- `landscape` 设置纸张方向为横向，默认为纵向
 
 <br>
 
@@ -303,7 +305,23 @@ placement 选项默认为 `tbp`，各选项含义如下：
 <br>
 
 ### 伪代码
-可以使用 algorithm2e 宏包来编写伪代码，其导入选项有：
+可以使用 algorithm2e 宏包来编写伪代码，其基本使用如下：
+```latex
+\begin{algorithm}
+  \KwIn{A array $A$ of size $N$}
+  \KwOut{how to write algorithm with \LaTeX2e}
+  \SetKwData{Sum}{sum}
+  \BlankLine
+  \Sum $\leftarrow$ 0\;
+  \For{$i\leftarrow 1$ \KwTo $N$}{
+    \Sum $\leftarrow$ \Sum $+ A[i]$\;
+  }
+  \Return{\Sum}
+  \caption{How to write algorithms}
+\end{algorithm}
+```
+
+algorithm2e 宏包常见的导入选项有：
 - 环境设置
   - `plain` 默认
   - `boxed` 用方框包围算法
@@ -413,12 +431,15 @@ C 风格：
 另一种插入代码块的方法是导入外部文件，需要使用命令 `\inputminted[options]{language}{file}`，其中 file 参数支持相对路径。
 
 常用的选项有：
-- `bgcolor=<string>` 设置代码块背景颜色，常用的有 black, gray, lightgray, white 等。此外，还可以使用 `\definecolor{name}{model}{color}` 命令自定义颜色，如 `\definecolor{bg}{RGB}{242, 242, 242}`
+- `bgcolor=<string>` 设置代码块背景颜色，常用的有 black, gray, lightgray, white 等。此外，还可以使用 `\definecolor{name}{model}{color}` 命令自定义颜色，如 `\definecolor{bg}{RGB}{242, 242, 242}` 和 `\definecolor{bg}{rgb}{0.9, 0.9, 0.9}`
 - `style=<string>` 设置配色风格，常用的有 bw, sas, staroffice, xcode, default, monokai, lightbulb, github-dark, rrt 等。此外，还可以在导言区使用 `\usemintedstyle[language]{pygments style}` 命令设置全局配色
 - `fontsize=<font size>` 设置字体大小，常用的有 \small 和 \footnotesize
 - `baselinestretch=<factor>` 设置块内行间距
 - `linenos[=true]` 显示行号
 - `numbersep=<length>` 设置行号和代码块之间的距离
+- `frame=<none|leftline|topline|bottomline|lines|single>` 设置边框，`lines` 为上下边框，`single` 为所有边框
+- `framerule=<length>` 设置边框宽度
+- `framesep=<length>` 设置边框与文本的距离
 
 若要修改字体类别，可以先导入 fontspec 宏包，再使用 `\setmonofont{}` 命令，如 `\setmonofont{FiraCode-Regular.ttf}`。
 
@@ -438,28 +459,74 @@ C 风格：
 
 <br>
 
-## 字体
-$$
-text \\
-\textit{text} \\
-\text{text} \\
-\textrm{text} \\
-\textup{text} \\
-\textbf{text} \\
-\textsf{text} \\
-\texttt{text} \\
-$$
+## 格式调整
+### 字体样式
+文本字体样式命令有两种格式，分别为 `\text..{}` 和 `\..family|series|shape`。前者接收一个参数，后者改变整个所在环境的字体样式。文本字体样式是可叠加的，不同类别的命令可以嵌套生效，相同类别的命令最内层的会生效。
+- 字体族
+  - `\textrm` `\rmfamily` 罗马字体 (Roman)，又称衬线字体，默认
+  - `\textsf` `\sffamily` 无衬线字体 (San Serif)，又称等线字体
+  - `\texttt` `\ttfamily` 打印机字体 (Typewriter)，又称等宽字体
+  - 若要修改默认字体族，可使用 `\renewcommand{\familydefault}{\rmdefault|\sfdefault|\ttdefault}` 命令
+- 字体系列
+  - `\textmd` `\mdseries` 正常 (Medium)
+  - `\textbf` `\bfseries` 粗体 (Boldface)
+- 字体形状
+  - `\textup` `\upshape` 正体 (Upright)
+  - `\textit` `\itshape` 斜体 (Italic)，字形可能会发生变化
+  - `\textsl` `\slshape` 倾斜体 (Slanted)
+  - `\textsc` `\scshape` 小型大写体 (Small Caps)
+- `\textnomal` `\nomalfont` 默认字体样式
 
-$$
-math \\
-\mathrm{math} \\
-\mathbf{math} \\
-\mathsf{math} \\
-\mathtt{math} \\
-\mathbb{R}, \mathcal{R}, \mathscr{R} \\ 
-\mathbb{P}, \mathcal{P}, \mathscr{P} \\ 
-\mathbb{L}, \mathcal{L}, \mathscr{L} \\
-$$
+数学字体样式不可叠加，只有最内层的命令会生效。除了上述命令以外，数学字体还有以下样式：
+- `\mathbb` 黑板粗体字母 - $\mathbb{R}$
+- `\mathcal` 书法体字母 - $\mathcal{R}$
+- `\mathscr` 手写体字母 - $\mathscr{R}$
+- `\mathfrak` 哥特体字母 - $\mathfrak{R}$
+
+字体大小从小到大依次为：`\tiny` `\scriptsize` `\footnotesize` `\small` `\normalsize` `\large` `\Large` `\LARGE` `\huge` `\Huge`。这些命令会改变整个环境的字体大小。
+
+此外，还可以通过 `\textcolor[model]{color}{text}` 命令设置字体颜色。其中 color 参数可为自带的颜色，如 `\textcolor{red}{text}`；可为 RGB 值，如 `\textcolor[RGB]{255, 0, 0}{text}` 或 `\textcolor[rgb]{1, 0, 0}{text}`；还可为使用 `\definecolor` 命令自定义的颜色。
+
+---
+使用 fontspec 宏包可以方便地设置字体族，以下为其常用命令：
+- `\setmainfont{font}[font features]` 设置默认衬线字体
+- `\setsansfont{font}[font features]` 设置默认无衬线字体
+- `\setmonofont{font}[font features]` 设置默认等宽字体
+- `\setfontfamily{cmd}{font}[font features]` 设置自定义字体族，如在使用过 `\setfontfamily{\siyuan}{思源黑体 CN}` 命令后，就可用 `\siyuan` 改变整个环境的字体族
+
+字体可以通过名称或文件名指定，搜索路径为 C:\Windows\Fonts 和 TEXMF 树，若指定文件名，还可以在用户文件夹的 Windows\Fonts 中搜索。
+
+常见的字体特征有：
+- `Color=<color>` 设置字体默认颜色，参数可为 xcolor 定义的颜色或十六进制码
+- `Scale=<number>|MatchLowercase|MatchUppercase` 设置字体默认大小，若为 MatchLowercase 则将匹配其他字体的小写字母高度，若为 MatchUppercase 则将匹配其他字体的大写字母高度
+
+
+
+
+<br>
+
+### 页面布局
+可以使用 geometry 宏包调整页面布局，其选项如下：
+- `letterpaper|a4paper|a5paper|b5paper|...` 设置纸张大小
+- `landscape|portrait` 设置纸张方向
+- `scale|hscale|vscale=<number>` 设置正文区域与纸张的尺寸比例
+- `width|height=<length>` 设置正文区域的宽高
+- `text|body={<width>, <height>}` 设置正文区域的宽高
+- `left|right|top|bottom|lmargin|rmargin|tmargin|bmargin=<length>` 设置页边距
+- `centering` 设置正文区域居中
+- `onecolumn|twocolumn` 设置页面布局为单栏/双栏排版
+
+
+
+
+
+
+
+
+
+
+
+<br>
 
 ## 数学
 ### Additional Component
