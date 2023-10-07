@@ -239,13 +239,12 @@ setspace 宏包还支持传入 `singlespacing` `onehalfspacing` `doublespacing` 
   2 & 7 & 78 \\
 \end{tabular}
 ```
-- `c` 代表居中对齐，`l` 代表左对齐，`r` 代表右对齐
-- `|` 代表竖线，`\hline` 代表横线，可叠加使用
+- `c` 代表居中对齐，`l` 代表左对齐，`r` 代表右对齐，`|` 代表竖线
+- `\hline` 代表水平线，宽度与表格相同
+- `\cline{i-j}` 代表水平线，从第 i 个单元格画至第 j 个单元格
 - cols 参数还可以使用 `@{}` 说明符，如 `@{\hspace{2em}}`。若两个说明符之间没有 @ 表达式，则每列的两侧都会放上 `\tabcolsep` 长度的空格，否则会放上 @ 表达式中的内容
 
 若要跨列合并单元格，可以使用 `\multicolumn{numcols}{cols}{text}` 命令。cols 参数会覆盖原有参数，故若要保持竖线，则必须使用 `|`。
-
-若要跨行合并单元格，可以使用 multirow 宏包中的 `\multirow{numrows}{width}{text}` 命令。width 参数代表表格宽度，一般填 * 代表自动宽度。
 
 若要改变行间距，可以使用 `\renewcommand{\arraystretch}{factor}` 命令。
 若要改变列间距，可以使用 `\setlength{\tabcolsep}{length}` 命令，或使用 `@{}`。
@@ -276,6 +275,28 @@ placement 选项默认为 `tbp`，各选项含义如下：
 - `p` 将表格作为单独的浮动页面放置，而不是嵌入到正文中
 - `!` 忽略 LaTeX 默认的表格放置限制
 - 各选项的顺序不重要，未出现的选项不会被尝试，也就是说，Latex 默认不会将表格放置在当前位置
+
+---
+multirow 宏包可用于跨行合并单元格，命令为 `\multirow{numrows}{width}{text}`，其中 width 参数用于指定表格宽度，一般填 * 代表自动宽度。
+
+makecell 宏包可用于表格内换行，命令为 `\makecell[alignment]{text}`，可通过在 text 中使用 `\\` 换行，对齐方式默认为居中。
+
+diagbox 宏包可用于制作斜线表头，命令为 `\diagbox[options]{text}{text}...`，常见选项有：
+- `dir=NW|NE|SW|SE` 指定斜线方向
+- `width|height=<length>` 指定框的宽高
+- `innerwidth=<length>` 左右文本之间的距离
+- `innerleftsep|innerrighttsep=<length>` 文本与框之间的距离
+- `font=<style>` 指定字体样式，如 `\footnotesize\itshape`
+
+tabularx 宏包可用于自动调整列宽以及自动换行，命令为 `\begin{tabularx}{width}[pos]{preamble}`，其基本使用如下：
+```latex
+\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\begin{tabularx}{\textwidth}{|c|c|Y|Y|Y|}
+    ...
+\end{tabularx}
+```
+- `\arraybackslash` 常用于 `\raggedleft` `\raggedright` `\centering` 之后，恢复 `\\` 的定义
+- `\newcolumntype{name}{definition}` 定义新的列类型
 
 
 
