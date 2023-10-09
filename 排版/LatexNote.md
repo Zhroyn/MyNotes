@@ -14,6 +14,7 @@
   - [图像](#图像)
   - [伪代码](#伪代码)
   - [代码块](#代码块)
+  - [图表](#图表)
 - [格式调整](#格式调整)
   - [字体样式](#字体样式)
   - [页面布局](#页面布局)
@@ -260,7 +261,7 @@ setspace 宏包还支持传入 `singlespacing` `onehalfspacing` `doublespacing` 
     SRN & 27.29 & 21.37 & 18.24 \\
     LLFF & 28.42 & 22.85 & 19.52 \\
     Ours & 32.70 & 25.17 & 20.92 
-  \end{tabular}
+\end{tabular}
   \caption{Per-scene quantitative results from real image dataset}
   \label{tab:psnr}
 \end{table}
@@ -468,6 +469,48 @@ C 风格：
 
 若要修改全局设置，可以在导言区使用 `\setminted[language]{options}` 命令。若要单独修改行内代码的全局设置，可以使用命令 `\setmintedinline[language]{options}`。若省略了 language 选项，则会对所有语言应用设置。
 
+
+
+
+<br>
+
+### 图表
+可以使用 pgfplots 宏包绘制多种图表，其基本使用如下：
+```latex
+\begin{tikzpicture}
+    \begin{axis}[
+        title=Inv. cum. normal,
+        xlabel={$x$},
+        ylabel={$f(x)$},
+    ]
+        \addplot[
+            blue,
+            mark=*,
+        ]
+        coordinates {
+            (1, 2) (2, 4) (5, 6)
+            (7, 5) (9, 10)
+        };
+    \end{axis}
+\end{tikzpicture}
+```
+
+- 若要绘制散点图，应该添加选项 `scatter, only marks`
+- 若要绘制柱状图，应该添加选项 `ybar/xbar`；若要添加符号坐标，可以添加选项 `symbolic x coords={A, B, C, D, E}`
+- 若要添加图例，应该在 `\addplot` 语句后使用 `\addlegendentry{}`
+- 若要从外部文件导入数据，应将 `coordinates {}` 换为 `table {*.dat}`，文件格式为每行一个数据点，每个数据点的不同分量用空格分隔。
+- 若要坐标轴取对数，可以使用 loglogaxis, semilogx/yaxis 环境，或者在 axis 环境中使用 `y/xmode=log`
+- 若要添加全局设置，可以使用 `\pgfplotsset{every axis/.append style={options}}` 命令
+
+常用选项有：
+- `smooth` 使折线图平滑
+- `mark` 设置记号的形状，常用的有 `*` `x` `+` 等
+- `xmin/xmax/ymin/ymax=<coord>` 改变坐标轴的最小/大值
+- `xtick/ytick=<coord list>/data` 设置坐标轴上的刻度线，若为 `data`，则会使用数据的值作为刻度线的位置
+- `xticklabels/yticklabels={label list}` 为每个刻度线添加标签
+- `xticklabel style={style}` 改变刻度线标签的样式
+- `legend style={font=\small, cells={anchor=west}, inner ysep=0.5em}` 改变图例样式
+- `legend pos==south west|south east|north west|north east|outer north east` 改变图例位置，默认为 north east
 
 
 
