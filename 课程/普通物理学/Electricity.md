@@ -2,6 +2,7 @@
 - [Electric Charge](#electric-charge)
 - [Electric Field](#electric-field)
 - [Gauss Law](#gauss-law)
+- [Electric Potential Energy and Potential](#electric-potential-energy-and-potential)
 
 
 
@@ -90,5 +91,25 @@ $$E = \frac{\sigma}{2\epsilon_0}$$
 The electric field for a infinite line of charge is:
 $$E = \frac{\lambda \cdot l}{\epsilon_0 \cdot 2\pi rl} = \frac{\lambda}{2\pi\epsilon_0 r}$$
 
+
+
+
+
+
+
+<br>
+
+## Electric Potential Energy and Potential
+$$V_b - V_a = -\frac{W_{ab}}{q_0} = -\int_a^b \vec{E} \cdot d\vec{l}$$
+
+$$V_p = -\int_{\infty}^p E \cdot dl = \int_p^{\infty} E \cdot dl$$
+
+The electric potential around a point charge is $$V(r) = \frac{q}{4\pi\epsilon_0 r}$$
+
+The electric potential around a electric dipole is $$V(r) = \frac{1}{4\pi\epsilon_0} \left( \frac{q}{r_1} - \frac{q}{r_2} \right) = \frac{q}{4\pi\epsilon_0} \frac{r_2 - r_1}{r_1r_2} \approx \frac{p\cos\theta}{4\pi\epsilon_0 r^2}$$
+
+For electric quadrupole, the electric potential on the axis of the quadrupole is $$V(r) = \frac{1}{4\pi\epsilon_0} \left( \frac{q}{r - d} + \frac{-2q}{r} + \frac{q}{r + d} \right) = \frac{1}{4\pi\epsilon_0} \frac{2qd^2}{r(r^2 - d^2)}$$
+
+When $r >> d$, we have $V(r) = \dfrac{Q}{4\pi\epsilon_0 r^3}$.
 
 
