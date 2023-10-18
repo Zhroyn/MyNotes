@@ -97,6 +97,7 @@ $$E = \frac{\lambda \cdot l}{\epsilon_0 \cdot 2\pi rl} = \frac{\lambda}{2\pi\eps
 
 
 
+
 <br>
 
 ## Electric Potential Energy and Potential
@@ -111,5 +112,29 @@ The electric potential around a electric dipole is $$V(r) = \frac{1}{4\pi\epsilo
 For electric quadrupole, the electric potential on the axis of the quadrupole is $$V(r) = \frac{1}{4\pi\epsilon_0} \left( \frac{q}{r - d} + \frac{-2q}{r} + \frac{q}{r + d} \right) = \frac{1}{4\pi\epsilon_0} \frac{2qd^2}{r(r^2 - d^2)}$$
 
 When $r >> d$, we have $V(r) = \dfrac{Q}{4\pi\epsilon_0 r^3}$.
+
+---
+$$
+E\cos\theta = -\frac{dV}{dl} \\~\\
+\Rightarrow E = -\nabla V
+$$
+
+In Cartesian coordinates, we have $$\nabla \vec{V} = \frac{\partial V}{\partial x}\hat{x} + \frac{\partial V}{\partial y}\hat{y} + \frac{\partial V}{\partial z}\hat{z}$$
+
+In Spherical coordinates, we have $$\nabla \vec{V} = \frac{\partial V}{\partial r}\hat{r} + \frac{1}{r} \frac{\partial V}{\partial \theta}\hat{\theta} + \frac{1}{r\sin\theta} \frac{\partial V}{\partial \phi}\hat{\phi}$$
+
+When $r >> a$, the electric field around a dipole is
+$$
+V(r, \theta) = \frac{1}{4\pi\epsilon_0} \frac{p\cos\theta}{r^2} \\~\\
+\Rightarrow E = - \frac{\partial V}{\partial r} - \frac{1}{r} \frac{\partial V}{\partial \theta} = \frac{p}{4\pi\epsilon_0 r^3}((2\cos\theta)\hat{r} + (\sin\theta)\hat{\theta})
+$$
+
+The electric field along the axis of a charged disk is
+$$
+dV = \frac{dq}{4\pi\epsilon_0\sqrt{z^2 + r^2}} = \frac{2\pi rdr \cdot \sigma}{4\pi\epsilon_0\sqrt{z^2 + r^2}} \\~\\
+\Rightarrow V = \frac{\sigma}{2\epsilon_0} \int_0^R \frac{rdr}{\sqrt{z^2 + r^2}} = \frac{\sigma}{2\epsilon_0} (\sqrt{z^2 + R^2} - z) \\~\\
+\Rightarrow E = - \frac{\partial V}{\partial z} = \frac{\sigma}{2\epsilon_0} (1 - \frac{1}{\sqrt{1 + (R/z)^2}})
+$$
+
 
 
