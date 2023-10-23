@@ -3,6 +3,7 @@
 - [Electric Field](#electric-field)
 - [Gauss Law](#gauss-law)
 - [Electric Potential Energy and Potential](#electric-potential-energy-and-potential)
+- [Capacitance](#capacitance)
 
 
 
@@ -76,7 +77,7 @@ $$\Phi_E = \oiint E \cdot dA = \frac{q}{\epsilon_0}$$
 By this, we can get the electric field inside sphere:
 $$
 q = \frac{4}{3}\pi r^3\rho \\~\\
-E = \frac{1}{4\pi\epsilon_0} \frac{q}{r^2} = \frac{\rho r}{3\epsilon_0}
+E = \frac{1}{4\pi\epsilon_0} \frac{q}{r^2} = \frac{\rho r}{3\epsilon_0} = \frac{Qr}{4\pi\epsilon_0R^3}
 $$
 
 The outer electric field for a charged conductor is:
@@ -135,6 +136,59 @@ dV = \frac{dq}{4\pi\epsilon_0\sqrt{z^2 + r^2}} = \frac{2\pi rdr \cdot \sigma}{4\
 \Rightarrow V = \frac{\sigma}{2\epsilon_0} \int_0^R \frac{rdr}{\sqrt{z^2 + r^2}} = \frac{\sigma}{2\epsilon_0} (\sqrt{z^2 + R^2} - z) \\~\\
 \Rightarrow E = - \frac{\partial V}{\partial z} = \frac{\sigma}{2\epsilon_0} (1 - \frac{1}{\sqrt{1 + (R/z)^2}})
 $$
+
+
+
+
+
+
+
+
+<br>
+
+## Capacitance
+The capacitance of parallel plate capacitor is $$C = \frac{q}{\Delta V} = \frac{\sigma A}{\dfrac{\sigma}{\epsilon_0} d} = \frac{\epsilon_0 A}{d}$$
+
+The capacitance of cylindrical capacitor ($V = 0$ at $r = b$) is
+$$
+\Delta V = \int_a^b \frac{Q}{2\pi\epsilon_0 rL}dr = \frac{Q}{2\pi\epsilon_0 L} \ln{\frac{b}{a}} \\~\\
+C = \frac{Q}{\Delta V} = \frac{2\pi\epsilon_0 L}{\ln(b/a)}
+$$
+
+The capacitance of spherical capacitor is
+$$
+\Delta V = \int_a^b \frac{Q}{4\pi\epsilon_0 r^2}dr = \frac{Q}{4\pi\epsilon_0} \left( \frac{1}{a} - \frac{1}{b} \right) \\~\\
+C = \frac{Q}{\Delta V} = 4\pi\epsilon_0 \frac{ab}{b - a}
+$$
+
+When $b \rightarrow \infty$, $C = 4\pi\epsilon_0 a$.
+
+---
+When capacitors are in parallel, we have $$C = \frac{Q_1 + Q_2}{V} = \frac{C_1V + C_2V}{V} = C_1 + C_2$$
+
+When capacitors are in series, we have
+$$
+\frac{Q}{C} = \frac{Q}{C_1} + \frac{Q}{C_2}
+\Rightarrow \frac{1}{C} = \frac{1}{C_1} + \frac{1}{C_2}
+$$
+
+---
+The total work to charge a capacitor to $Q$ is $$W = \int_0^Q \frac{q}{C} dq = \frac{Q^2}{2C} = \frac{1}{2} CV^2$$
+
+Pull the plates apart from $d$ to $d'$. When the battery is disconnected, then $$C' = \frac{d}{d'}C, V' = \frac{d'}{d}V, U' = \frac{d'}{d}U$$
+
+When the battery is connected, then $$C' = \frac{d}{d'}C, E' = \frac{d}{d'}E, U' = \frac{d}{d'}U$$
+
+---
+Energy is stored in the electric field. For a parallel plate capacitor, we have
+$$
+C = \frac{\epsilon_0 A}{d},
+\quad E = \frac{\sigma}{\epsilon_0} = \frac{Q}{\epsilon_0 A} \\~\\
+\Rightarrow U = \frac{Q^2}{2C} = \frac{1}{2} E^2\epsilon_0 Ad
+$$
+
+So the energy density is $$u = \frac{U}{Ad} = \frac{1}{2}\epsilon_0 E^2$$
+
 
 
 
