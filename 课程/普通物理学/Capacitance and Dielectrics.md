@@ -75,9 +75,35 @@ The polar dielectrics in an electric field will undergo **alignment polarization
 ---
 The intensity of polarization is $$\vec{P} = \frac{\sum \vec{p}_m}{\Delta V}$$
 
+Suppose $n$ is the number of molecular per unit volume, then we have
 $$
-P = \frac{\sigma dA \cdot \frac{d}{\cos\theta}}{dA \cdot d} \\~\\
-\Rightarrow P\cos\theta = \sigma \\~\\
-\Rightarrow \sigma = \vec{P} \bullet \vec{n} = P_n
+dq = qdN = q(ndV) = nqldA\cos\theta = PdA\cos\theta \\~\\
+\Rightarrow \iint \vec{P} \bullet d\vec{A} = \sum_{out} q = - \sum_{in} q \\~\\
+\Rightarrow \sigma = \frac{dq}{dA} = \vec{P} \bullet \vec{n} = P_n
 $$
+
+For a spherical dielectrics with uniform polarization $\vec{P}$, the depolarization field at center is
+$$
+\begin{aligned}
+  dE &= \frac{dq}{4\pi\epsilon_0 R^2} \cdot \cos\theta = \frac{\sigma dA}{4\pi\epsilon_0 R^2} \cdot \cos\theta \\~\\
+  &= \frac{P\cos\theta \cdot 2\pi R\sin\theta \cdot Rd\theta}{4\pi\epsilon_0 R^2} \cdot \cos\theta \\~\\
+  &= \frac{P\cos^2\theta\sin\theta}{2\epsilon_0} d\theta \\
+\end{aligned} \\~\\
+E = - \frac{P}{2\epsilon_0} \int_0^{\pi} \cos^2\theta\sin\theta d\theta = - \frac{P}{3\epsilon_0}
+$$
+
+---
+Define the electric displacement vector $D = \epsilon_0E + P$, we have
+$$
+\epsilon_0 \iint E \bullet dA = \sum_{in}(q_0 + q') \\~\\
+\Rightarrow \iint D \bullet dA = \sum_{in}q_0
+$$
+
+For general isotropic materials, there are $P = \chi_e\epsilon_0 E$. Then we have
+$$
+D = \epsilon_0E + P = \epsilon_0E + \chi_e\epsilon_0E = (1 + \chi_e)\epsilon_0E = \kappa_e\epsilon_0E \\~\\
+\Rightarrow \kappa_e = 1 + \chi_e
+$$
+
+where $\kappa_e$ is dielectric constant, $\chi_e$ is polarization coefficient.
 
