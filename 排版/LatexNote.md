@@ -410,6 +410,10 @@ algorithm2e 宏包常见的导入选项有：
 - `\SetKwIF{if csname}{elseif csname}{else csname}{if text}{then text}{elseif text}{else text}{endif text}` 定义一个判断语句宏，可以加上前缀
 - `\SetKwFor{csname}{for text}{do text}{endfor text}` 定义一个循环语句宏，可以加上前缀
 - `\SetKwProg{csname}{title text}{begin text}{end text}` 定义一个程序宏，可用于定义函数。该宏可接收两个参数，分别为函数原型和函数体，打印时，函数原型前后分别为 title text 和 begin text，函数体后为 end text
+<br>
+
+- `\SetAlgorithmName{name}{autoref name}{listofalgorithms name}` 定义算法名，其中第二个参数被用于 `\autoref`，第三个参数被用于 `\listofalgorithms`，例如 `\SetAlgorithmName{Data Structure}{datastructure}{List of Data Structures}`
+- `\setcounter{algocf}{count}` 设置标题计数，其后标题的编号会在 count 上加一
 
 Python 风格：
 ```latex
