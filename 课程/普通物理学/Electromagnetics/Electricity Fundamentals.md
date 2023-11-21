@@ -15,6 +15,7 @@ There are three kinds of charge density:
 - Surface charge density: $\sigma = dq/dA$
 - Volume charge density: $\rho = dq/dV$
 
+---
 The force between a point charge and a ring of charge is $$F_z = \frac{1}{4\pi \epsilon_0} \frac{q_0qz}{(z^2 + R^2)^{3/2}}$$
 
 When $z \rightarrow +\infty$, $F_z = \dfrac{1}{4\pi \epsilon_0} \dfrac{q_0q}{z^2}$.
