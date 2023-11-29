@@ -1,0 +1,236 @@
+
+- [Inductance and Magnetic properties of materials](#inductance-and-magnetic-properties-of-materials)
+  - [Inductance](#inductance)
+    - [Mutual Inductance](#mutual-inductance)
+    - [Self Inductance](#self-inductance)
+  - [Magnetic properties of materials](#magnetic-properties-of-materials)
+    - [Nuclear Magnetism](#nuclear-magnetism)
+    - [Magnetization of material](#magnetization-of-material)
+  - [RL circuits](#rl-circuits)
+  - [Energy storage in a magnetic field](#energy-storage-in-a-magnetic-field)
+  - [Electromagnetic Oscillation](#electromagnetic-oscillation)
+
+
+
+
+
+## Inductance and Magnetic properties of materials
+### Inductance
+#### Mutual Inductance
+Suppose $S_1$ generate a magnetic field $B_1$, then the flux linkage in $S_2$ due to $S_1$ is
+$$
+\Psi_{12} \propto N_2A_2B_1 \propto N_2\Phi_{12} \\~\\
+\Rightarrow \Psi_{12} = M_{12} i_1
+$$
+
+From Faraday's Law, we have
+$$
+M_{12} = \frac{\Psi_{12}}{i_1} = \frac{N_2\Phi_{12}}{i1} \\~\\
+\epsilon_2 = - \frac{d\Psi_{12}}{dt} = -M_{12} \frac{di_1}{dt}
+$$
+
+$M_{12}, M_{21}$ are called mutual inductance constant. Generally, $M_{12} = M_{21} = M$.
+
+
+<br>
+
+#### Self Inductance
+The magnetic field produced by the current in the loop is proportional to that current. The flux, therefore, is also proportional to the current: $$\Phi_B = \iint B \bullet dA \propto i$$
+
+Therefore, we can define this constant of proportionality between flux and current to be the self-inductance as $$L = \frac{\Phi_B}{i}$$
+
+Combining with Faraday’s Law gives the emf induced by a changing current: $$\epsilon = - \frac{d\Psi}{dt} = -L \frac{di}{dt}$$
+
+---
+For a solenoid, $$L = \frac{\Psi}{i} = \frac{N \cdot \mu_0ni \cdot A}{i} = \mu_0n^2lA = \mu_0n^2V$$
+
+The self-inductance per unit volume is $\mu_0n^2$.
+The self-inductance per unit length is $\mu_0n^2A$.
+
+For a toroid of rectangular,
+$$
+\oint B\bullet dl = \mu_0Ni \\~\\
+\Phi_B = \iint B\bullet dA = \int_a^b \frac{\mu_0Ni}{2\pi r} hdr = \frac{\mu_0Nhi}{2\pi} \ln \frac{b}{a} \\~\\
+L = \frac{N\Phi_B}{i} = \frac{\mu_0N^2h}{2\pi} \ln \frac{b}{a}
+$$
+
+---
+When no flux leakage, $M = \sqrt{L_1L_2}$
+
+When direct in series $L = L_1 + L_2 + 2M = L_1 + L_2 + 2\sqrt{L_1L_2}$
+
+When opposite in series $L = L_1 + L_2 - 2M = L_1 + L_2 - 2\sqrt{L_1L_2}$
+
+---
+For inductors with magnetic material $$L = \kappa_m L_0$$ where $\kappa_m$ is permeability constant.
+
+
+
+
+
+
+
+
+
+
+<br>
+
+### Magnetic properties of materials
+#### Nuclear Magnetism
+$$\mu = iA = \frac{ev}{2\pi r} \cdot \pi r^2 = \frac{1}{2} erv = \frac{1}{2} er^2 \omega$$
+
+Suppose the angular momentum is $l = mvr$, the orbital magnetic dipole moment can be $$\vec{\mu}_L = - \frac{e}{2m} \vec{L}$$
+
+By Quantum mechanism, the smallest $L$ is $h/2\pi$, so the Bore Magneton is $$\mu_B = \frac{eh}{4\pi m} = 9.274 \times 10^{-24} Am^2$$
+
+Suppose the intrinsic angular momentum is $S$, the intrinsic magnetic dipole moment can be $$\vec{\mu}_S = - \frac{e}{m} \vec{S}$$
+
+Then we can define
+$$
+\vec{J} = \vec{L} + 2\vec{S} \\~\\
+\vec{\mu}_J = - \frac{e}{m} \vec{J}
+$$
+
+
+
+<br>
+
+#### Magnetization of material
+After magnetization, induced current $i'$ will be generated on the surface.
+
+Define the magnetization vector $$\vec{M} = \frac{\sum \mu_m}{\Delta V}$$
+
+For uniform magnetization,
+$$
+j' = \frac{i'}{\Delta z} \\~\\
+\Delta m = i' \Delta A = j' \Delta x \Delta y \Delta z \\~\\
+M = \frac{\Delta m}{\Delta V} = j' \\~\\
+M\Delta z = i'
+$$
+
+For non-uniform magnetization, we can proof $$\oint \vec{M}\bullet d\vec{l} = \sum_{inl} i'$$
+
+---
+By Ampere’s Loop Law, we have
+$$
+\oint \vec{B} \bullet d\vec{l} = \mu_0 \sum_{inl} (i_0 + i') \\~\\
+\Rightarrow \oint ( \frac{\vec{B}}{\mu_0} - \vec{M} ) \bullet d\vec{l} = \sum_{inl} i_0
+$$
+
+Therefore, we can define magnetic field strength $$\vec{H} = \frac{\vec{B}}{\mu_0} - \vec{M}$$
+
+The new Ampere’s Loop Law is $$\oint \vec{H}\bullet d\vec{l} = \sum_{inl} i_0$$
+
+---
+Define susceptibility magnetization coefficient: $$\vec{M} = \chi_m \vec{H}$$
+
+Define permeability constant: $$\vec{B} = \kappa_m \mu_0\vec{H}$$
+
+For magnetic materials
+$$
+B = \mu_0(H + M) = \mu_0(1 + \chi_m)H = \kappa_m \mu_0H \\~\\
+\Rightarrow \kappa_m = 1 + \chi_m
+$$
+
+Paramagnetic materials: $\chi_m > 0, \kappa_m > 1, \kappa_m \approx 1$
+Diamagnetic materials: $\chi_m < 0, \kappa_m < 1, \kappa_m \approx 1$
+Ferromagnetic materials: $\chi_m(H), \kappa_m(H)$
+
+
+
+
+
+
+
+
+
+<br>
+
+### RL circuits
+For RC circuits, when K is closed,
+$$
+iR + \frac{q}{C} = \epsilon \\~\\
+\Rightarrow \frac{dq}{dt} + \frac{q}{RC} = \frac{\epsilon}{R} \\~\\
+\Rightarrow q = C\epsilon(1 - e^{- \frac{1}{RC}t})
+$$
+
+---
+For RL circuits, when K is connected to seat,
+$$
+iR + L\frac{di}{dt} = \epsilon \\~\\
+\Rightarrow i = \frac{\epsilon}{R} (1 - e^{- \frac{R}{L} t}) \\~\\
+\Rightarrow V_L = -L \frac{di}{dt} = \epsilon e^{- \frac{R}{L} t} = \epsilon e^{- t/\tau_L}
+$$
+
+where $\tau_L = \frac{L}{R}$ is induct time constant.
+
+When K is disconnected from seat,
+$$
+iR + L\frac{di}{dt} = 0 \\~\\
+\Rightarrow i = \frac{\epsilon}{R} e^{- \frac{R}{L} t} \\~\\
+\Rightarrow V_L = -\epsilon e^{- \frac{R}{L} t}
+$$
+
+
+
+
+
+
+
+
+<br>
+
+### Energy storage in a magnetic field
+The magnetic energy in a self-inductance is
+$$
+dW = -\epsilon_L dq = L \frac{di}{dt} \cdot idt = Lidi \\~\\
+\Rightarrow W = \int_0^I Lidi = \frac{1}{2} LI^2
+$$
+
+The magnetic energy stored in two solenoid is
+$$
+\begin{aligned}
+  W &= W_1 + W_2 \\
+  &= - \int_0^{\infty} \epsilon_{21} i_1 dt - \int_0^{\infty} \epsilon_{12} i_2 dt \\
+  &= \int_0^{I_1I_2} (M_{21}i_1di_2 + M_{12}i_2di_1) \\
+  &= M \int_0^{I_1I_2} d(i_2i_1) \\
+  &= MI_1I_2
+\end{aligned}
+$$
+
+So the total magnetic energy in $k$ solenoids is $$U_m = \frac{1}{2} \sum_{i=1}^{k} L_iI_i^2 + \frac{1}{2} \sum_{i,j=1}^{k} M_{ij}I_iI_j$$
+
+---
+The energy density in a magnetic field is $$u_B = \frac{U}{V} = \frac{\frac{1}{2}LI^2}{V} = \frac{\frac{1}{2} \cdot \mu_0 n^2 V \cdot I^2}{V} = \frac{1}{2} \mu_0n^2I^2 = \frac{B^2}{2\mu_0}$$
+
+Therefore,
+$$
+u_B = \frac{B^2}{2\mu_0} = \frac{1}{2} \vec{B} \bullet \vec{H} \\~\\
+u_E = \frac{1}{2} \epsilon_0 E^2 = \frac{1}{2} \vec{D} \bullet \vec{E}
+$$
+
+
+
+
+
+
+
+
+<br>
+
+### Electromagnetic Oscillation
+For capacitor and inductor, there are
+$$
+U_E = \frac{1}{2} \frac{q^2}{C} \\~\\
+U_B = \frac{1}{2} Li^2
+$$
+
+Because the total energy is constant, we have
+$$
+U = U_B + U_E = \frac{1}{2} \frac{q^2}{C} + \frac{1}{2} Li^2 \\~\\
+\Rightarrow \frac{dU}{dt} = Li \frac{di}{dt} + \frac{q}{C} \frac{dq}{dt} = Li \frac{d^2q}{dt^2} + \frac{q}{C} i = 0 \\~\\
+\Rightarrow \frac{d^2q}{dt^2} + \frac{1}{LC} q = 0
+$$
+
+So $$\omega = 2\pi f = \sqrt{\frac{1}{LC}}$$
+
