@@ -16,7 +16,9 @@
   - [代码块](#代码块)
   - [图表](#图表)
 - [格式调整](#格式调整)
-  - [字体样式](#字体样式)
+  - [文本字体](#文本字体)
+  - [数学字体](#数学字体)
+  - [中文文档](#中文文档)
   - [页面布局](#页面布局)
 - [数学](#数学)
   - [Additional Component](#additional-component)
@@ -528,7 +530,7 @@ C 风格：
 <br>
 
 ## 格式调整
-### 字体样式
+### 文本字体
 文本字体样式命令有两种格式，分别为 `\text..{}` 和 `\..family|series|shape`。前者接收一个参数，后者改变整个所在环境的字体样式。文本字体样式是可叠加的，不同类别的命令可以嵌套生效，相同类别的命令最内层的会生效。
 - 字体族
   - `\textrm` `\rmfamily` 罗马字体 (Roman)，又称衬线字体，默认
@@ -543,17 +545,11 @@ C 风格：
   - `\textit` `\itshape` 斜体 (Italic)，字形可能会发生变化
   - `\textsl` `\slshape` 倾斜体 (Slanted)
   - `\textsc` `\scshape` 小型大写体 (Small Caps)
-- `\textnomal` `\nomalfont` 默认字体样式
-
-数学字体样式不可叠加，只有最内层的命令会生效。除了上述命令以外，数学字体还有以下样式：
-- `\mathbb` 黑板粗体字母 - $\mathbb{R}$
-- `\mathcal` 书法体字母 - $\mathcal{R}$
-- `\mathscr` 手写体字母 - $\mathscr{R}$
-- `\mathfrak` 哥特体字母 - $\mathfrak{R}$
-
-字体大小从小到大依次为：`\tiny` `\scriptsize` `\footnotesize` `\small` `\normalsize` `\large` `\Large` `\LARGE` `\huge` `\Huge`。这些命令会改变整个环境的字体大小。
-
-此外，还可以通过 `\textcolor[model]{color}{text}` 命令设置字体颜色。其中 color 参数可为自带的颜色，如 `\textcolor{red}{text}`；可为 RGB 值，如 `\textcolor[RGB]{255, 0, 0}{text}` 或 `\textcolor[rgb]{1, 0, 0}{text}`；还可为使用 `\definecolor` 命令自定义的颜色。
+- 字体大小
+  - 从小到大依次为 `\tiny` `\scriptsize` `\footnotesize` `\small` `\normalsize` `\large` `\Large` `\LARGE` `\huge` `\Huge`。这些命令会改变整个环境的字体大小。
+- 字体颜色：`\textcolor[model]{color}{text}`
+  - color 参数可为自带的颜色，如 `\textcolor{red}{text}`；可为 RGB 值，如 `\textcolor[RGB]{255, 0, 0}{text}` 或 `\textcolor[rgb]{1, 0, 0}{text}`；还可为使用 `\definecolor` 命令自定义的颜色。
+- 默认字体样式：`\textnomal` `\nomalfont`
 
 ---
 使用 fontspec 宏包可以方便地设置字体族，以下为其常用命令：
@@ -567,6 +563,54 @@ C 风格：
 常见的字体特征有：
 - `Color=<color>` 设置字体默认颜色，参数可为 xcolor 定义的颜色或十六进制码
 - `Scale=<number>|MatchLowercase|MatchUppercase` 设置字体默认大小，若为 MatchLowercase 则将匹配其他字体的小写字母高度，若为 MatchUppercase 则将匹配其他字体的大写字母高度
+
+
+
+
+
+
+<br>
+
+### 数学字体
+数学字体样式不可叠加，只有最内层的命令会生效。除了上述命令以外，数学字体还有以下样式：
+- `\mathbb` 黑板粗体字母 - $\mathbb{R}$
+- `\mathcal` 书法体字母 - $\mathcal{R}$
+- `\mathscr` 手写体字母 - $\mathscr{R}$
+- `\mathfrak` 哥特体字母 - $\mathfrak{R}$
+
+使用 unicode-math 宏包可以设置数学字体，常用的数学字体包括：
+- `\setmathfont{Latin Modern Math}` Computer Modern 的现代化版本，设置对应文本字体可以使用宏包 lmodern
+- `\setmathfont{STIX Math}` 类 Times 字体
+- `\setmathfont{XITS Math}` 基于 STIX Math 进行了一些修改和改进，设置对应文本字体可以使用命令 `\setmainfont{XITS}`
+- `\setmathfont{Asana Math}` 类 Palatino 字体
+- `\setmathfont{Fira Math}` 无衬线 Unicode 数学字体
+- `\setmathfont{Cambria Math}` Microsoft Office 的默认数学字体之一，更加紧凑
+
+
+
+
+
+<br>
+
+### 中文文档
+若要编写中文文档，需要将文档类修改为 `ctexart` `ctexrep` `ctexbook` `ctexbeamer`，常见的选项有：
+- `zihao=<-4|5|false>` 将默认字号设置为小四号或五号，若为 false 则会禁用
+- `scheme=<chinese|plain>` 若为 chinese (默认)，则会调整默认字号为五号字，调整行距为 1.3，并汉化文档中的标题名字
+- `punct=<quanjiao|banjiao|kaiming|CCT|plain>` 设置标点样式
+  - `quanjiao` 全角式：所有标点占一个汉字宽度，相邻两个标点占 1.5 汉字宽度，默认
+  - `banjiao` 半角式：所有标点占半个汉字宽度
+  - `kaiming` 开明式：句末点号用占一个汉字宽度，其他占半个汉字宽度
+  - `CCT` CCT 式：所有标点符号的宽度略小于一个汉字宽度
+  - `plain` 原样
+- `linespread=<factor>` 设置行距倍数
+
+CTex 预定义了 `\songti` `\heiti` `\kaishu` `\fangsong` `\yahei` 等字体族，此外还可以使用以下命令设置字体族：
+- `\setCJKmainfont{font name}` 设置默认衬线字体
+- `\setCJKsansfont{font name}` 设置默认无衬线字体
+- `\setCJKmonofont{font name}` 设置默认等宽字体
+- `\setCJKfamilyfont{family}{font name}` 设置自定义字体族
+
+
 
 
 
