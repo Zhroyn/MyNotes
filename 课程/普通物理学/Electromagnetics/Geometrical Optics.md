@@ -1,0 +1,136 @@
+
+- [Geometrical Optics](#geometrical-optics)
+  - [The Basic Law of Geometrical Optics](#the-basic-law-of-geometrical-optics)
+    - [Index of Refraction](#index-of-refraction)
+    - [Total Internal Reflection](#total-internal-reflection)
+  - [Fermat's Principle](#fermats-principle)
+  - [Image Formation](#image-formation)
+  - [Thin Lens](#thin-lens)
+
+
+
+
+## Geometrical Optics
+### The Basic Law of Geometrical Optics
+#### Index of Refraction
+For most materials, $\kappa_m \approx 1$, so $$v = \frac{1}{\sqrt{\kappa_e\kappa_m\epsilon_0\mu_0}} \approx \frac{1}{\sqrt{\mu_0\epsilon_0\kappa_e}} = \frac{c}{\sqrt{\kappa_e}}$$
+
+Let's define the index of refraction of a material as $$v = \frac{c}{n}$$
+
+It's obvious that $n \approx \sqrt{\kappa_e} > 1$.
+
+#### Total Internal Reflection
+When the light incident into a material with a with a lower index of refraction, total internal reflection will occur if the incident angle satisfies $$\theta \ge \sin^{-1} \frac{n_2}{n_1}$$
+
+
+
+
+
+
+<br>
+
+### Fermat's Principle
+The time of a light ray traveling from point $Q$ to point $P$ is given by
+$$t = \sum \frac{\Delta l_i}{v_i} = \sum \frac{n_i \Delta l_i}{c} = \frac{\sum n_i \Delta l_i}{c}$$
+
+Define the optical path length as $$(QP) = \sum n_i \Delta l_i = \int_Q^P ndl$$
+
+By Fermat's Principle, the actual path taken by the light ray is the one that minimizes the optical path length.
+
+To form an image, the rays of light emitted from a point on an object must converge, so the optical path between the object point and the image point is equivalent.
+
+
+
+
+
+
+
+<br>
+
+### Image Formation
+For the refraction on a spherical surface, we have $$\frac{o^2}{n^2(o + r)^2} - \frac{i^2}{{n'}^2(i - r)^2} = -4r\sin^2 \frac{\phi}{2} \left[ \frac{1}{n^2(o + r)} + \frac{1}{{n'}^2(i - r)} \right]$$
+
+$o$ and $i$ are determined at same time. For one spherical surface, there is only one group points that satisfy the equation for all $\phi$.
+
+For paraxial rays, suppose $\phi \rightarrow 0$, then we have 
+$$
+\frac{o^2}{n^2(o + r)^2} = \frac{i^2}{{n'}^2(i - r)^2} \\~\\
+\Rightarrow \frac{n(o + r)}{o} = \frac{{n'}(i - r)}{i} \\~\\
+\Rightarrow \frac{n}{o} + \frac{n'}{i} = \frac{n' - n}{r}
+$$
+
+For the first focal point, $i \rightarrow \infty$, $o = f = \dfrac{n}{n' - n} r$.
+
+For the second focal point, $o \rightarrow \infty$, $i = f' = \dfrac{n'}{n' - n} r$.
+
+Therefore, we have the image formation equation: $$\frac{f}{f'} = \frac{n}{n'}, \quad \frac{f}{o} + \frac{f'}{i} = 1$$
+
+---
+If we suggest that the incident light ray from left to right, then:
+
+When $Q, Q', C$ is at the left of the surface, $o > 0, i < 0, r < 0$.
+
+When $Q, Q', C$ is at the right of the surface, $o < 0, i > 0, r > 0$.
+
+For example, for the reflection at the surface of a mirror, $$n = -n', \quad f = - \frac{r}{2}, \quad f' = \frac{r}{2}$$
+
+So the image formation equation becomes $$\frac{(- \dfrac{r}{2})}{o} + \frac{\dfrac{r}{2}}{(-i)} = 1 \quad \Rightarrow \quad \frac{1}{o} + \frac{1}{i} = - \frac{2}{r}$$
+
+---
+For the refraction, the lateral magnification is $$m = \frac{y'}{y} = - \frac{i\theta'}{o\theta} = - \frac{ni}{n'o}$$
+
+For the reflection, the lateral magnification is $$m = - \frac{i}{o}$$
+
+
+
+
+
+
+
+<br>
+
+### Thin Lens
+For two closely adjacent surfaces, we have 
+$$
+\begin{cases}
+  \dfrac{f_1}{o_1} + \dfrac{f'_1}{i_1} = 1 \\[1em]
+  \dfrac{f_2}{o_2} + \dfrac{f'_2}{i_2} = 1
+\end{cases}
+\quad ,\quad -o_2 \approx i_1 \\~\\
+\Rightarrow \frac{f}{o} + \frac{f'}{i} = 1
+$$
+
+where
+$$
+f' = \frac{f'_1f'_2}{f'_1 + f_2} = \frac{\dfrac{n_L}{n_L - n}\cdot \dfrac{n'}{n' - n_L} \cdot r_1r_2}{\dfrac{n_L}{n_L - n}r_1 + \dfrac{n'}{n' - n_L}r_2} = \frac{n'}{\dfrac{n_L - n}{r_1} + \dfrac{n' - n_L}{r_2}} \\~\\
+f = \frac{f_1f_2}{f'_1 + f_2} = \frac{\dfrac{n}{n_L - n}\cdot \dfrac{n_L}{n' - n_L} \cdot r_1r_2}{\dfrac{n_L}{n_L - n}r_1 + \dfrac{n'}{n' - n_L}r_2} = \frac{n}{\dfrac{n_L - n}{r_1} + \dfrac{n' - n_L}{r_2}} \\~\\
+\frac{f'}{f} = \frac{n'}{n}
+$$
+
+If $n = n' = 1$, then 
+$$
+f = f' = \frac{1}{(n_L - 1)(\dfrac{1}{r_1} - \dfrac{1}{r_2})} \\~\\
+\frac{1}{i} + \frac{1}{o} = \frac{1}{f}
+$$
+
+For converging lens, $r_1 > 0, r_2 < 0$, so $f > 0, f' > 0$.
+
+For diverging lens, $r_1 < 0, r_2 > 0$, so $f < 0, f' < 0$.
+
+---
+Sign conventions: If $Q$ is at the left of $F$, $x > 0$; If $Q'$ is at the right of $F'$, $x' > 0$.
+
+Define $o = f + x$, $i = f' + x'$, then we have the Newton's Form:
+$$
+\frac{1}{f + x} + \frac{1}{f' + x'} = \frac{1}{f} \\~\\
+\Rightarrow xx' = f^2 = ff'
+$$
+
+---
+The Lateral Magnification of thin lens is
+$$
+m_1 = - \frac{ni_1}{n_Lo_1}, \quad m_2 = - \frac{n_Li_2}{n'o_2} \\~\\
+m = m_1m_2 = \frac{ni_1}{n_Lo_1} \cdot \frac{n_Li_2}{n'(-i_1)} = - \frac{ni}{n'o} = - \frac{fi}{f'o}
+$$
+
+
