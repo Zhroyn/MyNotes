@@ -3,6 +3,8 @@
   - [Electromagnetic Wave Spectrum](#electromagnetic-wave-spectrum)
   - [The Properties Of Electromagnetic Wave](#the-properties-of-electromagnetic-wave)
   - [The Energy Flux Density of Electromagnetic Wave](#the-energy-flux-density-of-electromagnetic-wave)
+  - [Momentum and Pressure of Radiation](#momentum-and-pressure-of-radiation)
+  - [The Doppler effect for light wave](#the-doppler-effect-for-light-wave)
 
 
 
@@ -81,3 +83,58 @@ Define $Z_0 = \mu_0c = 377 \Omega$, then we have $$S = \frac{EB}{\mu_0} = \frac{
 Then the Intensity of a wave ($W/m^2$) is $$I = \left\langle S \right\rangle = \frac{\left\langle E^2 \right\rangle}{Z_0} = \frac{1}{2} \frac{E^2_{\max}}{377 \Omega} = \frac{E^2_{\text{rms}}}{377 \Omega}$$
 
 We can also define the Intensity of a wave as average energy density times wave velocity $$I = c\left\langle u \right\rangle = c\epsilon_0 \left\langle E^2 \right\rangle = c\epsilon_0 E^2_{\text{rms}} = \frac{E^2_{\text{rms}}}{\mu_0c}$$
+
+
+
+
+
+
+
+
+
+<br>
+
+### Momentum and Pressure of Radiation
+For the force on the area $\Delta A$ metal plate
+$$
+\Delta F \cdot c \Delta t = (S_{in} - S_{out}) \Delta A \Delta t
+\\~\\
+\Rightarrow \Delta \vec{F} = \frac{1}{c} (\vec{S}_{in} - \vec{S}_{out}) \Delta A
+$$
+
+So the pressure of radiation is $$P = \frac{|\Delta F|}{\Delta A} = \frac{1}{c} (|\vec{S}_{in}| + |\vec{S}_{out}|)$$
+
+For white body (reflectivity 100%), we have $P = \dfrac{2}{c} |\vec{S}_{in}| = \dfrac{2}{c} I$.
+For black body (reflectivity 0%), we have $P = \dfrac{1}{c} |\vec{S}_{in}| = \dfrac{1}{c} I$.
+
+
+The change of momentum of EMW is
+$$
+\Delta G = - \Delta \vec{F} \cdot \Delta t = \frac{1}{c} (\vec{S}_{out} - \vec{S}_{in}) \Delta A \Delta t \\~\\
+\Rightarrow \Delta \vec{g} = \frac{\Delta G}{\Delta V} = \frac{1}{c} (\vec{S}_{out} - \vec{S}_{in})
+$$
+
+So the momentum density of EMW is $$\vec{g} = \frac{1}{c^2} \vec{S} = \frac{1}{c^2} (\vec{E} \times \vec{H})$$
+
+
+
+
+
+
+
+
+
+<br>
+
+### The Doppler effect for light wave
+The Dopper effect for light wave is
+$$f = f_0 \frac{\sqrt{1 - \dfrac{u^2}{c^2}}}{1 + \dfrac{u}{c} \cos\theta}$$
+
+where $f_0$ is measured in the frame the source is fixed
+
+At $\theta = \pi/2$, the light traveling perpendicular to the  relative motion of the frames, $$f = f_0 \sqrt{1 - \frac{u^2}{c^2}}$$
+
+At $\theta = 0$, the source is leaving (redshift), $$f = f_0 \sqrt{\frac{1 - u/c}{1 + u/c}}$$
+
+At $\theta = \pi$, the source is approaching (blueshift), $$f = f_0 \sqrt{\frac{1 + u/c}{1 - u/c}}$$
+
