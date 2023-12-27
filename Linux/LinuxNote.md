@@ -12,6 +12,10 @@
 - [网络远程](#网络远程)
   - [wget, curl](#wget-curl)
   - [hostname, ip, ifconfig](#hostname-ip-ifconfig)
+  - [ssh, ssh-keygen](#ssh-ssh-keygen)
+  - [scp, rsync](#scp-rsync)
+- [硬件管理](#硬件管理)
+  - [df, du](#df-du)
 - [数据处理](#数据处理)
   - [sort](#sort)
   - [uniq](#uniq)
@@ -456,6 +460,7 @@ curl --header 'X-My-Header: 123' --request PUT https://example.com
 - `-X/--request <method>` 指定 HTTP 请求方法，默认为 GET
 - `-T/--upload-file <file>` 上传本地文件
 
+
 <br>
 
 ### hostname, ip, ifconfig
@@ -494,6 +499,91 @@ ifconfig lo
 # 启用/禁用网络接口
 ifconfig {{interface}} up/down
 ```
+
+
+<br>
+
+### ssh, ssh-keygen
+**ssh**
+```shell
+# 连接到远程服务器
+ssh username@remote_host
+```
+- `-i identity_file` 指定认证文件
+- `-p port` 指定端口
+
+---
+**ssh-keygen**
+```shell
+# 交互式地生成密钥
+ssh-keygen
+```
+- `-t dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa` 指定密钥类型，默认为 RSA
+- `-C comment` 添加注释，通常使用邮箱
+
+
+<br>
+
+### scp, rsync
+**scp**
+```shell
+# 将本地文件传输到远程服务器中
+scp path/to/local_file remote_host:path/to/remote_file
+# 将远程服务器中的文件传输到本地
+scp remote_host:path/to/remote_file path/to/local_file
+```
+- `-r` 递归地拷贝文件
+- `-i identity_file` 指定认证文件
+- `-P port` 指定端口
+
+---
+**rsync**
+```shell
+# 传输文件
+rsync path/to/source path/to/destination
+```
+- `--archive` 使用归档模式，会递归地复制目录、符号文件、权限、所有权和修改时间等，等效于 `-rlptgoD`
+- `-r/--recursive` 递归地传输文件
+
+
+
+
+
+
+
+
+
+<br>
+
+## 硬件管理
+### df, du
+**df**
+```shell
+# 显示所有文件系统的磁盘空间使用情况
+df
+# 显示指定文件或目录所在的文件系统的磁盘空间使用情况
+df path/to/file_or_directory
+```
+- `-h` 以更可读的形式显示
+- `-T` 显示文件系统类型
+- `-t TYPE` 显示指定类型的文件系统
+
+---
+**du**
+```shell
+# 递归地列出所有文件和目录的大小
+du path/to/directory
+# 列出所有的 jpg 文件及其总大小
+du -ch */*.jpg
+```
+- `-h` 以更可读的形式显示
+- `-b/--bytes` 以 B 为单位
+- `-k` 以 KB 为单位
+- `-m` 以 MB 为单位
+- `-s/--summarize` 只显示单个目录的总结，等效于 `-d0`
+- `-c/--total` 在最后显示列出文件的总大小
+- `-d/--max-depth=N` 指定最大递归深度
+
 
 
 
@@ -941,29 +1031,43 @@ who -a
 # -print0 uses a null character to split file names, and -0 uses it as delimiter
 find . -name '*.backup' -print0 | xargs -0 rm -v
 ```
+
+
 ### tar
 ```shell
--c, --create #create a new archive.Directories are archived recursively
--r, --append #append files to the end of an archive(uncompressed)
---delete     #delete MEMBERS from the archive(uncompressed)
--A, --catenate, --concatenate #append archive to the end of another archive
--a, --auto-compress #use archive suffix to determine the compression program
-
-# [c]reate an archive and write it to a [f]ile:
-tar cf target.tar file1 file2 file3
-# [c]reate a g[z]ipped archive and write it to a [f]ile:
-tar czf target.tar.gz file1 file2 file3
-# [c]reate a g[z]ipped archive from another directory:
-tar czf target.tar.gz --directory=path/to/directory .
-# E[x]tract a (compressed) archive [f]ile [v]erbosely:
-tar xvf source.tar[.gz|.bz2|.xz]
-# E[x]tract a (compressed) archive [f]ile into the target directory:
-tar xf source.tar[.gz|.bz2|.xz] --directory=directory
-# Lis[t] the contents of a tar [f]ile:
-tar tf source.tar
-# E[x]tract files matching a pattern from an archive [f]ile:
-tar xf source.tar --wildcards "*.html"
+# 创建一个归档文件，包含指定的文件
+tar cf path/to/target.tar path/to/file1 path/to/file2 ...
+# 创建一个用 gzip 压缩的归档文件，包含指定的文件
+tar czf path/to/target.tar.gz path/to/file1 path/to/file2 ...
+# 向一个归档文件追加指定文件，同时进行压缩
+tar rzf target.tar.gz path/to/file1 path/to/file2 ...
+# 提取一个归档文件到当前目录，输出提取的文件名
+tar xvf path/to/source.tar[.gz|.bz2|.xz]
+# 列出一个归档文件中的内容，最多为两层目录
+tar tf path/to/source.tar[.gz|.bz2|.xz] --exclude "*/*/*"
+# 删除一个归档文件中的指定文件
+tar --delete -f source.tar path/to/file1 path/to/file2 ...
 ```
+- `-f/--file ARCHIVE` 指定归档文件
+- `-C/--directory DIR` 指定目标目录
+<br>
+
+- `-c/--create` 创建归档文件，会覆盖删除原有归档文件
+- `-x/--extract` 提取归档文件
+- `-t/--list` 列出归档文件内容
+- `-r/--append` 向归档文件末尾追加文件
+- `--delete` 从归档文件中删除文件
+<br>
+
+- `-z/--gzip` 使用 gzip 压缩
+- `-j/--bzip2` 使用 bzip2 压缩
+- `-J/--xz` 使用 xz 压缩
+- `-a/--auto-conpress` 根据后缀名自动决定压缩程序
+<br>
+
+- `--exclude PATTERN` 不对符合 PATTERN 的文件执行操作
+- `--wildcards PATTERN` 只对符合 PATTERN 的文件执行操作
+
 ### less
 ```shell
 # Open a file:
