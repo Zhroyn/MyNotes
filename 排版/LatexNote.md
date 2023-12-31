@@ -463,7 +463,8 @@ C 风格：
 - `style=<string>` 设置配色风格，常用的有 bw, sas, staroffice, xcode, default, monokai, lightbulb, github-dark, rrt 等。此外，还可以在导言区使用 `\usemintedstyle[language]{pygments style}` 命令设置全局配色
 - `fontsize=<font size>` 设置字体大小，常用的有 \small 和 \footnotesize
 - `baselinestretch=<factor>` 设置块内行间距
-- `linenos[=true]` 显示行号
+- `breaklines[=false]` 自动换行
+- `linenos[=false]` 显示行号
 - `numbersep=<length>` 设置行号和代码块之间的距离
 - `frame=<none|leftline|topline|bottomline|lines|single>` 设置边框，`lines` 为上下边框，`single` 为所有边框
 - `framerule=<length>` 设置边框宽度
