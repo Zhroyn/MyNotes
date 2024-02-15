@@ -1,48 +1,36 @@
 
-- [Recognition](#recognition)
-  - [Semantic Segmentation](#semantic-segmentation)
-  - [Object Detection](#object-detection)
-    - [R-CNN](#r-cnn)
-    - [Fast R-CNN](#fast-r-cnn)
-    - [Faster R-CNN](#faster-r-cnn)
-    - [Single-Stage Object Detection](#single-stage-object-detection)
-  - [Instance Segmentation](#instance-segmentation)
-  - [Human Pose Estimation](#human-pose-estimation)
-    - [Top-down Method](#top-down-method)
-    - [Bottom-up Method](#bottom-up-method)
-  - [Other Tasks](#other-tasks)
-
-
-
+[toc]
 
 
 
 
 ## Recognition
 ### Semantic Segmentation
-To realize semantic segmentation, we can use **fully convolutional network** to make predictions all at once, converting the input with size $3 \times H \times W$ to scores with size $C \times H \times W$, and then using argmax to get predictions with size $H \times W$. The loss function is **per-pixel cross entropy**.
+语义分割为每个像素预测一个类别，无法区分同一类别的不同实例。
 
-To make the receptive field expand faster, we can use pooling or strided conv to realize **downsampling**, and then use interpolation or transposed conv to realize **upsampling**
+语义分割的基本思路是使用**全卷积网络**。在训练时，大小为 $3 \times H \times W$ 的图像在经过一系列卷积核后，转换为大小为 $C \times H \times W$ 的分数，然后在每个像素上使用交叉熵损失函数，即可得到最终的损失。在预测时，只需在最后使用 argmax 函数，即可得到每个像素的类别。
 
-Moreover, we can use **skip connection** between downsampling and
-upsampling stages. We call such network as **U-Net**.
+因为对高分辨率的图像直接计算卷积的代价太大，所以我们可以先对图像进行**下采样**，使得卷积网络主要在低分辨率上计算，然后再进行**上采样**，恢复到原始分辨率。
 
-To overcome the poor localization property of the final output, we can combine the responses at the final layer with a fully connected **Conditional Random Field (CRF)**. That is
-$$E(x) = \sum_i \theta_i(x_i) + \sum_{ij}\theta_{ij}(x_i, x_j)$$
+下采样的方法有池化和跨步卷积，上采样的方法有上池化和转置卷积，具体如下：
 
-The unary potential is
-$$\theta_i(x_i) = -\log P(x_i)$$
+- 上池化
+  - Nearest Neighbor: 将数据复制四份放在四个角落
+  - Bed of Nails: 将数据放在左上角，其余位置补零
+  - Max Unpooling: 在下采样时记录最大值所在的位置，然后在上采样时将数据放在对应位置，其余位置补零
+- 转置卷积
+  - 若卷积核的大小为 3，步长为 2，做法则是将输入的像素值乘以 3x3 的卷积核输出到对应位置，相邻像素的输出相距两个像素，重叠的输出进行相加
+  - 最终输出要裁去边缘的像素，以保证放大倍数准确
+  - 当卷积核大小不能被步长整除时，输出的结果会不均匀重叠，可能会产生棋盘效应，抑制的方法有调整卷积核的大小和步长，以及使用双线性插值。需要注意的是，即使卷积核大小能被步长整除，若卷积核学习不均匀，仍会产生棋盘效应
+  - 在计算卷积时，将输入输出分别拉平为一维向量 $X$ 和 $Y$，则可用矩阵乘法 $Y = CX$ 来表示卷积操作，其中 $C$ 为将卷积核重新排布的卷积矩阵。此时若将 $C$ 转置，计算 $C^TY$，得到的输出形式和上述上采样操作得到的输出形式相同，因此称为转置卷积
 
-The pairwise potential is
-$$
-\begin{aligned}
-  \theta_{ij}(x_i, x_j) = \mu(x_i, x_j) & \left[ w_1 \exp\left( - \frac{\left\| p_i - p_j \right\|^2}{2\sigma_\alpha^2} - \frac{\left\| I_i - I_j \right\|^2}{2\sigma_\beta^2} \right) \right. \\
-  & \left. + w_2 \exp\left( - \frac{\left\| p_i - p_j \right\|^2}{2\sigma_\gamma^2} \right) \right] \\
-\end{aligned}
-$$
+此外，我们还可以在上采样的过程中使用跳跃连接 (skip connection)，将下采样和上采样阶段的特征信息拼接在一起，这样可以获取到更多的高分辨率信息，进一步提高分割精度。这样就构成了经典的 U-Net 网络。
 
-One of evaluation metric of semantic segmentation is **Per-pixel Intersection-over-union (IoU)**, which is
-$$\text{IoU} = \frac{\text{The area of intersection}}{\text{The area of union}}$$
+我们还可以向语义分割模型中加入**条件随机场 (CRF)**，以改善图像中不同区域之间的一致性和上下文信息，通过考虑空间邻近关系来提高分割精度。
+
+语义分割的评价指标之一是 **均交并比 (mIoU, Mean Intersection over Union)**，即 $$\text{mIoU} = \frac{1}{k + 1} \sum_{i=0}^k \frac{p_{ii}}{\sum_{j=0}^k p_{ij} + \sum_{j=0}^k p_{ji} - p_{ii}}$$ 其中 $i$ 表示真实值，$j$ 表示预测值，$p_{ij}$ 表示将 $i$ 预测为 $j$ 的像素个数。
+
+
 
 
 
@@ -53,45 +41,58 @@ $$\text{IoU} = \frac{\text{The area of intersection}}{\text{The area of union}}$
 <br>
 
 ### Object Detection
-The input is a RGB image, the output is a set of bounding boxes that denote objects.
+物体检测与 Classification + Localization 不同，后者的输出数量是固定的，而前者的输出数量与检测出来的物体数量相关。实现上物体检测也比 Classification + Localization 复杂许多，后者可能只需要在图像分类模型最后再加一个全连接层就好了。
 
-The **bounding box (bbox)** contains
-- Class label
-- Location (x, y)
-- Size (w, h)
+物体检测的基本思路是使用 **bounding box (bbox)** 裁剪出一小块图像进行分类。接下来将讲几种经典的物体检测方法。
 
-The evaluation metric of object detection can be IoU.
 
 <br>
 
 #### R-CNN
-The procedures of **Regions with CNN features (R-CNN)** are
-1. Firstly, run region proposal method to compute **Regions of Interest (Rols)**
-2. Then, resize each region to 224x224 and run through CNN, predict class scores and bbox
-3. Finally, select a subset of region proposals to output by **non-max suppression**. That is, firstly select the highest-scoring box, and then eliminate lower-scoring boxes with IoU > threshold
+**R-CNN (Regions with CNN features)** 的基本流程是：
+
+1. 使用 Selective Search 等区域提取方法，生成一系列**感兴趣区域 (RoI, Regions of Interest)**
+2. 将每个区域变形为固定的大小输入卷积网络，进行特征提取
+3. 将每个候选区域的特征输入一个目标分类器，通常是一个线性 SVM，用于判断是否包含感兴趣的目标并预测类别。
+4. 进一步应用一个回归器，得到边界框的偏移量，对边界框进行精确调整，以更好地拟合目标的真实位置
+5. 使用**非极大值抑制 (Non-Max Suppression)** 去除高度重叠的候选区域，即对每个区域计算 IoU，找到局部极大值，然后筛除邻域内小于阈值的区域
+
+R-CNN 有许多缺点，比如说速度很慢，因为它需要对数百甚至数千个 RoI 单独运行卷积网络，计算量巨大。还有就是 RoI 的大小是固定的，无法学习。
 
 <br>
 
 #### Fast R-CNN
-The procedures of Fast R-CNN are
-1. Run whole image through backbone network like AlexNet, ResNet, get the feature map of the image
-2. Rol Pooling: Get Rols from a proposal method, and then use them to crop and resize feature map to the same size
-3. Run through per-region network, predict class scores and bbox
+Fast R-CNN 的基本流程是：
+
+1. 使用 Selective Search 方法选取一系列建议框
+2. 将原始图片输入卷积网络，得到特征图，截取出对应的特征框
+3. 对每个特征框进行 **RoI 池化**，将其映射为固定大小的特征图，具体就是将特征框分割为 $H \times W$ 个子区域，然后对每个子区域取最大值
+4. 将每个特征图输入全连接层，通过 softmax 分类器和 bbox 回归器得到最终的分类和位置
+
+Fast R-CNN 的缺点是使用的 Selective Search 仍十分耗费时间，且由于使用 Selective Search 来预先提取候选区域，并未实现真正意义上端到端的训练模式。
 
 <br>
 
 #### Faster R-CNN
-Faster R-CNN uses **Region Proposal Network (RPN)** to get Rols, that is,
-1. Firstly, suppose $K$ anchor boxes of fixed size at each point in the feature map, thus we can get $K \times H \times W$ anchor boxes at all
-2. Then run through the network, and get the scores and the offset coordinates for each anchor boxes
-3. Sort all $K \times H \times W$ boxes by their scores, and take the highest ones as Rols
+Faster R-CNN 与 Fast R-CNN 最大的不同之处是引入了 **Region Proposal Network (RPN)**，用于生成 RoI，实现了端到端的训练，使得整个模型更加高效且准确。其基本流程是：
+
+1. 输入一张图像，通过卷积神经网络（通常是预训练的网络如 VGG16 或 ResNet，亦称骨干网络）提取图像的基础特征
+2. 基于图像的基础特征，使用 RPN 生成一系列候选区域（即边界框提案），对 $K$ 个预置的 anchor 进行分类和边界框回归：
+   - 特征图输入 1x1 卷积层，得到每个 anchor 的 positive score 和 negative score，总共 $2K$ 个通道。有了这两个分数后，再应用 softmax 即可得到每个特征点上每个 anchor **是否包含目标的概率**，选出前 N 个 anchor 作为 proposals
+   - 特征图输入 1x1 卷积层，得到每个 anchor 的偏移量，总共 $4K$ 个通道。由此即可对每个特征点上的每个 anchor 进行位置调整，实现边界框回归，生成最终的 proposals
+3. 与 Fast R-CNN 一样，对每个 proposal 进行 RoI 池化，得到 proposal feature map，然后输入全连接层计算出具体类别，同时再做一次边界框回归获得最终的精确位置
 
 <br>
 
 #### Single-Stage Object Detection
-RCNN, Fast RCNN and Faster RCNN are all two-stage object detection. For faster computation, there are also single-stage object detection, such as YOLO, SSD, etc.
+RCNN, Fast R-CNN 和 Faster R-CNN 都是 Region-based 方法，需要两个阶段，即先生成候选区域，再对候选区域进行分类和回归。为了更快的计算，我们还有 YOLO, SSD 等 Single-Stage 方法。
 
-**You Only Look Once (YOLO)** firstly split image into $S \times S$ grids. Then for each grid, it predicts $B$ bounding boxes, which contains its location $(x, y)$, size $(w, h)$, and its confidence. It also predicts its probabilities for $C$ categories. So the size of the output of CNN is $S \times S \times (B \times 5 + C)$.
+**You Only Look Once (YOLO)** 首先将图像分割为 $S \times S$ 个网格，然后输入卷积网络，每个网格会预测 $B$ 个边界框，每个边界框包括其位置、大小及置信度，共五个元素；除此以外，每个网格还会预测 $C$ 个类别的概率，故最终的输出大小为 $S \times S \times (B \times 5 + C)$。
+
+**Single Shot MultiBox Detector (SSD)** 在 YOLO 的基础上，做出了如下改进，在提高检测精度的同时保持了速度：
+- 与 Faster R-CNN 一样，在每个网格上采用了不同尺度和长宽比的先验框
+- 与 YOLO 最后采用全连接层不同，SSD 直接使用卷积对特征图进行检测
+- 与 YOLO 只利用了末端特征图不同，SSD 采用多尺度特征图进行检测，能够更好地检测不同尺度的物体
 
 
 
@@ -103,50 +104,15 @@ RCNN, Fast RCNN and Faster RCNN are all two-stage object detection. For faster c
 <br>
 
 ### Instance Segmentation
-One method of instance segmentation is to firstly perform object detection, and then predict a segmentation mask for each object.
+实例分割既需要做到像素级别的分类，又需要区分同一类别的不同实例。
 
-Beyond instance segmentation there is also **panoptic segmentation**, which labels all pixels in the image.
+实例分割有许多方法，其中一种是两阶段的 Mask R-CNN，其基本流程是：
+- 与 Faster R-CNN 一样，首先将图像送入特征提取网络得到特征图，然后使用 RPN 网络生成 RoI 提案
+- 进行 RoI Align，将每个 RoI 对齐到固定大小的特征图上。RoI Align 会保留浮点数进行插值，而不是像 RoI Pooling 那样直接取整，从而提高了分割精度
+- 输入全卷积网络，对每个 RoI 生成每个类别的二值 mask，但只提取之前预测的类别对应的 mask，这样可以避免不同类别互相竞争，实现解耦，提高检测精度
 
+在实例分割之上，还有**全景分割 (Panoptic Segmentation)**。全景分割同时关注 stuff 和 thing，即将图像中的每个像素分为两类，一类是 stuff，一类是 thing。stuff 是指没有明确边界的物体，如天空、道路、草地等，而 thing 是指有明确边界的物体，如人、车、树等。全景分割的输出是一个包含 stuff 和 thing 的分割图，即每个像素都有一个类别标签，同时还有一个实例 ID，用于区分不同的 thing。
 
-
-
-
-
-
-<br>
-
-### Human Pose Estimation
-We can represent the pose of a human by locating a set of **keypoints**, such as nose, eyes, ears, shoulders, elbows, wrists, hips, knees and ankles, which sum up to 17 keypoints.
-
-<br>
-
-#### Top-down Method
-Top-down method detect humans firstly and then detect keypoints in each bbox. Its performance is usually better.
-
-For each human, it outputs a single heatmap for each type of joint, and then choose the location with the highest value as the coordinate of the keypoint.
-
-
-
-<br>
-
-#### Bottom-up Method
-Bottom-up method detect keypoints firstly and then group keypoints to form humans. It's usually faster.
-
-OpenPose firstly generates **part confidence maps (heatmaps)** and **part affinity fields (PAF)** from the input images, and then link parts based on part affinity fields.
-
-
-
-
-
-
-
-<br>
-
-### Other Tasks
-- **Video Classification**: Recognize actions
-- **Temporal Action Localization**: Given a long untrimmed video sequence, identify frames corresponding to different actions
-- **Spatial-temporal Detection**: Given a long untrimmed video, detect all the people in space and time and classify the activities they are performing
-- **Multi-object Tracking**: Identify and track objects belonging to one or more categories without any prior knowledge about the appearance and number of targets.
 
 
 
