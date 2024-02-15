@@ -20,13 +20,12 @@
   - [数学字体](#数学字体)
   - [中文文档](#中文文档)
   - [页面布局](#页面布局)
-- [数学](#数学)
-  - [Additional Component](#additional-component)
-  - [Operators](#operators)
-  - [Symbols](#symbols)
-  - [Equations and Alignment](#equations-and-alignment)
-  - [Matrix](#matrix)
-  - [Greek Alphabet](#greek-alphabet)
+- [数学公式](#数学公式)
+  - [符号函数](#符号函数)
+  - [位置组合](#位置组合)
+  - [公式对齐](#公式对齐)
+  - [希腊字母](#希腊字母)
+- [TODO](#todo)
 
 
 
@@ -642,70 +641,121 @@ CTex 预定义了 `\songti` `\heiti` `\kaishu` `\fangsong` `\yahei` 等字体族
 
 <br>
 
-## 数学
-### Additional Component
-**Subscript and Supscript**
+## 数学公式
+数学公式分为行内公式和行间公式：
+- 行内公式：
+  - \$...\$
+  - \\(...\\)
+  - \\begin{math}...\\end{math}
+- 行内公式：
+  - \$\$...\$\$
+  - \\[...\\]
+  - \\begin{displaymath}...\\end{displaymath}
+  - \\begin{equation}...\\end{equation}
+
+
+<br>
+
+### 符号函数
+**二元运算符**
+
+$$\pm, \mp, \oplus, \times, \div$$
+
+$$\cdot, \odot, \circ, \bullet$$
+
+$$\cap, \cup, \bigcap, \bigcup, \setminus$$
+
+$$\wedge, \vee, \bigwedge, \bigvee$$
+
+
+**关系符号**
+
+$$\lt, \le, \leq, \leqq, \leqslant, \not\lt$$
+
+$$\gt, \ge, \geq, \geqq, \geqslant, \not\gt$$
+
+$$\prec, \preceq, \preccurlyeq, \precapprox, \precnapprox, \precsim, \precnsim $$
+
+$$\neq, \approx, \approxeq, \sim, \simeq, \cong, \equiv$$
+
+$$\subset, \subseteq, \subsetneq, \supset, \in, \notin$$
+
+$$\to, \rightarrow, \leftarrow, \Rightarrow, \Leftarrow, \iff$$
+
+$$\forall, \exists, \mapsto, \because, \therefore$$
+
+**省略号**
+
+$$\dots, \ldots, \cdots, \vdots, \ddots$$
+
+**括号**
+
+`\left` 和 `\right` 命令可以实现自动调整括号大小，效果为：
+
 $$
-a_i^2, a_{j-1,j}^{n+1} \\~\\
+\left(\frac{1}{2} \right),
+\left[ \frac{1}{2} \right],
+\left\{ \frac{1}{2} \right\},
+\left< \frac{1}{2} \right>,
+\left| \frac{1}{2} \right|,
+\left\| \frac{1}{2} \right\|
 $$
 
-$a_i^n, \mathop{a}\limits_i^n $
-$\sum_{i=1}^n, \sum\limits_{i=1}^n $
-$\lim_{n\to\infty}, \lim\limits_{n\to\infty} $
+`\left` 和 `\right` 需要配对，但不需要后接相同的符号。如果有一边不想放上符号，可以在那一边使用 `.` 代替，如： $$\left. \frac{\partial y}{\partial x} \right|_{x=x_0}$$
 
-**Additional Symbols**
-$$
-\hat{a}, \widehat{a}, \check{a}, \widecheck{a}, \tilde{a}, \widetilde{a} \\~\\
-\bar{a}, \vec{a} \\~\\
-\acute{a}, \grave{a} \\~\\
-\dot{a}, \ddot{a} \\~\\
-\not\in, \cancel\in \\
-$$
+如果想要自定义括号的大小，或者不想要配对，则可以使用 `\big` `\Big` `\bigg` `\Bigg` 命令，效果如下：$$\Bigg< \bigg\{ \Big[ \big( xyz \big) \Big] \bigg\} \Bigg>$$
 
-**Over and Under**
-$$
-\overleftarrow{abc}, \underleftarrow{abc} \\~\\
-\overrightarrow{abc}, \underrightarrow{abc} \\~\\
-\overleftrightarrow{abc}, \underleftrightarrow{abc} \\~\\
-\overline{\text{overline}}, \underline{\text{underline}} \\~\\
-\underbar{\text{underbar}}, \underbrace{\text{underbrace}} \\~\\
-\overset{a}{\text{overset}}, \underset{a}{\text{underset}} \\~\\
-$$
+**常见函数**
 
-### Operators
-**Binary Operators**
-$$
-\pm, \mp, \oplus, \setminus \\~\\
-\times, \div \\~\\
-\cdot, \odot, \circ, \bullet \\~\\
-\cap, \cup, \bigcap, \bigcup \\~\\
-\wedge, \vee, \bigwedge,\bigvee \\~\\
-$$
+$$\sum, \prod, \sqrt[k]{n}, \lim$$
 
-**Large Operators**
-$$
-\lim, \sum, \prod, \int, \sqrt[n]{n},
-$$
+$$\int, \iint, \iiint, \oint, \oiint, \oiiint$$
 
 $$
 \frac{\mathrm{d} y}{\mathrm{d} x}, 
 \frac{\partial f}{\partial x}, 
-f^{'}, 
-\nabla f
+f^{'}, \nabla f
 $$
 
-
-### Symbols
-$$\lt, \le, \leq, \leqq, \leqslant, \not\lt$$
-$$\gt, \ge, \geq, \geqq, \geqslant, \not\gt$$
-$$\prec, \preceq, \preccurlyeq, \precapprox, \precnapprox, \precsim, \precnsim $$
-$$\neq, \approx, \approxeq, \sim, \simeq, \cong, \equiv$$
-$$\subset, \subseteq, \subsetneq, \supset, \in, \notin$$
-$$\to, \rightarrow, \leftarrow, \Rightarrow, \Leftarrow, \iff$$
-$$\forall, \exists, \mapsto, \because, \therefore$$
+行内公式中的函数会被压缩，如果想要正常显示，可以使用 `\displaystyle` 命令改变环境，如 `\displaystyle \frac{1}{2}`；如果不想改变大小，只想改变位置关系，则可以使用 `\limits` 命令，如 `\sum\limits_{i=1}^n`，效果为 $\sum\limits_{i=1}^n, \lim\limits_{n\to\infty}$，实现将式子放在运算符的上下方。
 
 
-### Equations and Alignment
+
+<br>
+
+### 位置组合
+使用 ^ 和 _ 可以实现上标和下标，如 $a_{j-1,j}^{n+1}$。若想将上标或下标放在整个式子的上下方，可以先使用 `\mathop` 将其转换为数学运算符，再使用 `\limits` 命令，如 $\mathop{a}\limits_i^n$；还可以直接使用 `\overset` 和 `\underset` 命令，如 $\overset{a}{b}, \underset{a}{b}$。
+
+其他常见的为符号添加上下标的命令有：
+
+$$\hat{a}, \check{a}, \tilde{a}$$
+
+$$\bar{a}, \vec{a}, \acute{a}, \grave{a}, \dot{a}, \ddot{a}$$
+
+这些命令生成的上标的大小是固定的，常用于单个字符，使用时可以不加花括号，如 `\hat a`。此外一些可变大小的上下标命令有：
+
+$$\widehat{abc}, \widecheck{abc}, \widetilde{abc}$$
+
+$$
+\overleftarrow{abc}, \underleftarrow{abc},
+\overrightarrow{abc}, \underrightarrow{abc},
+\overleftrightarrow{abc}, \underleftrightarrow{abc}
+$$
+
+$$
+\overline{\text{overline}}, \underline{\text{underline}},
+\overbrace{\text{overbrace}}, \underbrace{\text{underbrace}},
+\underbar{\text{underbar}}
+$$
+
+此外还可以使用 `\not` `\cancel` 等命令为数学公式添加删除线，其中 `not` 命令主要用于运算符，`\cancel` 等命令来自 cancel 宏包，效果如下：$$\not{abc}, \cancel{abc}, \bcancel{abc}, \xcancel{abc}$$
+
+
+<br>
+
+### 公式对齐
+**方程组或分段函数**
+
 $$
 y =
 \begin{cases}
@@ -715,21 +765,7 @@ y =
 \end{cases}
 $$
 
-$$
-\begin{cases}\tag{1}
-  a + b - c = 2 \\
-  a - b = 4 \\
-\end{cases}
-$$
-
-$$
-\left\{\tag{2}
-  \begin{aligned}
-    & a + b - c = 2 \\
-    & a - b = 4 \\
-  \end{aligned}
-\right.
-$$
+**对齐公式**
 
 $$
 \begin{aligned}
@@ -739,8 +775,8 @@ f(x) &= 2x+1 \\
 \end{aligned}
 $$
 
+**矩阵**
 
-### Matrix
 $$
 \left(
 \left[
@@ -774,37 +810,47 @@ $$
   1 & 0 & 0 \\
   0 & 1 & 0 \\
   0 & 0 & 1 \\
-\end{vmatrix}, 
+\end{vmatrix}
 $$
 
-### Greek Alphabet
-|form|letter|form|letter|
+
+<br>
+
+### 希腊字母
+|小写|代码|大写|代码|
 |---|---|---|---|
-|\alpha	|α |\Alpha	|A|
-|\beta	|β |\Beta	  |B|
-|\gamma	|γ |\Gamma	|Γ|
-|\delta	|δ |\Delta	|Δ|
-|\epsilon|ϵ|\Epsilon|E|
-|\zeta	|ζ |\Zeta	  |Z|
-|\eta	  |η |\Eta	  |H|
-|\theta	|θ |\Theta  |Θ|
-|\iota	|ι |\Iota   |I|
-|\kappa	|κ |\Kappa  |K|
-|\lambda|λ |\Lambda |Λ|
-|\mu	  |μ |\Mu     |M|
-|\nu	  |ν |\Nu     |N|
-|\xi	  |ξ |\Xi     |Ξ|
-|\omicron|ο|\Omicron|O|
-|\pi	  |π |\Pi     |Π|
-|\rho	  |ρ |\Rho    |P|
-|\sigma	|σ |\Sigma  |Σ|
-|\tau	  |τ |\Tau    |T|
-|\upsilon|υ|\Upsilon|Υ|
-|\varphi|φ |\Phi    |Φ|
-|\psi	  |ψ |\Psi    |Ψ|
-|\omega	|ω |\Omega  |Ω|
+|\alpha   |$\alpha$   |\Alpha   |$\Alpha$   |
+|\beta    |$\beta$    |\Beta    |$\Beta$    |
+|\gamma   |$\gamma$   |\Gamma   |$\Gamma$   |
+|\delta   |$\delta$   |\Delta   |$\Delta$   |
+|\epsilon |$\epsilon$ |\Epsilon |$\Epsilon$ |
+|\zeta    |$\zeta$    |\Zeta    |$\Zeta$    |
+|\eta     |$\eta$     |\Eta     |$\Eta$     |
+|\theta   |$\theta$   |\Theta   |$\Theta$   |
+|\iota    |$\iota$    |\Iota    |$\Iota$    |
+|\kappa   |$\kappa$   |\Kappa   |$\Kappa$   |
+|\lambda  |$\lambda$  |\Lambda  |$\Lambda$  |
+|\mu      |$\mu$      |\Mu      |$\Mu$      |
+|\nu      |$\nu$      |\Nu      |$\Nu$      |
+|\omicron |$\omicron$ |\Omicron |$\Omicron$ |
+|\xi      |$\xi$      |\Xi      |$\Xi$      |
+|\pi      |$\pi$      |\Pi      |$\Pi$      |
+|\rho     |$\rho$     |\Rho     |$\Rho$     |
+|\sigma   |$\sigma$   |\Sigma   |$\Sigma$   |
+|\tau     |$\tau$     |\Tau     |$\Tau$     |
+|\upsilon |$\upsilon$ |\Upsilon |$\Upsilon$ |
+|\phi \varphi |$\phi$ $\varphi$ |\Phi|$\Phi$|
+|\chi     |$\chi$     |\Chi     |$\Chi$     |
+|\psi     |$\psi$     |\Psi     |$\Psi$     |
+|\omega   |$\omega$   |\Omega   |$\Omega$   |
 
 
+
+<br>
+
+## TODO
+- [ ] 删除线
+- [ ] 公式编号
 
 
 
