@@ -564,6 +564,7 @@ C 风格：
 常见的字体特征有：
 - `Color=<color>` 设置字体默认颜色，参数可为 xcolor 定义的颜色或十六进制码
 - `Scale=<number>|MatchLowercase|MatchUppercase` 设置字体默认大小，若为 MatchLowercase 则将匹配其他字体的小写字母高度，若为 MatchUppercase 则将匹配其他字体的大写字母高度
+- `Path=<path>` 指定字体文件所在文件夹
 
 
 
