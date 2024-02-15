@@ -1,4 +1,3 @@
-<!-- TOC -->
 
 - [Wave Motion](#wave-motion)
   - [Wave Function](#wave-function)
@@ -11,6 +10,9 @@
     - [Speed of Wave on a String](#speed-of-wave-on-a-string)
     - [Energy Transfer](#energy-transfer)
     - [Different Cases of Superposition](#different-cases-of-superposition)
+      - [Interference Case](#interference-case)
+      - [Beating Case](#beating-case)
+      - [Standing Wave](#standing-wave)
   - [Sound Wave](#sound-wave)
     - [Pressure Fluctuation](#pressure-fluctuation)
     - [Speed of Sound in a Fluid](#speed-of-sound-in-a-fluid)
@@ -19,7 +21,6 @@
     - [Doppler Effect](#doppler-effect)
     - [Shock Waves](#shock-waves)
 
-<!-- /TOC -->
 
 
 
@@ -40,10 +41,13 @@ The displacement $y$ depends on both $x$ and $t$. For this reason, it is often w
 
 ### Wave Equation
 Set $y = f(x + vt) = f(u) $, then
+
 $$
-\frac{\partial^2 y}{\partial t^2} = v^2 \frac{\partial^2 y}{\partial u^2} \\~\\
-\frac{\partial^2 y}{\partial x^2} = \frac{\partial^2 y}{\partial u^2} \\~\\
-\Rightarrow \frac{\partial^2 y}{\partial t^2} = v^2 \frac{\partial^2 y}{\partial x^2}
+\begin{gathered}
+  \frac{\partial^2 y}{\partial t^2} = v^2 \frac{\partial^2 y}{\partial u^2} \\\\
+  \frac{\partial^2 y}{\partial x^2} = \frac{\partial^2 y}{\partial u^2} \\\\
+  \Rightarrow \frac{\partial^2 y}{\partial t^2} = v^2 \frac{\partial^2 y}{\partial x^2}
+\end{gathered}
 $$
 
 
@@ -57,6 +61,7 @@ $$
   - Waves that obey the superposition principle are called **linear waves**.
   - Waves that violate the superposition principle are called **nonlinear waves**.
 - The combination of separate waves in the same region of space to produce a resultant wave is called **interference**.
+
 <br>
 
 - **Reflection** :
@@ -71,10 +76,10 @@ $$
 
 #### Speed of Wave in a Solid
 Set $x_n$ to be the positions of atoms, and $X_n = na $ to be the equilibrium positions.
-Let the wave function be $u_n = u(X_n, t) $, then we can get $$
-U^{\text{harm}} = \frac{1}{2}K\sum_n (u_{n+1}-u_n)^2 $$
+Let the wave function be $u_n = u(X_n, t) $, then we can get $$U^{\text{harm}} = \frac{1}{2}K\sum_n (u_{n+1}-u_n)^2$$
 
 So for every atom, there are
+
 $$
 \begin{aligned} 
   M\frac{\partial^2 u_n}{\partial t^2}
@@ -83,11 +88,11 @@ $$
   &= Ka\left.\frac{\partial u}{\partial x}\right|_{X_n} - Ka\left.\frac{\partial u}{\partial x}\right|_{X_{n-1}} \\
   &= Ka^2\left.\frac{\partial^2 u}{\partial x^2}\right|_{X_n}
 \end{aligned}
-$$ 
+$$
 
-So we can get $$\displaystyle \frac{\partial^2 u}{\partial t^2} = \frac{Ka^2}{M}\frac{\partial^2 u}{\partial x^2} $$
+So we can get $$\frac{\partial^2 u}{\partial t^2} = \frac{Ka^2}{M}\frac{\partial^2 u}{\partial x^2}$$
 
-Therefore $$\displaystyle v = a\sqrt\frac{K}{M} $$
+Therefore $$v = a\sqrt\frac{K}{M}$$
 
 
 
@@ -109,10 +114,8 @@ $$
 $$
 
 $$
-k = \frac{2\pi}{\lambda} = \frac{2\pi f}{v} 
-\\~\\
-\omega = \frac{2\pi}{T} = 2\pi f
-\\~\\
+k = \frac{2\pi}{\lambda} = \frac{2\pi f}{v}, \quad
+\omega = \frac{2\pi}{T} = 2\pi f, \quad
 v = \frac{\omega}{k}
 $$
 
@@ -122,22 +125,19 @@ $$
 Set $\mu$ to be the linear density, then we can get
 
 $$
-F_{1x} = F_{2x} = F 
-\\~\\
-\Delta ma_y
-= \mu \Delta x \frac{\partial^2 y}{\partial t^2} 
-= F \left.\frac{\partial y}{\partial x}\right|_{x+\Delta x} - F \left.\frac{\partial y}{\partial x}\right|_{x} 
-= F \frac{\partial^2y}{\partial x^2} \cdot \Delta x
-\\~\\
-\Rightarrow \frac{\partial^2y}{\partial t^2} = \frac{F}{\mu} \frac{\partial^2y}{\partial x^2}
+\begin{gathered}
+  \Delta ma_y = \mu \Delta x \frac{\partial^2 y}{\partial t^2} = F \left.\frac{\partial y}{\partial x}\right|_{x+\Delta x} - F \left.\frac{\partial y}{\partial x}\right|_{x} = F \frac{\partial^2y}{\partial x^2} \cdot \Delta x \\\\
+  \Rightarrow \frac{\partial^2y}{\partial t^2} = \frac{F}{\mu} \frac{\partial^2y}{\partial x^2}
+\end{gathered}
 $$
 
-Therefore $$v = \sqrt{\frac{F}{\mu}} $$
+Therefore $$v = \sqrt{\frac{F}{\mu}}$$
 
 <br>
 
 #### Energy Transfer
 The power of energy transfer at a particular position and time is
+
 $$
 \begin{aligned}
   P(x, t) &= F_y(x, t)v_y(x, t) \\
@@ -146,12 +146,12 @@ $$
 \end{aligned} 
 $$
 
-So The average rate of energy transfer is $$P_{avg} = \frac{1}{2}Fk\omega A^2 = \frac{1}{2}\mu\omega^2 A^2v $$
+So The average rate of energy transfer is $$P_{avg} = \frac{1}{2}Fk\omega A^2 = \frac{1}{2}\mu\omega^2 A^2v$$
 
 <br>
 
 #### Different Cases of Superposition
-**Interference Case**
+##### Interference Case
 $$
 \begin{aligned}
   y = y_1 + y_2 &= A\left[ \sin(kx - \omega t) + \sin(kx - \omega t + \phi) \right] \\
@@ -160,58 +160,70 @@ $$
 $$
 
 $$
-\Delta r = v\Delta t = \lambda f \Delta t \\
-\phi = \omega \Delta t = 2\pi f \Delta t \\
+\begin{gathered}
+  \Delta r = v\Delta t = \lambda f \Delta t \\
+  \phi = \omega \Delta t = 2\pi f \Delta t
+\end{gathered}
 $$
 
-So we can get
-$$
-\Delta r = \frac{\phi}{\pi}\cdot \frac{\lambda}{2} \\~\\
-\frac{\phi}{2} = \pi \frac{\Delta r}{\lambda}
-$$
+So we can get $$\Delta r = \frac{\phi}{\pi}\cdot \frac{\lambda}{2}, \quad \frac{\phi}{2} = \pi \frac{\Delta r}{\lambda}$$
 
-When $\displaystyle \cos\left( \frac{\phi}{2} \right) = \pm 1 $ or $\displaystyle \Delta r = (2n)\cdot \frac{\lambda}{2} $, the waves are said to be everywhere *in phase* and thus *interfere constructively*.
-When $\displaystyle \cos\left( \frac{\phi}{2} \right) = 0 $ or $\displaystyle \Delta r = (2n+1)\cdot \frac{\lambda}{2} $, the resultant wave has zero amplitude everywhere, as a consequence of *destructive interference*.
+When $\displaystyle \cos\left( \frac{\phi}{2} \right) = \pm 1$ or $\displaystyle \Delta r = (2n)\cdot \frac{\lambda}{2}$, the waves are said to be everywhere *in phase* and thus *interfere constructively*.
 
-**Beating Case**
+When $\displaystyle \cos\left( \frac{\phi}{2} \right) = 0$ or $\displaystyle \Delta r = (2n+1)\cdot \frac{\lambda}{2}$, the resultant wave has zero amplitude everywhere, as a consequence of *destructive interference*.
+
+
+##### Beating Case
 Beating is the periodic variation in intensity at a given point due to the superposition of two waves having slightly different frequencies.
+
 Set
+
 $$
-y_1 = A\cos\omega_1t = A\cos 2\pi f_1t \\
-y_2 = A\cos\omega_2t = A\cos 2\pi f_2t
+\begin{gathered}
+  y_1 = A\cos\omega_1t = A\cos 2\pi f_1t \\
+  y_2 = A\cos\omega_2t = A\cos 2\pi f_2t
+\end{gathered}
 $$
 
 Then we can get
+
 $$
 \begin{aligned}
-y = y_1 + y_2 &= A(\cos 2\pi f_1t + \cos 2\pi f_2t) \\
-&= \left[ 2A \cos 2\pi\left( \frac{f_1-f_2}{2} \right)t \right]\cos 2\pi\left( \frac{f_1+f_2}{2} \right)t
+  y = y_1 + y_2 &= A(\cos 2\pi f_1t + \cos 2\pi f_2t) \\
+  &= \left[ 2A \cos 2\pi\left( \frac{f_1-f_2}{2} \right)t \right]\cos 2\pi\left( \frac{f_1+f_2}{2} \right)t
 \end{aligned} 
 $$
 
 Beat frequency: $f_b = |f_1 - f_2| $
 
 
-**Standing Wave**
+##### Standing Wave
 Set
-$$ 
-y_1 = A\sin(kx - \omega t) \\
-y_2 = A\sin(kx + \omega t) \\
+
+$$
+\begin{gathered}
+  y_1 = A\sin(kx - \omega t) \\
+  y_2 = A\sin(kx + \omega t) \\
+\end{gathered}
 $$
 
 Then we can get
+
 $$
 \begin{aligned}
-y = y_1 + y_2 &= A\sin(kx - \omega t) + A\sin(kx + \omega t) \\
-&= (2A\sin kx)\cos\omega t
+  y = y_1 + y_2 &= A\sin(kx - \omega t) + A\sin(kx + \omega t) \\
+  &= (2A\sin kx)\cos\omega t
 \end{aligned} 
 $$
 
 Nodes: $kx = n\pi$
+
 Antiodes: $\displaystyle kx = (n + \frac{1}{2})\pi$
 
 The wavelengths of standing waves for a string fixed at both ends are $\displaystyle \lambda_n = \frac{2L}{n} $
+
 Then the frequencies are $\displaystyle f_n = \frac{v}{\lambda_n} = n\frac{v}{2L} $
+
 This series is called **harmonic series**. The frequency with $n=1$ is called **fundamental frequency** or the first harmonic. The frequency with $n>1$ is called the $n$th harmonic, or the $(n-1)$th **overtones**.
 
 
@@ -229,9 +241,10 @@ This series is called **harmonic series**. The frequency with $n=1$ is called **
 - Sound waves in solids can be either longitudinal or transverse. 
 
 #### Pressure Fluctuation
-For a sound wave confined to a tube, there are $$\Delta V = S[u(x + \Delta x, t) - u(x, t)] $$
+For a sound wave confined to a tube, there are $$\Delta V = S[u(x + \Delta x, t) - u(x, t)]$$
 
 So we can get
+
 $$
 \begin{aligned}
   \frac{\text{d}V}{V} &= \lim_{\Delta x \rightarrow 0} \frac{S[u(x + \Delta x, t) - u(x, t)]}{S\Delta x} \\
@@ -239,32 +252,37 @@ $$
 \end{aligned} 
 $$
 
-Hence $$\Delta p(x, t) = -B \frac{\text{d}V}{V} = -B \frac{\partial u(x,t)}{\partial x} $$
+Hence $$\Delta p(x, t) = -B \frac{\text{d}V}{V} = -B \frac{\partial u(x,t)}{\partial x}$$
 
 <br>
 
 #### Speed of Sound in a Fluid
 We consider an idealized case of a sound wave confined to a tube.
 Set $A$ to be the area of cross section, $v_y$ to be the initial speed the fluid is pushed as well as the speed of fluid, $V$ to be the volume of fluid being pushed, $\Delta V$ to be the reduced volume of the fluid, then we can get
+
 $$
-V = Avt \\~\\
-\Delta V = Av_yt \\~\\
-\Delta p = -B \frac{\Delta V}{V} = -B \frac{v_y}{v}
+\begin{gathered}
+  V = Avt \\\\
+  \Delta V = Av_yt \\\\
+  \Delta p = -B \frac{\Delta V}{V} = -B \frac{v_y}{v}
+\end{gathered}
 $$
 
 By $P = I$, we can get
+
 $$
-P = \rho V v_y = \rho (Av_yt)v 
-\\~\\
-I = Ft = \Delta p At = B \frac{Av_yt}{v}
-\\~\\
-\Rightarrow v = \sqrt{\frac{B}{\rho}}
+\begin{gathered}
+  P = \rho V v_y = \rho (Av_yt)v \\\\
+  I = Ft = \Delta p At = B \frac{Av_yt}{v} \\\\
+  \Rightarrow v = \sqrt{\frac{B}{\rho}}
+\end{gathered}
 $$
 
 <br>
 
 #### Sound Intensity
-Sound intensity $I$ is defined as the power carried by sound waves per unit area in a direction perpendicular to that area, that is to say, $\bm{I} = p\bm{v}$.
+Sound intensity $I$ is defined as the power carried by sound waves per unit area in a direction perpendicular to that area, that is to say, $\boldsymbol{I} = p\boldsymbol{v}$.
+
 $$
 \begin{aligned}
   I(x, t) &= \Delta p(x, t) v(x, t) \\
@@ -274,6 +292,7 @@ $$
 $$
 
 So the average is
+
 $$
 \begin{aligned}
   I = \frac{\mathscr{P}_{avg}}{A} &= \frac{1}{2} kB\omega s_{max}^2 \\ 
@@ -282,13 +301,13 @@ $$
 \end{aligned}
 $$
 
-which means $I\sim s^2 $.
+which means $I \sim s^2$.
 
 **Sound intensity level** is the logarithmic measure of the intensity of a sound relative to a reference value, that is
-$$
-\beta = 10 \log\left( \frac{I}{I_0} \right) (\text{dB}) \\~\\
-I_0 = 1.00\times 10^{-12} \text{ W}/\text{m}^2
-$$
+
+$$\beta = 10 \log\left( \frac{I}{I_0} \right) (\text{dB})$$
+
+$$I_0 = 1.00\times 10^{-12} \text{ W}/\text{m}^2$$
 
 <br>
 
@@ -297,35 +316,36 @@ $$
 - **Rays** are directed lines perpendicular to the wavefronts that indicate the direction of travel of the wavefronts. 
 
 $$
-I = \frac{\mathscr{P}_{avg}}{A} = \frac{\mathscr{P}_{avg}}{4\pi r^2} \\~\\
-\Rightarrow \phi(r, t) = \frac{s_0}{r}\sin(kr - \omega t)
+\begin{gathered}
+  I = \frac{\mathscr{P}_{avg}}{A} = \frac{\mathscr{P}_{avg}}{4\pi r^2} \\\\
+  \Rightarrow \phi(r, t) = \frac{s_0}{r}\sin(kr - \omega t)
+\end{gathered}
 $$
 
 <br>
 
 #### Doppler Effect
 **Moving Observer, Stationary Source**
-Assume $v_O$ is positive if the observer is moving from $O$ to $S$, then the speed of the sound relative to the observer become $$v' = v + v_O $$
+Assume $v_O$ is positive if the observer is moving from $O$ to $S$, then the speed of the sound relative to the observer become $$v' = v + v_O$$
 
-However, the wavelength of the sound the observer receive is unchanged, so $$f' = \frac{v'}{\lambda} = \frac{v + v_O}{\lambda} = (1 + \frac{v_O}{v})f $$
+However, the wavelength of the sound the observer receive is unchanged, so $$f' = \frac{v'}{\lambda} = \frac{v + v_O}{\lambda} = (1 + \frac{v_O}{v})f$$
 
 **Moving Source, Stationary Observer**
-Assume $v_S$ is positive if the source is moving from $S$ to $O$, then the wavelengh of the sound become $$\lambda' = \lambda - v_ST = \lambda - \frac{v_S}{f} $$
+Assume $v_S$ is positive if the source is moving from $S$ to $O$, then the wavelengh of the sound become $$\lambda' = \lambda - v_ST = \lambda - \frac{v_S}{f}$$
 
-However, the speed of the sound the observer receive is unchanged, so $$ f' = \frac{v}{\lambda'} = \frac{v}{\lambda - \dfrac{v_S}{f}} = \frac{v}{\dfrac{v}{f} - \dfrac{v_S}{f}} = \frac{1}{1 - \dfrac{v_S}{v}}f $$
+However, the speed of the sound the observer receive is unchanged, so $$f' = \frac{v}{\lambda'} = \frac{v}{\lambda - \dfrac{v_S}{f}} = \frac{v}{\dfrac{v}{f} - \dfrac{v_S}{f}} = \frac{1}{1 - \dfrac{v_S}{v}}f$$
 
 **Both Source and Observer in Motion**
-The speed of the sound the observer receive is $\displaystyle v' = v + v_O $, the wavelengh of the sound the observer receive is $\displaystyle \lambda' = \lambda - \frac{v_S}{f} $, so we can get
-$$
-f' = \frac{v'}{\lambda'} = \frac{v + v_O}{v - v_S} f
-$$
+The speed of the sound the observer receive is $\displaystyle v' = v + v_O $, the wavelengh of the sound the observer receive is $\displaystyle \lambda' = \lambda - \frac{v_S}{f} $, so we can get $$f' = \frac{v'}{\lambda'} = \frac{v + v_O}{v - v_S} f$$
 
 <br>
 
 #### Shock Waves
 When $v_S$ is higher than the wave velocity $v$, the envelope surface of the wave surface is a cone, which is called **Mach cone**.
-Set the conical angle to be $\theta$, then we can get $$\sin\theta = \frac{vt}{v_St} = \frac{v}{v_S} $$
-By this, we can set **Mach number** : $\displaystyle \frac{v_S}{v}$
+
+Set the conical angle to be $\theta$, then we can get $$\sin\theta = \frac{vt}{v_St} = \frac{v}{v_S}$$
+
+By this, we can set **Mach number**: $v_S/v$
 
 At the shock front, which is the generatrix of the cone, it will form constructive interference and generate a wave with a very large amplitude.
 

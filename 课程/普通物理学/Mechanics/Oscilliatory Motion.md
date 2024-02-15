@@ -15,24 +15,23 @@
 
 
 
-
-
 ## Oscillatory Motion
 ### Equilibrium
 An object is in equilibrium if it is in both translational and rotational equilibrium, which means that both the **linear acceleration** and the **angular acceleration** are zero.
 
 If an object is in equilibrium and the net torque is zero about one point, then the net torque must be zero about any other point:
+
 $$
 \begin{aligned}
-\sum \bold{\tau}_{O'} &= \bold{(r_1-r')\times F_1 + (r_2-r')\times F_2 + \cdots} \\
-&= \bold{r_1\times F_1 + r_2\times F_2 + \cdots - r'(F_1 + F_2 + \cdots) } \\
-&= \sum \tau_O - \bold{r' \sum F} \\
-&= \sum \tau_O
+  \sum \mathbf{\tau}_{O'} &= \mathbf{(r_1-r')\times F_1 + (r_2-r')\times F_2 + \cdots} \\
+  &= \mathbf{r_1\times F_1 + r_2\times F_2 + \cdots - r'(F_1 + F_2 + \cdots) } \\
+  &= \sum \tau_O - \mathbf{r' \sum F} \\
+  &= \sum \tau_O
 \end{aligned}
 $$
 
 Positions of **stable equilibrium** correspond to points for which $U(x)$ is a minimum:
-$$\displaystyle \frac{dU}{dx}=0, \frac{d^2U}{dx^2}>0 $$
+$$\displaystyle \frac{dU}{dx}=0, \frac{d^2U}{dx^2}>0$$
 
 Quite generically, we expect linear restoring force if we neglect the higher order terms, which are usually small if we stay close enough to the equilibrium, for Taylor expansion of $U(x)$. This universal family of motion is known as the **simple harmonic motion**
 
@@ -46,30 +45,39 @@ Quite generically, we expect linear restoring force if we neglect the higher ord
 
 ### Simple Harmonic Oscillation
 An object moves with simple harmonic motion whenever its acceleration is proportional to its displacement from some equilibrium position and is oppositely directed, that is
+
 $$
-F_s = -kx = ma \\~\\
-\Rightarrow a = -\frac{k}{m} x
+\begin{gathered}
+  F_s = -kx = ma \\\\
+  \Rightarrow a = -\frac{k}{m} x
+\end{gathered}
 $$
 
 Define $\omega = \sqrt{k/m}$, then we can get
+
 $$
-\frac{d^2x}{dt^2} = -\omega^2x,\\~\\
-\Rightarrow x = A\cos(\omega t + \phi) \\~\\
-\Rightarrow v = -A\omega\sin(\omega t + \phi) \\~\\
-\Rightarrow a = -A\omega^2\cos(\omega t + \phi)
+\begin{gathered}
+  \frac{d^2x}{dt^2} = -\omega^2x,\\\\
+  \Rightarrow x = A\cos(\omega t + \phi) \\\\
+  \Rightarrow v = -A\omega\sin(\omega t + \phi) \\\\
+  \Rightarrow a = -A\omega^2\cos(\omega t + \phi) \\
+\end{gathered}
 $$
 
-So
-$$T = \frac{2\pi}{\omega}, f = \frac{\omega}{2\pi}, \omega = 2\pi f $$
+So $$T = \frac{2\pi}{\omega}, f = \frac{\omega}{2\pi}, \omega = 2\pi f$$
 
 And the kinetic energy is
+
 $$
 \begin{aligned}
   K &= \frac{1}{2}mv^2 \\
   &= \frac{1}{2}m\omega^2A^2\sin^2(\omega t + \phi) \\
   &= \frac{1}{2}kA^2\sin^2(\omega t + \phi)
-\end{aligned} \\~\\
-U = \frac{1}{2}kx^2 = \frac{1}{2}kA^2\cos^2(\omega t + \phi) \\~\\
+\end{aligned}
+$$
+
+$$
+U = \frac{1}{2}kx^2 = \frac{1}{2}kA^2\cos^2(\omega t + \phi) \\\\
 \Rightarrow E = K + U = \frac{1}{2}kA^2 
 $$
 
@@ -84,33 +92,33 @@ $$
 ### Pendulum
 #### Simple Pendulum
 $$
--mg\sin\theta = m\frac{d^2s}{dt^2} \\~\\
-\Rightarrow \frac{d^2\theta}{dt^2} = -\frac{g}{L}\sin\theta \\~\\
+-mg\sin\theta = m\frac{d^2s}{dt^2} \\\\
+\Rightarrow \frac{d^2\theta}{dt^2} = -\frac{g}{L}\sin\theta \\\\
 \Rightarrow \frac{d^2\theta}{dt^2} = -\frac{g}{L}\theta
 $$
 
-So 
-$$
-\omega = \sqrt{\frac{g}{L}} \\~\\
-T = \frac{2\pi}{\omega} = 2\pi\sqrt{\frac{L}{g}}
-$$
+So
+
+$$\omega = \sqrt{\frac{g}{L}}$$
+
+$$T = \frac{2\pi}{\omega} = 2\pi\sqrt{\frac{L}{g}}$$
 
 #### Physical Pendulum
 If a hanging object oscillates about a fixed axis that does not pass through its center of mass, and the object cannot be approximated as a point mass, we cannot treat the system as a simple pendulum. In this case the system is called a physical pendulum.
 
 $$
--mgd\sin\theta = I\frac{d^2\theta}{dt^2} \\~\\
+-mgd\sin\theta = I\frac{d^2\theta}{dt^2} \\\\
 \Rightarrow \frac{d^2\theta}{dt^2} = -\frac{mgd}{I}\theta
 $$
 
 So
-$$
-\omega = \sqrt{\frac{mgd}{I}} \\~\\
-T = \frac{2\pi}{\omega} = 2\pi\sqrt{\frac{I}{mgd}}
-$$
+
+$$\omega = \sqrt{\frac{mgd}{I}}$$
+
+$$T = \frac{2\pi}{\omega} = 2\pi\sqrt{\frac{I}{mgd}}$$
 
 #### Torsional Pendulum
-Restoring torque is proportional to the angular displacement, that is $$\tau = I\frac{d^2\theta}{dt^2} = -\kappa\theta $$
+Restoring torque is proportional to the angular displacement, that is $$\tau = I\frac{d^2\theta}{dt^2} = -\kappa\theta$$
 
 
 
@@ -123,15 +131,21 @@ Restoring torque is proportional to the angular displacement, that is $$\tau = I
 
 ### Damped Oscillator
 $$
-F_x = -kx - bv = ma_x \\~\\
-\Rightarrow -kx - b\frac{dx}{dt} = m\frac{d^2x}{dt^2}
+\begin{gathered}
+  F_x = -kx - bv = ma_x \\\\
+  \Rightarrow -kx - b\frac{dx}{dt} = m\frac{d^2x}{dt^2}
+\end{gathered}
 $$
 
 **Weak Damping (Underdamped) Situation**
 When
+
 $$
-b^2 - 4km < 0 \\~\\
-\Rightarrow \frac{k}{m} > \left( \frac{b}{2m} \right)^2$$
+\begin{gathered}
+  b^2 - 4km < 0 \\\\
+  \Rightarrow \frac{k}{m} > \left( \frac{b}{2m} \right)^2
+\end{gathered}
+$$
 
 We can get $$x = Ae^{-\frac{b}{2m}t} \cos(\omega t + \phi)$$
 
@@ -141,9 +155,13 @@ where $\displaystyle \omega = \sqrt{\frac{k}{m} - \left( \frac{b}{2m} \right)^2}
 
 **Critical Damping Situation**
 When
+
 $$
-b^2 - 4km = 0 \\~\\
-\Rightarrow \frac{k}{m} = \left( \frac{b}{2m} \right)^2$$
+\begin{gathered}
+  b^2 - 4km = 0 \\\\
+  \Rightarrow \frac{k}{m} = \left( \frac{b}{2m} \right)^2
+\end{gathered}
+$$
 
 We can get $$x = (A_1 + A_2t)e^{-\frac{b}{2m}t}$$
 
@@ -151,9 +169,13 @@ We can get $$x = (A_1 + A_2t)e^{-\frac{b}{2m}t}$$
 
 **Overdamped Situation**
 When
+
 $$
-b^2 - 4km > 0 \\~\\
-\Rightarrow \frac{k}{m} < \left( \frac{b}{2m} \right)^2$$
+\begin{gathered}
+  b^2 - 4km > 0 \\\\
+  \Rightarrow \frac{k}{m} < \left( \frac{b}{2m} \right)^2
+\end{gathered}
+$$
 
 We can get $$x = A_1e^{r_1t} + A_2e^{r_2t}$$
 
@@ -169,20 +191,19 @@ where $r_1, r_2$ is the solution of $mr^2 + br + k = 0.$
 <br>
 
 ### Forced Oscillation
-$$ 
+$$
 F_{ext}\cos\omega t - kx - b\frac{dx}{dt} = m\frac{d^2x}{dt^2}
 $$
 
 At the underdamped situation, we can get the solution
+
 $$
-\left\{
-  \begin{aligned}
-    & x = A'e^{-\frac{b}{2m}t} \cos(\omega' t + \phi') + A\cos(\omega t + \phi) \\
-    & \omega' = \sqrt{\frac{k}{m} - \left( \frac{b}{2m} \right)^2} \\
-    & A = \frac{F_{ext}/m}{\sqrt{(\omega^2 - \omega_0^2)^2 + \left( \dfrac{b\omega}{m} \right)^2}}, \omega_0 = \sqrt{\frac{k}{m}} \\
-    & \cos\phi =  \frac{\omega^2_0 - \omega^2}{\sqrt{(\omega^2 - \omega_0^2)^2 + \left( \dfrac{b\omega}{m} \right)^2}}, \sin\phi =  \frac{-\dfrac{b\omega}{m}}{\sqrt{(\omega^2 - \omega_0^2)^2 + \left( \dfrac{b\omega}{m} \right)^2}}
-  \end{aligned}
-\right.
+\begin{cases}
+  x = A'e^{-\frac{b}{2m}t} \cos(\omega' t + \phi') + A\cos(\omega t + \phi) \\
+  \omega' = \sqrt{\frac{k}{m} - \left( \frac{b}{2m} \right)^2} \\
+  A = \frac{F_{ext}/m}{\sqrt{(\omega^2 - \omega_0^2)^2 + \left( \dfrac{b\omega}{m} \right)^2}}, \omega_0 = \sqrt{\frac{k}{m}} \\
+  \cos\phi =  \frac{\omega^2_0 - \omega^2}{\sqrt{(\omega^2 - \omega_0^2)^2 + \left( \dfrac{b\omega}{m} \right)^2}}, \sin\phi =  \frac{-\dfrac{b\omega}{m}}{\sqrt{(\omega^2 - \omega_0^2)^2 + \left( \dfrac{b\omega}{m} \right)^2}} \\
+\end{cases}
 $$
 
 When $\omega < \omega_0 = \sqrt{k/m}$, the driving force is slow enough that the oscillator can follow the force after the transient motion decays.
@@ -219,7 +240,7 @@ When $\omega = \omega_0 = \sqrt{k/m}$, the amplitude quickly grows to a maximum.
 <br>
 
 ### Elastic Properties
-$$ \text{Elastic modulus} \equiv \frac{\text{stress}}{\text{strain}} $$
+$$\text{Elastic modulus} \equiv \frac{\text{stress}}{\text{strain}}$$
 
 - Stress: A quantity that is proportional to the force causing a deformation; more specifically, stress is the external force acting on an object per unit cross-sectional area.
 - Strain: A measure of the degree of deformation.
