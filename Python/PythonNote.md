@@ -1,4 +1,3 @@
-<!-- TOC -->
 
 - [Python 笔记](#python-笔记)
   - [内建函数](#内建函数)
@@ -33,7 +32,6 @@
     - [Function definitions](#function-definitions)
       - [Decorator](#decorator)
 
-<!-- /TOC -->
 
 
 
@@ -173,6 +171,7 @@
 - 列表、元组、字符串等序列都支持 `+` (concatenation) 和 `*` (repetition) 操作符，可实现浅复制
 - 列表、元组、字符串等序列都支持 `in` 和 `not in` 操作符，字符串、bytes 和 bytearray 还额外支持子序列包含检查
 - 列表是 mutable 序列类型，不可使用 hash() 函数
+- 列表切片是浅复制
 - 列表可通过给切片赋值 iterable，来插入、删除、修改批量元素，如：
 ```py
 >>> a = [1, 2, 3, 4, 5]
@@ -182,7 +181,7 @@
 >>> a[4:4] = [7, 8]
 >>> a
 [1, 2, 3, 4, 7, 8, 6]
->>> a[2:6] = []  
+>>> a[2:6] = []
 >>> a
 [1, 2, 6]
 ```

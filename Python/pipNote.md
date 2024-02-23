@@ -1,10 +1,8 @@
-<!-- TOC -->
 
 - [Pip](#pip)
 - [Packages](#packages)
 - [Mirror Source](#mirror-source)
 
-<!-- /TOC -->
 
 
 

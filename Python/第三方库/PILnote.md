@@ -1,6 +1,4 @@
 
-<!-- TOC -->
-
 - [Image](#image)
   - [图像属性](#图像属性)
   - [基本 I/O](#基本-io)
@@ -15,7 +13,6 @@
 - [ImageEnhance](#imageenhance)
 - [ImageGrab](#imagegrab)
 
-<!-- /TOC -->
 
 
 

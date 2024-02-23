@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Advanced Counting Techniques](#advanced-counting-techniques)
   - [8.2 Solving Linear Recurrence Relations](#82-solving-linear-recurrence-relations)
     - [Linear Homogeneous Recurrence Relations](#linear-homogeneous-recurrence-relations)
@@ -20,7 +16,6 @@
     - [The Number of Onto Functions](#the-number-of-onto-functions)
     - [Derangements](#derangements)
 
-<!-- /code_chunk_output -->
 
 
 

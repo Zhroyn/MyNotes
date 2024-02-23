@@ -1,8 +1,6 @@
-<!-- TOC -->
 
 - [Integrate](#integrate)
 
-<!-- /TOC -->
 
 
 

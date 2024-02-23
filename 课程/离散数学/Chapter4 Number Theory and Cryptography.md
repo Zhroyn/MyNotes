@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Number Theory and Cryptography](#number-theory-and-cryptography)
   - [4.1 Divisibility and Modular Arithmetic](#41-divisibility-and-modular-arithmetic)
   - [4.2 Integer Representations and Algorithms](#42-integer-representations-and-algorithms)
@@ -22,7 +18,6 @@
     - [Pseudoprimes](#pseudoprimes)
     - [Primitive Roots and Discrete Logarithms](#primitive-roots-and-discrete-logarithms)
 
-<!-- /code_chunk_output -->
 
 
 

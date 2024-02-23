@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Relations](#relations)
   - [9.1 Relations and Their Properties](#91-relations-and-their-properties)
     - [Properties of Binary Relations](#properties-of-binary-relations)
@@ -28,7 +24,6 @@
     - [Lattice](#lattice)
     - [Topological Sorting](#topological-sorting)
 
-<!-- /code_chunk_output -->
 
 
 

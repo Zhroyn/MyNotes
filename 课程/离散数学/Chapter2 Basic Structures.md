@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Basic Structures](#basic-structures)
   - [2.1 Sets](#21-sets)
   - [2.2 Set Operations](#22-set-operations)
@@ -10,7 +6,6 @@
   - [2.5 Cardinality of Sets](#25-cardinality-of-sets)
   - [2.6 Matrices](#26-matrices)
 
-<!-- /code_chunk_output -->
 
 
 

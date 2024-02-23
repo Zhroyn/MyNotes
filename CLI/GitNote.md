@@ -1,4 +1,3 @@
-<!-- TOC -->
 
 - [Common usage](#common-usage)
   - [Redo commit](#redo-commit)
@@ -45,7 +44,6 @@
   - [mergetool and difftool](#mergetool-and-difftool)
   - [Other configurations](#other-configurations)
 
-<!-- /TOC -->
 
 
 

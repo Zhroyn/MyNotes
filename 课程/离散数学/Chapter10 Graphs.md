@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Graphs](#graphs)
   - [10.1 Graphs and Graph Models](#101-graphs-and-graph-models)
     - [Undirected Graph](#undirected-graph)
@@ -35,7 +31,6 @@
     - [Augmenting Path Algorithm](#augmenting-path-algorithm)
     - [Ford-Fulkerson Algorithm](#ford-fulkerson-algorithm)
 
-<!-- /code_chunk_output -->
 
 
 

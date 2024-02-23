@@ -1,4 +1,3 @@
-<!-- TOC -->
 
 - [Keyboard](#keyboard)
   - [Hotkeys](#hotkeys)
@@ -12,7 +11,6 @@
   - [Loop Statements](#loop-statements)
 - [Threads](#threads)
 
-<!-- /TOC -->
 
 
 

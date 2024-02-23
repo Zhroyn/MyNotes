@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Logic and Proofs](#logic-and-proofs)
   - [1.1 Propositional Logic](#11-propositional-logic)
   - [1.2 Applications of Propositional Logic](#12-applications-of-propositional-logic)
@@ -14,7 +10,6 @@
   - [1.8 Proof Methods and Strategy](#18-proof-methods-and-strategy)
 - [Shorthand](#shorthand)
 
-<!-- /code_chunk_output -->
 
 
 

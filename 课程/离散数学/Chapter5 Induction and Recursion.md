@@ -1,15 +1,10 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Induction and Recursion](#induction-and-recursion)
   - [5.1 Mathematical Induction](#51-mathematical-induction)
   - [5.2 Strong Induction and Well-Ordering](#52-strong-induction-and-well-ordering)
   - [5.3 Recursive Definitions and Structural Induction](#53-recursive-definitions-and-structural-induction)
   - [5.4 Recursive Algorithms](#54-recursive-algorithms)
 
-<!-- /code_chunk_output -->
 
 
 

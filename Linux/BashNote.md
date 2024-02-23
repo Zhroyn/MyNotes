@@ -1,4 +1,3 @@
-<!-- TOC -->
 
 - [Quoting](#quoting)
 - [Array](#array)
@@ -41,7 +40,6 @@
     - [read](#read)
     - [printf](#printf)
 
-<!-- /TOC -->
 
 
 

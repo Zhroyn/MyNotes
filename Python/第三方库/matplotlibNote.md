@@ -1,4 +1,3 @@
-<!-- TOC -->
 
 - [Create Figures](#create-figures)
 - [Create Subplot](#create-subplot)
@@ -13,7 +12,6 @@
 - [Change Style](#change-style)
   - [Show Config](#show-config)
 
-<!-- /TOC -->
 
 
 

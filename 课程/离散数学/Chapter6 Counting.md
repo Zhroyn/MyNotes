@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Counting](#counting)
   - [6.2 The Pigeonhole Principle](#62-the-pigeonhole-principle)
     - [The Pigeonhole Principle](#the-pigeonhole-principle)
@@ -22,7 +18,6 @@
     - [Generating Permutations](#generating-permutations)
     - [Generating Combinations](#generating-combinations)
 
-<!-- /code_chunk_output -->
 
 
 

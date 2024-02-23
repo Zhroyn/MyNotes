@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Open3d](#open3d)
 - [Colmap](#colmap)
   - [自动重建](#自动重建)
@@ -13,7 +9,6 @@
   - [转换格式](#转换格式)
   - [视觉定位](#视觉定位)
 
-<!-- /code_chunk_output -->
 
 
 

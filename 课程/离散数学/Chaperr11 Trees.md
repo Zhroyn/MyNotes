@@ -1,8 +1,4 @@
 
-<!-- @import "[TOC]" {cmd="toc" depthFrom=1 depthTo=6 orderedList=false} -->
-
-<!-- code_chunk_output -->
-
 - [Trees](#trees)
   - [11.1 Introduction to Trees](#111-introduction-to-trees)
     - [Terminologies of Trees](#terminologies-of-trees)
@@ -22,7 +18,6 @@
     - [Prim’s Algorithm](#prims-algorithm)
     - [Kruskal’s Algorithm](#kruskals-algorithm)
 
-<!-- /code_chunk_output -->
 
 
 
