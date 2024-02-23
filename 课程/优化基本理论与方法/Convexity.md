@@ -18,7 +18,7 @@ Let $Q$ be a subset of $\mathbb{R}^n$. We denote by $C_{L}^{k,p}(Q)$ the class o
 $f(\bm{x}) \in C_L^{2,1}$ if and only if $$\left\| \nabla^2 f(\bm{x}) \right\| \le L$$
 
 **Lemma9**
-If $f(\bm{x}) \in C_L^{1,1}$, then $$\left| f(\bm{y}) - f(\bm{x}) - \left\langle \nabla f(\bm{x}), \bm{y} - \bm{x} \right\rangle \right| \le \frac{L}{2} \left\| \bm{y} - \bm{x} \right\|^2$$
+If $f(\bm{x}) \in C_L^{1,1}$, then $$\left| f(\bm{y}) - f(\bm{x}) - \left< \nabla f(\bm{x}), \bm{y} - \bm{x} \right> \right| \le \frac{L}{2} \left\| \bm{y} - \bm{x} \right\|^2$$
 
 **Lemma10**
 If $f(\bm{x}) \in C_M^{2,2}$, then $$\left\| \nabla f(\bm{y}) - \nabla f(\bm{x}) - \nabla^2 f(\bm{x}) (\bm{y} - \bm{x}) \right\| \le \frac{M}{2} \left\| \bm{y} - \bm{x} \right\|^2$$
@@ -35,7 +35,7 @@ A set $\mathcal{Q} \subseteq \mathbb{R}^n$ is called convex if for any $x, y \in
 
 
 **Difinition: Convex Function**
-A continuously differentiable function $f(\cdot)$ is called convex on a convex set $\mathcal{Q}$ if for any $x, y \in Q$ we have $$f(\bm{y}) \ge f(\bm{x}) + \left\langle \nabla f(\bm{x}), \bm{y} - \bm{x} \right\rangle$$
+A continuously differentiable function $f(\cdot)$ is called convex on a convex set $\mathcal{Q}$ if for any $x, y \in Q$ we have $$f(\bm{y}) \ge f(\bm{x}) + \left< \nabla f(\bm{x}), \bm{y} - \bm{x} \right>$$
 
 If $-f(\bm{x})$ is convex, we call $f(\bm{x})$ concave.
 
@@ -49,7 +49,7 @@ We denote by $\mathcal{F}^k(\mathcal{Q})$ the class of convex functions with the
 A continuously differentiable function $f$ belongs to the class $\mathcal{F}^1$ if and only if for any $\alpha \in [0, 1]$, we have $$f(\alpha\bm{x} + (1 - \alpha)\bm{y}) \le \alpha f(\bm{x}) + (1 - \alpha) f(\bm{y})$$
 
 **Theorem 24**
-A continuously differentiable function $f$ belongs to the class $\mathcal{F}^1$ if and only if $$\left\langle \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right\rangle \ge 0$$
+A continuously differentiable function $f$ belongs to the class $\mathcal{F}^1$ if and only if $$\left< \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right> \ge 0$$
 
 **Theorem 24**
 A continuously differentiable function $f$ belongs to the class $\mathcal{F}^2$ if and only if $$\nabla^2 f(\bm{x}) \ge 0$$
@@ -65,13 +65,13 @@ We denote by $\mathcal{F}_{L}^{k,l}(\mathbb{R}^n)$ the class of functions with t
 **Theorem 27**
 All conditions below, holding for all $\bm{x}, \bm{y} \in \mathbb{R}^n$ and $\alpha \in [0, 1]$, are equivalent to the inclusion $f \in \mathcal{F}_{L}^{k,l}(\mathbb{R}^n)$:
 
-$$0 \le f(\bm{y}) - f(\bm{x}) - \left\langle \nabla f(\bm{x}), \bm{y} - \bm{x} \right\rangle \le \frac{L}{2} \left\| \bm{y} - \bm{x} \right\|^2$$
+$$0 \le f(\bm{y}) - f(\bm{x}) - \left< \nabla f(\bm{x}), \bm{y} - \bm{x} \right> \le \frac{L}{2} \left\| \bm{y} - \bm{x} \right\|^2$$
 
-$$f(\bm{x}) + \left\langle \nabla f(\bm{x}), \bm{y} - \bm{x} \right\rangle + \frac{1}{2L} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2 \le f(\bm{y})$$
+$$f(\bm{x}) + \left< \nabla f(\bm{x}), \bm{y} - \bm{x} \right> + \frac{1}{2L} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2 \le f(\bm{y})$$
 
-$$\frac{1}{L} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2 \le \left\langle \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right\rangle$$
+$$\frac{1}{L} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2 \le \left< \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right>$$
 
-$$0 \le \left\langle \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right\rangle \le L\left\| \bm{x} - \bm{y} \right\|^2$$
+$$0 \le \left< \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right> \le L\left\| \bm{x} - \bm{y} \right\|^2$$
 
 $$\alpha f(\bm{x}) + (1 - \alpha) f(\bm{y}) \ge f(\alpha\bm{x} + (1 - \alpha)\bm{y}) + \frac{\alpha(1 - \alpha)}{2L} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2$$
 
@@ -89,7 +89,7 @@ Twice continuously differentiable function $f$ belongs to the class $\mathcal{F}
 
 ## Strongly Convex Function
 **Difinition: Convex Function**
-A continuously differentiable function $f(\bm{x})$ is called strongly convex on $\mathbb{R}^n$ if for any $x, y \in \mathbb{R}^n$ we have $$f(\bm{y}) \ge f(\bm{x}) + \left\langle \nabla f(\bm{x}), \bm{y} - \bm{x} \right\rangle + \frac{1}{2} \mu \left\| \bm{y} - \bm{x} \right\|^2$$
+A continuously differentiable function $f(\bm{x})$ is called strongly convex on $\mathbb{R}^n$ if for any $x, y \in \mathbb{R}^n$ we have $$f(\bm{y}) \ge f(\bm{x}) + \left< \nabla f(\bm{x}), \bm{y} - \bm{x} \right> + \frac{1}{2} \mu \left\| \bm{y} - \bm{x} \right\|^2$$
 
 which is notated as $f \in \mathcal{S}_{\mu}^1(\mathbb{R}^n)$. $\mu$ is called the convexity parameter of $f$.
 
@@ -97,14 +97,14 @@ which is notated as $f \in \mathcal{S}_{\mu}^1(\mathbb{R}^n)$. $\mu$ is called t
 
 **Theorem 32**
 If $f \in \mathcal{S}_{\mu}^{1}(\mathbb{R}^n)$, then for all $\bm{x}, \bm{y} \in \mathbb{R}^n$, we have:
-$$f(\bm{y}) \le f(\bm{x}) + \left\langle \nabla f(\bm{x}), \bm{y} - \bm{x} \right\rangle + \frac{1}{2\mu} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2$$
+$$f(\bm{y}) \le f(\bm{x}) + \left< \nabla f(\bm{x}), \bm{y} - \bm{x} \right> + \frac{1}{2\mu} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2$$
 
-$$\left\langle \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right\rangle \le \frac{1}{\mu} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2$$
+$$\left< \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right> \le \frac{1}{\mu} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2$$
 
 **Theorem 33**
 All conditions below, holding for all $\bm{x}, \bm{y} \in \mathbb{R}^n$ and $\alpha \in [0, 1]$, are equivalent to the inclusion $f \in \mathcal{S}_{\mu}^{1}(\mathbb{R}^n)$:
 
-$$\left\langle \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right\rangle \ge \mu \left\| \bm{x} - \bm{y} \right\|^2$$
+$$\left< \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right> \ge \mu \left\| \bm{x} - \bm{y} \right\|^2$$
 
 $$\alpha f(\bm{x}) + (1 - \alpha) f(\bm{y}) - f(\alpha\bm{x} + (1 - \alpha)\bm{y}) \ge \alpha(1 - \alpha) \frac{\mu}{2} \left\| \bm{x} - \bm{y} \right\|^2$$
 
@@ -122,5 +122,5 @@ A function $f \in \mathcal{S}_{\mu, L}^{k, l}$ is and only if $f \in \mathcal{S}
 
 **Theorem 36**
 If $f \in \mathcal{S}_{\mu, L}^{1, 1}(\mathbb{R}^n)$, then for all $\bm{x}, \bm{y} \in \mathbb{R}^n$, we have:
-$$\left\langle \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right\rangle \ge \frac{\mu L}{\mu + L} \left\| \bm{x} - \bm{y} \right\|^2 + \frac{1}{\mu + L} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2$$
+$$\left< \nabla f(\bm{x}) - \nabla f(\bm{y}), \bm{x} - \bm{y} \right> \ge \frac{\mu L}{\mu + L} \left\| \bm{x} - \bm{y} \right\|^2 + \frac{1}{\mu + L} \left\| \nabla f(\bm{x}) - \nabla f(\bm{y}) \right\|^2$$
 

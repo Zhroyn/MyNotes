@@ -110,9 +110,9 @@ Then we can get the direction of the ray in the world coordinate system:
 $$
 \tilde{\bm{x}}_c = \begin{bmatrix} x_c \\ y_c \\ 1 \\ 1 \end{bmatrix},
 \quad \tilde{\bm{x}}_w = M_{ext}^{-1} \tilde{\bm{x}}_c = \begin{bmatrix} x_w \\ y_w \\ z_w \\ 1 \end{bmatrix} \\~\\
-\bm{d} = \frac{\bm{x}_w - \bold{o}}{\left\| \bm{x}_w - \bold{o} \right\|}
+\bm{d} = \frac{\bm{x}_w - \mathbf{o}}{\left\| \bm{x}_w - \mathbf{o} \right\|}
 $$
 
-Finally, we have the equation of the ray in the world coordinate system: $$\bm{x} = \bold{o} + t\bold{d}$$
+Finally, we have the equation of the ray in the world coordinate system: $$\bm{x} = \mathbf{o} + t\mathbf{d}$$
 
 

@@ -101,13 +101,13 @@ y_c = \frac{v - o_y}{f_y}, \quad
 z_c = 1 \\
 $$
 
-By these, we can get $\cos\left\langle a, b \right\rangle, \cos\left\langle b, c \right\rangle, \cos\left\langle a, c \right\rangle$. Then, by the cosine theorem, we can get
+By these, we can get $\cos\left< a, b \right>, \cos\left< b, c \right>, \cos\left< a, c \right>$. Then, by the cosine theorem, we can get
 $$
 \left\{
 \begin{aligned}
-  & OA^2 + OB^2 - 2OA\cdot OB\cdot \cos\left\langle a, b \right\rangle = AB^2 \\
-  & OB^2 + OC^2 - 2OB\cdot OC\cdot \cos\left\langle b, c \right\rangle = BC^2 \\
-  & OA^2 + OC^2 - 2OA\cdot OC\cdot \cos\left\langle a, c \right\rangle = AC^2 \\
+  & OA^2 + OB^2 - 2OA\cdot OB\cdot \cos\left< a, b \right> = AB^2 \\
+  & OB^2 + OC^2 - 2OB\cdot OC\cdot \cos\left< b, c \right> = BC^2 \\
+  & OA^2 + OC^2 - 2OA\cdot OC\cdot \cos\left< a, c \right> = AC^2 \\
 \end{aligned}
 \right.
 $$
@@ -117,9 +117,9 @@ Devided both sides by $OC^2$, and let $\displaystyle x = \frac{OA}{OC}, y = \fra
 $$
 \left\{
 \begin{aligned}
-  & x^2 + y^2 - 2xy\cos\left\langle a, b \right\rangle - v = 0 \\
-  & y^2 + 1 - 2y\cos\left\langle b, c \right\rangle - uv = 0 \\
-  & x^2 + 1 - 2y\cos\left\langle a, c \right\rangle - wv = 0 \\
+  & x^2 + y^2 - 2xy\cos\left< a, b \right> - v = 0 \\
+  & y^2 + 1 - 2y\cos\left< b, c \right> - uv = 0 \\
+  & x^2 + 1 - 2y\cos\left< a, c \right> - wv = 0 \\
 \end{aligned}
 \right.
 $$
@@ -128,8 +128,8 @@ Rerange the equations, then we can get
 $$
 \left\{
 \begin{aligned}
-  & (1 - u)y^2 - ux^2 - \cos\left\langle b, c \right\rangle y + 2uxy\cos\left\langle a, b \right\rangle + 1 = 0 \\
-  & (1 - w)x^2 - wy^2 - \cos\left\langle b, c \right\rangle x + 2wxy\cos\left\langle a, b \right\rangle + 1 = 0 \\
+  & (1 - u)y^2 - ux^2 - \cos\left< b, c \right> y + 2uxy\cos\left< a, b \right> + 1 = 0 \\
+  & (1 - w)x^2 - wy^2 - \cos\left< b, c \right> x + 2wxy\cos\left< a, b \right> + 1 = 0 \\
 \end{aligned}
 \right.
 $$ This binary quadratic equation has 4 possible answers, we use one extra point to determine the most possible one.
@@ -255,12 +255,12 @@ $$
 \begin{bmatrix} f_{11} \\ f_{12} \\ f_{13} \\ f_{21} \\ f_{22} \\ f_{23} \\ f_{31} \\ f_{32} \\ f_{33} \end{bmatrix}
 = \bm{0}
 \\~\\
-\Rightarrow A\bold{f} = \bm{0}
+\Rightarrow A\mathbf{f} = \bm{0}
 $$
 
-Because $\bold{f}$ is defined up to scale, we can add a constraint condition $\left\| \bold{f} \right\|^2 = 1$, then the solution is
+Because $\mathbf{f}$ is defined up to scale, we can add a constraint condition $\left\| \mathbf{f} \right\|^2 = 1$, then the solution is
 $$
-\underset{\bold{f}}{\min}\left\| A\bold{f} \right\|^2 \text{ such that } \left\| \bold{f} \right\|^2 = 1
+\underset{\mathbf{f}}{\min}\left\| A\mathbf{f} \right\|^2 \text{ such that } \left\| \mathbf{f} \right\|^2 = 1
 $$
 
 The eigenvector with smallest eigenvalue $\lambda$ of matrix $A^TA$ is the solution.
@@ -319,18 +319,18 @@ $$
   p_{24} - v_lp_{34} \\
 \end{bmatrix}
 \\~\\
-\Rightarrow A\bm{x}_r = \bold{b}
+\Rightarrow A\bm{x}_r = \mathbf{b}
 $$
 
 The least squares solution is
-$$\bm{x}_r = (A^TA)^{-1} A^T \bold{b} $$
+$$\bm{x}_r = (A^TA)^{-1} A^T \mathbf{b} $$
 
 <br>
 
 ##### Non-Linear Solution
-Suppose $\bold{P}$ is the coordinate of a point, $\bm{\hat{u}}_l, \bm{\hat{u}}_r$ are projections of the point on the two image planes, then we can define the reprojection error
-$$\text{cost}(\bold{P}) = \left\| \bm{u}_l - \bm{\hat{u}}_l \right\|^2 + \left\| \bm{u}_r - \bm{\hat{u}}_r \right\|^2$$
+Suppose $\mathbf{P}$ is the coordinate of a point, $\bm{\hat{u}}_l, \bm{\hat{u}}_r$ are projections of the point on the two image planes, then we can define the reprojection error
+$$\text{cost}(\mathbf{P}) = \left\| \bm{u}_l - \bm{\hat{u}}_l \right\|^2 + \left\| \bm{u}_r - \bm{\hat{u}}_r \right\|^2$$
 
-The solution is $\bold{P}$ such that minimize the reprojection error.
+The solution is $\mathbf{P}$ such that minimize the reprojection error.
 
 

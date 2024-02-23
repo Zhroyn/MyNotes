@@ -36,7 +36,7 @@ $$f_w(x) = w^T x + b$$
 where $x$ is the image, $w$ is the weights.
 
 When $x$ is similar to $w$, the score is large. Then we can convert scores to probabilities by **softmax** function
-$$\sigma(\bold{z})_j = \frac{e^{z_j}}{\sum_{k=1}^{K} e^{z_k}}$$
+$$\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^{K} e^{z_k}}$$
 
 Then we can use **cross entropy function** as loss function
 $$H(P, Q) = -\sum_i P_i \log Q_i$$
