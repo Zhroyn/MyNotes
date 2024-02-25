@@ -1,407 +1,489 @@
 
-- [Common usage](#common-usage)
-  - [Redo commit](#redo-commit)
-  - [修改 commit 注释](#修改-commit-注释)
-  - [Unstage](#unstage)
-  - [Discard changes](#discard-changes)
-  - [Untrack files](#untrack-files)
-  - [Relate upstream branch](#relate-upstream-branch)
-  - [Show Objects](#show-objects)
-- [Looking Info](#looking-info)
-  - [git status](#git-status)
-  - [git diff](#git-diff)
-  - [git log](#git-log)
-  - [git show](#git-show)
-  - [git ls-files](#git-ls-files)
-- [Basic Snapshotting](#basic-snapshotting)
-  - [git add](#git-add)
-  - [git commit](#git-commit)
-  - [git mv](#git-mv)
-  - [git rm](#git-rm)
-- [Recover and stash](#recover-and-stash)
-  - [git restore](#git-restore)
-  - [git reset](#git-reset)
-  - [git stash](#git-stash)
-- [Branching and Merging](#branching-and-merging)
-  - [git branch](#git-branch)
-  - [git checkout](#git-checkout)
-  - [git switch](#git-switch)
-  - [git merge](#git-merge)
-  - [git rebase](#git-rebase)
-  - [git tag](#git-tag)
-- [Remote](#remote)
-  - [git clone](#git-clone)
-  - [git remote](#git-remote)
-  - [git fetch](#git-fetch)
-  - [git pull](#git-pull)
-  - [git push](#git-push)
-- [Configuration](#configuration)
-  - [show config](#show-config)
-  - [ssh](#ssh)
-  - [crlf](#crlf)
-  - [gitignore](#gitignore)
-  - [alias](#alias)
-  - [mergetool and difftool](#mergetool-and-difftool)
-  - [Other configurations](#other-configurations)
+- [Git 笔记](#git-笔记)
+  - [基本文件操作](#基本文件操作)
+    - [git add](#git-add)
+    - [git commit](#git-commit)
+    - [git mv](#git-mv)
+    - [git rm](#git-rm)
+  - [信息查看](#信息查看)
+    - [git status](#git-status)
+    - [git diff](#git-diff)
+    - [git log](#git-log)
+    - [git show](#git-show)
+    - [git cat-file](#git-cat-file)
+    - [git ls-files](#git-ls-files)
+  - [恢复保存](#恢复保存)
+    - [git restore](#git-restore)
+    - [git reset](#git-reset)
+    - [git reflog](#git-reflog)
+    - [git stash](#git-stash)
+  - [分支管理](#分支管理)
+    - [git branch](#git-branch)
+    - [git checkout](#git-checkout)
+    - [git switch](#git-switch)
+    - [git merge](#git-merge)
+    - [git rebase](#git-rebase)
+    - [git tag](#git-tag)
+  - [远程管理](#远程管理)
+    - [git remote](#git-remote)
+    - [git fetch](#git-fetch)
+    - [git pull](#git-pull)
+    - [git push](#git-push)
+  - [配置管理](#配置管理)
+    - [git config](#git-config)
+    - [gitignore](#gitignore)
 
 
 
 
 
-### Common usage
-#### Redo commit
-- `git restore <file>... -S -s HEAD^` Restore accidentally staged files in index to their previous version before the last commit
-- `git commit --amend -C HEAD` Change the last commit with the current index and the same commit message
-- `git commit --amend -c HEAD` Change the last commit with the current index and the wanted commit message
+# Git 笔记
 
-#### 修改 commit 注释
-- `git rebase -i HEAD~2` 修改倒数 2 次的 commit。将想要修改的 commit 前的 pick 改为 edit，保存退出
-- `git commit --amend` 修改 commit 注释，保存退出
-- `git rebase --continue` 完成修改
+## 基本文件操作
 
-#### Unstage
-- `git restore --staged <file>...`
-- `git reset HEAD <file>...`
+### git add
 
-#### Discard changes
-- `git restore <file>...`
-- `git checkout -- <file>...`
-
-#### Untrack files
-- `git rm --cached <file>...`
-
-#### Relate upstream branch
-- `git branch -u <upstream>` Set up the current branch's tracking information
-- `git push -u <remote> <branch>` For every branch that is up to date or successfully pushed, add upstream (tracking) reference while pushing.
-
-#### Show Objects
-- `git show <object>` show human-readable information without specific `sha1`
-- `git cat-file -p <object>` show all references within the object
-- `git ls-files -s <object>` show all references within staging area
-
-
-
-
-
-### Looking Info
-
-#### git status
-- `git status` 显示工作区与暂存区的区别，以及暂存区与HEAD的区别
-- `git status -s` 输出更加简短
-
-#### git diff
-- `git diff` 显示工作区与暂存区的差别，但不包括未追踪的文件
-- `git diff [<commit>]` 显示工作区与某次提交（默认为HEAD）的区别
-- `git diff --cached|--staged [<commit>]` 显示暂存区与分支（默认为HEAD）的差别
-- `git diff <commit> <commit>` 显示任意两次提交的区别
-- `--stat` 显示摘要
-
-#### git log
-- `git log <commit>… ^<commit>…` 列出前面指定提交向上追溯的历史记录，但是不包括后面指定提交向上追溯的历史记录
-- `--graph` adds a nice little ASCII graph showing your branch and merge history
-- `-<n>` Show only the last n commits
-- `--since|--after` Limit the commits to those made after the specified date.
-- `--until|--before` Limit the commits to those made before the specified date.
-- `git log -p|--patch` 显示提交的具体修改
-- `git log --stat` 显示提交的简要修改
-- `git log --pretty[=<format>]` 修改显示提交的格式，默认为`medium`
-  - `=oneling` 显示在一行
-  - `=short/medium/full/fuller` 显示内容依次变多
-  - `=format:"%h - %an, %ar : %s"` 显示指定格式
-```shell
-%H  #Commit hash
-%h  #Abbreviated commit hash
-%T  #Tree hash
-%t  #Abbreviated tree hash
-%P  #Parent hashes
-%p  #Abbreviated parent hashes
-%an #Author name
-%ae #Author email
-%ad #Author date (format respects the --date=option)
-%ar #Author date, relative
-%cn #Committer name
-%ce #Committer email
-%cd #Committer date
-%cr #Committer date, relative
-%s  #Subject(message)
-```
-
-#### git show
-- `git show [<options>] <object>…​`
-
-#### git ls-files
-- `-c|--cached` 查看暂存区中文件，默认是此命令
-- `-m|--midified` 查看修改的文件
-- `-d|--delete` 查看删除过的文件
-- `-o|--other` 查看没有被git跟踪的文件
-- `-s|--stage` 显示mode以及文件对应的Blob对象，进而可以获取暂存区中对应文件里面的内容。
-
-
-
-
-
-
-### Basic Snapshotting
-
-#### git add
 - `git add .` 添加当前项目所有文件
 - `git add [<pathspec>…​]` 添加任意多个文件或文件夹到暂存区
 
-#### git commit
-- `-a|--all` automatically stage files that have been modified and deleted, but new files you have not told Git about are not affected.
-- `-m <msg>` use the given `<msg>` as the commit message. If multiple -m options are given, their values are concatenated as separate paragraphs.
-- `-C <commit>` take an existing commit object, and reuse the log message and the authorship information (including the timestamp) when creating the commit.
-- `-c <commit>` Like -C, but the user can further edit the commit message.
-- `--amend` replace the tip of the current branch by creating a new commit. The new commit has the same parents. Roughly equivalent for `git reset --soft HEAD^` + `...` + `git commit -c ORIG_HEAD`
+### git commit
 
-#### git mv
-- `git mv <source> <destination>` 若目标文件不存在，则重命名
-- `git mv <source> <destination directory>` 移动
-- `-f` 强制重命名或移动，即使目标存在
-- git不追踪文件的移动，所以直接移动或重命名会被当成直接删除原文件并增加新的未追踪文件，而`git rm`命令相当于`mv`+`git rm`+`git add`
+git commit 的常用选项有：
 
-#### git rm
-- `git rm <file>` 若文件没有修改，则将文件从暂存区和工作区中移除
-- `git rm -f <file>` 若已修改，可使用`-f`强制移除
-- `git rm --cached <file>` 仅将文件从暂存区移除，解除git的追踪，但暂存区文件须与工作区文件或HEAD相同
-- `git rm log/\*.log` 移除`log`文件夹下的所有`.log`文件，反斜杠用来避免shell的文件名拓展
-- 直接删除只会从工作区移除，而`git rm` 会缓存文件的移除，可以直接提交，解除git对该文件的追踪，相当于`rm`+`git add`
+- `-a/--all` 自动暂存所有文件，未追踪的文件不受影响
+- `-m/--message <msg>` 指定提交的注释，若不指定则会弹出编辑器
+- `-C <commit>` 重用指定提交的信息，包括注释、作者信息和时间戳
+- `-c <commit>` 与 `-C` 选项相似，但会打开编辑器提供机会修改提交信息
+- `--amend` 让新的提交替换当前分支的末端，相当于`git reset --soft HEAD^` + `git commit -c ORIG_HEAD`
+
+### git mv
+
+- `git mv <source> <destination>` 若目标不存在则改变路径，若目标已存在且是文件则会报错，加上 `-f/--force` 选项则可以强制重命名或移动
+- `git mv <source>…​ <destination directory>` 移动多个文件到目标文件夹
+
+由于 git 不追踪文件的移动或重命名，直接操作被当成删除原文件并增加新的未追踪文件，使用 git mv 可以避免这一点，减少麻烦，这在大规模移动文件时尤其重要。
+
+### git rm
+
+- `git rm [<pathspec>…​]` 若文件没有修改，则将文件从暂存区和工作区中移除；若已修改，可使用 `-f/--force` 选项强制移除
+- `git rm --cached [<pathspec>…​]` 仅将文件从暂存区移除，解除追踪
+
+在 pathspec 中，可以使用通配符进行匹配，例如 `git rm 'log/*.log'` 会删除 log 文件夹中的所有 .log 文件。
 
 
 
 
 
-### Recover and stash
-#### git restore
-- `git restore [<pathspec>…​]` 将工作区文件恢复至与暂存区一致
-- `git restore --staged <pathspec>…​` 将暂存区文件恢复至与HEAD一致
-- `-s <tree>|--source=<tree>` 指定还原源
-- 若使用了`-S|--staged`，则还原源为HEAD，否则为index
-- 若只使用`-S|--staged`，则只恢复暂存区文件
-- 若同时使用`-S|--staged`和`-W|--worktree`，则同时还原工作区与暂存区文件
-- 若还原源中不包含指定路径，则删除指定路径
 
-#### git reset
-- `git reset [<tree-ish>] [<pathspec>…​]` 将暂存区文件重置至与HEAD一致
-- `git reset [<mode>] [<commit>]` 回退至某个版本，默认模式为`--mixed`
+
+<br>
+
+## 信息查看
+
+### git status
+
+- `git status` 显示当前所处分支、暂存区与 HEAD 有区别的文件、工作区与暂存区有区别的文件，以及未追踪的文件
+- `git status -s/--short` 以简短的形式输出
+
+### git diff
+
+- `git diff [--] [<path>…​]` 显示工作区与暂存区的差别，不包括未追踪的文件
+- `git diff --no-index [--] <path> <path>` 显示两个指定文件的差别
+- `git diff --cached/--staged [<commit>] [--] [<path>…​]` 显示暂存区与某次提交的差别，默认为 HEAD
+- `git diff <commit> [--] [<path>…​]` 显示工作区与某次提交的差别
+- `git diff <commit> <commit> [--] [<path>…​]` 显示任意两次提交的区别
+
+若在上述命令中使用了 `--stat` 选项，则只会显示每个文件的统计情况。
+
+在 git 中，可用 `--` 分隔 path 与其前面部分，以避免选项混淆。
+
+### git log
+
+```shell
+git log [<options>] [<revision-range>] [[--] <path>…​]
+```
+
+git log 会列出可由指定提交追溯到的提交历史，并会排除可由前带有 `^` 的提交追溯到的提交历史，例如 `git log ^foo bar` 会列出 bar 的提交历史，但不包括 foo 的提交历史，`foo..bar` 可用作其简写，常用于表示一连串提交。
+
+需要注意的是，与之类似还有 `foo...bar`，其定义为 `r1 r2 --not $(git merge-base --all r1 r2)`，常用于表示由同一祖先分出的两串分支。同时，这两种写法都可以省略一端，以默认的 HEAD 来代替，例如 `origin..HEAD` 可以简写为 `origin..`，表示当前分支尚未推送到远程的提交。
+
+若指定了 path，则只会显示与 path 相关的提交历史。
+
+以下选项可以用于筛选提交：
+
+- `-<number>` 最多只显示 number 条提交
+- `--since/--after=<date>` 只显示在指定日期之后的提交，日期格式可为：
+  - `YYYY-MM-DD` `YYYY.MM.DD` `YYYY/MM/DD`，若不指定则默认为今天
+  - `HH:MM:SS`，若不指定则默认为午夜
+  - `n minutes/hours/days/weeks/months/years ago`，其中末尾的 `s` 可省略，空格也可替换成 `.` `-` `/`
+- `--until/--before=<date>` 只显示在指定日期之前的提交
+- `--author/--commiter=<pattern>` 只显示作者名符合 pattern 的提交，可使用 `-i` 选项忽略大小写
+
+以下选项可用于修改显示格式：
+
+- `--stat` 显示修改的统计信息
+- `-p/--patch` 显示提交的具体修改，可与 `--stat` 选项一起使用
+- `--abbrev-commit` 显示提交哈希的缩写
+- `--pretty[=<format>]` `--format=<format>` 修改显示格式，默认为 `medium`
+- `--oneline` 等价于 `--pretty=oneline --abbrev-commit`
+- `--graph` 在左侧绘制图，显示分支与合并历史
+
+`--pretty` 或 `--format` 选项中的 format 可为：
+
+- `=oneling` 显示在一行
+- `=short/medium/full/fuller` 显示内容依次变多，short 只含提交哈希、作者名与标题行，fuller 则包括提交哈希、作者名、作者日期、提交者名、提交日期、标题行与完整提交注释
+- `=format:<format-string>` 显示指定格式，可以使用以下占位符：
+  - `%H` 提交哈希
+  - `%h` 提交哈希的缩写
+  - `%an` 作者名
+  - `%ae` 作者邮箱
+  - `%ad` 作者日期
+  - `%ar` 作者相对日期
+  - `%ai` 类 ISO 8601 格式的作者日期
+  - `%as` 作者日期的缩写，格式为 `YYYY-MM-DD`
+  - `%cn` 提交者名。其余各占位符与作者信息相同，只需将 `a` 替换成 `c`
+  - `%d` 引用名，包括分支与标签
+  - `%s` 标题行，即提交注释的第一行
+  - `%Cred` `%Cgreen` `%Cblue` `%Creset` `%C(…​)` 切换之后的颜色，其中 `%Creset` 用于重置颜色，`%C(auto)` 可以自动设置颜色
+
+### git show
+
+```shell
+git show [<options>] [<object>…​]
+```
+
+与 git log 和 git cat-file 类似，但侧重于显示指定对象且可读性更强，可以是提交、标签、树或者 blob，会根据对象的类型，显示对象的内容：
+
+- 若对象是提交和标签，则会显示详细信息与具体修改，可接受 git log 的那些修改显示格式的选项
+- 若是树，则会列出其下文件名称
+- 若是 blob，则会显示其内容
+
+### git cat-file
+
+- `git cat-file -t <object>` 显示对象的类型
+- `git cat-file -s <object>` 显示对象的大小
+- `git cat-file -p <object>` 根据对象的类型，显示对象的内容
+  - 若对象是提交或标签，则会显示其所有信息，包括树、父提交、作者等
+  - 若对象是树，则会显示其所有 blob 与子树的信息，包括权限、类型、哈希值与文件名
+  - 若对象是 blob，则会显示其内容
+
+### git ls-files
+
+- `git ls-files [-c/--cached]` 列出暂存区的文件，即所有被追踪的文件
+- `git ls-files -d/--deleted` 列出所有已被删除但尚未暂存的文件
+- `git ls-files -m/--modified` 列出所有已被修改但尚未暂存的文件，包括被删除
+- `git ls-files -o/--other` 列出尚未被追踪的文件
+- `git ls-files -i/--ignored` 列出所有被忽略的文件，必须使用 `-c` 或 `-o` 选项来指定搜索范围，同时还必须使用 `--exclude*` 选项来进行匹配，例如 `git ls-files -io --exclude='*.log'` 可以列出所有未追踪的被忽略的 .log 文件
+- `git ls-files -s/--stage` 列出暂存区文件的信息，包括权限、哈希值与文件名等
+
+
+
+
+
+
+
+
+<br>
+
+## 恢复保存
+
+### git restore
+
+```shell
+git restore [<options>] [--source=<tree>] [--staged] [--worktree] [--] <pathspec>…​
+```
+
+git restore 可用于恢复工作区和暂存区中的文件，恢复源可以通过 `-s/--source <tree>` 手动指定。若 pathspec 已被追踪但不存在于恢复源中，则会被删除以匹恢复源。
+
+默认情况下，git restore 恢复工作区文件，恢复源为 index；若使用了 `-S/--stage` 选项，则恢复暂存区文件，恢复源为 HEAD；若同时使用了 `-S/--stage` 和 `-W/--worktree` 选项，则同时恢复工作区与暂存区文件。
+
+### git reset
+
+git reset 可用于重置暂存区的文件，如：
+
+- `git reset [<tree-ish>] [--] <pathspec>…​` 重置暂存区的文件，使其与 tree-ish 一致，tree-ish 默认为 HEAD
+
+但相比之下，git reset 更常用于回退版本，具体命令为：
+
+- `git reset [<mode>] [<commit>]` 将当前分支重置为指定 commit，暂存区和工作区的文件的改变视模式而定，默认为 mixed
   - `--soft` 不改变工作区和暂存区
   - `--mixed` 仅重置暂存区
   - `--hard` 重置工作区与暂存区
-- 会同时移动HEAD和分支到指定提交上，更加危险，而checkout只会移动HEAD
 
-#### git stash
-- `git stash` Record the current state of the working directory and the index
-- `git stash list [<log-options>]` List the stash entries that you currently have.
-- `git stash pop [--index] [<stash>]`  Remove a single stashed state from the stash list and apply it on top of the current working tree state. The working directory must match the index.
-- `git stash apply [--index] [<stash>]` Like pop, but do not remove the state from the stash list. 
-- `git stash drop [<stash>]` Remove a single stash entry from the list of stash entries.
+需要注意的是，该操作会同时移动 HEAD 和当前分支到指定提交上，更加危险。不过在进行该操作前，git 会将原分支设为 `ORIG_HEAD`，以便回退。
 
+在指定提交时，可以使用相对引用，例如 `HEAD^` 可以表示 HEAD 的父提交，其中 `^` 可以叠加使用；`HEAD~2` 可以更方便地表示 HEAD 的父提交的父提交；当存在多个父提交时，可以使用 `^n` 来指定第 n 父级，若不使用则默认为第一父级。
 
+### git reflog
 
-
-
-### Branching and Merging
-
-#### git branch
-- `git branch <branchname> [<start-point>]` create branch
-- `git branch -d|--delete <branchname>…​` delete branch
-- `git branch -m|--move [<oldbranch>] <newbranch>` rename branch, default is `HEAD`
-- `git branch -c|--copy [<oldbranch>] <newbranch>` copy branch, default is `HEAD`
-- `git branch -l|--list [<pattern>]`
-  - List branches. 
-  - With optional `<pattern>`, list only the branches that match the pattern(s).
-- `git branch -v|-vv`
-  - When in list mode, show sha1 and commit subject line for each head, along with relationship to upstream branch (if any).
-  - If given twice, print the path of the linked worktree (if any) and the name of the upstream branch
-<br>
-
-- `git branch -r|--remotes`
-  - List or delete (if used with `-d`) the remote-tracking branches.
-  - Combine with `--list` to match the optional pattern(s).
-- `git branch -u|--set-upstream-to <upstream> [<branchname>]`
-  - Set up `<branchname>`'s tracking information so `<upstream>` is considered `<branchname>`'s upstream branch. 
-  - If no `<branchname>` is specified, then it defaults to the current branch.
-- `git branch --unset-upstream [<branchname>]` 
-  - Remove the upstream information for `<branchname>`.
-  - If no branch is specified it defaults to the current branch.
-
-#### git checkout
-- `git checkout <branch>`
-  - To prepare for working on `<branch>`, switch to it by updating the index and the files in the working tree, and by pointing `HEAD` at the branch.
-  - Local modifications to the files in the working tree are kept.
-  - If `<branch>` is not found but there does exist a tracking branch in exactly one remote with a matching name and `--no-guess` is not specified, treat as equivalent to `git checkout -b <branch> --track <remote>/<branch>`
-<br>
-
-- `git checkout -b <new-branch> [-t|--track[=direct|inherit]] [<start-point>]`
-  - If no specified, the `<start-point>` branch is `HEAD`
-  - `-t`, `--track`, or `--track=direct` means to use the `<start-point>` branch itself as the upstream
-  - `--track=inherit` means to copy the upstream configuration of the `<start-point>` branch.
-  - If no `-b` option is given, the name of the new branch will be derived from the remote-tracking branch. For example: `git checkout -t origin/dev`
-<br>
-
-- `git checkout [<tree-ish>] [--] <pathspec>…​`
-  - Overwrite the contents of the files that match the pathspec.
-  - When the `<tree-ish>` (most often a commit) is not given, overwrite working tree with the contents in the index.
-  - When the `<tree-ish>` is given, overwrite both the index and the working tree with the contents at the <tree-ish>.
-  - `--` means do not interpret any more arguments as options.
-
-#### git switch
-- `git switch <branch>` 切换分支
-- `git switch -c|-C <new-branch> [<start-point>]` 新建分支并切换
-
-#### git merge
-- `git merge <commit>…​` Incorporates changes from the named commits into the current branch, since the time their histories diverged from the current branch.
-- `git merge --continue`
-  - After resolving the conflicts and `git add` them to the index, use `git commit` or `git merge --continue` to seal the deal.
-  - The latter command checks whether there is a (interrupted) merge in progress before calling git commit.
-- `git merge --abort` Abort the current merge process, and try to reconstruct the pre-merge state, including the index and working tree.
-- `git merge --quit` Forget about the current merge in progress. Leave the index and the working tree as-is.
-- `MERGE_HEAD` ref is set to point to the other branch head.
-- `stage 1` stores the version from the common ancestor, `stage 2` from `HEAD`, and `stage 3` from `MERGE_HEAD` (you can inspect the stages with git ls-files -u). The working tree files contain the result of the "merge" program
-
-#### git rebase
-- `git rebase [<upstream> [<branch>]]`
-  - All changes made by commits in the current branch but that are not in `<upstream>` are saved to a temporary area.
-  - The current branch is reset to `<upstream>`
-  - The commits that were previously saved into the temporary area are then reapplied to the current branch, one by one, in order.
-- `<<branch>` Working branch; defaults to `HEAD`. If `<branch>` is specified, git rebase will perform an automatic `git switch <branch>`
-- If `<upstream>` is not specified, the upstream configured in `branch.<name>.remote` and `branch.<name>.merge` options will be used
-- `--continue` Restart the rebasing process after having resolved a merge conflict.
-- `--abort` Abort the rebase operation and reset HEAD to the original branch.
-- `--quit` Abort the rebase operation but HEAD is not reset back to the original branch. The index and working tree are also left unchanged as a result.
-
-#### git tag
-- `git tag` 列出所有标签
-- `git tag <tagname> [<commit>]` 在指定位置（默认为HEAD）创建轻量标签 
-- `git tag -a <tagname> [-m "..."] [<commit>]` 在指定位置（默认为HEAD）创建附注标签 
-- `git tag -d|--delete <tagname>…` 删除标签
-- `git push <remote> :refs/tags/<tagname>` 从远程删除标签
-- `git push <remote> -d|--delete <tagname>` 从远程删除标签
-- `git tag -l|--list [<pattern>...]` 列出所有匹配的标签
-- `git tag -l|--list --contains [<commit>]` 列出在指定提交（默认为HEAD）上的标签
-- `git tag -l|--list --no-contains [<commit>]` 列出所有不在指定提交（默认为HEAD）上的标签
-
-
-
-### Remote
-#### git clone
-- `git clone <repository> [<directory>]` Clones a repository into a newly created directory, creates remote-tracking branches for each branch in the cloned repository, and creates and checks out an initial branch that is forked from the cloned repository’s currently active branch.
-
-#### git remote
-- `git remote` show all remotes
-- `git remote -v|--verbose` show all remotes verbosely
-- `git remote add <name> <URL>` add remote
-- `git remote rename <old> <new>` rename remote
-- `git remote rm|remove <name>` remove remote
-
-#### git fetch
-- `git fetch [<options>] [<repository> [<refspec>…​]]`
-- `--all` Fetch all remotes.
-- The names of refs that are fetched, together with the object names they point at, are written to `.git/FETCH_HEAD`.
-
-#### git pull
-- `git pull [<options>] [<repository> [<refspec>…​]]` Incorporates changes from a remote repository into the current branch.
-- `<repository>` should be the name of a remote repository as passed to `git-fetch`.
-- `<refspec>` can name an arbitrary remote ref (for example, the name of a tag) or even a collection of refs with corresponding remote-tracking branches, but usually it is the name of a branch in the remote repository.
-- `--all` Fetch all remotes.
-- `--set-upstream` If the remote is fetched successfully, add upstream (tracking) reference
-
-#### git push
-- `git push [<repository> [<refspec>…​]]` Updates remote refs using local refs, while sending objects necessary to complete the given refs.
-- If `<repository>` argument is not specified, the upstream configured in `branch.<name>.remote` will be used. If the configuration is missing, it defaults to origin.
-- If `<refspec>...` arguments or `--all`, `--mirror`, `--tags` options is not specified, the command finds the default `<refspec>` by consulting `remote.<name>.push` configuration, and if it is not found, honors `push.default` configuration to decide what to push
--  The format of a `<refspec>` parameter is an optional plus +, followed by `<src>:<dst>`.
--  If `<dst>` doesn’t start with refs/ (e.g. refs/heads/master) we will try to infer where in refs/* on the destination `<repository>` it belongs based on the type of `<src>` being pushed and whether `<dst>` is ambiguous.
--  Pushing an empty `<src>` allows you to delete the `<dst>` ref from the remote repository. Deletions are always accepted without a leading `+` in the refspec.
-<br>
-
-- `--all` Push all branches (i.e. refs under `refs/heads/`); cannot be used with other `<refspec>`.
-- `-d|--delete` All listed refs are deleted from the remote repository. This is the same as prefixing all refs with a colon.
-- `--tags` All refs under refs/tags are pushed, in addition to refspecs explicitly listed on the command line.
-- `-u|--set-upstream` For every branch that is up to date or successfully pushed, add upstream (tracking) reference, i.e. `git push -u origin main`
-
-
-
-
-
-
-
-
-### Configuration
-#### show config
 ```shell
-# list all the settings Git can find at that point
-git config --list
-
-# show a specific key’s value
-git config user.name
-
-# show which configuration file had the final say in setting that value
-git config --show-origin rerere.autoUpdate
+git reflog [show] [<log-options>] [<ref>]
 ```
-#### ssh
+
+git 的引用存储在 .git/refs 文件夹中，主要分为以下几类：
+
+- 本地分支，格式为 `refs/heads/<branch>`
+- 远程追踪分支，格式为 `refs/remotes/<remote>/<branch>`
+- 标签，格式为 `refs/tags/<tagname>`
+
+以上引用在使用时，大多可将 `refs/heads` 等前缀略去。
+
+除此以外，还会有一些特殊的引用存储在 .git 文件夹中，例如 `HEAD` 指向当前检出 commit，`ORIG_HEAD` 指向危险操作前的 HEAD，`FETCH_HEAD` 指向最近一次拉取的分支（可能会有多个），`MERGE_HEAD` 指向欲合并的目标分支。
+
+git 会记录下所有引用的变动，包括提交、合并、重置等，这些记录被称为 reflog，可以通过 `git reflog` 来查看，具体形式为 `HEAD@{n}`，可用于恢复历史。
+
+git reflog 的默认子命令为 show，可以接受 git log 的所有参数。
+
+### git stash
+
+- `git stash [push] [--] [<pathspec>…]` 临时保存未提交的更改，使工作目录回到干净的状态，默认会贮藏所有更改
+  - `-S/--staged` 仅贮藏暂存区的更改
+  - `-u/--include-untracked` 也贮藏未追踪的文件
+  - `-k/--keep-index` 保留暂存区的更改
+  - `-m/--message <msg>` 指定贮藏项的注释，默认为当前 commit 的注释
+- `git stash list [<log-options>]` 列出所有贮藏项，具体形式为 `stash@{n}: <message>`
+- `git stash show [<diff-options>] [<stash>]` 显示贮藏项的内容
+- `git stash pop [<stash>]` 弹出一个贮藏项并应用，默认为 `stash@{0}`
+- `git stash drop [<stash>]` 删除一个贮藏项
+- `git stash clear` 删除所有贮藏项
+
+
+
+
+
+
+
+
+<br>
+
+## 分支管理
+
+### git branch
+
+以下命令可以列出分支：
+
+- `git branch` `git branch -l/--list` 列出所有本地分支
+- `git branch -r/--remotes` 列出所有远程追踪分支
+- `git branch -a/--all` 列出所有分支
+- `git branch -v` 列出本地分支的最后一次提交
+- `git branch -vv` 列出本地分支的最后一次提交与上游分支
+
+上述各选项可以组合使用，而且需要注意的是，如果想要使用 pattern 匹配分支，则必须要使用 `--list` 选项，例如 `git branch -rl *dev*`。
+
+以下命令可以修改分支：
+
+- `git branch <branchname> [<start-point>]` 新建一个指向 start-point 的本地分支，默认为 HEAD，若为远程追踪分支则会自动设置其为上游分支
+- `git branch -d/--delete <branchname>…​` 删除本地分支
+- `git branch -m/--move [<oldbranch>] <newbranch>` 重命名本地分支
+- `git branch -c/--copy [<oldbranch>] <newbranch>` 复制本地分支
+
+被删除的分支不能是当前分支，且必须要完全合并进上游分支，若没有上游分支则要完全合并进 HEAD，也就是说，删除目标需要能通过上游分支或 HEAD 恢复，以免丢失未合并的更改；newbranch 也不能是已存在的分支名。若要强制如此，可以使用 `-f/--force` 选项，或者直接使用 `-D` `-M` `-C` 选项来代替。此外，`-d` 和 `-r` 选项可以组合使用，以删除存储在本地的远程追踪分支。
+
+以下命令可以设置上游分支：
+
+- `git branch -u/--set-upstream-to <upstream> [<branchname>]` 设置上游分支
+- `git branch --unset-upstream [<branchname>]` 移除上游分支
+- `<upstream>` 的形式为 `<remote>/<branch>`
+- `<branchname>` 若未被指定，则默认为当前分支
+
+本地分支在推送和拉取前，需要先设置上游分支，以与某个远程仓库的远程分支建立联系，其在本地的存在形式为远程追踪分支。如果此前本地并没有远程追踪分支，可以先使用 `git fetch` 拉取远程仓库，然后再将拉取来远程追踪分支的设置为上游分支。
+
+### git checkout
+
+`git checkout` 可以切换 HEAD 的位置，更新工作区和暂存区，常用的命令有：
+
+- `git checkout <branch>` 切换到指定分支
+- `git checkout <commit>` 切换到指定 commit
+- `git checkout -` 切换到前一个位置
+- `git checkout -d/--detach [<branch>]` 切换分支并分离 HEAD
+- `git checkout -b <new-branch> [<start-point>]` 新建分支并切换，start-point 默认为 HEAD，若为远程追踪分支则会自动设置其为上游分支
+
+需要注意的是，只有在前后 HEAD 的文件完全相同的情况下，`git checkout` 才会保持本地的更改，否则会报错，这样可以避免本地的更改被覆盖。
+
+此外，`git checkout` 还可以做到从已给分支名推测远程追踪分支，或者从远程追踪分支推测分支名：在使用 `git checkout <branch>` 时，如果本地没有该分支名，而且刚好有一个远程仓库有一个同名的远程追踪分支，则会自动新建分支并追踪；在使用 `git checkout -t <remote>/<branch>` 时，如果本地没有该分支名，同样也会自动新建分支并追踪。这两种情况都相当于在使用 `git checkout -b <branch> --track <remote>/<branch>`。当然，如果想要新建分支名和远程追踪分支名不同，就不能省略 `-b` 选项了。
+
+### git switch
+
+- `git switch <branch>` 切换分支
+- `git switch -` 切换到前一个分支，不能是 commit
+- `git switch -d/--detach [<start-point>]` 切换位置并分离 HEAD
+- `git switch -c/--create <new-branch> [<start-point>]` 新建分支并切换
+
+`git switch` 和 `git checkout` 一样，可以在前后 HEAD 的文件完全相同的情况下保持更改，也可以做到从已给分支名推测远程追踪分支，或者从远程追踪分支推测分支名，从而在省略 `-c` 选项的情况下完成自动新建与追踪。
+
+### git merge
+
+- `git merge <commit>…​` 将指定提交合并到当前分支
+- `git merge --continue` 在解决了冲突后继续合并，需要处于合并过程
+- `git merge --abort` 取消合并，回到合并前的状态
+- `git merge --quit` 退出合并，但不回到合并前的状态
+
+若当前分支是目标分支的祖先，则会进行快进合并，不会产生 merge commit，否则在没有冲突的情况下，会自动产生一个新的 merge commit。如果不想自动产生合并提交，可以使用 `--no-commit` 选项。
+
+合并分支有多种策略，可以使用 `-s/--strategy` 选项来指定，常用的策略有：
+
+- `ort` 是合并两个分支时的默认策略，使用三路合并算法，具体就是，如果只有一方有修改，或者双方都有修改但修改相同，则选择修改后的文件，否则就会产生冲突，需要手动解决
+  - 可以使用 `-X/--strategy-option ours/theirs` 选项来指定合并时的冲突解决策略，`ours` 代表保留当前分支的修改，`theirs` 代表保留合并分支的修改
+- `octopus` 是合并多于两个分支时的默认策略，在合并过程中一旦出现需要手动解决的冲突就会拒绝合并
+- `ours` 策略不同于 `-X ours`，会完全保留当前分支的更改，不考虑其他分支
+
+如果不想留下其他分支的记录，保持线性的提交历史，可以使用 `--squash` 选项，这样就会将其他分支的所有提交合并成一个提交附加到当前分支。
+
+### git rebase
+
+- `git rebase [--onto <newbase>] [<upstream> [<branch>]]` 保存 branch 有而 upstream 没有的提交，也即保存从 upstream 到 branch 的提交，然后将其逐个应用到 upstream 上
+  - 若有 `--onto` 选项，则会将补丁应用到 newbase 上
+  - 若未指定 `<upstream>`，则会使用当前分支的上游分支
+- `git rebase --continue` 在解决了冲突后继续变基
+- `git rebase --abort` 取消变基，回到变基前的状态，若有 branch 则会切换到 branch
+- `git rebase --quit` 退出变基，但不回到变基前的状态
+- `git rebase --skip` 继续变基，跳过当前补丁
+
+`git rebase` 可用于删除提交，例如 `git rebase --onto feature~5 feature~3 feature` 会删除从 `feature^4` 到 `feature^3` 的提交；也可用于将某一分支的部分更改应用到另一分支上，例如 `git rebase --onto master feature bugfix` 会将 feature 分支上对 bug 的修复应用到 master 分支上。
+
+`git rebase` 更常用的用法是加上 `-i/--interactive` 选项，以交互式的方式来变基，可以方便地对提交进行删除、合并等操作，并且只会改变提交时间，不会改变作者时间，其命令有：
+
+- `p, pick <commit>` 使用提交
+- `r, reword <commit>` 使用提交，但是会弹出编辑器，提供修改提交信息的机会
+- `e, edit <commit>` 使用提交，但是会在应用该提交后停下，以便使用 `--amend` 选项来修改提交
+- `s, squash <commit>` 使用提交，但是会将该提交合并进上一个提交，然后弹出编辑器，显示合并后的提交信息，适用于合并多个相似的小更改
+- `f, fixup [-C | -c] <commit>` 和 squash 一样能够合并多个提交，但会自动使用之前的提交信息，若使用 `-C` 选项则会使用当前提交信息，若使用 `-c` 选项还会在使用当前提交信息的基础上打开编辑器，适用于将修复合并进之前的提交
+- `d, drop <commit>` 移除提交
+
+### git tag
+
+- `git tag` 列出所有标签
+- `git tag -l/--list [<pattern>…]` 列出所有标签，若有 pattern 则会匹配
+- `git tag <tagname> [<commit>]` 创建轻量标签 
+- `git tag -a/--annotate <tagname> [-m <msg>] [<commit>]` 创建附注标签 
+- `git tag -d/--delete <tagname>…` 删除标签
+
+
+
+
+
+
+
+
+<br>
+
+## 远程管理
+
+### git remote
+
+- `git remote` 显示所有远程仓库
+- `git remote -v/--verbose` 显示所有远程仓库的详细信息，包括 URL
+- `git remote add <name> <URL>` 添加远程仓库
+- `git remote rename <old> <new>` 重命名远程仓库
+- `git remote rm/remove <name>` 删除远程仓库
+- `git remote set-url [--push] <name> <newurl>` 修改远程仓库的 URL，若使用 `--push` 选项则只修改 push 地址
+
+### git fetch
+
 ```shell
-# set user name and email
-git congif --global user.name "Pxtkn"
-git config --global user.name "hr.zheng@outlook.com"
+git fetch [<options>] [<repository> [<refspec>…​]]
+```
 
-# generate a ssh key
+git fetch 能从远程仓库拉取分支，用以更新远程追踪分支，其常用选项有：
+
+- `--all` 拉去所有的远程仓库
+- `-v/--verbose` 显示详细信息
+- `-p/--prune` 删除远程仓库中不存在的远程追踪分支
+
+refspec 用于表示本地引用和远程引用之间的映射关系，其格式为 `[+]<src>:<dst>`。在 git fetch 中，src 表示要拉取的远程引用，dst 表示要更新的本地引用，+ 号表示允许 non-fast-forward。
+
+在使用 git fetch 时，若未指定 repository，则会使用上游分支的远程仓库，若没有上游分支，则会使用 origin 仓库；若未指定 refspec，则会使用 `remote.<repository>.fetch` 中的配置，一般为 `+refs/heads/*:refs/remotes/origin/*`，即将远程仓库的所有分支都拉取到本地对应的远程追踪分支中；若 refspec 中的 `:<dst>` 被忽略，则会更新与 src 对应的远程追踪分支。
+
+### git pull
+
+```shell
+git pull [<options>] [<repository> [<refspec>…​]]
+```
+
+git pull 形式与 git fetch 相同，但会在拉取后自动合并，相当于 git fetch + git merge，其常用选项有：
+
+- `-r/--rebase[=false|true|merges|interactive]` 使用变基而不是合并，可以在 `pull.rebase` `branch.<name>.rebase` `branch.autoSetupRebase` 中配置
+- `--no-rebase` 相当于 `--rebase=false`
+- `--set-upstream` 若拉取成功，则设置上游分支
+- 其余更多选项可见 git fetch 和 git merge
+
+### git push
+
+```shell
+git push [<repository> [<refspec>…​]]
+```
+
+git push 能推送本地分支到远程仓库，使用本地引用更新远程引用，其常用选项有：
+
+- `--all` 推送所有分支
+- `--tags` 推送所有标签
+- `--prune` 删除远程仓库中不存在对应本地分支的分支
+- `-f/--force` 强制推送
+- `-d/--delete` 从远程仓库删去列出的引用，常见用法为 `git push origin --delete <branch>`
+- `-u/--set-upstream` 若分支已最新或推送成功，则设置上游分支，常见用法为 `git push -u origin main`
+
+在 git push 中，src 表示要推送的本地引用，dst 表示要更新的远程引用，+ 号表示强制推送。可以使用 `git push <repository> +:<dst>` 强制删除任意引用。
+
+在使用 git push 时，若未指定 repository，则会使用 `branch.<name>.remote` 中的配置，若没有配置则会默认使用 origin 仓库；若未指定 refspec，则会使用 `remote.<name>.push` 中的配置，若没有配置则会默认推送到远程仓库的同名分支；若 refspec 中的 `:<dst>` 被忽略，则默认为 `:<src>`，即推送到同名分支。
+
+
+
+
+
+
+
+
+<br>
+
+## 配置管理
+
+### git config
+
+- `git config <name> <value>` 设置配置
+- `git config -l/--list` 列出所有配置
+- `git config --get <name>` 显示指定配置
+- `git config --get-regexp <name-regex> [<value-pattern>]` 显示匹配 name-regex 以及可选的 value-pattern 的配置
+- `git config --unset <name>` 删除指定配置
+
+在 git 中，配置分为三个级别：系统级别、全局级别和仓库级别，分别对应三个配置文件：`/etc/gitconfig` `~/.gitconfig` `.git/config`。在使用 `git config` 时，可以使用 `--system` `--global` `--local` 选项来指定配置级别，若未指定则默认为 `--local`。
+
+在列出和显示配置时，可以使用 `--show-origin` 选项来显示配置的来源，还可以使用 `--show-scope` 选项来显示配置的级别。
+
+常见的配置有：
+
+- `user.name` 用户名
+- `user.email` 用户邮箱
+- `alias.<name>` 别名
+- `core.editor` 默认编辑器
+- `core.autocrlf` 行结束符的转换
+  - 若为 `true`，则在提交时将 CRLF 转换成 LF，在检出时将 LF 转换成 CRLF
+  - 若为 `input`，则在提交时将 CRLF 转换成 LF
+  - 若为 `false`，则不做任何转换
+- `merge.tool` 默认合并工具
+- `mergetool.<tool>.cmd` 使用某合并工具时的命令
+- `diff.tool` 默认比较工具
+- `difftool.<tool>.cmd` 使用某比较工具时的命令
+- `init.defaultBranch` 默认分支名
+
+另外一种与 git 无关但与 Github 有关的配置是 SSH 密钥，可以使用 `ssh-keygen` 来生成密钥，然后将 .pub 公钥添加到 Github 上。
+
+```shell
+# 生成带邮箱注释的的 rsa 密钥
 ssh-keygen -t rsa -C "hr.zheng@outlook.com"
-# by default, will form '.ssh' under '~'
-# then need to copy all the content in 'id_rsa.pub' to Github
 
-# check if can connect to Github by ssh
+# 检验能否成功连接到 Github
 ssh -T git@github.com
 ```
 
-#### crlf
-- `git config --global core.autocrlf true` 在push时把行结束符CRLF转换成LF，在pull时把LF转换成CRLF
-- `git config --global core.autocrlf input` 在push时把行结束符CRLF转换成LF
-- `git config --global core.autocrlf false` 什么都不改变
+### gitignore
 
-#### gitignore
-- 当前目录定义的规则，高于父级目录定义的规则，高于`git config --global core.excludesfile /path/to/.gitignore`中定义的全局规则
-```shell
-# ignore all .a files
-*.a
-# do track lib.a, even though you're ignoring .a files above
-!lib.a
-# only ignore the file in the current directory, avoid recursivity
-/file
-# ignore all files in any directory named build
-build/
-# only ignore all files in build/ in the current directory
-/build/
-# only ignore all .txt files in doc/
-doc/*.txt
-# ignore all .pdf files in doc/ recursively
-doc/**/*.pdf
-# ignore a0, a1, ..., c8, c9.txt
-[abc][0-9].txt
-```
-#### alias
-```shell
-git config --global alias.co checkout
-git config --global alias.br branch
-git config --global alias.ci commit
-git config --global alias.st status
-git config --global alias.last 'log -1 HEAD'
-git config --global alias.unstage 'reset HEAD --'
-```
-#### mergetool and difftool
-```shell
-merge.tool=code
-mergetool.code.cmd='code --wait $MERGED'
+可在项目根目录中的 .gitignore 文件中定义忽略规则，以忽略不需要追踪的文件，已追踪的文件不受影响。常见的规则如下：
 
-diff.tool=code
-difftool.code.cmd='code --wait --diff $LOCAL $REMOTE'
-```
-#### Other configurations
-```shell
-#### Default Editor
-# On a Windows system, must specify the full path to its executable file
-git config --global core.editor emacs
+- `build` 忽略所有名为 build 的文件或文件夹
+- `build/` 只忽略名为 build 的文件夹，忽略其内所有文件
+- `/build/` 只忽略当前目录下的名为 build 的文件夹
+- `/codes/*.c` 只忽略 codes 第一层目录下的 .c 文件
+- `/codes/*/*.c` 只忽略 codes 第二层目录下的 .c 文件
+- `/codes/**/*.c` 忽略 codes 内的所有 .c 文件，`/**/` 可匹配零个或多个目录
+- `!` 所有因之前规则被忽略的匹配文件会被重新追踪
 
-#### Default Branch Name
-git config --global init.defaultBranch main
-```
