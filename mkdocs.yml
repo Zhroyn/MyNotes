@@ -1,0 +1,134 @@
+site_name: Zhroyn 的学习笔记
+site_url: https://zhroyn.github.io/MyNotes/
+repo_name: Zhroyn/MyNotes
+repo_url: https://github.com/Zhroyn/MyNotes/
+
+nav:
+  - 主页: index.md
+  - 课程:
+    - 普通物理学:
+      - 力学:
+        - Linear Motion: 课程/普通物理学/Mechanics/Linear Motion.md
+        - Oscilliatory Motion: 课程/普通物理学/Mechanics/Oscilliatory Motion.md
+        - Rotation Motion: 课程/普通物理学/Mechanics/Rotation Motion.md
+        - Wave Motion: 课程/普通物理学/Mechanics/Wave Motion.md
+      - 电磁学:
+        - Electricity Charge and Field: 课程/普通物理学/Electromagnetics/01. Electricity Charge and Field.md
+        - Electric Potential: 课程/普通物理学/Electromagnetics/02. Electric Potential.md
+        - Capacitance and Dielectrics: 课程/普通物理学/Electromagnetics/03. Capacitance and Dielectrics.md
+        - Steady Current: 课程/普通物理学/Electromagnetics/04. Steady Current.md
+        - Steady Magnetic Field: 课程/普通物理学/Electromagnetics/05. Steady Magnetic Field.md
+        - Faraday's Law: 课程/普通物理学/Electromagnetics/06. Faraday’s Law.md
+        - Inductance and Magnetic properties of materials: 课程/普通物理学/Electromagnetics/07. Inductance and Magnetic properties of materials.md
+        - Maxwell's Equation: 课程/普通物理学/Electromagnetics/08. Maxwell's Equation.md
+        - EM Waves and Light Wave: 课程/普通物理学/Electromagnetics/09. EM Waves and Light Wave.md
+        - Geometrical Optics: 课程/普通物理学/Electromagnetics/10. Geometrical Optics.md
+        - Interference: 课程/普通物理学/Electromagnetics/11. Interference.md
+        - Diffraction and Gates: 课程/普通物理学/Electromagnetics/12. Diffraction and Gates.md
+        - Polarization: 课程/普通物理学/Electromagnetics/13. Polarization.md
+      - 热学: 课程/普通物理学/Thermal Physics.md
+      - 相对论: 课程/普通物理学/The Theory of Relativity.md
+    - 离散数学:
+      - Logic and Proofs: 课程/离散数学/Chapter1 Logic and Proofs.md
+      - Basic Structures: 课程/离散数学/Chapter2 Basic Structures.md
+      - Algorithms: 课程/离散数学/Chapter3 Algorithms.md
+      - Number Theory and Cryptography: 课程/离散数学/Chapter4 Number Theory and Cryptography.md
+      - Induction and Recursion: 课程/离散数学/Chapter5 Induction and Recursion.md
+      - Counting: 课程/离散数学/Chapter6 Counting.md
+      - Advanced Counting Techniques: 课程/离散数学/Chapter8 Advanced Counting Techniques.md
+      - Relations: 课程/离散数学/Chapter9 Relations.md
+      - Graphs: 课程/离散数学/Chapter10 Graphs.md
+      - Trees: 课程/离散数学/Chaperr11 Trees.md
+    - 计算机视觉导论:
+      - 图像匹配: 课程/计算机视觉导论/Image Matching.md
+      - 图像拼接: 课程/计算机视觉导论/Image Stitching.md
+      - 图像变形: 课程/计算机视觉导论/Image Warping.md
+      - 优化理论: 课程/计算机视觉导论/Optimization.md
+      - 相机模型: 课程/计算机视觉导论/Camera Model.md
+      - 运动恢复结构: 课程/计算机视觉导论/Structure from Motion.md
+      - 深度估计与三维重建: 课程/计算机视觉导论/Depth Estimation and 3D Reconstruction.md
+      - 深度学习: 课程/计算机视觉导论/Deep Learning.md
+      - 图像识别: 课程/计算机视觉导论/Recognition.md
+      - 工具: 课程/计算机视觉导论/Tools.md
+  - C:
+    - C 语言: C/CNote.md
+    - Makefile: C/MakefileNote.md
+    # - OpenMp: C/OpenMPnote.md
+  - Python:
+    - Python 语言: Python/PythonNote.md
+    - Anaconda: Python/AnacondaNote.md
+    - pip: Python/pipNote.md
+    - 标准库:
+      - json: Python/标准库/jsonNote.md
+      - os: Python/标准库/osNote.md
+      - random: Python/标准库/randomNote.md
+      - sqlite3: Python/标准库/sqlite3Note.md
+      - venv: Python/标准库/venvNote.md
+    - 第三方库:
+      - OpenCV: Python/第三方库/OpenCVnote.md
+      - PIL: Python/第三方库/PILnote.md
+      - PyQt: Python/第三方库/PyQtNote.md
+      - imageio: Python/第三方库/imageioNote.md
+      - matplotlib: Python/第三方库/matplotlibNote.md
+      - numpy: Python/第三方库/numpyNote.md
+      - scipy: Python/第三方库/scipyNote.md
+      - torch: Python/第三方库/torchNote.md
+  - Linux:
+    - Linux: Linux/LinuxNote.md
+    - Bash: Linux/BashNote.md
+  - CLI:
+    - Git: CLI/GitNote.md
+    - PowerShell: CLI/PowerShellNote.md
+  - 排版:
+    - Markdown: 排版/MarkdownNote.md
+    - LaTeX: 排版/LaTeXNote.md
+  - 前端:
+    - HTML: 前端/HTMLNote.md
+    - CSS: 前端/CSSNote.md
+    - Nodejs: 前端/NodejsNote.md
+    - TailwindCSS: 前端/TailwindCSSNote.md
+  - 软件:
+    - Edge: 软件/EdgeNote.md
+    - Vim: 软件/VimNote.md
+    - Vscode: 软件/VscodeNote.md
+    - Win11: 软件/Win11Note.md
+    - Blender:
+      - 窗口视图: 软件/Blender/窗口视图.md
+      - 建模操作: 软件/Blender/建模操作.md
+  - 其他:
+    - 8086 汇编语言: 其他/8086Note.md
+    - Arduino: 其他/ArduinoNote.md
+    - AutoHotkey: 其他/AutoHotkeyNote.md
+    - AI 绘画提示词: 其他/PromptNote.md
+
+theme:
+  name: 'material'
+  language: 'zh'
+  icon:
+    logo: material/notebook-outline
+    repo: fontawesome/brands/github
+    edit: material/pencil
+  features:
+    - content.code.annotate
+    - content.action.edit
+    - navigation.tracking
+    - navigation.top
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.sections
+  font:
+    code: Fira Code
+  palette:
+    - scheme: default
+
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - js/katex.js
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/contrib/auto-render.min.js
+
+extra_css:
+  - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
