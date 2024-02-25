@@ -1,5 +1,8 @@
 # MyNotes
+
 学无止境，探索一切未知的可能。
+
+笔记网站：https://zhroyn.github.io/MyNotes/
 
 ## TODO
 
