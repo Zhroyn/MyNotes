@@ -81,7 +81,7 @@ nav:
     - PowerShell: CLI/PowerShellNote.md
   - 排版:
     - Markdown: 排版/MarkdownNote.md
-    - LaTeX: 排版/LaTeXNote.md
+    - LaTeX: 排版/LatexNote.md
   - 前端:
     - HTML: 前端/HTMLNote.md
     - CSS: 前端/CSSNote.md
