@@ -1,25 +1,25 @@
 
 - [Wave Motion](#wave-motion)
-  - [Wave Function](#wave-function)
-  - [Wave Equation](#wave-equation)
-  - [Linear Wave](#linear-wave)
-    - [Phenomenon](#phenomenon)
-    - [Speed of Wave in a Solid](#speed-of-wave-in-a-solid)
-  - [Sinusoidal Wave](#sinusoidal-wave)
-    - [Sinusoidal Wave Function](#sinusoidal-wave-function)
-    - [Speed of Wave on a String](#speed-of-wave-on-a-string)
-    - [Energy Transfer](#energy-transfer)
-    - [Different Cases of Superposition](#different-cases-of-superposition)
-      - [Interference Case](#interference-case)
-      - [Beating Case](#beating-case)
-      - [Standing Wave](#standing-wave)
-  - [Sound Wave](#sound-wave)
-    - [Pressure Fluctuation](#pressure-fluctuation)
-    - [Speed of Sound in a Fluid](#speed-of-sound-in-a-fluid)
-    - [Sound Intensity](#sound-intensity)
-    - [Spherical Waves](#spherical-waves)
-    - [Doppler Effect](#doppler-effect)
-    - [Shock Waves](#shock-waves)
+    - [Wave Function](#wave-function)
+    - [Wave Equation](#wave-equation)
+    - [Linear Wave](#linear-wave)
+        - [Phenomenon](#phenomenon)
+        - [Speed of Wave in a Solid](#speed-of-wave-in-a-solid)
+    - [Sinusoidal Wave](#sinusoidal-wave)
+        - [Sinusoidal Wave Function](#sinusoidal-wave-function)
+        - [Speed of Wave on a String](#speed-of-wave-on-a-string)
+        - [Energy Transfer](#energy-transfer)
+        - [Different Cases of Superposition](#different-cases-of-superposition)
+            - [Interference Case](#interference-case)
+            - [Beating Case](#beating-case)
+            - [Standing Wave](#standing-wave)
+    - [Sound Wave](#sound-wave)
+        - [Pressure Fluctuation](#pressure-fluctuation)
+        - [Speed of Sound in a Fluid](#speed-of-sound-in-a-fluid)
+        - [Sound Intensity](#sound-intensity)
+        - [Spherical Waves](#spherical-waves)
+        - [Doppler Effect](#doppler-effect)
+        - [Shock Waves](#shock-waves)
 
 
 
@@ -58,19 +58,19 @@ $$
 #### Phenomenon
 - **Superposition Principle** : If two or more traveling waves are moving through a medium, the resultant wave function at any point is the **algebraic sum** of the wave functions of the individual waves.
 - Linear Waves :
-  - Waves that obey the superposition principle are called **linear waves**.
-  - Waves that violate the superposition principle are called **nonlinear waves**.
+    - Waves that obey the superposition principle are called **linear waves**.
+    - Waves that violate the superposition principle are called **nonlinear waves**.
 - The combination of separate waves in the same region of space to produce a resultant wave is called **interference**.
 
 <br>
 
 - **Reflection** :
-  - When the string's end is fixed, the pulse moves back in the opposite direction.
-  - When the string is tied to a light ring that is free to slide vertically on a smooth post, again, the pulse moves back in the same direction.
+    - When the string's end is fixed, the pulse moves back in the opposite direction.
+    - When the string is tied to a light ring that is free to slide vertically on a smooth post, again, the pulse moves back in the same direction.
 - **Transmission** :
-  - When the boundary is intermediate between these two extremes, part of the incident pulse is reflected and part undergoes transmission.
-  - When from soft to hard, the reflected wave is invertd.
-  - When from hard to soft, the reflected wave is not invertd.
+    - When the boundary is intermediate between these two extremes, part of the incident pulse is reflected and part undergoes transmission.
+    - When from soft to hard, the reflected wave is invertd.
+    - When from hard to soft, the reflected wave is not invertd.
 
 <br>
 

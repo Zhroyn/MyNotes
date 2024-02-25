@@ -75,8 +75,8 @@ clean :
 include foo.make *.mk $(makefiles)
 ```
 - 若未指定路径，则会先在当前目录寻找，若未找到，那么make还会在下面的几个目录下找：
-  - 如果make执行时，有`-I|--include-dir`参数，那么make就会在这个参数所指定的目录下去寻找
-  - 如果目录`<prefix>/include`（一般是：`/usr/local/bin`或`/usr/include`）存在的话，make也会去找
+    - 如果make执行时，有`-I|--include-dir`参数，那么make就会在这个参数所指定的目录下去寻找
+    - 如果目录`<prefix>/include`（一般是：`/usr/local/bin`或`/usr/include`）存在的话，make也会去找
 
 ##### 文件搜寻
 ```makefile

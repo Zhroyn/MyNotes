@@ -1,18 +1,18 @@
 
 - [Depth Estimation](#depth-estimation)
-  - [Stereo Matching](#stereo-matching)
-    - [Stereo Image Rectification](#stereo-image-rectification)
-    - [Stereo Matching Algorithms](#stereo-matching-algorithms)
-      - [Window-based Stereo Matching](#window-based-stereo-matching)
-      - [MRF-based Stereo Matching](#mrf-based-stereo-matching)
-  - [Multi-View Stereo (MVS)](#multi-view-stereo-mvs)
-    - [Plane-Sweep](#plane-sweep)
-    - [Patch Match](#patch-match)
+    - [Stereo Matching](#stereo-matching)
+        - [Stereo Image Rectification](#stereo-image-rectification)
+        - [Stereo Matching Algorithms](#stereo-matching-algorithms)
+            - [Window-based Stereo Matching](#window-based-stereo-matching)
+            - [MRF-based Stereo Matching](#mrf-based-stereo-matching)
+    - [Multi-View Stereo (MVS)](#multi-view-stereo-mvs)
+        - [Plane-Sweep](#plane-sweep)
+        - [Patch Match](#patch-match)
 - [3D Reconstruction](#3d-reconstruction)
-  - [3D Representations](#3d-representations)
-  - [3D Surface Reconstruction](#3d-surface-reconstruction)
-    - [Poisson Reconstruction](#poisson-reconstruction)
-    - [Marching Cubes](#marching-cubes)
+    - [3D Representations](#3d-representations)
+    - [3D Surface Reconstruction](#3d-surface-reconstruction)
+        - [Poisson Reconstruction](#poisson-reconstruction)
+        - [Marching Cubes](#marching-cubes)
 
 
 
@@ -170,8 +170,8 @@ It's an efficient algorithm for solving correspondence problems. Its steps are
 The methods for 3D representation include
 - Point Cloud
 - Volume
-  - Occupancy
-  - Signed Distance
+    - Occupancy
+    - Signed Distance
 - Mesh
 
 **Occupancy**

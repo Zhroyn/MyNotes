@@ -2,10 +2,10 @@
 - [Newton's Laws and Conservation Laws](#newtons-laws-and-conservation-laws)
     - [Elastic Collision in 1D](#elastic-collision-in-1d)
     - [Elastic Collision in 2D](#elastic-collision-in-2d)
-  - [Center of Mass](#center-of-mass)
+- [Center of Mass](#center-of-mass)
     - [Perfectly Elastic Collision in CM Frame](#perfectly-elastic-collision-in-cm-frame)
     - [Perfectly inelastic scattering in CM Frame](#perfectly-inelastic-scattering-in-cm-frame)
-  - [Gravitation](#gravitation)
+- [Gravitation](#gravitation)
     - [The Law of Gravitation](#the-law-of-gravitation)
     - [Rocket Propulsion](#rocket-propulsion)
 
@@ -14,7 +14,9 @@
 
 
 
-## Newton's Laws and Conservation Laws
+
+
+### Newton's Laws and Conservation Laws
 #### Elastic Collision in 1D
 The coefficient of restitution is $$e = \frac{v_{2f} - v_{1f}}{v_{1i} - v_{2i}}$$
 

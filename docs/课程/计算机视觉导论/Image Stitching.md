@@ -1,8 +1,8 @@
 
 - [Image Stitching](#image-stitching)
-  - [Affine Transformation](#affine-transformation)
-  - [Projective Transformation](#projective-transformation)
-  - [RANSAC](#ransac)
+    - [Affine Transformation](#affine-transformation)
+    - [Projective Transformation](#projective-transformation)
+    - [RANSAC](#ransac)
 
 
 

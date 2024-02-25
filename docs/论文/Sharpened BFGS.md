@@ -1,12 +1,12 @@
 
 - [Sharpened Quasi-Newton Methods: Faster Superlinear Rate and Larger Local Convergence Neighborhood](#sharpened-quasi-newton-methods-faster-superlinear-rate-and-larger-local-convergence-neighborhood)
-  - [Abstract](#abstract)
-  - [Introduction](#introduction)
-    - [Contributions](#contributions)
-  - [Preliminaries](#preliminaries)
-    - [BFGS Operator and Algorithm](#bfgs-operator-and-algorithm)
-    - [Greedy-BFGS Algorithm](#greedy-bfgs-algorithm)
-    - [Sharpened-BFSG](#sharpened-bfsg)
+    - [Abstract](#abstract)
+    - [Introduction](#introduction)
+        - [Contributions](#contributions)
+    - [Preliminaries](#preliminaries)
+        - [BFGS Operator and Algorithm](#bfgs-operator-and-algorithm)
+        - [Greedy-BFGS Algorithm](#greedy-bfgs-algorithm)
+        - [Sharpened-BFSG](#sharpened-bfsg)
 
 
 

@@ -1,63 +1,63 @@
 
 - [基本数据类型](#基本数据类型)
-  - [字符](#字符)
-  - [整数](#整数)
-  - [浮点数](#浮点数)
-  - [隐式类型转换](#隐式类型转换)
+    - [字符](#字符)
+    - [整数](#整数)
+    - [浮点数](#浮点数)
+    - [隐式类型转换](#隐式类型转换)
 - [运算符与表达式](#运算符与表达式)
-  - [运算符优先级](#运算符优先级)
-  - [副作用与序列点](#副作用与序列点)
+    - [运算符优先级](#运算符优先级)
+    - [副作用与序列点](#副作用与序列点)
 - [字符串](#字符串)
-  - [string.h](#stringh)
-  - [stdio.h](#stdioh)
-  - [stdlib.h](#stdlibh)
-  - [ctype.h](#ctypeh)
+    - [string.h](#stringh)
+    - [stdio.h](#stdioh)
+    - [stdlib.h](#stdlibh)
+    - [ctype.h](#ctypeh)
 - [数组与指针](#数组与指针)
-  - [定义](#定义)
-  - [初始化](#初始化)
+    - [定义](#定义)
+    - [初始化](#初始化)
 - [结构、联合与枚举](#结构联合与枚举)
-  - [结构](#结构)
-    - [定义与初始化](#定义与初始化)
-    - [伸缩型数组成员](#伸缩型数组成员)
-    - [匿名结构](#匿名结构)
-  - [联合](#联合)
-    - [定义与初始化](#定义与初始化-1)
-    - [匿名联合](#匿名联合)
-  - [枚举](#枚举)
+    - [结构](#结构)
+        - [定义与初始化](#定义与初始化)
+        - [伸缩型数组成员](#伸缩型数组成员)
+        - [匿名结构](#匿名结构)
+    - [联合](#联合)
+        - [定义与初始化](#定义与初始化-1)
+        - [匿名联合](#匿名联合)
+    - [枚举](#枚举)
 - [Storage, Linkage and Memory](#storage-linkage-and-memory)
-  - [storage class](#storage-class)
-  - [storage-class specifier](#storage-class-specifier)
-  - [Dynamic memory management](#dynamic-memory-management)
-  - [Type Qualifier](#type-qualifier)
+    - [storage class](#storage-class)
+    - [storage-class specifier](#storage-class-specifier)
+    - [Dynamic memory management](#dynamic-memory-management)
+    - [Type Qualifier](#type-qualifier)
 - [File Input/Output](#file-inputoutput)
-  - [File access](#file-access)
-  - [Input/Output](#inputoutput)
-  - [File positioning](#file-positioning)
-  - [Others](#others)
+    - [File access](#file-access)
+    - [Input/Output](#inputoutput)
+    - [File positioning](#file-positioning)
+    - [Others](#others)
 - [Bit manipulation](#bit-manipulation)
-  - [Bitwise operator](#bitwise-operator)
-  - [Bit field](#bit-field)
-  - [Align](#align)
+    - [Bitwise operator](#bitwise-operator)
+    - [Bit field](#bit-field)
+    - [Align](#align)
 - [C预处理器](#c预处理器)
-  - [翻译处理](#翻译处理)
-  - [预处理器指令](#预处理器指令)
-  - [#define](#define)
-    - [类函数宏](#类函数宏)
-    - [##运算符](#运算符)
-    - [变参宏](#变参宏)
-    - [预定义宏和预定义标识符](#预定义宏和预定义标识符)
-  - [#include](#include)
-  - [其他指令](#其他指令)
+    - [翻译处理](#翻译处理)
+    - [预处理器指令](#预处理器指令)
+    - [#define](#define)
+        - [类函数宏](#类函数宏)
+        - [##运算符](#运算符)
+        - [变参宏](#变参宏)
+        - [预定义宏和预定义标识符](#预定义宏和预定义标识符)
+    - [#include](#include)
+    - [其他指令](#其他指令)
 - [C functions](#c-functions)
-  - [printf()](#printf)
-  - [scanf()](#scanf)
-  - [memcpy(), memmove()](#memcpy-memmove)
-  - [qsort(), bsearch()](#qsort-bsearch)
-  - [rand(), srand()](#rand-srand)
+    - [printf()](#printf)
+    - [scanf()](#scanf)
+    - [memcpy(), memmove()](#memcpy-memmove)
+    - [qsort(), bsearch()](#qsort-bsearch)
+    - [rand(), srand()](#rand-srand)
 - [C libaries](#c-libaries)
-  - [time.h](#timeh)
-  - [windows.h](#windowsh)
-  - [sys/time.h](#systimeh)
+    - [time.h](#timeh)
+    - [windows.h](#windowsh)
+    - [sys/time.h](#systimeh)
 
 
 
@@ -96,16 +96,16 @@ char 分为 signed char 和 unsigned char，二者在内存并无差别，但是
 
 ### 浮点数
 - float 为单精度浮点数，长 32 位，有 6-7 个有效数字，后缀为 f/F
-  - 1 个符号位，8 个指数位，23 个尾数位
+    - 1 个符号位，8 个指数位，23 个尾数位
 - double 为双精度浮点数，长 64 位，有 15-16 个有效数字，为默认类型
-  - 1 个符号位，11 个指数位，52 个尾数位
+    - 1 个符号位，11 个指数位，52 个尾数位
 - long double 为长双精度浮点数，至少长 128 位，后缀为 l/L
 <br>
 
 - 对于 scanf() 函数，float 使用 %f，double 使用 %lf，long double 使用 %Lf
 - 对于 printf() 函数，float 和 double 使用 f/F/e/E/g/G，long double 还要额外加上 L 长度修饰符，l 会被忽略
-  - e/E 表示使用指数形式，g/G 表示使用合适的形式，大写则表示使用指数形式时会使用大写字母
-  - 当使用精度修饰符时，会自动四舍五入
+    - e/E 表示使用指数形式，g/G 表示使用合适的形式，大写则表示使用指数形式时会使用大写字母
+    - 当使用精度修饰符时，会自动四舍五入
 
 浮点数的合法的写法有： .2, 100., .8E-5 (不能有空格出现), 0x0.1ap8 (等于 (0 + 1/16 + 10/256) * (2^8) = 26) 等
 
@@ -262,8 +262,8 @@ long double strtod( const char *restrict str, char **restrict str_end );
 <br>
 
 - `strtol/strtoll(str, str_end, base)` 将 str 转换为整数
-  - `str_end` 指向字符指针，存储转换结束的位置，若为 NULL 则被忽略
-  - `base` 可为 0 或 2~36，若为 0，则由整数的前缀决定相应进制
+    - `str_end` 指向字符指针，存储转换结束的位置，若为 NULL 则被忽略
+    - `base` 可为 0 或 2~36，若为 0，则由整数的前缀决定相应进制
 - `strtof/strtod/strtold(str, str_end)` 将 str 转换为浮点数
 
 <br>
@@ -479,37 +479,37 @@ enum color {red, orange, yellow=-2, green, blue, violet};
 **storage duration**
 - Scope and linkage describe the visibility of identifiers. Storage duration describes the persistence of the objects accessed by these identifiers.
 - `automatic storage duration` : have memory allocated for them when the program enters the block in which they are defined, and the memory is freed when the block is exited.
-  - Variable-length arrays provide a slight exception in that they exist from the point of declaration to the end of the block rather than from the beginning of the block to the end.
+    - Variable-length arrays provide a slight exception in that they exist from the point of declaration to the end of the block rather than from the beginning of the block to the end.
 - `static storage duration` : exists throughout program execution.
-  - For a variable to have block scope but static storage duration, exists from the time the program is loaded until the program terminates.
+    - For a variable to have block scope but static storage duration, exists from the time the program is loaded until the program terminates.
 - `thread storage duration` : exists from when it’s declared until the thread terminates.
-  - Such an object is created when a declaration that would otherwise create a file scope object is modified with the keyword `_Thread_local`.
-  - When a variable is declared with this specifier, each thread gets its own private copy of that variable.
+    - Such an object is created when a declaration that would otherwise create a file scope object is modified with the keyword `_Thread_local`.
+    - When a variable is declared with this specifier, each thread gets its own private copy of that variable.
 - `allocated storage duration` : exists from when the memory is allocated until it's freed, stored in **heap**.
 
 ### storage-class specifier
 - `auto` : declare a varible belonging to automatic storage class(i.e. automatic varible) which has automatic storage duration, block scope, and no linkage.
-  - automatic variables are not initialized unless you do so explicitly.
-  - automatic varibles are stored in **stack**.
+    - automatic variables are not initialized unless you do so explicitly.
+    - automatic varibles are stored in **stack**.
 
 - `register`: declare a varible belonging to register storage class(i.e. register varible) which has automatic storage duration, block scope, and no linkage.
-  - register variables are stored in the CPU registers or, more generally, in the fastest memory available, where they can be accessed and manipulated more rapidly than regular variables.
-  - you can’t take the address of a register variable whether or not your request is approved.
+    - register variables are stored in the CPU registers or, more generally, in the fastest memory available, where they can be accessed and manipulated more rapidly than regular variables.
+    - you can’t take the address of a register variable whether or not your request is approved.
 
 - `static`: declare a varible belonging to static storage class(i.e. static varible) which has static storage duration. It has block scope and no linkage if declared in a block, or has file scope and internal linkage if declared outside of any function.
-  - static variables and external variables are already in place after a program is loaded into memory and is initialized just once. It’s initialization statement won't execute during runtime.
-  - can’t use `static` for function parameters
-  - static variables are initialized to zero if you don’t explicitly initialize them to some other value.
-  - static local varible can also hide global varible.
-  - static varibles are stored in static memory.
-  - define static function
+    - static variables and external variables are already in place after a program is loaded into memory and is initialized just once. It’s initialization statement won't execute during runtime.
+    - can’t use `static` for function parameters
+    - static variables are initialized to zero if you don’t explicitly initialize them to some other value.
+    - static local varible can also hide global varible.
+    - static varibles are stored in static memory.
+    - define static function
 
 - `extern`: declare a varible belonging to external storage class(i.e. external varible) which has static storage duration, file scope, and external linkage.
-  - an external variable is created by placing a defining declaration outside of any function.
-  - If a particular external variable is defined in one source code file and is used in a second source code file, declaring the variable in the second file with `extern` is mandatory.
-  - an external variable can additionally be declared inside a function with `extern` to document your intention of using the static variable created previously instead of creating a new automatic varible.
-  - declaration with `extern` does not cause space to be allocated, so don’t use the keyword to create an external definition
-  - define external function which is default
+    - an external variable is created by placing a defining declaration outside of any function.
+    - If a particular external variable is defined in one source code file and is used in a second source code file, declaring the variable in the second file with `extern` is mandatory.
+    - an external variable can additionally be declared inside a function with `extern` to document your intention of using the static variable created previously instead of creating a new automatic varible.
+    - declaration with `extern` does not cause space to be allocated, so don’t use the keyword to create an external definition
+    - define external function which is default
 
 - `_Thread_local` : may be used together with static and extern.
 - `typedef` : doesn’t say anything about memory storage, but it is thrown in for syntax reasons.
@@ -536,9 +536,9 @@ void free( void *ptr );
 ### Type Qualifier
 - `const` : to share const data across files, can define global varibles with `static` in header
 - `volatile` : tells the compiler that a variable can have its value altered by agencies other than the program, which facilitates compiler optimization.
-  - A value can be both `const` and `volatile`.
+    - A value can be both `const` and `volatile`.
 - `restrict` : can be applied only to pointers, and it indicates that a pointer is the sole initial means of accessing a data object.
-  - the compiler can’t check whether you obey this restriction.
+    - the compiler can’t check whether you obey this restriction.
 - `_Atomic` : While a thread performs an atomic operation on an object of atomic type, other threads won’t access that object.
 
 
@@ -727,22 +727,22 @@ int rename( const char *old_filename, const char *new_filename );
 ### Bitwise operator
 - Bitwise Negation: `~`
 - Bitwise AND: `&`
-  - Mask, `a & MASK`
-  - Reset bits, `a & ~MASK`
-  - Check bits, `a & MASK == MASK`
+    - Mask, `a & MASK`
+    - Reset bits, `a & ~MASK`
+    - Check bits, `a & MASK == MASK`
 - Bitwise OR: `|`
-  - Set bits, `a | MASK`
+    - Set bits, `a | MASK`
 - Bitwise EXCLUSIVE OR: `^`
-  - Toggle bits, `a ^ MASK`
+    - Toggle bits, `a ^ MASK`
 - Bitwise Left Shift Operator: `<<`
-  - operand must have integral type
-  - for type smaller than int, shift as int and return int
-  - fill 0 on the right
+    - operand must have integral type
+    - for type smaller than int, shift as int and return int
+    - fill 0 on the right
 - Bitwise Right Shift Operator: `>>`
-  - operand must have integral type
-  - for type smaller than int, shift as int and return int
-  - for unsigned type, fill 0 on the left
-  - for signed type, fill sign on the left
+    - operand must have integral type
+    - for type smaller than int, shift as int and return int
+    - for unsigned type, fill 0 on the left
+    - for signed type, fill sign on the left
 
 ### Bit field
 ```C
@@ -786,9 +786,9 @@ _Alignof
 - 从`#`开始，到第一个换行符为止
 - 分为对象宏、类函数宏和空宏
 - 由三部分组成：
-  - 预处理指令，如`#define`
-  - 宏：不允许有空格，只能使用字母、数字和下划线，首字符不能是数字。分为类对象宏和类函数宏
-  - 替换列表/替换体
+    - 预处理指令，如`#define`
+    - 宏：不允许有空格，只能使用字母、数字和下划线，首字符不能是数字。分为类对象宏和类函数宏
+    - 替换列表/替换体
 <br>
 
 ### #define

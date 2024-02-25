@@ -1,13 +1,13 @@
 
 - [Logic and Proofs](#logic-and-proofs)
-  - [1.1 Propositional Logic](#11-propositional-logic)
-  - [1.2 Applications of Propositional Logic](#12-applications-of-propositional-logic)
-  - [1.3 Propositional Equivalences](#13-propositional-equivalences)
-  - [1.4 Predicates and Quantifiers](#14-predicates-and-quantifiers)
-  - [1.5 Nested Quantifiers and Normal Form](#15-nested-quantifiers-and-normal-form)
-  - [1.6 Rules of Inference](#16-rules-of-inference)
-  - [1.7 Introduction to Proofs](#17-introduction-to-proofs)
-  - [1.8 Proof Methods and Strategy](#18-proof-methods-and-strategy)
+    - [1.1 Propositional Logic](#11-propositional-logic)
+    - [1.2 Applications of Propositional Logic](#12-applications-of-propositional-logic)
+    - [1.3 Propositional Equivalences](#13-propositional-equivalences)
+    - [1.4 Predicates and Quantifiers](#14-predicates-and-quantifiers)
+    - [1.5 Nested Quantifiers and Normal Form](#15-nested-quantifiers-and-normal-form)
+    - [1.6 Rules of Inference](#16-rules-of-inference)
+    - [1.7 Introduction to Proofs](#17-introduction-to-proofs)
+    - [1.8 Proof Methods and Strategy](#18-proof-methods-and-strategy)
 - [Shorthand](#shorthand)
 
 
@@ -24,23 +24,23 @@
 <br>
 
 - `negation` : $\neg p$
-  - The truth value of the negation of a proposition in fuzzy logic is 1 minus the truth value of the proposition
+    - The truth value of the negation of a proposition in fuzzy logic is 1 minus the truth value of the proposition
 - `conjunction` : $p \wedge q$
-  - The truth value of the conjunction of two propositions in fuzzy logic is the minimum of the truth values of the two propositions
+    - The truth value of the conjunction of two propositions in fuzzy logic is the minimum of the truth values of the two propositions
 - `disjunction` : $p \vee q$
-  - The truth value of the disjunction of two propositions in fuzzy logic is the maximum of the truth values of the two propositions
+    - The truth value of the disjunction of two propositions in fuzzy logic is the maximum of the truth values of the two propositions
 - `exclusive or` : $p \oplus q$
 - `nor` : $p \downarrow q$
-  - True when both p and q are false
+    - True when both p and q are false
 - `conditional statement` : $p \rightarrow q$
-  - True when both p and q are true and when p is false
-  - `if p, then q` is equivalent to `p only if q`, `q whenever p`, `q follows from p` and `q unless ¬p`
-  - `converse` : $q \rightarrow p$
-  - `contrapositive` : $\neg q \rightarrow \neg p$
-  - `inverse` : $\neg p \rightarrow \neg q$
+    - True when both p and q are true and when p is false
+    - `if p, then q` is equivalent to `p only if q`, `q whenever p`, `q follows from p` and `q unless ¬p`
+    - `converse` : $q \rightarrow p$
+    - `contrapositive` : $\neg q \rightarrow \neg p$
+    - `inverse` : $\neg p \rightarrow \neg q$
 - `biconditional statement` : $p \leftrightarrow q$
-  - True when p and q have the same truth values
-  - Equivalent to `p iff q` and `p exactly then q`
+    - True when p and q have the same truth values
+    - Equivalent to `p iff q` and `p exactly then q`
 
 |Operator| Precedence|
 | :-: | :-: |
@@ -87,7 +87,7 @@
 - Associative laws : $(p \vee q) \vee r ≡ p \vee (q \vee r)$, $(p \wedge q) \wedge r ≡ p \wedge (q \wedge r)$
 - Distributive laws : $p \vee (q \wedge r) ≡ (p \vee q) \wedge (p \vee r)$, $p \wedge (q \vee r) ≡ (p \wedge q) \vee (p \wedge r)$
 - De Morgan’s laws : $\neg (p \wedge q) ≡ \neg p \vee \neg q$, $\neg(p \vee q) ≡ \neg p \wedge \neg q$
-  - $\neg(\vee_{j=1}^n p_j) \equiv \wedge_{j=1}^n \neg p_j$, $\neg(\wedge_{j=1}^n p_j) \equiv \vee_{j=1}^n \neg p_j$
+    - $\neg(\vee_{j=1}^n p_j) \equiv \wedge_{j=1}^n \neg p_j$, $\neg(\wedge_{j=1}^n p_j) \equiv \vee_{j=1}^n \neg p_j$
 - Absorption laws : $p \vee (p \wedge q) ≡ p$, $p \wedge (p \vee q) ≡ p$
 - Negation laws : $p \vee \neg p ≡ T$, $p \wedge \neg p ≡ F$
 <br>
@@ -151,8 +151,8 @@
 
 **Logical Equivalences Involving Quantifiers**
 - Statements involving predicates and quantifiers are **logically equivalent** if and only if they have the same truth 
-  - for every predicate substituted into these statements
-  - for every domain of discourse used for the variables in the expressions
+    - for every predicate substituted into these statements
+    - for every domain of discourse used for the variables in the expressions
 - Suppose $p$ and $q$ are statements involving predicates and quantifiers, we can show $p$ and $q$ are logically equivalent by showing that if one of them is true, then the other is true
 <br>
 
@@ -318,8 +318,8 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 <br>
 
 - The two parts of a **uniqueness proof** are:
-  - Existence: show that an element $x$ with the desired property exists.
-  - Uniqueness: show that if $x$ and $y$ both have the desired property, then $x = y$
+    - Existence: show that an element $x$ with the desired property exists.
+    - Uniqueness: show that if $x$ and $y$ both have the desired property, then $x = y$
 <br>
 
 - Using the premises, together with axioms and known theorems, you can construct a proof using a sequence of steps that leads to the conclusion. This type of reasoning is called **forward reasoning**
@@ -395,11 +395,11 @@ incorrect reasoning is called the **fallacy of denying the hypothesis**
 
 **Proof Methods and Strategy**
 - Existence proof
-  - constructive
-  - nonconstructive : the negation of the existential quantification implies a contradiction
+    - constructive
+    - nonconstructive : the negation of the existential quantification implies a contradiction
 - Uniqueness proof
-  - Existence
-  - Uniqueness : if $x$ and $y$ both have the desired property, then $x = y$
+    - Existence
+    - Uniqueness : if $x$ and $y$ both have the desired property, then $x = y$
 
 
 

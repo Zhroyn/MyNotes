@@ -1,21 +1,21 @@
 
 - [Operators and motions](#operators-and-motions)
-  - [Operators](#operators)
-  - [Word motions](#word-motions)
-  - [Left-right motions](#left-right-motions)
-  - [Up-down motions](#up-down-motions)
-  - [Text object motions](#text-object-motions)
-  - [Text object selection](#text-object-selection)
-  - [Jumps](#jumps)
+    - [Operators](#operators)
+    - [Word motions](#word-motions)
+    - [Left-right motions](#left-right-motions)
+    - [Up-down motions](#up-down-motions)
+    - [Text object motions](#text-object-motions)
+    - [Text object selection](#text-object-selection)
+    - [Jumps](#jumps)
 - [Other Operator](#other-operator)
 - [Other Commands](#other-commands)
-  - [File](#file)
-  - [Fold](#fold)
-  - [Substitute](#substitute)
-  - [Mark](#mark)
-  - [Multiple Windows](#multiple-windows)
-  - [Macro](#macro)
-  - [Navigation](#navigation)
+    - [File](#file)
+    - [Fold](#fold)
+    - [Substitute](#substitute)
+    - [Mark](#mark)
+    - [Multiple Windows](#multiple-windows)
+    - [Macro](#macro)
+    - [Navigation](#navigation)
 
 
 
@@ -135,16 +135,16 @@
 #### Substitute
 - `:{scope}s/{from}/{to}/{tag}`
 - `{scope}`: default is current line
-  - `%` all lines in file
-  - `10,20` from tenth line to twentieth line
-  - `1,$` from first line to last line
-  - `.,$` from current line to last line
-  - `'a,'b` from line with mark a to line with mark b
-  - `'<,'>` from the scope selected in visual mode
+    - `%` all lines in file
+    - `10,20` from tenth line to twentieth line
+    - `1,$` from first line to last line
+    - `.,$` from current line to last line
+    - `'a,'b` from line with mark a to line with mark b
+    - `'<,'>` from the scope selected in visual mode
 - `{tag}`: default is substiting the first matched string
-  - `g` globally in scope
-  - `c` prompt for each substitution
-  - `i/I` case insensitive / sensitive
+    - `g` globally in scope
+    - `c` prompt for each substitution
+    - `i/I` case insensitive / sensitive
 
 #### Mark
 - `m{a-z/A-Z}` Set mark at cursor position

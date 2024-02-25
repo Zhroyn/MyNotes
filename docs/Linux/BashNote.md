@@ -58,8 +58,8 @@
 - Associative arrays are created using `declare -A name`. `declare` builtin also accept assignment syntax to initialize.
 - Arrays are assigned to using compound assignments of the form `name=(value1 value2 … )` where each value may be of the form `[subscript]=string`. Indexed array assignments do not require anything but `string`. When assigning to indexed arrays, if the optional `subscript` is supplied, that index is assigned to; otherwise the index of the element assigned is the last index assigned to by the statement plus one. Indexing starts at zero.
 - When assigning to an associative array, the words in a compound assignment may be either assignment statements, for which the subscript is required, or a list of words that is interpreted as a sequence of alternating keys and values: `name=(key1 value1 key2 value2 … )`. These are treated identically to `name=( [key1]=value1 [key2]=value2 … )`.
-  - The first word in the list determines how the remaining words are interpreted.
-  - When using key/value pairs, the keys may not be missing or empty; a final missing value is treated like the empty string.
+    - The first word in the list determines how the remaining words are interpreted.
+    - When using key/value pairs, the keys may not be missing or empty; a final missing value is treated like the empty string.
 - When assigning to an indexed array, if `name` is subscripted by a negative number, that means counting back from the end of the array, and an index of -1 references the last element.
 - If the subscript is `@` or `*`, the word expands to all members of the array name. These subscripts differ only when the word appears within double quotes. If the word is double-quoted, `${name[*]}` expands to a single word with the value of each array member separated by the first character of the IFS variable, and `${name[@]}` expands each element of name to a separate word.
 
@@ -100,11 +100,11 @@
 - `*` Matches any string, including the null string.
 - `?` Matches any single character.
 - `[…]` Matches any one of the enclosed characters.
-  - A pair of characters separated by a hyphen denotes a range expression; any character that falls between those two characters, inclusive, using the current locale’s collating sequence and character set, is matched.
-  - If the first character following the `[` is a `!` or a `^` then any character not enclosed is matched.
-  - A `-` may be matched by including it as the first or last character in the set.
-  - A `]` may be matched by including it as the first character in the set.
-  - character classes can be specified using the syntax `[:class:]`, where class is one of the following classes defined in the POSIX standard:
+    - A pair of characters separated by a hyphen denotes a range expression; any character that falls between those two characters, inclusive, using the current locale’s collating sequence and character set, is matched.
+    - If the first character following the `[` is a `!` or a `^` then any character not enclosed is matched.
+    - A `-` may be matched by including it as the first or last character in the set.
+    - A `]` may be matched by including it as the first character in the set.
+    - character classes can be specified using the syntax `[:class:]`, where class is one of the following classes defined in the POSIX standard:
 ```shell
 alnum   alpha   ascii   blank   cntrl   digit   graph   lower
 print   punct   space   upper   word    xdigit
@@ -123,7 +123,7 @@ print   punct   space   upper   word    xdigit
 
 ## Command Line Editing
 
-#### Emacs Mode
+### Emacs Mode
 - You can pass numeric arguments to Readline commands. The general way to pass numeric arguments to a command is to type meta digits before the command.
 
 **Movement**
@@ -200,7 +200,7 @@ print   punct   space   upper   word    xdigit
 - `\C x~` Possible username completions
 - `\C x$` Possible variable completions
 
-#### Readline Init File
+### Readline Init File
 - `\C-x\C-r` Reread init file.
 
 
@@ -249,14 +249,14 @@ print   punct   space   upper   word    xdigit
 - `-z string` True if the length of string is zero.
 - `-n string` or `string` True if the length of string is non-zero.
 - `string1 == string2` or `string1 = string2` True if the strings are equal.
-  - `=` should be used with the test command for POSIX conformance.
+    - `=` should be used with the test command for POSIX conformance.
 - `string1 != string2` True if the strings are not equal.
-  - When the `==` and `!=` operators are used between `[[` and `]]`, the string to the right of the operator is considered a pattern. When you use `=~`, the string to the right of the operator is considered a POSIX extended regular expression pattern. The return value is 0 if the string matches (`==` or `~=`) or does not match (`!=`) the pattern, and 1 otherwise.
-  - You can quote any part of the pattern to force the quoted portion to be matched literally instead of as a regular expression. If the pattern is stored in a shell variable, quoting the variable expansion forces the entire pattern to be matched literally.
+    - When the `==` and `!=` operators are used between `[[` and `]]`, the string to the right of the operator is considered a pattern. When you use `=~`, the string to the right of the operator is considered a POSIX extended regular expression pattern. The return value is 0 if the string matches (`==` or `~=`) or does not match (`!=`) the pattern, and 1 otherwise.
+    - You can quote any part of the pattern to force the quoted portion to be matched literally instead of as a regular expression. If the pattern is stored in a shell variable, quoting the variable expansion forces the entire pattern to be matched literally.
 - `string1 < string2` True if string1 sorts before string2 lexicographically.
 - `string1 > string2` True if string1 sorts after string2 lexicographically.
-  - When used with `[[`, the `<` and `>` operators sort lexicographically using the current locale.
-  - When used with `test` or `[`, the `<` and `>` operators sort lexicographically using ASCII ordering.
+    - When used with `[[`, the `<` and `>` operators sort lexicographically using the current locale.
+    - When used with `test` or `[`, the `<` and `>` operators sort lexicographically using ASCII ordering.
 
 **Integer**
 - `arg1 -eq arg2` True if arg1 is equal to arg2.
@@ -281,7 +281,7 @@ print   punct   space   upper   word    xdigit
 
 
 ## Compound Commands
-#### Looping Constructs
+### Looping Constructs
 **until**
 ```shell
 until test-commands; do consequent-commands; done
@@ -314,7 +314,7 @@ for (( expr1 ; expr2 ; expr3 )) ; do commands ; done
 - Each time expr2 evaluates to a non-zero value, commands are executed and the arithmetic expression expr3 is evaluated.
 
 
-#### Conditional Constructs
+### Conditional Constructs
 **if**
 ```shell
 if test-commands; then
@@ -372,7 +372,7 @@ do
 done
 ```
 
-#### Grouping Commands
+### Grouping Commands
 
 **( *list* )**
 - Placing a list of commands between parentheses forces the shell to create a subshell, and each of the commands in list is executed in that subshell environment.
@@ -391,17 +391,17 @@ done
 
 ## Expansions
 - The order of expansions is:
-  - brace expansion
-  - tilde expansion
-  - parameter and variable expansion
-  - arithmetic expansion
-  - command substitution (done in a left-to-right fashion)
-  - word splitting
-  - filename expansion
+    - brace expansion
+    - tilde expansion
+    - parameter and variable expansion
+    - arithmetic expansion
+    - command substitution (done in a left-to-right fashion)
+    - word splitting
+    - filename expansion
 - On systems that can support it, there is an additional expansion available: process substitution. This is performed at the same time as tilde, parameter, variable, and arithmetic expansion and command substitution.
 - After all expansions, quote removal is performed.
 
-#### Brace Expansion
+### Brace Expansion
 - Brace expansions may be nested.
 - Patterns to be brace expanded take the form of either a series of comma-separated strings or a sequence expression between a pair of braces.
 - A sequence expression takes the form `{x..y[..incr]}`, where x and y are either integers or letters, and incr, an optional increment, is an integer.
@@ -411,7 +411,7 @@ done
 - If the generated list is ascending, but incr is negative, the increment is actually positive.
 - If incr is 0, then the increment is actually 1 or -1.
 
-#### Tilde Expansion
+### Tilde Expansion
 - If a word begins with an unquoted tilde character (`~`), all of the characters up to the first unquoted slash (or all characters, if there is no unquoted slash) are considered a tilde-prefix.
 - Each variable assignment is checked for unquoted tilde-prefixes immediately following a `:` or the first `=`. In these cases, tilde expansion is also performed.
 - If none of the characters in the tilde-prefix are quoted, the characters in the tilde-prefix following the tilde are treated as a possible login name.
@@ -420,7 +420,7 @@ done
 - If the tilde-prefix is `~-`, the value of the shell variable `OLDPWD`, if it is set, is substituted.
 - If the tilde-prefix is `~+N` or `~-N`, the corresponding element from the directory stack is substituted, which is the string that would be displayed by `dirs +N` or `dirs -N`. If the tilde-prefix consists of a number without a leading `+` or `-`, `+` is assumed.
 
-#### Shell Parameter Expansion
+### Shell Parameter Expansion
 - The basic form of parameter expansion is `$parameter` or `${parameter}`. The value of parameter is substituted. The braces are required when parameter is a positional parameter with more than one digit, or when parameter is followed by a character that is not to be interpreted as part of its name.
 - The only times a variable appears "naked" -- without the `$` prefix -- is when declared or assigned, when unset, when exported, in an arithmetic expression within double parentheses `(( ... ))`, or in the special case of a variable representing a signal
 - If the first character of parameter is `!`, Bash would use the value formed by expanding the rest of parameter as the new parameter, which is known as indirect expansion. The value is subject to tilde expansion, parameter expansion, command substitution, and arithmetic expansion. Indirect expansion is not recursive.
@@ -433,11 +433,11 @@ done
 <br>
 
 - `${parameter:offset[:length]}`
-  - This is referred to as Substring Expansion. It expands to up to length characters of the value of parameter starting at the character specified by offset (Substring indexing is zero-based). If length is omitted, it expands to the end of the value.
-  - length and offset are arithmetic expressions.
-  - If offset evaluates to a number less than zero, the value is used as an offset in characters from the end of the value of parameter.
-  - If length evaluates to a number less than zero, it is interpreted as an offset in characters from the end of the value of parameter rather than a number of characters, and the expansion is the characters between offset and that result.
-  - a negative offset must be separated from the colon by at least one space to avoid being confused with the `:-` expansion.
+    - This is referred to as Substring Expansion. It expands to up to length characters of the value of parameter starting at the character specified by offset (Substring indexing is zero-based). If length is omitted, it expands to the end of the value.
+    - length and offset are arithmetic expressions.
+    - If offset evaluates to a number less than zero, the value is used as an offset in characters from the end of the value of parameter.
+    - If length evaluates to a number less than zero, it is interpreted as an offset in characters from the end of the value of parameter rather than a number of characters, and the expansion is the characters between offset and that result.
+    - a negative offset must be separated from the colon by at least one space to avoid being confused with the `:-` expansion.
 - `${#parameter}` The length of the expanded value of parameter is substituted.
 - `${parameter#word}` or `${parameter##word}` If the pattern produced from expaned word matches the **beginning** of the expanded value of parameter, then the shortest matching pattern (the `#` case) or the longest matching pattern (the `##` case) will be deleted.
 - `${parameter%word}` or `${parameter%%word}` If the pattern produced from expaned word matches the **trailing portion** of the expanded value of parameter, then the shortest matching pattern (the `%` case) or the longest matching pattern (the `%%` case) will be deleted.
@@ -447,44 +447,44 @@ done
 - `${parameter//pattern/string}`
 - `${parameter/#pattern/string}`
 - `${parameter/%pattern/string}`
-  - Parameter is expanded and the longest match of pattern against its value is replaced with string.
-  - `pattern` undergoes filename expansion.
-  - `string` undergoes tilde expansion, parameter and variable expansion, arithmetic expansion, command and process substitution, and quote removal.
-  - In the first form above, only the first match is replaced.
-  - In the second form above, all matches of pattern are replaced.
-  - In the third form above, it must match at the beginning of the expanded value of parameter.
-  - In the fourth form above, it must match at the end of the expanded value of parameter.
-  - If string is null, matches of pattern are deleted and the `/` following pattern may be omitted.
+    - Parameter is expanded and the longest match of pattern against its value is replaced with string.
+    - `pattern` undergoes filename expansion.
+    - `string` undergoes tilde expansion, parameter and variable expansion, arithmetic expansion, command and process substitution, and quote removal.
+    - In the first form above, only the first match is replaced.
+    - In the second form above, all matches of pattern are replaced.
+    - In the third form above, it must match at the beginning of the expanded value of parameter.
+    - In the fourth form above, it must match at the end of the expanded value of parameter.
+    - If string is null, matches of pattern are deleted and the `/` following pattern may be omitted.
 - `${parameter^pattern}`
 - `${parameter^^pattern}`
 - `${parameter,pattern}`
 - `${parameter,,pattern}`
-  - The pattern is expanded to produce a pattern just as in filename expansion. The pattern should not attempt to match more than one character.
-  - `^` converts lowercase to uppercase; `,` converts matching uppercase to lowercase.
-  - The `^^` and `,,` expansions convert each matched character in the expanded value; the `^` and `,` expansions match and convert only the first character in the expanded value.
-  - If pattern is omitted, it is treated like a `?`, which matches every character.
+    - The pattern is expanded to produce a pattern just as in filename expansion. The pattern should not attempt to match more than one character.
+    - `^` converts lowercase to uppercase; `,` converts matching uppercase to lowercase.
+    - The `^^` and `,,` expansions convert each matched character in the expanded value; the `^` and `,` expansions match and convert only the first character in the expanded value.
+    - If pattern is omitted, it is treated like a `?`, which matches every character.
 <br>
 
 - `${parameter@operator}`
-  - `U` The expansion is a string that is the value of parameter with lowercase alphabetic characters converted to uppercase.
-  - `u` The expansion is a string that is the value of parameter with the first character converted to uppercase, if it is alphabetic.
-  - `L` The expansion is a string that is the value of parameter with uppercase alphabetic characters converted to lowercase.
-  - `Q` The expansion is a string that is the value of parameter quoted in a format that can be reused as input.
-  - `E` The expansion is a string that is the value of parameter with backslash escape sequences expanded as with the $'…' quoting mechanism.
-  - `P` The expansion is a string that is the result of expanding the value of parameter as if it were a prompt string (see Controlling the Prompt).
-  - `A` The expansion is a string in the form of an assignment statement or declare command that, if evaluated, will recreate parameter with its attributes and value.
-  - `K` Produces a possibly-quoted version of the value of parameter, except that it prints the values of indexed and associative arrays as a sequence of quoted key-value pairs (see Arrays).
-  - `a` The expansion is a string consisting of flag values representing parameter’s attributes.
-  - `k` Like the `K` transformation, but expands the keys and values of indexed and associative arrays to separate words after word splitting.
+    - `U` The expansion is a string that is the value of parameter with lowercase alphabetic characters converted to uppercase.
+    - `u` The expansion is a string that is the value of parameter with the first character converted to uppercase, if it is alphabetic.
+    - `L` The expansion is a string that is the value of parameter with uppercase alphabetic characters converted to lowercase.
+    - `Q` The expansion is a string that is the value of parameter quoted in a format that can be reused as input.
+    - `E` The expansion is a string that is the value of parameter with backslash escape sequences expanded as with the $'…' quoting mechanism.
+    - `P` The expansion is a string that is the result of expanding the value of parameter as if it were a prompt string (see Controlling the Prompt).
+    - `A` The expansion is a string in the form of an assignment statement or declare command that, if evaluated, will recreate parameter with its attributes and value.
+    - `K` Produces a possibly-quoted version of the value of parameter, except that it prints the values of indexed and associative arrays as a sequence of quoted key-value pairs (see Arrays).
+    - `a` The expansion is a string consisting of flag values representing parameter’s attributes.
+    - `k` Like the `K` transformation, but expands the keys and values of indexed and associative arrays to separate words after word splitting.
 
-#### Arithmetic Expansion
+### Arithmetic Expansion
 ```shell
 $(( expression ))
 ```
 - All tokens in the expression undergo parameter and variable expansion, command substitution, and quote removal. The result is treated as the arithmetic expression to be evaluated.
 - Arithmetic expansions may be nested.
 
-#### Command Substitution
+### Command Substitution
 ```shell
 $(command)
 `command`
@@ -493,23 +493,23 @@ $(command)
 - Embedded newlines are not deleted, but they may be removed during word splitting.
 - The command substitution `$(cat file)` can be replaced by the equivalent but faster `$(< file)`.
 
-#### Process Substitution
+### Process Substitution
 - Process substitution allows a process’s input or output to be referred to using a filename. This filename is passed as an argument to the current command as the result of the expansion.
 - `>(list)` Writing to the file will provide input for list.
 - `<(list)` The file passed as an argument should be read to obtain the output of list.
 
-#### Word Splitting
+### Word Splitting
 - The shell scans the results of parameter expansion, command substitution, and arithmetic expansion that did not occur within double quotes for word splitting.
 - The shell treats each character of `$IFS` as a delimiter, and splits the results of the other expansions into words using these characters as field terminators.
 - If `IFS` is unset, or its value is exactly `<space><tab><newline>`, the default, then sequences of `<space>`, `<tab>`, and `<newline>` at the beginning and end of the results of the previous expansions are ignored, and any sequence of IFS characters not at the beginning or end serves to delimit words.
 - Explicit null arguments ("" or '') are retained and passed to commands as empty strings. Unquoted implicit null arguments, resulting from the expansion of parameters that have no values, are removed. If a parameter with no value is expanded within double quotes, a null argument results and is retained and passed to a command as an empty string. When a quoted null argument appears as part of a word whose expansion is non-null, the null argument is removed.
 
-#### Filename Expansion
+### Filename Expansion
 - After word splitting, unless the `-f` option has been set, Bash scans each word for the characters `*`, `?`, and `[`. If one of these characters appears, and is not quoted, then the word is regarded as a pattern, and replaced with an alphabetically sorted list of filenames matching the pattern.
 - When a pattern is used for filename expansion, the character `.` at the start of a filename or immediately following a slash must be matched explicitly, unless the shell option `dotglob` is set.
 - When matching a filename, the slash character must always be matched explicitly by a slash in the pattern.
 
-#### Quote Removal
+### Quote Removal
 After the preceding expansions, all unquoted occurrences of the characters `\`, `'`, and `"` that did not result from one of the above expansions are removed.
 
 
@@ -519,7 +519,7 @@ After the preceding expansions, all unquoted occurrences of the characters `\`, 
 
 ## Builtin
 
-#### ., source
+### ., source
 **.**
 ```shell
 . filename [arguments]
@@ -530,7 +530,7 @@ After the preceding expansions, all unquoted occurrences of the characters `\`, 
 **source**
 - A synonym for `.`
 
-#### command, eval
+### command, eval
 **command**
 ```shell
 command [-pVv] command [arguments …]
@@ -548,14 +548,14 @@ eval [arguments]
 - If there are no arguments or only empty arguments, the return status is zero.
 
 
-#### :
+### :
 ```shell
 : [arguments]
 ```
 - Do nothing beyond expanding arguments and performing redirections.
 - The return status is zero.
 
-#### alias, unalias
+### alias, unalias
 ```shell
 alias [-p] [name[=value] …]
 ```
@@ -569,7 +569,7 @@ unalias [-a] [name … ]
 - Remove each name from the list of aliases.
 - If `-a` is supplied, all aliases are removed.
 
-#### bind
+### bind
 - `-m keymap` Use `keymap` as the keymap to be affected by the subsequent bindings. Acceptable keymap names are `emacs`, `emacs-standard`, `emacs-meta`, `emacs-ctlx`, `vi`, `vi-move`, `vi-command`, and `vi-insert`.
 - `-l` List the names of all Readline functions.
 - `-p` Display Readline function names and bindings in the form of Readline initialization file.
@@ -585,7 +585,7 @@ unalias [-a] [name … ]
 - `-x keyseq:shell-command` Cause shell-command to be executed whenever keyseq is entered.
 - `-X` List all key sequences bound to shell commands and the associated commands in a format that can be reused as input.
 
-#### break, continue, exit, return
+### break, continue, exit, return
 **break**
 ```shell
 break [n]
@@ -614,7 +614,7 @@ return [n]
 - Cause a shell function to stop executing and return the value n to its caller.
 - If n is not supplied, the return value is the exit status of the last command executed in the function.
 
-#### builtin
+### builtin
 ```shell
 builtin [shell-builtin [args]]
 ```
@@ -622,7 +622,7 @@ builtin [shell-builtin [args]]
 - This is useful when defining a shell function with the same name as a shell builtin.
 - The return status is non-zero if shell-builtin is not a shell builtin command.
 
-#### caller
+### caller
 ```shell
 caller [expr]
 ```
@@ -630,7 +630,7 @@ caller [expr]
 - Without expr, caller displays the line number and source filename of the current subroutine call.
 - If a non-negative integer is supplied as expr, caller displays the line number, subroutine name, and source file corresponding to that position in the current execution call stack.
 
-#### cd
+### cd
 ```shell
 cd [-L|[-P [-e]] [-@] [directory]
 ```
@@ -648,7 +648,7 @@ pwd [-LP]
 - If the `-P` option is supplied, the pathname printed will not contain symbolic links.
 
 
-#### declare, export, local, readonly, typeset
+### declare, export, local, readonly, typeset
 **declare**
 ```shell
 declare [-aAfFgiIlnrtux] [-p] [name[=value] …]
@@ -707,7 +707,7 @@ typeset [-afFgrxilnrtux] [-p] [name[=value] …]
 - The `typeset` command is supplied for compatibility with the Korn shell. It is a synonym for the `declare` builtin command.
 
 
-#### echo
+### echo
 ```shell
 echo [-neE] [arg …]
 ```
@@ -715,7 +715,7 @@ echo [-neE] [arg …]
 - `-e` Enable the interpretation of the following backslash-escaped characters.
 - `-E` Disable the interpretation of these escape characters.
 
-#### enable
+### enable
 ```shell
 enable [-a] [-dnps] [-f filename] [name …]
 ```
@@ -725,7 +725,7 @@ enable [-a] [-dnps] [-f filename] [name …]
 - The `-f` option means to load the new builtin command `name` from shared object filename. The `-d` option will delete a builtin loaded with `-f`.
 - The `-s` option restricts enable to the POSIX special builtins. If `-s` is used with `-f`, the new builtin becomes a special builtin.
 
-#### help
+### help
 ```shell
 help [-dms] [pattern]
 ```
@@ -735,7 +735,7 @@ help [-dms] [pattern]
 - `-m` Display the description of each pattern in a manpage-like format
 - `-s` Display only a short usage synopsis for each pattern
 
-#### let, test, [
+### let, test, [
 **let**
 ```shell
 let expression [expression …]
@@ -750,7 +750,7 @@ test expr
 - Evaluate a conditional expression expr and return a status of 0 (true) or 1 (false).
 - Each operator and operand must be a separate argument.
 
-#### mapfile, readarray
+### mapfile, readarray
 **mapfile**
 ```shell
 mapfile [-d delim] [-n count] [-O origin] [-s count] [-t] [-u fd] [array]
@@ -764,7 +764,7 @@ mapfile [-d delim] [-n count] [-O origin] [-s count] [-t] [-u fd] [array]
 - `-t` Remove a trailing delim (default newline) from each line read.
 - `-u` Read lines from file descriptor fd instead of the standard input.
 
-#### read
+### read
 ```shell
 read [-ers] [-a aname] [-d delim] [-i text] [-n nchars]
     [-N nchars] [-p prompt] [-t timeout] [-u fd] [name …]
@@ -787,7 +787,7 @@ read [-ers] [-a aname] [-d delim] [-i text] [-n nchars]
 **readarray**
 - A synonym for `mapfile`.
 
-#### printf
+### printf
 ```shell
 printf [-v var] format [arguments]
 ```

@@ -1,25 +1,25 @@
 
 - [Deep Learning](#deep-learning)
-  - [Linear Classfier](#linear-classfier)
-  - [Neural Network](#neural-network)
-    - [Activation Functions](#activation-functions)
-    - [Perceptron](#perceptron)
-    - [Multi-layer Perceptron](#multi-layer-perceptron)
-  - [Convolutional Neural Network](#convolutional-neural-network)
-    - [Convolution Layer](#convolution-layer)
-    - [Pooling Layer](#pooling-layer)
-  - [Training Neural Network](#training-neural-network)
-    - [Backpropagation](#backpropagation)
-    - [Optimizer](#optimizer)
-    - [Weight Initialization](#weight-initialization)
-      - [Xavier Initialization](#xavier-initialization)
-      - [Kaiming Initialization](#kaiming-initialization)
-    - [Batch Normalization](#batch-normalization)
-    - [Regularization](#regularization)
-    - [Data Augmentation](#data-augmentation)
-  - [Babysitting Learning](#babysitting-learning)
-    - [Sanity Check](#sanity-check)
-    - [Hyperparameter Optimization](#hyperparameter-optimization)
+    - [Linear Classfier](#linear-classfier)
+    - [Neural Network](#neural-network)
+        - [Activation Functions](#activation-functions)
+        - [Perceptron](#perceptron)
+        - [Multi-layer Perceptron](#multi-layer-perceptron)
+    - [Convolutional Neural Network](#convolutional-neural-network)
+        - [Convolution Layer](#convolution-layer)
+        - [Pooling Layer](#pooling-layer)
+    - [Training Neural Network](#training-neural-network)
+        - [Backpropagation](#backpropagation)
+        - [Optimizer](#optimizer)
+        - [Weight Initialization](#weight-initialization)
+            - [Xavier Initialization](#xavier-initialization)
+            - [Kaiming Initialization](#kaiming-initialization)
+        - [Batch Normalization](#batch-normalization)
+        - [Regularization](#regularization)
+        - [Data Augmentation](#data-augmentation)
+    - [Babysitting Learning](#babysitting-learning)
+        - [Sanity Check](#sanity-check)
+        - [Hyperparameter Optimization](#hyperparameter-optimization)
 
 
 
@@ -61,24 +61,24 @@ For multiple outputs, we can use
 $$f(x) = \sigma(Wx + b) $$
 
 - Sigmoid: $$\sigma(x) = \frac{1}{1 + e^{-x}}$$
-  - Problems: Saturated neurons kill the gradients; outputs are not zero-centered; compute expensive
+    - Problems: Saturated neurons kill the gradients; outputs are not zero-centered; compute expensive
 - tanh: $$\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$$
-  - Advantages: zero centered
-  - Problems: still kills gradients when saturated
+    - Advantages: zero centered
+    - Problems: still kills gradients when saturated
 - Rectified Linear Unit (ReLU): $$\max(0, x)$$
-  - Advantages: Does not saturate; Very computationally efficient; Converges much faster than sigmoid/tanh in practice
-  - Problems: Not zero-centered; big learning rate may cause dead ReLU problem 
+    - Advantages: Does not saturate; Very computationally efficient; Converges much faster than sigmoid/tanh in practice
+    - Problems: Not zero-centered; big learning rate may cause dead ReLU problem 
 - Leaky ReLU or Parametric Rectifier (PReLU, $\alpha$ is learned): $$\max(0.01x, x), \quad \max(\alpha x, x)$$
-  - Advantages: Does not saturate; Computationally efficient; Converges much faster than sigmoid/tanh in practice; will not die
-  - Problems: Not zero-centered; big learning rate may cause dead ReLU problem 
+    - Advantages: Does not saturate; Computationally efficient; Converges much faster than sigmoid/tanh in practice; will not die
+    - Problems: Not zero-centered; big learning rate may cause dead ReLU problem 
 - Exponential Linear Unit (ELU): $$\begin{cases} x & x \gt 0 \\ \alpha(e^x - 1) & x \le 0 \end{cases}$$
-  - Advantages: All benefits of ReLU; Closer to zero mean outputs; Negative saturation regime compared with Leaky ReLU adds some robustness to noise
-  - Problems: Computation requires exp()
+    - Advantages: All benefits of ReLU; Closer to zero mean outputs; Negative saturation regime compared with Leaky ReLU adds some robustness to noise
+    - Problems: Computation requires exp()
 - Scaled Exponential Linear Unit (SELU): $$\begin{cases} \lambda x & x \gt 0 \\ \lambda\alpha(e^x - 1) & x \le 0 \end{cases}$$
-  - Advantages: Works better for deep networks; "Self-normalizing" property; Can train deep SELU networks without BatchNorm
+    - Advantages: Works better for deep networks; "Self-normalizing" property; Can train deep SELU networks without BatchNorm
 - Maxout: $$\max(w_1^Tx + b_1, w_2^Tx + b_2)$$
-  - Advantages: Generalizes ReLU and Leaky ReLU; Linear Regime; Does not saturate; Does not die
-  - Problems: Doubles the number of parameters/neuron
+    - Advantages: Generalizes ReLU and Leaky ReLU; Linear Regime; Does not saturate; Does not die
+    - Problems: Doubles the number of parameters/neuron
 
 <br>
 
@@ -308,9 +308,9 @@ One method is to add a regularization term to the loss function
 $$L(W) = \frac{1}{N}\sum_{i=1}^{N} L_i(f(x_i, W), y_i) + \lambda R(W)$$
 
 - **L1 regularization**: $R(W) = \sum_i \sum_j |W_{ij}|$
-  - L1 regularization tends to generate sparse solutions, that is, causing more weights to become 0
+    - L1 regularization tends to generate sparse solutions, that is, causing more weights to become 0
 - **L2 regularization**: $R(W) = \sum_i \sum_j W_{ij}^2$
-  - L2 regularization likes to spread out the weights
+    - L2 regularization likes to spread out the weights
 - Elastic net (L1 + L2): $R(W) = \sum_i \sum_j \beta W_{ij}^2 + |W_{ij}|$
 
 **Max Norm Constraints**

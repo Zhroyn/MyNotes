@@ -1,35 +1,35 @@
 
 - [Graphs](#graphs)
-  - [10.1 Graphs and Graph Models](#101-graphs-and-graph-models)
-    - [Undirected Graph](#undirected-graph)
-    - [Directed Graph](#directed-graph)
-  - [10.2 Graph Terminology and Special Types of Graphs](#102-graph-terminology-and-special-types-of-graphs)
-    - [Terminology for Undirected Graph](#terminology-for-undirected-graph)
-    - [Terminology for Directed Graph](#terminology-for-directed-graph)
-    - [Some Special Simple Graphs](#some-special-simple-graphs)
-    - [Bipartite Graphs](#bipartite-graphs)
-    - [New Graphs from Old](#new-graphs-from-old)
-  - [10.3 Representing Graphs and Graph Isomorphism](#103-representing-graphs-and-graph-isomorphism)
-    - [Representing Graphs](#representing-graphs)
-    - [Isomorphism of Graphs](#isomorphism-of-graphs)
-  - [10.4 Connectivity](#104-connectivity)
-    - [Paths](#paths)
-    - [Connectedness in Undirected Graphs](#connectedness-in-undirected-graphs)
-    - [Connectedness in Directed Graphs](#connectedness-in-directed-graphs)
-  - [10.5 Euler and Hamilton Paths](#105-euler-and-hamilton-paths)
-    - [Euler Paths and Circuits](#euler-paths-and-circuits)
-    - [Hamilton Paths and Circuits](#hamilton-paths-and-circuits)
-  - [10.6 Shortest-Path Problems](#106-shortest-path-problems)
-  - [10.7 Planar Graphs](#107-planar-graphs)
-    - [Euler's Formula](#eulers-formula)
-    - [Kuratowski’s Theorem](#kuratowskis-theorem)
-  - [10.8 Graph Coloring](#108-graph-coloring)
-  - [Network Flow](#network-flow)
-    - [Max Flow Problem](#max-flow-problem)
-    - [Max-Flow Min-cut Theorem](#max-flow-min-cut-theorem)
-    - [Residual Graph](#residual-graph)
-    - [Augmenting Path Algorithm](#augmenting-path-algorithm)
-    - [Ford-Fulkerson Algorithm](#ford-fulkerson-algorithm)
+    - [10.1 Graphs and Graph Models](#101-graphs-and-graph-models)
+        - [Undirected Graph](#undirected-graph)
+        - [Directed Graph](#directed-graph)
+    - [10.2 Graph Terminology and Special Types of Graphs](#102-graph-terminology-and-special-types-of-graphs)
+        - [Terminology for Undirected Graph](#terminology-for-undirected-graph)
+        - [Terminology for Directed Graph](#terminology-for-directed-graph)
+        - [Some Special Simple Graphs](#some-special-simple-graphs)
+        - [Bipartite Graphs](#bipartite-graphs)
+        - [New Graphs from Old](#new-graphs-from-old)
+    - [10.3 Representing Graphs and Graph Isomorphism](#103-representing-graphs-and-graph-isomorphism)
+        - [Representing Graphs](#representing-graphs)
+        - [Isomorphism of Graphs](#isomorphism-of-graphs)
+    - [10.4 Connectivity](#104-connectivity)
+        - [Paths](#paths)
+        - [Connectedness in Undirected Graphs](#connectedness-in-undirected-graphs)
+        - [Connectedness in Directed Graphs](#connectedness-in-directed-graphs)
+    - [10.5 Euler and Hamilton Paths](#105-euler-and-hamilton-paths)
+        - [Euler Paths and Circuits](#euler-paths-and-circuits)
+        - [Hamilton Paths and Circuits](#hamilton-paths-and-circuits)
+    - [10.6 Shortest-Path Problems](#106-shortest-path-problems)
+    - [10.7 Planar Graphs](#107-planar-graphs)
+        - [Euler's Formula](#eulers-formula)
+        - [Kuratowski’s Theorem](#kuratowskis-theorem)
+    - [10.8 Graph Coloring](#108-graph-coloring)
+    - [Network Flow](#network-flow)
+        - [Max Flow Problem](#max-flow-problem)
+        - [Max-Flow Min-cut Theorem](#max-flow-min-cut-theorem)
+        - [Residual Graph](#residual-graph)
+        - [Augmenting Path Algorithm](#augmenting-path-algorithm)
+        - [Ford-Fulkerson Algorithm](#ford-fulkerson-algorithm)
 
 
 
@@ -259,12 +259,12 @@ A connected multigraph has an Euler path but not an Euler circuit if and only if
 
 **Theorem for Directed Graph**
 A directed multigraph has an Euler circuit if and only if 
-  -  the graph is weakly connected 
-  -  the in-degree and out-degree of each vertex are equal.
+    -  the graph is weakly connected 
+    -  the in-degree and out-degree of each vertex are equal.
 
 A directed multigraph has an Euler path but not an Euler circuit if and only if 
-  -  the graph is weakly connected 
-  -  the in-degree and out-degree of each vertex are equal for all but two vertices, one that has in-degree 1 larger than its out-degree and the other that has out-degree 1 larger than its in-degree. 
+    -  the graph is weakly connected 
+    -  the in-degree and out-degree of each vertex are equal for all but two vertices, one that has in-degree 1 larger than its out-degree and the other that has out-degree 1 larger than its in-degree. 
 
 <br>
 

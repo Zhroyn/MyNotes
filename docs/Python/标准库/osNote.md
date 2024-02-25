@@ -69,7 +69,7 @@
 ### 执行命令
 - `os.system(command)` 在一个子进程中执行命令并返回状态码，父进程会阻塞
 - `os.popen(cmd, mode='r', buffering=-1)` 创建一个管道并执行命令
-  - `pipe = os.popen("ls"); result = pipe.read()`
+    - `pipe = os.popen("ls"); result = pipe.read()`
 
 
 
@@ -100,24 +100,24 @@
 
 ### 查看与修改文件权限
 - `os.access(path, mode)` 查看是否存在或查看权限
-  - `os.F_OK` 存在
-  - `os.R_OK` 可读
-  - `os.W_OK` 可写
-  - `os.X_OK` 可执行
+    - `os.F_OK` 存在
+    - `os.R_OK` 可读
+    - `os.W_OK` 可写
+    - `os.X_OK` 可执行
 - `os.chmod(path, mode)` 修改文件权限
-  - `stat.S_IREAD` 所有者读权限
-  - `stat.S_IWRITE` 所有者写权限
-  - `stat.S_IEXEC` 所有者执行权限
-  - `stat.S_IRUSR` 所有者读权限
-  - `stat.S_IWUSR` 所有者写权限
-  - `stat.S_IXUSR` 所有者执行权限
-  - `stat.S_IRWXU` 所有者全部权限
-  - `stat.S_IRGRP` 组用户读权限
-  - `stat.S_IWGRP` 组用户写权限
-  - `stat.S_IXGRP` 组用户执行权限
-  - `stat.S_IRWXG` 组用户全部权限
-  - `stat.S_IROTH` 其他用户读权限
-  - `stat.S_IWOTH` 其他用户写权限
-  - `stat.S_IXOTH` 其他用户执行权限
-  - `stat.S_IRWXO` 其他用户全部权限
+    - `stat.S_IREAD` 所有者读权限
+    - `stat.S_IWRITE` 所有者写权限
+    - `stat.S_IEXEC` 所有者执行权限
+    - `stat.S_IRUSR` 所有者读权限
+    - `stat.S_IWUSR` 所有者写权限
+    - `stat.S_IXUSR` 所有者执行权限
+    - `stat.S_IRWXU` 所有者全部权限
+    - `stat.S_IRGRP` 组用户读权限
+    - `stat.S_IWGRP` 组用户写权限
+    - `stat.S_IXGRP` 组用户执行权限
+    - `stat.S_IRWXG` 组用户全部权限
+    - `stat.S_IROTH` 其他用户读权限
+    - `stat.S_IWOTH` 其他用户写权限
+    - `stat.S_IXOTH` 其他用户执行权限
+    - `stat.S_IRWXO` 其他用户全部权限
 

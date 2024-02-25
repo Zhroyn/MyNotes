@@ -1,8 +1,8 @@
 - [Flexbox](#flexbox)
-  - [Flexbox](#flexbox-1)
+    - [Flexbox](#flexbox-1)
 - [Sizing](#sizing)
-  - [Width](#width)
-  - [Max Width](#max-width)
+    - [Width](#width)
+    - [Max Width](#max-width)
 
 
 
@@ -11,17 +11,17 @@
 ## Flexbox
 ### Flexbox
 - `flex-initial`
-  - flex: 0 1 auto
-  - allow a flex item to shrink but not grow, taking into account its initial size
+    - flex: 0 1 auto
+    - allow a flex item to shrink but not grow, taking into account its initial size
 - `flex-1`
-  - flex: 1 1 0%;
-  - allow a flex item to grow and shrink as needed, ignoring its initial size
+    - flex: 1 1 0%;
+    - allow a flex item to grow and shrink as needed, ignoring its initial size
 - `flex-auto`
-  - flex: 1 1 auto;
-  - allow a flex item to grow and shrink, taking into account its initial size
+    - flex: 1 1 auto;
+    - allow a flex item to grow and shrink, taking into account its initial size
 - `flex-none`
-  - flex: none;
-  - prevent a flex item from growing or shrinking
+    - flex: none;
+    - prevent a flex item from growing or shrinking
 
 <br>
 

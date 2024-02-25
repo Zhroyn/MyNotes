@@ -1,15 +1,15 @@
 - [控件](#控件)
-  - [应用程序](#应用程序)
-  - [窗口桌面](#窗口桌面)
-  - [文本](#文本)
-  - [输入框](#输入框)
-  - [按钮](#按钮)
-  - [布局](#布局)
-    - [QBoxLayout](#qboxlayout)
-    - [QGroupBox](#qgroupbox)
-    - [QGridLayout](#qgridlayout)
-    - [QFormLayout](#qformlayout)
-    - [QStackedLayout](#qstackedlayout)
+    - [应用程序](#应用程序)
+    - [窗口桌面](#窗口桌面)
+    - [文本](#文本)
+    - [输入框](#输入框)
+    - [按钮](#按钮)
+    - [布局](#布局)
+        - [QBoxLayout](#qboxlayout)
+        - [QGroupBox](#qgroupbox)
+        - [QGridLayout](#qgridlayout)
+        - [QFormLayout](#qformlayout)
+        - [QStackedLayout](#qstackedlayout)
 
 
 
@@ -39,10 +39,10 @@ screen = QDesktopWidget()
 ```
 - `w.setWindowTitle(title)` 设置窗口标题
 - `w.setWindowIcon(QIcon)` 设置窗口 icon
-  - `QIcon = PyQt5.QtGui.QIcon(icon_path)` 图片会变形为正方形
+    - `QIcon = PyQt5.QtGui.QIcon(icon_path)` 图片会变形为正方形
 - `w.setLayout` 设置窗口布局
 - `w.setStyleSheet(styleSheet)` 设置窗口样式
-  - `w.setStyleSheet("background-color:green;")` 背景颜色会变为绿色
+    - `w.setStyleSheet("background-color:green;")` 背景颜色会变为绿色
 <br>
 
 - `w.resize(w, h)` 调整窗口大小
@@ -143,7 +143,7 @@ v_layout = QVBoxLayout()
 h_layout = QHBoxLayout()
 ```
 - `box.addWidget(widget, alignment=Qt.Alignment())` 添加控件
-  - 对齐标志在 `PyQt5.QtCore.Qt.AlignmentFlag`，包括 `AlignTop, AlignBottom, AlignLeft, AlignRight` `AlignCenter, AlignVCenter, AlignVCenter` 等
+    - 对齐标志在 `PyQt5.QtCore.Qt.AlignmentFlag`，包括 `AlignTop, AlignBottom, AlignLeft, AlignRight` `AlignCenter, AlignVCenter, AlignVCenter` 等
 - `box.addStretch(stretch=0)` 添加伸缩量，用以控制控件之间距离的比例
 - `box.addLayout(layout)` 添加布局
 

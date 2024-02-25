@@ -1,16 +1,16 @@
 
 - [Optimization](#optimization)
-  - [Model Fitting](#model-fitting)
-  - [Numerical Methods](#numerical-methods)
-    - [Steepest Descent Method](#steepest-descent-method)
-    - [Newton Method](#newton-method)
-    - [Gauss-Newton Method](#gauss-newton-method)
-    - [Levenberg-Marquardt Method](#levenberg-marquardt-method)
-  - [Robust Estimation](#robust-estimation)
-    - [Random Sample Concensus (RANSAC)](#random-sample-concensus-ransac)
-  - [Graphcut and MRF](#graphcut-and-mrf)
-    - [Graph Cut](#graph-cut)
-    - [Segmentation by MRF](#segmentation-by-mrf)
+    - [Model Fitting](#model-fitting)
+    - [Numerical Methods](#numerical-methods)
+        - [Steepest Descent Method](#steepest-descent-method)
+        - [Newton Method](#newton-method)
+        - [Gauss-Newton Method](#gauss-newton-method)
+        - [Levenberg-Marquardt Method](#levenberg-marquardt-method)
+    - [Robust Estimation](#robust-estimation)
+        - [Random Sample Concensus (RANSAC)](#random-sample-concensus-ransac)
+    - [Graphcut and MRF](#graphcut-and-mrf)
+        - [Graph Cut](#graph-cut)
+        - [Segmentation by MRF](#segmentation-by-mrf)
 
 
 

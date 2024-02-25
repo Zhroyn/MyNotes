@@ -1,36 +1,36 @@
 
 - [Python 笔记](#python-笔记)
-  - [内建函数](#内建函数)
-    - [迭代](#迭代)
-    - [转换](#转换)
-    - [算术](#算术)
-    - [对象](#对象)
-    - [输入输出](#输入输出)
-  - [内建类型](#内建类型)
-    - [数字](#数字)
-    - [列表和元组](#列表和元组)
-    - [范围和切片](#范围和切片)
-    - [字符串](#字符串)
-      - [查找和删除](#查找和删除)
-      - [分割和合并](#分割和合并)
-      - [转换](#转换-1)
-      - [判断](#判断)
-      - [格式化](#格式化)
-    - [字节序列](#字节序列)
-    - [集合](#集合)
-    - [字典](#字典)
-    - [文件](#文件)
-  - [命令行选项](#命令行选项)
-  - [Expressions](#expressions)
-    - [Atoms](#atoms)
-      - [Comprehensions and Generator expressions](#comprehensions-and-generator-expressions)
-      - [Yields expressions and Generator functions](#yields-expressions-and-generator-functions)
-    - [Primaries](#primaries)
-    - [Operators](#operators)
-    - [Assignment, Conditional and Lambda Expressions](#assignment-conditional-and-lambda-expressions)
-  - [Statements](#statements)
-    - [Function definitions](#function-definitions)
-      - [Decorator](#decorator)
+    - [内建函数](#内建函数)
+        - [迭代](#迭代)
+        - [转换](#转换)
+        - [算术](#算术)
+        - [对象](#对象)
+        - [输入输出](#输入输出)
+    - [内建类型](#内建类型)
+        - [数字](#数字)
+        - [列表和元组](#列表和元组)
+        - [范围和切片](#范围和切片)
+        - [字符串](#字符串)
+            - [查找和删除](#查找和删除)
+            - [分割和合并](#分割和合并)
+            - [转换](#转换-1)
+            - [判断](#判断)
+            - [格式化](#格式化)
+        - [字节序列](#字节序列)
+        - [集合](#集合)
+        - [字典](#字典)
+        - [文件](#文件)
+    - [命令行选项](#命令行选项)
+    - [Expressions](#expressions)
+        - [Atoms](#atoms)
+            - [Comprehensions and Generator expressions](#comprehensions-and-generator-expressions)
+            - [Yields expressions and Generator functions](#yields-expressions-and-generator-functions)
+        - [Primaries](#primaries)
+        - [Operators](#operators)
+        - [Assignment, Conditional and Lambda Expressions](#assignment-conditional-and-lambda-expressions)
+    - [Statements](#statements)
+        - [Function definitions](#function-definitions)
+            - [Decorator](#decorator)
 
 
 
@@ -47,30 +47,30 @@
 
 - `max/min(iterable, *[, default=obj, key=func])`
 - `max/min(arg1, arg2, *args, *[, key=func])`
-  - 若为一个可迭代对象，则返回其中的最大/最小值；若为多个参数，则返回多个参数中的最大/最小值
-  - `key` 单参数函数，返回的值用于排序
-  - `default` 当可迭代对象为 None 时返回的值
-  - `max(words, key=len)`
-  - `max(students, default={}, key=lambda x: x.get('grade'))`
+    - 若为一个可迭代对象，则返回其中的最大/最小值；若为多个参数，则返回多个参数中的最大/最小值
+    - `key` 单参数函数，返回的值用于排序
+    - `default` 当可迭代对象为 None 时返回的值
+    - `max(words, key=len)`
+    - `max(students, default={}, key=lambda x: x.get('grade'))`
 <br>
 
 - `sorted(iterable, /, *, key=None, reverse=False)` 返回一个新的升序排序的列表，不会改变原有可迭代对象
-  - `key` 单参数函数，返回的值用于排序
-  - `reverse` 若为 True 则变为降序排序
+    - `key` 单参数函数，返回的值用于排序
+    - `reverse` 若为 True 则变为降序排序
 - `reversed(seq)` 返回一个反转迭代器
 <br>
 
 - `map(func, *iterables)` 返回一个迭代器，对可迭代对象中的每一项应用指定函数，直至其中一个的可迭代对象被遍历完时停止
-  - `func` 参数个数必须与可迭代对象个数一致
-  - `map(str.lower, words)`
-  - `map(lambda x, y: x + y, [1, 2, 3], [0, 5, 3])`
+    - `func` 参数个数必须与可迭代对象个数一致
+    - `map(str.lower, words)`
+    - `map(lambda x, y: x + y, [1, 2, 3], [0, 5, 3])`
 - `filter(function or None, iterable)` 返回一个迭代器，生成 function(item) 为 True 的对象，若 function 为 None，则生成 item 为 True 的对象
-  - `filter(lambda x: x % 2 == 0, numbers)`
+    - `filter(lambda x: x % 2 == 0, numbers)`
 <br>
 
 - `enumerate(iterable, start=0)` 返回一个 enumerate 对象，每次生成一个 (count, value)，其中 count 为当前计数，value 为可迭代对象生成的值
 - `zip(*iterables, strict=False)` 返回一个 zip 对象，每次生成一个 n 元数组，直至其中一个的可迭代对象被遍历完时停止
-  - `strict` 若为 True，则会在可迭代对象长度不等时抛出 ValueError
+    - `strict` 若为 True，则会在可迭代对象长度不等时抛出 ValueError
 
 
 ### 转换
@@ -84,11 +84,11 @@
 <br>
 
 - `eval(source, globals=None, locals=None)` 将 source 字符串当作 Python 表达式进行求值
-  - `globals` 默认为当前的全局命名空间
-  - `locals` 默认为当前的局部命名空间
-  - `eval("a + b", {"a": 1, "b": 2})`
+    - `globals` 默认为当前的全局命名空间
+    - `locals` 默认为当前的局部命名空间
+    - `eval("a + b", {"a": 1, "b": 2})`
 - `repr(obj)` 返回一个对象的规范字符串表示
-  - 在大多数情况下，eval(repr(obj)) == obj，否则返回一个用尖括号括起来的字符串，其中包含类型、名称、地址等信息，或者由 \_\_repr\_\_() 方法指定
+    - 在大多数情况下，eval(repr(obj)) == obj，否则返回一个用尖括号括起来的字符串，其中包含类型、名称、地址等信息，或者由 \_\_repr\_\_() 方法指定
 - `ascii(obj)` 类似 repr()，但会使用 \\x, \\u 或 \\U 转义序列来表示非 ASCII 字符
 
 
@@ -97,9 +97,9 @@
 - `pow(base, exp, mod=None)` 返回 base**exp % mod
 - `divmod(x, y)` 返回一对商和余数，即 (x//y, x%y)，满足 div * y + mod == x
 - `round(number, ndigits=None)` 当 ndigits 为 None 时，返回整数，否则返回指定精度的小数
-  - `round(10.5)` 返回 10
-  - `round(10.5, 0)` 返回 10.0
-  - `round(10.5001, 1)` 返回 10.6
+    - `round(10.5)` 返回 10
+    - `round(10.5, 0)` 返回 10.0
+    - `round(10.5001, 1)` 返回 10.6
 
 
 ### 对象
@@ -120,8 +120,8 @@
 ### 输入输出
 - `input(prompt='')` 从标准输入读入一个字符串，会去除末尾的换行符，若用户输入 EOF 则会抛出 EOFError
 - `print(*objects, sep=' ', end='\n', file=None, flush=False)`
-  - `file` 输出的文件对象，默认为 sys.stdout
-  - `flush` 若为 True，则会立即刷新输出缓冲区
+    - `file` 输出的文件对象，默认为 sys.stdout
+    - `flush` 若为 True，则会立即刷新输出缓冲区
 
 
 
@@ -147,9 +147,9 @@
 - `bit_count()` 返回二进制形式中 1 的个数
 - `bit_length()` 返回二进制形式的长度，不考虑符号
 - `to_bytes(length=1, byteorder='big', *, signed=False)` 返回一个表示该整数的 bytes
-  - `length` 字节序列的长度，若不足会抛出 OverflowError
-  - `byteorder` 若为 `'big'`，则为大端模式，低地址存放高字节；若为 `'little'`，则为小端模式，低地址存放低字节
-  - `signed` 若为 True，则会使用补码，否则传入负数会抛出 OverflowError
+    - `length` 字节序列的长度，若不足会抛出 OverflowError
+    - `byteorder` 若为 `'big'`，则为大端模式，低地址存放高字节；若为 `'little'`，则为小端模式，低地址存放低字节
+    - `signed` 若为 True，则会使用补码，否则传入负数会抛出 OverflowError
 - `from_bytes(bytes, byteorder='big', *, signed=False)` 返回 bytes 表示的整数
 
 **浮点数方法**
@@ -203,7 +203,7 @@
 <br>
 
 - `sort(*, key=None, reverse=False)` 升序排序列表，返回 None
-  - 稳定排序，即值相同的两个元素的相对位置不变
+    - 稳定排序，即值相同的两个元素的相对位置不变
 - `reverse()` 原地反转，返回 None
 
 **元组方法**
@@ -252,8 +252,8 @@
 
 #### 分割和合并
 - `split(sep=None, maxsplit=-1)` 返回一个列表，存放分割后的子字符串
-  - `seq` 分隔符，默认为空白字符
-  - `maxsplit` 最大分割次数，返回的列表长度最大为 maxsplit + 1
+    - `seq` 分隔符，默认为空白字符
+    - `maxsplit` 最大分割次数，返回的列表长度最大为 maxsplit + 1
 - `rsplit(sep=None, maxsplit=-1)` 从末尾开始分割
 - `splitlines(keepends=False)` 返回一个用换行符分割的字符串列表，默认不保留末尾的换行符
 <br>
@@ -284,16 +284,16 @@
 - `replace(old, new, count=-1)` 替换 old 为 new，最多替换 count 次
 - `expandtabs(tabsize=8)` 将所有制表符转换为空格
 - `encode(encoding='utf-8', errors='strict')` 将字符串编码为 bytes 对象
-  - `error` 若为 `'ignore'` 则会忽略 UnicodeEncodeError
+    - `error` 若为 `'ignore'` 则会忽略 UnicodeEncodeError
 
 <br>
 
 #### 判断
 - `startswith(prefix[, start[, end]])` 若字符串开头为指定 prefix，则返回 True
 - `endswith(suffix[, start[, end]])` 若字符串末尾为指定 suffix，则返回 True
-  - `prefix` 可为一个字符串或由字符串组成元组
-  - `start` 开始检查的索引位置
-  - `end` 结束检查的索引位置
+    - `prefix` 可为一个字符串或由字符串组成元组
+    - `start` 开始检查的索引位置
+    - `end` 结束检查的索引位置
 <br>
 
 - `isalnum()` 若不为空字符串且所有字符均为字母数字，则返回 True
@@ -347,24 +347,24 @@ type            ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" |
 ```
 
 - align
-  - `<` 左对齐
-  - `>` 右对齐
-  - `=` 将填充字符放在符号之后
-  - `^` 居中对齐
+    - `<` 左对齐
+    - `>` 右对齐
+    - `=` 将填充字符放在符号之后
+    - `^` 居中对齐
 - sign
-  - `+` 正负数都应有符号
-  - `-` 只有负数有符号，默认
-  - ` ` 正数使用空格作符号，负数使用减号作符号
+    - `+` 正负数都应有符号
+    - `-` 只有负数有符号，默认
+    - ` ` 正数使用空格作符号，负数使用减号作符号
 - z, #, 0
-  - `z` 在浮点数四舍五入后，强制负的零变为正的零
-  - `#` 使用另一种替代形式，整数会加上前缀，浮点数会保留小数点
-  - `0` 会填充零并注意符号位置，相当于 `0=`
+    - `z` 在浮点数四舍五入后，强制负的零变为正的零
+    - `#` 使用另一种替代形式，整数会加上前缀，浮点数会保留小数点
+    - `0` 会填充零并注意符号位置，相当于 `0=`
 - grouping_option
-  - `,` 使用逗号作为整数或浮点数的千位分隔符
-  - `_` 使用下划线作为整数或浮点数的千位分隔符，若整数不是十进制，则每四位用下划线分隔一次
+    - `,` 使用逗号作为整数或浮点数的千位分隔符
+    - `_` 使用下划线作为整数或浮点数的千位分隔符，若整数不是十进制，则每四位用下划线分隔一次
 - type
-  - `n` 和 `d` 或 `g` 相同，除了在插入分隔符时会使用所在地区的设置
-  - `%` 和 `f` 相同，但会乘以一百并加上百分号
+    - `n` 和 `d` 或 `g` 相同，除了在插入分隔符时会使用所在地区的设置
+    - `%` 和 `f` 相同，但会乘以一百并加上百分号
 <br>
 
 - `"{:^5}".format(1)` 的结果为 `"  1  "`
@@ -403,10 +403,10 @@ type            ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" |
 - bytes 对象有着字符串的大多数方法，bytearray 对象有着字符串和列表的大多数方法
 - `fromhex(string)` 将字符串转换为对应的字节序列，不可带有前缀 0x，每个字节必须由两个字符组成，其间可以有空白字符
 - `hex([sep[, bytes_per_sep]])` 将字节序列转换为对应的十六进制字符串
-  - `sep` 分隔符，必须为单个字符或单个字节，默认为无
-  - `bytes_per_sep` 分隔符的间隔的字节数，若为正数则从右开始分隔，若为负数则从左开始分隔
+    - `sep` 分隔符，必须为单个字符或单个字节，默认为无
+    - `bytes_per_sep` 分隔符的间隔的字节数，若为正数则从右开始分隔，若为负数则从左开始分隔
 - `decode(encoding='utf-8', errors='strict')` 将字节序列解码为字符串
-  - `error` 若为 `'ignore'` 则会忽略 UnicodeDecodeError
+    - `error` 若为 `'ignore'` 则会忽略 UnicodeDecodeError
 
 
 
@@ -427,30 +427,30 @@ type            ::=  "b" | "c" | "d" | "e" | "E" | "f" | "F" | "g" | "G" | "n" |
 <br>
 
 - `update(*others)` 更新为多个集合的并集
-  - 等效于 `set |= other | ...`
+    - 等效于 `set |= other | ...`
 - `intersection_update(*others)` `set &= other & ...` 更新为多个集合的交集
-  - 等效于 `set &= other & ...`
+    - 等效于 `set &= other & ...`
 - `difference_update(*others)` `set -= other | ...` 更新为多个集合的差集
-  - 等效于 `set -= other | ...`
+    - 等效于 `set -= other | ...`
 - `symmetric_difference_update(other)` `set ^= other` 更新为多个集合的异或
-  - 等效于 `set ^= other`
+    - 等效于 `set ^= other`
 
 **集合方法**
 - `isdisjoint(other)` 若交集为空则返回 True
 - `issubset(other)` 若为 other 的子集则返回 True
-  - 等效于 `set <= other` 和 `set < other and set != other`
+    - 等效于 `set <= other` 和 `set < other and set != other`
 - `issuperset(other)` 若为 other 的超集则返回 True
-  - 等效于 `set >= other` 和 `set > other and set != other`
+    - 等效于 `set >= other` 和 `set > other and set != other`
 <br>
 
 - `union(*others)` 取多个集合的并集
-  - 等效于 `set | other | ...`
+    - 等效于 `set | other | ...`
 - `intersection(*others)` 取多个集合的交集
-  - 等效于 `set & other & ...`
+    - 等效于 `set & other & ...`
 - `difference(*others)` 取多个集合的差集
-  - 等效于 `set - other - ...`
+    - 等效于 `set - other - ...`
 - `symmetric_difference(other)` 取多个集合的异或
-  - 等效于 `set ^ other`
+    - 等效于 `set ^ other`
 
 
 
@@ -496,24 +496,24 @@ open(
 )
 ```
 - `mode` 指定打开模式，各个字符之间的顺序不重要
-  - `r` 只读模式，不可写，若文件不存在会抛出 FileNotFoundError
-  - `w` 写入模式，不可读，若文件不存在会新建文件，若文件已存在会清空原有文件
-  - `a` 追加模式，不可读，若文件不存在会新建文件，若文件已存在会移至文件末尾
-  - `x` 创建模式，不可读，若文件已存在会抛出 FileExistsError
-  - `+` 读写模式，与上述模式一起使用
-  - `t` 文本模式，与上述模式一起使用，默认
-  - `b` 二进制模式，与上述模式一起使用
+    - `r` 只读模式，不可写，若文件不存在会抛出 FileNotFoundError
+    - `w` 写入模式，不可读，若文件不存在会新建文件，若文件已存在会清空原有文件
+    - `a` 追加模式，不可读，若文件不存在会新建文件，若文件已存在会移至文件末尾
+    - `x` 创建模式，不可读，若文件已存在会抛出 FileExistsError
+    - `+` 读写模式，与上述模式一起使用
+    - `t` 文本模式，与上述模式一起使用，默认
+    - `b` 二进制模式，与上述模式一起使用
 - `errors` 指定在编解码错误时的处理方式
-  - `strict` 默认，会抛出错误，中断程序执行
-  - `ignore` 会忽略错误字符
-  - `replace` 会替换为 Unicode 替换字符 U+FFFD
-  - `xmlcharrefreplace` 会替换为相应的 XML 字符引用
-  - `backslashreplace` 会替换为 Python 字符串转义序列
+    - `strict` 默认，会抛出错误，中断程序执行
+    - `ignore` 会忽略错误字符
+    - `replace` 会替换为 Unicode 替换字符 U+FFFD
+    - `xmlcharrefreplace` 会替换为相应的 XML 字符引用
+    - `backslashreplace` 会替换为 Python 字符串转义序列
 - `newline` 指定换行符的处理方式
-  - `None` 默认，在读取和写入时使用当前操作系统的格式
-  - `""` 禁用换行转换，保持原有格式
-  - `"\n"` 在读取和写入时使用 \\n
-  - `"\r\n"` 在读取和写入时使用 \\r\\n
+    - `None` 默认，在读取和写入时使用当前操作系统的格式
+    - `""` 禁用换行转换，保持原有格式
+    - `"\n"` 在读取和写入时使用 \\n
+    - `"\r\n"` 在读取和写入时使用 \\r\\n
 
 <br>
 
@@ -530,7 +530,7 @@ open(
 
 - `tell()` 返回文件当前的位置
 - `seek(offset, whence=0)` 移动到指定位置
-  - `whence` 若为 0，则从文件开头开始偏移；若为 1，则从当前位置开始偏移；若为 2，则从文件末尾开始偏移
+    - `whence` 若为 0，则从文件开头开始偏移；若为 1，则从当前位置开始偏移；若为 2，则从文件末尾开始偏移
 
 <br>
 
@@ -610,13 +610,13 @@ dict_comprehension ::=  expression ":" expression comp_for
 ```
 - Atoms are the most basic elements of expressions. The simplest atoms are identifiers or literals. Forms enclosed in parentheses, brackets or braces are also categorized syntactically as atoms.
 - A parenthesized form is an optional expression list enclosed in parentheses.
-  - An empty pair of parentheses yields an empty tuple object.
-  - A parenthesized expression list yields whatever that expression list yields: if the list contains at least one comma, it yields a tuple; otherwise, it yields the single expression that makes up the expression list.
+    - An empty pair of parentheses yields an empty tuple object.
+    - A parenthesized expression list yields whatever that expression list yields: if the list contains at least one comma, it yields a tuple; otherwise, it yields the single expression that makes up the expression list.
 - A list display is a possibly empty series of expressions enclosed in square brackets.
 - A set display is denoted by curly braces and distinguishable from dictionary displays by the lack of colons separating keys and values.
 - A dictionary display is a possibly empty series of key/datum pairs enclosed in curly braces.
-  - A double asterisk `**` denotes dictionary unpacking. Its operand must be a mapping. Each mapping item is added to the new dictionary..
-  - An empty pair of braces `{}` constructs an empty dictionary, not a set.
+    - A double asterisk `**` denotes dictionary unpacking. Its operand must be a mapping. Each mapping item is added to the new dictionary..
+    - An empty pair of braces `{}` constructs an empty dictionary, not a set.
 
 
 #### Comprehensions and Generator expressions
@@ -651,13 +651,13 @@ yield_expression ::=  "yield" [expression_list | "from" expression]
 
 **Generator-iterator methods**
 - `generator.__next__()` Starts the execution of a generator function or resume it at the last executed yield expression.
-  - When a generator function is resumed with a `__next__()` method, the current yield expression always evaluates to None.
-  - The execution then continues to the next yield expression, where the generator is suspended again, and the value of the `expression_list` is returned to `__next__()`’s caller.
-  - If the generator exits without yielding another value, a `StopIteration` exception is raised.
-  - This method is normally called implicitly, e.g. by a `for` loop, or by the built-in `next()` function.
+    - When a generator function is resumed with a `__next__()` method, the current yield expression always evaluates to None.
+    - The execution then continues to the next yield expression, where the generator is suspended again, and the value of the `expression_list` is returned to `__next__()`’s caller.
+    - If the generator exits without yielding another value, a `StopIteration` exception is raised.
+    - This method is normally called implicitly, e.g. by a `for` loop, or by the built-in `next()` function.
 - `generator.send(value)` Resume the execution and “sends” a value into the generator function. The value argument becomes the result of the current yield expression.
-  - The `send()` method returns the next value yielded by the generator, or raises `StopIteration` if the generator exits without yielding another value.
-  - When `send()` is called to start the generator, it must be called with None as the argument, because there is no yield expression that could receive the value.
+    - The `send()` method returns the next value yielded by the generator, or raises `StopIteration` if the generator exits without yielding another value.
+    - When `send()` is called to start the generator, it must be called with None as the argument, because there is no yield expression that could receive the value.
 - `generator.throw(value)` or `generator.throw(type[, value[, traceback]])` Raise an exception at the point where the generator was paused, and returns the next value yielded by the generator function.
 - `generator.close()` Raise a `GeneratorExit` at the point where the generator function was paused.
 
@@ -680,10 +680,10 @@ stride       ::=  expression
 - Primaries represent the most tightly bound operations of the language.
 - An **attribute reference** is a primary followed by a period and a name. If this attribute is not available, the exception `AttributeError` is raised.
 - The **subscription** of an instance of a container class will generally select an element from the container. The subscription of a generic class will generally return a GenericAlias object.
-  -  An object may support subscription through defining one or both of `__getitem__()` and `__class_getitem__()`. When the primary is subscripted, the evaluated result of the expression list will be passed to one of these methods.
-  -  For built-in objects, there are two types of objects that support subscription via `__getitem__()`: Mappings, the `expression list` must evaluate to an object whose value is one of the keys of the mapping; Sequences, the `expression list` must evaluate to **an int or a slice**.
+    -  An object may support subscription through defining one or both of `__getitem__()` and `__class_getitem__()`. When the primary is subscripted, the evaluated result of the expression list will be passed to one of these methods.
+    -  For built-in objects, there are two types of objects that support subscription via `__getitem__()`: Mappings, the `expression list` must evaluate to an object whose value is one of the keys of the mapping; Sequences, the `expression list` must evaluate to **an int or a slice**.
 - A **slicing** selects a range of items in a sequence object. Slicings may be used as expressions or as targets in assignment or `del` statements.
-  - There is ambiguity in the formal syntax here: anything that looks like an expression list also looks like a slice list, so any subscription can be interpreted as a slicing. Rather than further complicating the syntax, this is disambiguated by defining that in this case the interpretation as a subscription takes priority over the interpretation as a slicing (this is the case if the slice list contains no proper slice).
+    - There is ambiguity in the formal syntax here: anything that looks like an expression list also looks like a slice list, so any subscription can be interpreted as a slicing. Rather than further complicating the syntax, this is disambiguated by defining that in this case the interpretation as a subscription takes priority over the interpretation as a slicing (this is the case if the slice list contains no proper slice).
 
 **Calls**
 ```C
@@ -705,19 +705,19 @@ keyword_item         ::=  identifier "=" expression
 - All argument expressions are evaluated before the call is attempted.
 - If positional argument follows keyword argument, a `SyntaxError` is raised.
 - If keyword arguments are present, they are first converted to positional arguments, as follows.
-  - First, a list of unfilled slots is created for the formal parameters. If there are N positional arguments, they are placed in the first N slots.
-  - Next, for each keyword argument, the identifier is used to determine the corresponding slot. If the slot is already filled, a `TypeError` exception is raised.
-  - When all arguments have been processed, the slots that are still unfilled are filled with the corresponding default value from the function definition. If there are any unfilled slots for which no default value is specified, a `TypeError` exception is raised.
-  - Otherwise, the list of filled slots is used as the argument list for the call.
+    - First, a list of unfilled slots is created for the formal parameters. If there are N positional arguments, they are placed in the first N slots.
+    - Next, for each keyword argument, the identifier is used to determine the corresponding slot. If the slot is already filled, a `TypeError` exception is raised.
+    - When all arguments have been processed, the slots that are still unfilled are filled with the corresponding default value from the function definition. If there are any unfilled slots for which no default value is specified, a `TypeError` exception is raised.
+    - Otherwise, the list of filled slots is used as the argument list for the call.
 <br>
 
 - If there are more positional arguments than there are formal parameter slots, a `TypeError` exception is raised, unless a formal parameter using the syntax `*identifier` is present; in this case, that formal parameter receives a tuple containing the excess positional arguments (or an empty tuple if there were no excess positional arguments).
-  - The arguments after `*` argument is keyword-only.
+    - The arguments after `*` argument is keyword-only.
 - If any keyword argument does not correspond to a formal parameter name, a `TypeError` exception is raised, unless a formal parameter using the syntax `**identifier` is present; in this case, that formal parameter receives a dictionary containing the excess keyword arguments, or a empty dictionary if there were no excess keyword arguments.
 <br>
 
 - If the syntax `*expression` appears in the function call, `expression` must evaluate to an iterable. Elements from these iterables are treated as if they were additional positional arguments.
-  - Although the `*expression` syntax may appear after explicit keyword arguments, it is processed before the keyword arguments, so `f(b=1, *(2,))` is similar to `f(2, b=1)`.
+    - Although the `*expression` syntax may appear after explicit keyword arguments, it is processed before the keyword arguments, so `f(b=1, *(2,))` is similar to `f(2, b=1)`.
 - When `**expression` is used, each key in this mapping must be a string. Each value from the mapping is assigned to the first formal parameter whose name is equal to the key. If there is no match to a formal parameter, the key-value pair is collected by the `**` parameter if there is one, otherwise a `TypeError` exception is raised.
 - Formal parameters using the syntax `*identifier` or `**identifier` cannot be used as positional argument slots or as keyword argument names.
 
@@ -747,18 +747,18 @@ keyword_item         ::=  identifier "=" expression
 
 **Arithmetic Operations**
 - The power operator `**` binds more tightly than unary operators on its left; it binds less tightly than unary operators on its right, i.e. `1**-2` is `1.0`, `-1**2` is `-1`.
-  - For int operands, the result has the same type as the operands unless the second argument is negative; in that case, all arguments are converted to float and a float result is delivered.
-  - Raising a negative number to a fractional power results in a complex number.
-  - Raising `0` or `0.0` to a negative power results in a `ZeroDivisionError`, but to a positive power results in `0` or `0.0`, while to zero power results in `1` or `1.0`.
+    - For int operands, the result has the same type as the operands unless the second argument is negative; in that case, all arguments are converted to float and a float result is delivered.
+    - Raising a negative number to a fractional power results in a complex number.
+    - Raising `0` or `0.0` to a negative power results in a `ZeroDivisionError`, but to a positive power results in `0` or `0.0`, while to zero power results in `1` or `1.0`.
 - The unary invert operator `~` only applies to integral numbers or to custom objects that override the `__invert__()` special method.
 - Bitwise operations only make sense for integers. The result of bitwise operations is calculated as though carried out in two’s complement with an infinite number of sign bits.
 - The `*` (multiplication) operator's arguments must either both be numbers, or one argument must be an integer and the other must be a sequence.
-  - In the former case, the numbers are converted to a common type and then multiplied together.
-  - In the latter case, sequence repetition is performed; a zero or negative repetition factor yields an empty sequence.
+    - In the former case, the numbers are converted to a common type and then multiplied together.
+    - In the latter case, sequence repetition is performed; a zero or negative repetition factor yields an empty sequence.
 - The `//` (floor division) operator's result is always rounded towards minus infinity, e.g. `1//2` equals `0`, `-1//2` equals `-1`, `1//-2` equals `-1`, `-1//-2` equals `0`
 - The `%` (modulo) operator's arguments may be floating point numbers, e.g., `3.14%0.7` equals `0.34`.
-  - The modulo operator always yields a result with the same sign as its second operand, e.g. `1.4%-0.7` equals `-0.0`
-  - The absolute value of the result is strictly smaller than the absolute value of the second operand
+    - The modulo operator always yields a result with the same sign as its second operand, e.g. `1.4%-0.7` equals `-0.0`
+    - The absolute value of the result is strictly smaller than the absolute value of the second operand
 
 **Conparisons**
 ```py
@@ -842,12 +842,12 @@ funcname                  ::=  identifier
 
 **Builtin decorators**
 - `@classmethod` Transform a method into a class method.
-  - A class method receives the class as an implicit first argument, just like an instance method receives the instance.
-  - A class method can be called either on the class or on an instance. The instance is ignored except for its class.
-  - If a class method is called for a derived class, the derived class object is passed as the implied first argument.
+    - A class method receives the class as an implicit first argument, just like an instance method receives the instance.
+    - A class method can be called either on the class or on an instance. The instance is ignored except for its class.
+    - If a class method is called for a derived class, the derived class object is passed as the implied first argument.
 - `@staticmethod` Transform a method into a static method.
-  - A static method does not receive an implicit first argument.
-  - A static method can be called either on the class or on an instance. Moreover, they can be called as regular functions.
+    - A static method does not receive an implicit first argument.
+    - A static method can be called either on the class or on an instance. Moreover, they can be called as regular functions.
 
 **Examples**
 ```py

@@ -1,43 +1,43 @@
 
 - [文件管理](#文件管理)
-  - [ls, pwd](#ls-pwd)
-  - [mv, cp, rm](#mv-cp-rm)
-  - [ln, touch, mkdir](#ln-touch-mkdir)
-  - [chmod, chown, chgrp](#chmod-chown-chgrp)
-  - [which, find, locate](#which-find-locate)
+    - [ls, pwd](#ls-pwd)
+    - [mv, cp, rm](#mv-cp-rm)
+    - [ln, touch, mkdir](#ln-touch-mkdir)
+    - [chmod, chown, chgrp](#chmod-chown-chgrp)
+    - [which, find, locate](#which-find-locate)
 - [输出](#输出)
-  - [echo, cat, tee](#echo-cat-tee)
-  - [cut, head, tail](#cut-head-tail)
-  - [wc](#wc)
+    - [echo, cat, tee](#echo-cat-tee)
+    - [cut, head, tail](#cut-head-tail)
+    - [wc](#wc)
 - [网络远程](#网络远程)
-  - [wget, curl](#wget-curl)
-  - [hostname, ip, ifconfig](#hostname-ip-ifconfig)
-  - [ssh, ssh-keygen](#ssh-ssh-keygen)
-  - [scp, rsync](#scp-rsync)
+    - [wget, curl](#wget-curl)
+    - [hostname, ip, ifconfig](#hostname-ip-ifconfig)
+    - [ssh, ssh-keygen](#ssh-ssh-keygen)
+    - [scp, rsync](#scp-rsync)
 - [硬件管理](#硬件管理)
-  - [df, du](#df-du)
+    - [df, du](#df-du)
 - [数据处理](#数据处理)
-  - [sort](#sort)
-  - [uniq](#uniq)
-  - [grep](#grep)
-  - [sed](#sed)
-  - [awk](#awk)
+    - [sort](#sort)
+    - [uniq](#uniq)
+    - [grep](#grep)
+    - [sed](#sed)
+    - [awk](#awk)
 - [终端复用器](#终端复用器)
-  - [tmux](#tmux)
+    - [tmux](#tmux)
 - [进程控制](#进程控制)
-  - [jobs, ps, pgrep](#jobs-ps-pgrep)
-  - [kill, pkill](#kill-pkill)
-  - [nohup, bg, fg](#nohup-bg-fg)
+    - [jobs, ps, pgrep](#jobs-ps-pgrep)
+    - [kill, pkill](#kill-pkill)
+    - [nohup, bg, fg](#nohup-bg-fg)
 - [其他](#其他)
-  - [date](#date)
-  - [who](#who)
-  - [xargs](#xargs)
-  - [tar](#tar)
-  - [less](#less)
+    - [date](#date)
+    - [who](#who)
+    - [xargs](#xargs)
+    - [tar](#tar)
+    - [less](#less)
 - [Packages](#packages)
-  - [apt](#apt)
+    - [apt](#apt)
 - [配置](#配置)
-  - [镜像源](#镜像源)
+    - [镜像源](#镜像源)
 
 
 
@@ -171,18 +171,18 @@ touch -r path/to/file1 path/to/file2
 <br>
 
 - `-d STRING` 使用指定的日期时间
-  - `-d "2023-09-04T12:30:30Z"`
-  - `-d "2023-09-04 12:30:30"`
-  - `-d "2023-9-4 12"` 必须包含年月日时，分和秒默认为零
-  - `-d "yesterday"` 昨天的当前时间
-  - `-d "1 hour ago"/"-1 hour"` 一个小时前的当前时间
-  - `-d "3 day"/"+3 day"` 三天后的当前时间
-  - `-d "next month"/"+1 month"` 下个月的第一天的当前时间
+    - `-d "2023-09-04T12:30:30Z"`
+    - `-d "2023-09-04 12:30:30"`
+    - `-d "2023-9-4 12"` 必须包含年月日时，分和秒默认为零
+    - `-d "yesterday"` 昨天的当前时间
+    - `-d "1 hour ago"/"-1 hour"` 一个小时前的当前时间
+    - `-d "3 day"/"+3 day"` 三天后的当前时间
+    - `-d "next month"/"+1 month"` 下个月的第一天的当前时间
 <br>
 
 - `-t STAMP` 使用自定义的时间戳，格式必须为 `[[CC]YY]MMDDhhmm[.ss]`
-  - `-t 202309041230.30`
-  - `-t $(date "+%Y%m%d%H%M.%S")`
+    - `-t 202309041230.30`
+    - `-t $(date "+%Y%m%d%H%M.%S")`
 
 ---
 **mkdir**
@@ -261,8 +261,8 @@ find root_path -name '*.tmp' -exec rm -f {} \;
 - `-maxdepth n` 限制搜索的最大深度
 - `-mindepth n` 限制搜索的最小深度
 - `-size [sign]n[bcwkMG]` 根据文件大小搜索
-  - `+` 表示大于，`-` 表示小于，不带符号表示等于
-  - `c` 表示字节，`k` 表示千字节，`M` 表示兆字节，`G` 表示千兆字节
+    - `+` 表示大于，`-` 表示小于，不带符号表示等于
+    - `c` 表示字节，`k` 表示千字节，`M` 表示兆字节，`G` 表示千兆字节
 <br>
 
 - `-atime n` 根据文件的最后访问时间搜索，单位为日
@@ -271,7 +271,7 @@ find root_path -name '*.tmp' -exec rm -f {} \;
 - `-amin n` 根据文件的最后访问时间搜索，单位为分钟
 - `-cmin n` 根据文件的最后更改时间搜索，单位为分钟
 - `-mmin n` 根据文件的最后修改时间搜索，单位为分钟
-  - `+` 表示在那之前，`-` 表示在那之后，不带符号表示刚好在那时
+    - `+` 表示在那之前，`-` 表示在那之后，不带符号表示刚好在那时
 <br>
 
 - `!` 和 `-not` 表示非操作，`-a` 和 `-and` 表示与操作，`-o` 和 `-or` 表示或操作
@@ -805,31 +805,31 @@ awk '{ for(i=1;i<=NF;i++) a[i]+=$i } END{ for(j=1;j<=NF;j++) printf a[j]/NR"\t";
 ## 终端复用器
 ### tmux
 - Sessions
-  - `tmux` start a new session.
-  - `tmux new -s NAME` start a new session with `NAME`.
-  - `tmux ls` list the current sessions
-  - `<C-b> d` detaches the current session
-  - `tmux a/attach-session` attach the last session
-  - `tmux a/attach-session -t NAME` attach the specified session
-  - `tmux kill-session` kill the last or current attached session
-  - `tmux kill-session -t NAME` kill the specfied session
-  - `tmux kill-session -a` kill all sessions except the last or current attached one
+    - `tmux` start a new session.
+    - `tmux new -s NAME` start a new session with `NAME`.
+    - `tmux ls` list the current sessions
+    - `<C-b> d` detaches the current session
+    - `tmux a/attach-session` attach the last session
+    - `tmux a/attach-session -t NAME` attach the specified session
+    - `tmux kill-session` kill the last or current attached session
+    - `tmux kill-session -t NAME` kill the specfied session
+    - `tmux kill-session -a` kill all sessions except the last or current attached one
 - Windows
-  - `<C-b> c` Creates a new window 
-  - `<C-b> p` Goes to the previous window
-  - `<C-b> n` Goes to the next window
-  - `<C-b> N` Go to the N th window
-  - `<C-b> ,` Rename the current window
-  - `<C-b> w` List current sessions and windows, and move
+    - `<C-b> c` Creates a new window 
+    - `<C-b> p` Goes to the previous window
+    - `<C-b> n` Goes to the next window
+    - `<C-b> N` Go to the N th window
+    - `<C-b> ,` Rename the current window
+    - `<C-b> w` List current sessions and windows, and move
 - Panes
-  - `<C-b> "` Split the current pane horizontally
-  - `<C-b> %` Split the current pane vertically
-  - `<C-b> <direction>` Move to the pane in the specified direction
-  - `<C-b> z` Toggle zoom for the current pane
-  - `<C-b> <space>` Cycle through pane arrangements.
-  - `<C-b> [` Start scrollback. You can then press <space> to start a selection and <enter> to copy that selection.
-  - `<C-d>` Close pane except only one left
-  - `<C-b> x` Kill pane with prompt
+    - `<C-b> "` Split the current pane horizontally
+    - `<C-b> %` Split the current pane vertically
+    - `<C-b> <direction>` Move to the pane in the specified direction
+    - `<C-b> z` Toggle zoom for the current pane
+    - `<C-b> <space>` Cycle through pane arrangements.
+    - `<C-b> [` Start scrollback. You can then press <space> to start a selection and <enter> to copy that selection.
+    - `<C-d>` Close pane except only one left
+    - `<C-b> x` Kill pane with prompt
 
 
 

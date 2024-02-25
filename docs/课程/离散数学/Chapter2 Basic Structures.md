@@ -1,10 +1,10 @@
 
 - [Basic Structures](#basic-structures)
-  - [2.1 Sets](#21-sets)
-  - [2.2 Set Operations](#22-set-operations)
-  - [2.3 Functions](#23-functions)
-  - [2.5 Cardinality of Sets](#25-cardinality-of-sets)
-  - [2.6 Matrices](#26-matrices)
+    - [2.1 Sets](#21-sets)
+    - [2.2 Set Operations](#22-set-operations)
+    - [2.3 Functions](#23-functions)
+    - [2.5 Cardinality of Sets](#25-cardinality-of-sets)
+    - [2.6 Matrices](#26-matrices)
 
 
 
@@ -49,7 +49,7 @@
 ### 2.2 Set Operations
 - **union** : $A ∪ B$
 - **intersection** : $A ∩ B$
-  - Two sets are called **disjoint** if their intersection is the empty set
+    - Two sets are called **disjoint** if their intersection is the empty set
 - **difference of A and B** or **complement of B with respect to A** : $A − B$
 - **complement** : $\bar{A}$
 
@@ -84,8 +84,8 @@
 - We write $f(a) = b$ if $b$ is the unique element of $B$ assigned by the function $f$ to the element $a$ of $A$, and we say that $b$ is the **image** of $a$ and $a$ is a **preimage** of $b$. The **range**, or **image** of $f$, is the set of all images of elements of $A$
 - If $f$ is a function from $A$ to $B$, we write $f : A → B$ and we say that $A$ is the **domain** of $f$ and $B$ is the **codomain** of $f$.
 - Let $f_1$ and $f_2$ be functions from $A$ to $R$. Then $f_1 + f_2$ and $f_1 f_2$ are also functions from $A$ to $R$ defined for all $x ∈ A$ by
-  - $(f_1 + f_2)(x) = f_1(x) + f_2(x)$
-  - $(f_1f_2)(x) = f_1(x)f_2(x)$
+    - $(f_1 + f_2)(x) = f_1(x) + f_2(x)$
+    - $(f_1f_2)(x) = f_1(x)f_2(x)$
 - The **image** of $S$ : $f(S) = \{t ∣ ∃s∈S (t = f(s))\}$ or $\{f(s) ∣ s ∈ S\}$
 <br>
 

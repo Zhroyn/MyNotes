@@ -1,9 +1,9 @@
 
 - [Lipschitz Conditon](#lipschitz-conditon)
 - [Convex Function](#convex-function)
-  - [Smooth and Convex Function](#smooth-and-convex-function)
+    - [Smooth and Convex Function](#smooth-and-convex-function)
 - [Strongly Convex Function](#strongly-convex-function)
-  - [Smooth and Strongly Convex Function](#smooth-and-strongly-convex-function)
+    - [Smooth and Strongly Convex Function](#smooth-and-strongly-convex-function)
 
 
 

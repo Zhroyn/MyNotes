@@ -34,26 +34,26 @@
 <br>
 
 - `[min/max-]width/height: <length>`  显示区域的宽高
-  - `min-width: 1080px` 显示区域宽度大于等于 1080px 时成立
+    - `min-width: 1080px` 显示区域宽度大于等于 1080px 时成立
 - `[min/max-]device-width-height: <length>`  设备屏幕的宽高
 
 - `[min/max-]aspect-ratio: <w/h>` 显示区域的宽高比
 - `[min/max-]device-aspect-ratio: <w/h>` 设备屏幕的宽高比
 - `orientation: portrait/landscape` 屏幕方向
-  - `portrait` 竖屏，height 大于等于 width 
-  - `landscape` 横屏，width 大于等于 height 
+    - `portrait` 竖屏，height 大于等于 width 
+    - `landscape` 横屏，width 大于等于 height 
 <br>
 
 - `[min/max-]color: <integer>` 每个色彩分量的深度
-  - `color` 设备有色彩深度时成立
-  - `min-color: 8` 色彩深度大于等于 8 位时成立
+    - `color` 设备有色彩深度时成立
+    - `min-color: 8` 色彩深度大于等于 8 位时成立
 - `[min/max-]color-index: <integer>` 色彩搜寻列表的颜色总数
-  - `min-color-index: 256` 至少有 256 色的设备成立
+    - `min-color-index: 256` 至少有 256 色的设备成立
 <br>
 
 - `[min/max-]resolution: <resolution>` 设备的分辨率
-  - `dpi` 每英寸像素数
-  - `dpcm` 每厘米像素数
-  - `dppx` 每 px 像素数，`1dppx` 相当于 `96dpi`
-  - `x` 相当于 `dppx`
+    - `dpi` 每英寸像素数
+    - `dpcm` 每厘米像素数
+    - `dppx` 每 px 像素数，`1dppx` 相当于 `96dpi`
+    - `x` 相当于 `dppx`
 

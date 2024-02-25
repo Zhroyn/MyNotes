@@ -1,37 +1,37 @@
 
 - [Git 笔记](#git-笔记)
-  - [基本文件操作](#基本文件操作)
-    - [git add](#git-add)
-    - [git commit](#git-commit)
-    - [git mv](#git-mv)
-    - [git rm](#git-rm)
-  - [信息查看](#信息查看)
-    - [git status](#git-status)
-    - [git diff](#git-diff)
-    - [git log](#git-log)
-    - [git show](#git-show)
-    - [git cat-file](#git-cat-file)
-    - [git ls-files](#git-ls-files)
-  - [恢复保存](#恢复保存)
-    - [git restore](#git-restore)
-    - [git reset](#git-reset)
-    - [git reflog](#git-reflog)
-    - [git stash](#git-stash)
-  - [分支管理](#分支管理)
-    - [git branch](#git-branch)
-    - [git checkout](#git-checkout)
-    - [git switch](#git-switch)
-    - [git merge](#git-merge)
-    - [git rebase](#git-rebase)
-    - [git tag](#git-tag)
-  - [远程管理](#远程管理)
-    - [git remote](#git-remote)
-    - [git fetch](#git-fetch)
-    - [git pull](#git-pull)
-    - [git push](#git-push)
-  - [配置管理](#配置管理)
-    - [git config](#git-config)
-    - [gitignore](#gitignore)
+    - [基本文件操作](#基本文件操作)
+        - [git add](#git-add)
+        - [git commit](#git-commit)
+        - [git mv](#git-mv)
+        - [git rm](#git-rm)
+    - [信息查看](#信息查看)
+        - [git status](#git-status)
+        - [git diff](#git-diff)
+        - [git log](#git-log)
+        - [git show](#git-show)
+        - [git cat-file](#git-cat-file)
+        - [git ls-files](#git-ls-files)
+    - [恢复保存](#恢复保存)
+        - [git restore](#git-restore)
+        - [git reset](#git-reset)
+        - [git reflog](#git-reflog)
+        - [git stash](#git-stash)
+    - [分支管理](#分支管理)
+        - [git branch](#git-branch)
+        - [git checkout](#git-checkout)
+        - [git switch](#git-switch)
+        - [git merge](#git-merge)
+        - [git rebase](#git-rebase)
+        - [git tag](#git-tag)
+    - [远程管理](#远程管理)
+        - [git remote](#git-remote)
+        - [git fetch](#git-fetch)
+        - [git pull](#git-pull)
+        - [git push](#git-push)
+    - [配置管理](#配置管理)
+        - [git config](#git-config)
+        - [gitignore](#gitignore)
 
 
 
@@ -113,9 +113,9 @@ git log 会列出可由指定提交追溯到的提交历史，并会排除可由
 
 - `-<number>` 最多只显示 number 条提交
 - `--since/--after=<date>` 只显示在指定日期之后的提交，日期格式可为：
-  - `YYYY-MM-DD` `YYYY.MM.DD` `YYYY/MM/DD`，若不指定则默认为今天
-  - `HH:MM:SS`，若不指定则默认为午夜
-  - `n minutes/hours/days/weeks/months/years ago`，其中末尾的 `s` 可省略，空格也可替换成 `.` `-` `/`
+    - `YYYY-MM-DD` `YYYY.MM.DD` `YYYY/MM/DD`，若不指定则默认为今天
+    - `HH:MM:SS`，若不指定则默认为午夜
+    - `n minutes/hours/days/weeks/months/years ago`，其中末尾的 `s` 可省略，空格也可替换成 `.` `-` `/`
 - `--until/--before=<date>` 只显示在指定日期之前的提交
 - `--author/--commiter=<pattern>` 只显示作者名符合 pattern 的提交，可使用 `-i` 选项忽略大小写
 
@@ -133,18 +133,18 @@ git log 会列出可由指定提交追溯到的提交历史，并会排除可由
 - `=oneling` 显示在一行
 - `=short/medium/full/fuller` 显示内容依次变多，short 只含提交哈希、作者名与标题行，fuller 则包括提交哈希、作者名、作者日期、提交者名、提交日期、标题行与完整提交注释
 - `=format:<format-string>` 显示指定格式，可以使用以下占位符：
-  - `%H` 提交哈希
-  - `%h` 提交哈希的缩写
-  - `%an` 作者名
-  - `%ae` 作者邮箱
-  - `%ad` 作者日期
-  - `%ar` 作者相对日期
-  - `%ai` 类 ISO 8601 格式的作者日期
-  - `%as` 作者日期的缩写，格式为 `YYYY-MM-DD`
-  - `%cn` 提交者名。其余各占位符与作者信息相同，只需将 `a` 替换成 `c`
-  - `%d` 引用名，包括分支与标签
-  - `%s` 标题行，即提交注释的第一行
-  - `%Cred` `%Cgreen` `%Cblue` `%Creset` `%C(…​)` 切换之后的颜色，其中 `%Creset` 用于重置颜色，`%C(auto)` 可以自动设置颜色
+    - `%H` 提交哈希
+    - `%h` 提交哈希的缩写
+    - `%an` 作者名
+    - `%ae` 作者邮箱
+    - `%ad` 作者日期
+    - `%ar` 作者相对日期
+    - `%ai` 类 ISO 8601 格式的作者日期
+    - `%as` 作者日期的缩写，格式为 `YYYY-MM-DD`
+    - `%cn` 提交者名。其余各占位符与作者信息相同，只需将 `a` 替换成 `c`
+    - `%d` 引用名，包括分支与标签
+    - `%s` 标题行，即提交注释的第一行
+    - `%Cred` `%Cgreen` `%Cblue` `%Creset` `%C(…​)` 切换之后的颜色，其中 `%Creset` 用于重置颜色，`%C(auto)` 可以自动设置颜色
 
 ### git show
 
@@ -163,9 +163,9 @@ git show [<options>] [<object>…​]
 - `git cat-file -t <object>` 显示对象的类型
 - `git cat-file -s <object>` 显示对象的大小
 - `git cat-file -p <object>` 根据对象的类型，显示对象的内容
-  - 若对象是提交或标签，则会显示其所有信息，包括树、父提交、作者等
-  - 若对象是树，则会显示其所有 blob 与子树的信息，包括权限、类型、哈希值与文件名
-  - 若对象是 blob，则会显示其内容
+    - 若对象是提交或标签，则会显示其所有信息，包括树、父提交、作者等
+    - 若对象是树，则会显示其所有 blob 与子树的信息，包括权限、类型、哈希值与文件名
+    - 若对象是 blob，则会显示其内容
 
 ### git ls-files
 
@@ -206,9 +206,9 @@ git reset 可用于重置暂存区的文件，如：
 但相比之下，git reset 更常用于回退版本，具体命令为：
 
 - `git reset [<mode>] [<commit>]` 将当前分支重置为指定 commit，暂存区和工作区的文件的改变视模式而定，默认为 mixed
-  - `--soft` 不改变工作区和暂存区
-  - `--mixed` 仅重置暂存区
-  - `--hard` 重置工作区与暂存区
+    - `--soft` 不改变工作区和暂存区
+    - `--mixed` 仅重置暂存区
+    - `--hard` 重置工作区与暂存区
 
 需要注意的是，该操作会同时移动 HEAD 和当前分支到指定提交上，更加危险。不过在进行该操作前，git 会将原分支设为 `ORIG_HEAD`，以便回退。
 
@@ -237,10 +237,10 @@ git reflog 的默认子命令为 show，可以接受 git log 的所有参数。
 ### git stash
 
 - `git stash [push] [--] [<pathspec>…]` 临时保存未提交的更改，使工作目录回到干净的状态，默认会贮藏所有更改
-  - `-S/--staged` 仅贮藏暂存区的更改
-  - `-u/--include-untracked` 也贮藏未追踪的文件
-  - `-k/--keep-index` 保留暂存区的更改
-  - `-m/--message <msg>` 指定贮藏项的注释，默认为当前 commit 的注释
+    - `-S/--staged` 仅贮藏暂存区的更改
+    - `-u/--include-untracked` 也贮藏未追踪的文件
+    - `-k/--keep-index` 保留暂存区的更改
+    - `-m/--message <msg>` 指定贮藏项的注释，默认为当前 commit 的注释
 - `git stash list [<log-options>]` 列出所有贮藏项，具体形式为 `stash@{n}: <message>`
 - `git stash show [<diff-options>] [<stash>]` 显示贮藏项的内容
 - `git stash pop [<stash>]` 弹出一个贮藏项并应用，默认为 `stash@{0}`
@@ -323,7 +323,7 @@ git reflog 的默认子命令为 show，可以接受 git log 的所有参数。
 合并分支有多种策略，可以使用 `-s/--strategy` 选项来指定，常用的策略有：
 
 - `ort` 是合并两个分支时的默认策略，使用三路合并算法，具体就是，如果只有一方有修改，或者双方都有修改但修改相同，则选择修改后的文件，否则就会产生冲突，需要手动解决
-  - 可以使用 `-X/--strategy-option ours/theirs` 选项来指定合并时的冲突解决策略，`ours` 代表保留当前分支的修改，`theirs` 代表保留合并分支的修改
+    - 可以使用 `-X/--strategy-option ours/theirs` 选项来指定合并时的冲突解决策略，`ours` 代表保留当前分支的修改，`theirs` 代表保留合并分支的修改
 - `octopus` 是合并多于两个分支时的默认策略，在合并过程中一旦出现需要手动解决的冲突就会拒绝合并
 - `ours` 策略不同于 `-X ours`，会完全保留当前分支的更改，不考虑其他分支
 
@@ -332,8 +332,8 @@ git reflog 的默认子命令为 show，可以接受 git log 的所有参数。
 ### git rebase
 
 - `git rebase [--onto <newbase>] [<upstream> [<branch>]]` 保存 branch 有而 upstream 没有的提交，也即保存从 upstream 到 branch 的提交，然后将其逐个应用到 upstream 上
-  - 若有 `--onto` 选项，则会将补丁应用到 newbase 上
-  - 若未指定 `<upstream>`，则会使用当前分支的上游分支
+    - 若有 `--onto` 选项，则会将补丁应用到 newbase 上
+    - 若未指定 `<upstream>`，则会使用当前分支的上游分支
 - `git rebase --continue` 在解决了冲突后继续变基
 - `git rebase --abort` 取消变基，回到变基前的状态，若有 branch 则会切换到 branch
 - `git rebase --quit` 退出变基，但不回到变基前的状态
@@ -456,9 +456,9 @@ git push 能推送本地分支到远程仓库，使用本地引用更新远程�
 - `alias.<name>` 别名
 - `core.editor` 默认编辑器
 - `core.autocrlf` 行结束符的转换
-  - 若为 `true`，则在提交时将 CRLF 转换成 LF，在检出时将 LF 转换成 CRLF
-  - 若为 `input`，则在提交时将 CRLF 转换成 LF
-  - 若为 `false`，则不做任何转换
+    - 若为 `true`，则在提交时将 CRLF 转换成 LF，在检出时将 LF 转换成 CRLF
+    - 若为 `input`，则在提交时将 CRLF 转换成 LF
+    - 若为 `false`，则不做任何转换
 - `merge.tool` 默认合并工具
 - `mergetool.<tool>.cmd` 使用某合并工具时的命令
 - `diff.tool` 默认比较工具

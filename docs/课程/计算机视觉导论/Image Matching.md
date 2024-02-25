@@ -1,14 +1,14 @@
 
 - [Image Matching](#image-matching)
-  - [Detection](#detection)
-    - [Principal Component Analysis](#principal-component-analysis)
-    - [Corner Detection](#corner-detection)
-    - [Gradient Operators](#gradient-operators)
-    - [Harris Detector](#harris-detector)
-    - [Blob Detector](#blob-detector)
-  - [Description](#description)
-    - [SIFT Descriptor](#sift-descriptor)
-  - [Matching](#matching)
+    - [Detection](#detection)
+        - [Principal Component Analysis](#principal-component-analysis)
+        - [Corner Detection](#corner-detection)
+        - [Gradient Operators](#gradient-operators)
+        - [Harris Detector](#harris-detector)
+        - [Blob Detector](#blob-detector)
+    - [Description](#description)
+        - [SIFT Descriptor](#sift-descriptor)
+    - [Matching](#matching)
 
 
 
@@ -100,8 +100,8 @@ $\displaystyle f = \frac{\lambda_1\lambda_2}{\lambda_1 + \lambda_2}
 - Not invariant to intensity scaling
 - Invariant to translation and rotation
 - Not invariant to scaling
-  - Find scale that gives local maximum of f
-  - Instead of computing $f$ for larger and larger windows, we can implement using a fixed window size with an image pyramid
+    - Find scale that gives local maximum of f
+    - Instead of computing $f$ for larger and larger windows, we can implement using a fixed window size with an image pyramid
 
 #### Blob Detector
 - Laplacian is sensitive to noise
@@ -123,8 +123,8 @@ $\displaystyle f = \frac{\lambda_1\lambda_2}{\lambda_1 + \lambda_2}
 
 **Lowe’s SIFT algorithm**
 - Run DoG detector
-  - Find maxima in location/scale space
-  - Remove edge points
+    - Find maxima in location/scale space
+    - Remove edge points
 - Find dominate orientation
 - For each (x,y,scale,orientation), create descriptor
 
@@ -143,8 +143,8 @@ $\displaystyle f = \frac{\lambda_1\lambda_2}{\lambda_1 + \lambda_2}
 
 **Ratio test**
 - Ratio score = $||f_1 - f_2 || / || f_1 - f_2^{'} ||$
-  - $f_2$ is best match to $f_1$ in $I_2$
-  - $f_2^{'}$ is 2nd best match to $f_1$ in $I_2$
+    - $f_2$ is best match to $f_1$ in $I_2$
+    - $f_2^{'}$ is 2nd best match to $f_1$ in $I_2$
 - Ambiguous matches have large ratio scores
 
 **Mutual nearest neighbor**

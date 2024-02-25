@@ -1,13 +1,13 @@
 
 - [Open3d](#open3d)
 - [Colmap](#colmap)
-  - [自动重建](#自动重建)
-  - [特征提取](#特征提取)
-  - [特征匹配](#特征匹配)
-  - [稀疏重建](#稀疏重建)
-  - [稠密重建](#稠密重建)
-  - [转换格式](#转换格式)
-  - [视觉定位](#视觉定位)
+    - [自动重建](#自动重建)
+    - [特征提取](#特征提取)
+    - [特征匹配](#特征匹配)
+    - [稀疏重建](#稀疏重建)
+    - [稠密重建](#稠密重建)
+    - [转换格式](#转换格式)
+    - [视觉定位](#视觉定位)
 
 
 
@@ -19,12 +19,12 @@
 
 ## Open3d
 - `o3d.io.read_point_cloud(filename, format='auto', ...)` 读取点云文件
-  - `pcd = o3d.io.read_point_cloud("a.txt", format="xyz")`
-  - `pcd = o3d.io.read_point_cloud("a.ply")`
+    - `pcd = o3d.io.read_point_cloud("a.txt", format="xyz")`
+    - `pcd = o3d.io.read_point_cloud("a.ply")`
 <br>
 
 - `o3d.visualization.draw_geometries(geometry_list, window_name='Open3D', width=1920, height=1080, left=50, top=50)` 可视化点云
-  - `o3d.visualization.draw_geometries([pcd])`
+    - `o3d.visualization.draw_geometries([pcd])`
 
 
 
@@ -52,10 +52,10 @@ colmap feature_extractor `
 ```
 - `--image_list_path /path/to/image-list.txt` 给新增的图像提取特征，其中 `image-list.txt` 存放新增的图像的路径，格式为每行一个，且必须为相对于 `images` 的相对路径
 - `--ImageReader.camera_model arg (=SIMPLE_RADIAL)` 指定相机模型
-  - `SIMPLE_PINHOLE`: f, cx, cy
-  - `PINHOLE`: fx, fy, cx, cy
-  - `SIMPLE_RADIAL`: f, cx, cy, k
-  - `RADIAL`: f, cx, cy, k1, k2
+    - `SIMPLE_PINHOLE`: f, cx, cy
+    - `PINHOLE`: fx, fy, cx, cy
+    - `SIMPLE_RADIAL`: f, cx, cy, k
+    - `RADIAL`: f, cx, cy, k1, k2
 
 <br>
 

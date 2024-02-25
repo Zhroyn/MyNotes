@@ -1,30 +1,30 @@
 
 - [基本使用](#基本使用)
-  - [定义文档类](#定义文档类)
-  - [加载宏包](#加载宏包)
-  - [特殊字符](#特殊字符)
-  - [空白换行](#空白换行)
+    - [定义文档类](#定义文档类)
+    - [加载宏包](#加载宏包)
+    - [特殊字符](#特殊字符)
+    - [空白换行](#空白换行)
 - [文档结构](#文档结构)
-  - [标题摘要](#标题摘要)
-  - [章节目录](#章节目录)
-  - [参考文献](#参考文献)
+    - [标题摘要](#标题摘要)
+    - [章节目录](#章节目录)
+    - [参考文献](#参考文献)
 - [插入元素](#插入元素)
-  - [列表](#列表)
-  - [表格](#表格)
-  - [图像](#图像)
-  - [伪代码](#伪代码)
-  - [代码块](#代码块)
-  - [图表](#图表)
+    - [列表](#列表)
+    - [表格](#表格)
+    - [图像](#图像)
+    - [伪代码](#伪代码)
+    - [代码块](#代码块)
+    - [图表](#图表)
 - [格式调整](#格式调整)
-  - [文本字体](#文本字体)
-  - [数学字体](#数学字体)
-  - [中文文档](#中文文档)
-  - [页面布局](#页面布局)
+    - [文本字体](#文本字体)
+    - [数学字体](#数学字体)
+    - [中文文档](#中文文档)
+    - [页面布局](#页面布局)
 - [数学公式](#数学公式)
-  - [符号函数](#符号函数)
-  - [位置组合](#位置组合)
-  - [公式对齐](#公式对齐)
-  - [希腊字母](#希腊字母)
+    - [符号函数](#符号函数)
+    - [位置组合](#位置组合)
+    - [公式对齐](#公式对齐)
+    - [希腊字母](#希腊字母)
 - [TODO](#todo)
 
 
@@ -346,57 +346,57 @@ tabularx 宏包可用于自动调整列宽以及自动换行，命令为 `\begin
 
 algorithm2e 宏包常见的导入选项有：
 - 环境设置
-  - `plain` 默认
-  - `boxed` 用方框包围算法
-  - `ruled` 在算法的顶部和底部绘制水平线，并让标题从底部中央到左上方
+    - `plain` 默认
+    - `boxed` 用方框包围算法
+    - `ruled` 在算法的顶部和底部绘制水平线，并让标题从底部中央到左上方
 - 块设置
-  - `noline` 默认，不在块内打印竖线
-  - `lined` 在块内打印竖线
-  - `vlined` 在块内打印竖线，并在末尾有一小段横线，形如 $\lfloor$
+    - `noline` 默认，不在块内打印竖线
+    - `lined` 在块内打印竖线
+    - `vlined` 在块内打印竖线，并在末尾有一小段横线，形如 $\lfloor$
 - 注释
-  - `scright` 默认，右对齐注释
-  - `scleft` 左对齐注释
-  - `fillcomment` 默认，注释的结束标志会右对齐
-  - `nofillcomment` 注释的结束标志紧跟注释之后
+    - `scright` 默认，右对齐注释
+    - `scleft` 左对齐注释
+    - `fillcomment` 默认，注释的结束标志会右对齐
+    - `nofillcomment` 注释的结束标志紧跟注释之后
 - 行号
-  - `linesnumbered` 为每行代码添加行号
+    - `linesnumbered` 为每行代码添加行号
 - end 关键字
-  - `noend` 不打印 end 关键字
-  - `shortend` 默认，每个宏的 end 关键字都只是 end
-  - `longend` 每个宏的 end 关键字都更长且不同
+    - `noend` 不打印 end 关键字
+    - `shortend` 默认，每个宏的 end 关键字都只是 end
+    - `longend` 每个宏的 end 关键字都更长且不同
 
 ---
 以下为一些常用关键字：
 - 基本关键字
-  - `\KwIn{input}`
-  - `\KwOut{output}`
-  - `\KwData{input}`
-  - `\KwResult{output}`
-  - `\KwTo`
-  - `\KwRet{[value]}` `\Return{[value]}`
+    - `\KwIn{input}`
+    - `\KwOut{output}`
+    - `\KwData{input}`
+    - `\KwResult{output}`
+    - `\KwTo`
+    - `\KwRet{[value]}` `\Return{[value]}`
 - 注释
-  - `\tcp{comments}` 为一行添加注释，紧跟在代码后，默认样式为 `//`
-  - `\tcp*{comments}` 为一行添加注释，注释靠右侧对齐
-  - `\tcc{comments}` 为多行添加注释，默认样式为 `/* */`
-  - `\tcc*{comments}` 为多行添加注释，注释靠右侧对齐
-  - `\tcp|\tcc*[alignment]{comments}` 对齐标志有：
-    - `r` 默认，右对齐且有换行
-    - `l` 左对齐且有换行
-    - `f` 右对齐且无换行
-    - `h` 左对齐且无换行
+    - `\tcp{comments}` 为一行添加注释，紧跟在代码后，默认样式为 `//`
+    - `\tcp*{comments}` 为一行添加注释，注释靠右侧对齐
+    - `\tcc{comments}` 为多行添加注释，默认样式为 `/* */`
+    - `\tcc*{comments}` 为多行添加注释，注释靠右侧对齐
+    - `\tcp|\tcc*[alignment]{comments}` 对齐标志有：
+        - `r` 默认，右对齐且有换行
+        - `l` 左对齐且有换行
+        - `f` 右对齐且无换行
+        - `h` 左对齐且无换行
 - 判断语句
-  - `\If(comment){condition}{then block}`
-  - `\ElseIf(comment){condition}{then block}`
-  - `\Else(comment){else block}`
-  - 以上命令，若加上前缀 `u` 则不会打印 end 语句，若加上前缀 `l` 则不会换行也不会有 end 语句
-  - `\eIf(then comment){condition}{then block}(else comment){else block}`
-  - `\leIf(comment){condition}{then block}{else block}` 所有块都在一行内
+    - `\If(comment){condition}{then block}`
+    - `\ElseIf(comment){condition}{then block}`
+    - `\Else(comment){else block}`
+    - 以上命令，若加上前缀 `u` 则不会打印 end 语句，若加上前缀 `l` 则不会换行也不会有 end 语句
+    - `\eIf(then comment){condition}{then block}(else comment){else block}`
+    - `\leIf(comment){condition}{then block}{else block}` 所有块都在一行内
 - 循环语句
-  - `\For(comment){condition}{do block}`
-  - `\While(comment){condition}{do block}`
-  - `\ForEach(comment){condition}{do block}`
-  - `\ForAll(comment){condition}{do block}`
-  - 以上命令，若加上前缀 `l` 则不会换行也不会有 end 语句
+    - `\For(comment){condition}{do block}`
+    - `\While(comment){condition}{do block}`
+    - `\ForEach(comment){condition}{do block}`
+    - `\ForAll(comment){condition}{do block}`
+    - 以上命令，若加上前缀 `l` 则不会换行也不会有 end 语句
 
 ---
 可以使用以下命令自定义宏，这样在使用自定义宏时，会以命令对应的样式打印文本：
@@ -533,22 +533,22 @@ C 风格：
 ### 文本字体
 文本字体样式命令有两种格式，分别为 `\text..{}` 和 `\..family|series|shape`。前者接收一个参数，后者改变整个所在环境的字体样式。文本字体样式是可叠加的，不同类别的命令可以嵌套生效，相同类别的命令最内层的会生效。
 - 字体族
-  - `\textrm` `\rmfamily` 罗马字体 (Roman)，又称衬线字体，默认
-  - `\textsf` `\sffamily` 无衬线字体 (San Serif)，又称等线字体
-  - `\texttt` `\ttfamily` 打印机字体 (Typewriter)，又称等宽字体
-  - 若要修改默认字体族，可使用 `\renewcommand{\familydefault}{\rmdefault|\sfdefault|\ttdefault}` 命令
+    - `\textrm` `\rmfamily` 罗马字体 (Roman)，又称衬线字体，默认
+    - `\textsf` `\sffamily` 无衬线字体 (San Serif)，又称等线字体
+    - `\texttt` `\ttfamily` 打印机字体 (Typewriter)，又称等宽字体
+    - 若要修改默认字体族，可使用 `\renewcommand{\familydefault}{\rmdefault|\sfdefault|\ttdefault}` 命令
 - 字体系列
-  - `\textmd` `\mdseries` 正常 (Medium)
-  - `\textbf` `\bfseries` 粗体 (Boldface)
+    - `\textmd` `\mdseries` 正常 (Medium)
+    - `\textbf` `\bfseries` 粗体 (Boldface)
 - 字体形状
-  - `\textup` `\upshape` 正体 (Upright)
-  - `\textit` `\itshape` 斜体 (Italic)，字形可能会发生变化
-  - `\textsl` `\slshape` 倾斜体 (Slanted)
-  - `\textsc` `\scshape` 小型大写体 (Small Caps)
+    - `\textup` `\upshape` 正体 (Upright)
+    - `\textit` `\itshape` 斜体 (Italic)，字形可能会发生变化
+    - `\textsl` `\slshape` 倾斜体 (Slanted)
+    - `\textsc` `\scshape` 小型大写体 (Small Caps)
 - 字体大小
-  - 从小到大依次为 `\tiny` `\scriptsize` `\footnotesize` `\small` `\normalsize` `\large` `\Large` `\LARGE` `\huge` `\Huge`。这些命令会改变整个环境的字体大小。
+    - 从小到大依次为 `\tiny` `\scriptsize` `\footnotesize` `\small` `\normalsize` `\large` `\Large` `\LARGE` `\huge` `\Huge`。这些命令会改变整个环境的字体大小。
 - 字体颜色：`\textcolor[model]{color}{text}`
-  - color 参数可为自带的颜色，如 `\textcolor{red}{text}`；可为 RGB 值，如 `\textcolor[RGB]{255, 0, 0}{text}` 或 `\textcolor[rgb]{1, 0, 0}{text}`；还可为使用 `\definecolor` 命令自定义的颜色。
+    - color 参数可为自带的颜色，如 `\textcolor{red}{text}`；可为 RGB 值，如 `\textcolor[RGB]{255, 0, 0}{text}` 或 `\textcolor[rgb]{1, 0, 0}{text}`；还可为使用 `\definecolor` 命令自定义的颜色。
 - 默认字体样式：`\textnomal` `\nomalfont`
 
 ---
@@ -598,11 +598,11 @@ C 风格：
 - `zihao=<-4|5|false>` 将默认字号设置为小四号或五号，若为 false 则会禁用
 - `scheme=<chinese|plain>` 若为 chinese (默认)，则会调整默认字号为五号字，调整行距为 1.3，并汉化文档中的标题名字
 - `punct=<quanjiao|banjiao|kaiming|CCT|plain>` 设置标点样式
-  - `quanjiao` 全角式：所有标点占一个汉字宽度，相邻两个标点占 1.5 汉字宽度，默认
-  - `banjiao` 半角式：所有标点占半个汉字宽度
-  - `kaiming` 开明式：句末点号用占一个汉字宽度，其他占半个汉字宽度
-  - `CCT` CCT 式：所有标点符号的宽度略小于一个汉字宽度
-  - `plain` 原样
+    - `quanjiao` 全角式：所有标点占一个汉字宽度，相邻两个标点占 1.5 汉字宽度，默认
+    - `banjiao` 半角式：所有标点占半个汉字宽度
+    - `kaiming` 开明式：句末点号用占一个汉字宽度，其他占半个汉字宽度
+    - `CCT` CCT 式：所有标点符号的宽度略小于一个汉字宽度
+    - `plain` 原样
 - `linespread=<factor>` 设置行距倍数
 
 CTex 预定义了 `\songti` `\heiti` `\kaishu` `\fangsong` `\yahei` 等字体族，此外还可以使用以下命令设置字体族：
@@ -644,14 +644,14 @@ CTex 预定义了 `\songti` `\heiti` `\kaishu` `\fangsong` `\yahei` 等字体族
 ## 数学公式
 数学公式分为行内公式和行间公式：
 - 行内公式：
-  - \$...\$
-  - \\(...\\)
-  - \\begin{math}...\\end{math}
+    - \$...\$
+    - \\(...\\)
+    - \\begin{math}...\\end{math}
 - 行内公式：
-  - \$\$...\$\$
-  - \\[...\\]
-  - \\begin{displaymath}...\\end{displaymath}
-  - \\begin{equation}...\\end{equation}
+    - \$\$...\$\$
+    - \\[...\\]
+    - \\begin{displaymath}...\\end{displaymath}
+    - \\begin{equation}...\\end{equation}
 
 
 <br>
