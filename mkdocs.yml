@@ -87,7 +87,7 @@ nav:
   - 前端:
     - HTML: 前端/HTMLNote.md
     - CSS: 前端/CSSNote.md
-    - Nodejs: 前端/NodejsNote.md
+    - Node.js: 前端/NodejsNote.md
     - TailwindCSS: 前端/TailwindCSSNote.md
   - 软件:
     - Edge: 软件/EdgeNote.md
