@@ -7,6 +7,7 @@ nav:
   - 主页: index.md
   - 课程:
     - 高级数据结构与算法分析: 课程/ADSNote.md
+    - 数据库系统: 课程/数据库系统/DatabaseNote.md
     - 数据结构基础: 课程/FDSNote.md
     - 普通物理学:
       - 力学:
