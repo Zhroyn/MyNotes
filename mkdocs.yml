@@ -83,8 +83,9 @@ nav:
     - Git: CLI/GitNote.md
     - PowerShell: CLI/PowerShellNote.md
   - 排版:
-    - Markdown: 排版/MarkdownNote.md
     - LaTeX: 排版/LatexNote.md
+    - Markdown: 排版/MarkdownNote.md
+    - Typst: 排版/TypstNote.md
   - 前端:
     - HTML: 前端/HTMLNote.md
     - CSS: 前端/CSSNote.md
