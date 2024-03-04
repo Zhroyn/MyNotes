@@ -1,9 +1,12 @@
 
 - [数据库介绍](#数据库介绍)
 - [数据模型](#数据模型)
-    - [关系模型](#关系模型)
-- [数据定义语言](#数据定义语言)
-- [数据操作语言](#数据操作语言)
+- [数据视图](#数据视图)
+- [数据语言](#数据语言)
+    - [数据定义语言](#数据定义语言)
+    - [数据操作语言](#数据操作语言)
+- [数据库使用者](#数据库使用者)
+- [数据库历史](#数据库历史)
 
 
 
@@ -45,13 +48,8 @@
 - 故障恢复 (Failure Recovery)
 - 安全控制 (Security Control)
 
-数据库的历史（图灵奖获得者）：
 
-- Charles W. Bachman，网状数据库之父，任职美国通用电气，获得 1973 年图灵奖
-- Edgar F. Codd，在 IBM 任职期间开创关系模型，获得 1981 年图灵奖
-- Jim Gray 因为他对数据库和事务处理研究的开创性贡献获得 1998 年图灵奖
-- Michael Stonebraker 因为他对现代数据库系统的概念和实践做出的贡献获得 2014 年图灵奖
-
+<br>
 
 ## 数据模型
 
@@ -67,9 +65,11 @@
     - 层次模型 (Hierarchical Model)
 - 实体-联系模型 (Entity-Relationship Model)，主要用于数据库设计
 
-### 关系模型
 
-关系模型有纵向的 Columns/Attributes，和横向的 Rows/Tuples。
+
+<br>
+
+## 数据视图
 
 数据视图有三种，可以隐藏复杂性，并增强适应变化的能力：
 
@@ -82,33 +82,52 @@
 
 
 
-
 <br>
 
-## 数据定义语言
+## 数据语言
+
+### 数据定义语言
 
 DDL (Data Definition Language) 用于定义数据库的结构，包括表的创建、删除、修改等。
 
 DDL 编译器会生成一个数据字典，用于存储数据库的元数据，其中包含：
 
-- 表的定义
+- 数据库模式
 - 完整性约束
     - 主键
     - 参照完整性
 - 权限
 
+### 数据操作语言
+
+DML (Data Manipulation Language) 是一种用于操作数据库中数据的语言，也被称为查询语言，如 SQL Query Language。
+
+分为**过程式 (Procedural)** 和**陈述式 (Declarative)**，其中 SQL 是使用最广泛的语言，属于陈述式。
+
+SQL 并不强大，某些计算和行为必须通过宿主语言 (host language) 来实现，如 Python、Java、C 等。
 
 
 
 
 <br>
 
-## 数据操作语言
+## 数据库使用者
 
-DML (Data Manipulation Language) 是一种用于操作数据库中数据的语言，也被称为查询语言，如 SQL Query Language。大多数编程语言是过程式语言，而 SQL 是声明式语言。
+- Native User: 通过图形化界面使用
+- Application Programmer: 使用 API 制作数据库应用
+- Sophisticated User: 使用 DML 和系统交互
+- Database Administrator: 协调数据库系统的所有活动，要对信息资源有深入的了解
 
-SQL 并不强大，某些计算和行为必须通过宿主语言 (host language) 来实现，如 Python、Java、C 等。
 
 
+<br>
 
+## 数据库历史
+
+历届图灵奖获得者有：
+
+- Charles W. Bachman，网状数据库之父，任职美国通用电气，获得 1973 年图灵奖
+- Edgar F. Codd，在 IBM 任职期间开创关系模型，获得 1981 年图灵奖
+- Jim Gray 因为他对数据库和事务处理研究的开创性贡献获得 1998 年图灵奖
+- Michael Stonebraker 因为他对现代数据库系统的概念和实践做出的贡献获得 2014 年图灵奖
 
