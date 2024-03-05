@@ -1,12 +1,3 @@
-- [Flexbox](#flexbox)
-    - [Flexbox](#flexbox-1)
-- [Sizing](#sizing)
-    - [Width](#width)
-    - [Max Width](#max-width)
-
-
-
-
 
 ## Flexbox
 ### Flexbox

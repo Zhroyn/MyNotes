@@ -1,9 +1,4 @@
 
-[toc]
-
-
-
-
 ## Recognition
 ### Semantic Segmentation
 语义分割为每个像素预测一个类别，无法区分同一类别的不同实例。

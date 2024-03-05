@@ -1,27 +1,4 @@
 
-- [Operators and motions](#operators-and-motions)
-    - [Operators](#operators)
-    - [Word motions](#word-motions)
-    - [Left-right motions](#left-right-motions)
-    - [Up-down motions](#up-down-motions)
-    - [Text object motions](#text-object-motions)
-    - [Text object selection](#text-object-selection)
-    - [Jumps](#jumps)
-- [Other Operator](#other-operator)
-- [Other Commands](#other-commands)
-    - [File](#file)
-    - [Fold](#fold)
-    - [Substitute](#substitute)
-    - [Mark](#mark)
-    - [Multiple Windows](#multiple-windows)
-    - [Macro](#macro)
-    - [Navigation](#navigation)
-
-
-
-
-
-
 ### Operators and motions
 - Every motion can be used after an operator command, so the command operates on the text comprised by the movement's reach.
 - If the motion includes a count and the operator also had a count before it,the two counts are multiplied. For example: `2d3w` deletes six words.

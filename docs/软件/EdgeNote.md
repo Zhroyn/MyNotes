@@ -1,5 +1,3 @@
-[toc]
-
 
 #### Edge Options
 `Alt + Shift + B` 将焦点放在收藏夹栏中的第一项上

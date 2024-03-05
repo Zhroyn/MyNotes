@@ -1,37 +1,4 @@
 
-- [Relations](#relations)
-    - [9.1 Relations and Their Properties](#91-relations-and-their-properties)
-        - [Properties of Binary Relations](#properties-of-binary-relations)
-        - [Combining Relations](#combining-relations)
-        - [Inverse and Complementary Relations](#inverse-and-complementary-relations)
-    - [9.3 Representing Relations](#93-representing-relations)
-        - [Representing Relations Using Matrices](#representing-relations-using-matrices)
-        - [Representing Relations Using Digraphs](#representing-relations-using-digraphs)
-    - [9.4 Closures of Relations](#94-closures-of-relations)
-        - [Different Types of Closures](#different-types-of-closures)
-        - [Paths in Directed Graphs](#paths-in-directed-graphs)
-        - [Transitive Closures](#transitive-closures)
-        - [Warshall’s Algorithm](#warshalls-algorithm)
-    - [9.5 Equivalence Relations](#95-equivalence-relations)
-        - [Equivalence Relations](#equivalence-relations)
-        - [Equivalence Classes](#equivalence-classes)
-        - [Equivalence Classes and Partitions](#equivalence-classes-and-partitions)
-    - [9.6 Partial Orderings](#96-partial-orderings)
-        - [Terminology for Partial Ordering](#terminology-for-partial-ordering)
-        - [Lexicographic Order](#lexicographic-order)
-        - [Hasse Diagrams](#hasse-diagrams)
-        - [Maximal and Minimal Elements](#maximal-and-minimal-elements)
-        - [Lattice](#lattice)
-        - [Topological Sorting](#topological-sorting)
-
-
-
-
-
-
-
-
-
 ## Relations
 ### 9.1 Relations and Their Properties
 **Definition**

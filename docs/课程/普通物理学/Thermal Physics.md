@@ -1,44 +1,4 @@
 
-- [Thermal Physics](#thermal-physics)
-    - [Basic Concepts](#basic-concepts)
-        - [The Laws of Thermodynamics](#the-laws-of-thermodynamics)
-        - [Temperature Scales](#temperature-scales)
-        - [Thermal Expansion](#thermal-expansion)
-        - [Ideal Gases](#ideal-gases)
-        - [Real Gases](#real-gases)
-    - [Microscopic Model of Ideal Gases](#microscopic-model-of-ideal-gases)
-        - [Pressure on the Wall](#pressure-on-the-wall)
-        - [Heat Capacity](#heat-capacity)
-            - [Equipartition Theorem](#equipartition-theorem)
-            - [Mode Counting](#mode-counting)
-        - [Maxwell Distribution](#maxwell-distribution)
-        - [Characteristic Speed](#characteristic-speed)
-    - [Heat and The 1st Law of Thermodynamics](#heat-and-the-1st-law-of-thermodynamics)
-        - [Heat ,Latent Heat, and Specific Heat](#heat-latent-heat-and-specific-heat)
-        - [Heat Conduction](#heat-conduction)
-        - [Mean Free Path](#mean-free-path)
-        - [The 1st Law of Thermodynamics](#the-1st-law-of-thermodynamics)
-        - [Thermodynamic Processes](#thermodynamic-processes)
-        - [Isothermal vs Free Expansion](#isothermal-vs-free-expansion)
-        - [Isobaric vs Isovolumetric Processes](#isobaric-vs-isovolumetric-processes)
-        - [Adiabatic Equation](#adiabatic-equation)
-    - [Engines and The 2nd Law of Thermodynamics](#engines-and-the-2nd-law-of-thermodynamics)
-        - [Otto Cycle](#otto-cycle)
-        - [Diesel Engine](#diesel-engine)
-        - [Carnot Cycle](#carnot-cycle)
-        - [Heat Pumps](#heat-pumps)
-        - [The 2nd Law of Thermodynamics](#the-2nd-law-of-thermodynamics)
-    - [Entropy and Information](#entropy-and-information)
-        - [The Function of Entropy](#the-function-of-entropy)
-        - [The Second Law in terms of Entropy](#the-second-law-in-terms-of-entropy)
-        - [Entropy: A Measure of Disorder](#entropy-a-measure-of-disorder)
-        - [Shannon Entropy](#shannon-entropy)
-
-
-
-
-
-
 ## Thermal Physics
 ### Basic Concepts
 #### The Laws of Thermodynamics

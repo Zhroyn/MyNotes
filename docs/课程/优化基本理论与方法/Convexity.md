@@ -1,13 +1,4 @@
 
-- [Lipschitz Conditon](#lipschitz-conditon)
-- [Convex Function](#convex-function)
-    - [Smooth and Convex Function](#smooth-and-convex-function)
-- [Strongly Convex Function](#strongly-convex-function)
-    - [Smooth and Strongly Convex Function](#smooth-and-strongly-convex-function)
-
-
-
-
 ## Lipschitz Conditon
 **Definition**
 Let $Q$ be a subset of $\mathbb{R}^n$. We denote by $C_{L}^{k,p}(Q)$ the class of functions with the following properties:

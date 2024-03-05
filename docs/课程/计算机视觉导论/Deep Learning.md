@@ -1,33 +1,4 @@
 
-- [Deep Learning](#deep-learning)
-    - [Linear Classfier](#linear-classfier)
-    - [Neural Network](#neural-network)
-        - [Activation Functions](#activation-functions)
-        - [Perceptron](#perceptron)
-        - [Multi-layer Perceptron](#multi-layer-perceptron)
-    - [Convolutional Neural Network](#convolutional-neural-network)
-        - [Convolution Layer](#convolution-layer)
-        - [Pooling Layer](#pooling-layer)
-    - [Training Neural Network](#training-neural-network)
-        - [Backpropagation](#backpropagation)
-        - [Optimizer](#optimizer)
-        - [Weight Initialization](#weight-initialization)
-            - [Xavier Initialization](#xavier-initialization)
-            - [Kaiming Initialization](#kaiming-initialization)
-        - [Batch Normalization](#batch-normalization)
-        - [Regularization](#regularization)
-        - [Data Augmentation](#data-augmentation)
-    - [Babysitting Learning](#babysitting-learning)
-        - [Sanity Check](#sanity-check)
-        - [Hyperparameter Optimization](#hyperparameter-optimization)
-
-
-
-
-
-
-
-
 ## Deep Learning
 ### Linear Classfier
 Define the **score** as

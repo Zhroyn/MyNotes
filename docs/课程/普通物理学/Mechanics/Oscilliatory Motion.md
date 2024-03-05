@@ -1,20 +1,4 @@
 
-- [Oscillatory Motion](#oscillatory-motion)
-    - [Equilibrium](#equilibrium)
-    - [Simple Harmonic Oscillation](#simple-harmonic-oscillation)
-    - [Pendulum](#pendulum)
-        - [Simple Pendulum](#simple-pendulum)
-        - [Physical Pendulum](#physical-pendulum)
-        - [Torsional Pendulum](#torsional-pendulum)
-    - [Damped Oscillator](#damped-oscillator)
-    - [Forced Oscillation](#forced-oscillation)
-    - [Coupled Oscillators](#coupled-oscillators)
-    - [Elastic Properties](#elastic-properties)
-
-
-
-
-
 ## Oscillatory Motion
 ### Equilibrium
 An object is in equilibrium if it is in both translational and rotational equilibrium, which means that both the **linear acceleration** and the **angular acceleration** are zero.

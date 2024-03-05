@@ -1,10 +1,4 @@
 
-- [读取图片](#读取图片)
-
-
-
-
-
 ### 读取图片
 - `imread(uri, format=None, **kwargs)` 读取图像，返回一个 numpy 数组
     - `uri` 可以是文件路径、pathlib.Path、URL、文件对象

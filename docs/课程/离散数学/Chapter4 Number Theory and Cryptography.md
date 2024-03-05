@@ -1,30 +1,4 @@
 
-- [Number Theory and Cryptography](#number-theory-and-cryptography)
-    - [4.1 Divisibility and Modular Arithmetic](#41-divisibility-and-modular-arithmetic)
-    - [4.2 Integer Representations and Algorithms](#42-integer-representations-and-algorithms)
-        - [Representations of Integers](#representations-of-integers)
-        - [Modular Exponentiation](#modular-exponentiation)
-    - [4.3 Primes and Greatest Common Divisors](#43-primes-and-greatest-common-divisors)
-        - [Greatest Common Divisors and Least Common Multiples](#greatest-common-divisors-and-least-common-multiples)
-        - [Euclidean Algorithm](#euclidean-algorithm)
-        - [Bezout’s Theorem](#bezouts-theorem)
-        - [Uniqueness of Prime Factorization](#uniqueness-of-prime-factorization)
-    - [4.4 Solving Congruences](#44-solving-congruences)
-        - [Linear Congruences](#linear-congruences)
-        - [Solving Linear Congruences](#solving-linear-congruences)
-        - [The Chinese Remainder Theorem](#the-chinese-remainder-theorem)
-        - [Back Substitution](#back-substitution)
-        - [Fermat’s Little Theorem](#fermats-little-theorem)
-        - [Pseudoprimes](#pseudoprimes)
-        - [Primitive Roots and Discrete Logarithms](#primitive-roots-and-discrete-logarithms)
-
-
-
-
-
-
-
-
 ## Number Theory and Cryptography
 ### 4.1 Divisibility and Modular Arithmetic
 **The Division Algorithm**

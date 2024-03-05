@@ -1,10 +1,4 @@
 
-- [Integrate](#integrate)
-
-
-
-
-
 #### Integrate
 ```py
 from scipy.integrate import quad

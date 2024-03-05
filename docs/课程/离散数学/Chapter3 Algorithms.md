@@ -1,16 +1,4 @@
 
-- [Algorithms](#algorithms)
-    - [3.1 Algorithms](#31-algorithms)
-    - [3.2 The Growth of Functions](#32-the-growth-of-functions)
-    - [3.3 Complexity of Algorithms](#33-complexity-of-algorithms)
-
-
-
-
-
-
-
-
 ## Algorithms
 ### 3.1 Algorithms
 - Algorithms that make what seems to be the best choice at each step are called **greedy algorithms**

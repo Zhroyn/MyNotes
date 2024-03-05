@@ -1,18 +1,4 @@
 
-- [Basic Structures](#basic-structures)
-    - [2.1 Sets](#21-sets)
-    - [2.2 Set Operations](#22-set-operations)
-    - [2.3 Functions](#23-functions)
-    - [2.5 Cardinality of Sets](#25-cardinality-of-sets)
-    - [2.6 Matrices](#26-matrices)
-
-
-
-
-
-
-
-
 ## Basic Structures
 ### 2.1 Sets
 - **elements** or **members** : $a ∈ A$ or $a ∉ A$

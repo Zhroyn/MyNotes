@@ -1,24 +1,4 @@
 
-- [Image](#image)
-    - [图像属性](#图像属性)
-    - [基本 I/O](#基本-io)
-    - [颜色转换](#颜色转换)
-    - [剪切粘贴](#剪切粘贴)
-    - [几何变换](#几何变换)
-    - [像素操作](#像素操作)
-    - [创建图像](#创建图像)
-- [ImageFilter](#imagefilter)
-    - [MultibandFilter](#multibandfilter)
-        - [BuiltinFilter](#builtinfilter)
-- [ImageEnhance](#imageenhance)
-- [ImageGrab](#imagegrab)
-
-
-
-
-
-
-
 ### Image
 #### 图像属性
 - `im.filename` 图像名

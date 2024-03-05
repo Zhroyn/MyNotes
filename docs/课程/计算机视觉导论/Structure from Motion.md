@@ -1,24 +1,4 @@
 
-- [Structure from Motion](#structure-from-motion)
-    - [Camera Calibration](#camera-calibration)
-        - [Perspective-n-Point (PnP) Problem](#perspective-n-point-pnp-problem)
-            - [Direct Linear Transform (DLT)](#direct-linear-transform-dlt)
-            - [P3P](#p3p)
-            - [Bundle Adjustment (BA)](#bundle-adjustment-ba)
-    - [Structure from Motion (SFM)](#structure-from-motion-sfm)
-        - [Epipolar Geometry](#epipolar-geometry)
-        - [Triangulation](#triangulation)
-            - [Linear Solution](#linear-solution)
-            - [Non-Linear Solution](#non-linear-solution)
-
-
-
-
-
-
-
-
-
 ## Structure from Motion
 ### Camera Calibration
 #### Perspective-n-Point (PnP) Problem

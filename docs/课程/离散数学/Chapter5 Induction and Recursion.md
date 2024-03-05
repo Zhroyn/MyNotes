@@ -1,18 +1,4 @@
 
-- [Induction and Recursion](#induction-and-recursion)
-    - [5.1 Mathematical Induction](#51-mathematical-induction)
-    - [5.2 Strong Induction and Well-Ordering](#52-strong-induction-and-well-ordering)
-    - [5.3 Recursive Definitions and Structural Induction](#53-recursive-definitions-and-structural-induction)
-    - [5.4 Recursive Algorithms](#54-recursive-algorithms)
-
-
-
-
-
-
-
-
-
 ## Induction and Recursion
 ### 5.1 Mathematical Induction
 - **PRINCIPLE OF MATHEMATICAL INDUCTION** : To prove that $P(n)$ is true for all positive integers $n$, we complete two steps:

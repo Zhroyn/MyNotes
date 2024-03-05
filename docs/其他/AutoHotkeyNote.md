@@ -1,20 +1,4 @@
 
-- [Keyboard](#keyboard)
-    - [Hotkeys](#hotkeys)
-        - [Modifier Symbols](#modifier-symbols)
-    - [Hotstrings](#hotstrings)
-    - [Varibles](#varibles)
-    - [Functions](#functions)
-    - [Directives](#directives)
-- [Flow of Control](#flow-of-control)
-    - [If Statements](#if-statements)
-    - [Loop Statements](#loop-statements)
-- [Threads](#threads)
-
-
-
-
-
 ## Keyboard
 ### Hotkeys
 - When a hotkey is triggered, the name of the hotkey is passed as its first parameter named `ThisHotkey`

@@ -1,16 +1,4 @@
 
-- [Sharpened Quasi-Newton Methods: Faster Superlinear Rate and Larger Local Convergence Neighborhood](#sharpened-quasi-newton-methods-faster-superlinear-rate-and-larger-local-convergence-neighborhood)
-    - [Abstract](#abstract)
-    - [Introduction](#introduction)
-        - [Contributions](#contributions)
-    - [Preliminaries](#preliminaries)
-        - [BFGS Operator and Algorithm](#bfgs-operator-and-algorithm)
-        - [Greedy-BFGS Algorithm](#greedy-bfgs-algorithm)
-        - [Sharpened-BFSG](#sharpened-bfsg)
-
-
-
-
 # Sharpened Quasi-Newton Methods: Faster Superlinear Rate and Larger Local Convergence Neighborhood
 ## Abstract
 - BFGS 方法能使 Hessian 近似矩阵在 Newton 方向上的误差收敛为 0

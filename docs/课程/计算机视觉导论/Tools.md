@@ -1,22 +1,4 @@
 
-- [Open3d](#open3d)
-- [Colmap](#colmap)
-    - [自动重建](#自动重建)
-    - [特征提取](#特征提取)
-    - [特征匹配](#特征匹配)
-    - [稀疏重建](#稀疏重建)
-    - [稠密重建](#稠密重建)
-    - [转换格式](#转换格式)
-    - [视觉定位](#视觉定位)
-
-
-
-
-
-
-
-
-
 ## Open3d
 - `o3d.io.read_point_cloud(filename, format='auto', ...)` 读取点云文件
     - `pcd = o3d.io.read_point_cloud("a.txt", format="xyz")`

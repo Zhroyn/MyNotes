@@ -1,25 +1,4 @@
 
-- [The Theory of Relativity](#the-theory-of-relativity)
-    - [Relativistic Velocity Addition Law](#relativistic-velocity-addition-law)
-    - [Synchronizing Clocks](#synchronizing-clocks)
-    - [Moving Clocks and Sticks](#moving-clocks-and-sticks)
-    - [Lorentz Transformation](#lorentz-transformation)
-        - [Time Dilation](#time-dilation)
-        - [Length Contraction](#length-contraction)
-        - [Invariant Interval](#invariant-interval)
-        - [Minkowski Diagram](#minkowski-diagram)
-    - [Relativistic Doppler Effect](#relativistic-doppler-effect)
-    - [Energy and Momentum](#energy-and-momentum)
-        - [Velocity Transformation](#velocity-transformation)
-        - [Linear Momentum, Force and Acceleration](#linear-momentum-force-and-acceleration)
-        - [Relativistic Energy](#relativistic-energy)
-
-
-
-
-
-
-
 ## The Theory of Relativity
 ### Relativistic Velocity Addition Law
 Here we derive the law by the example of a race between a ball and a pulse of light in a moving train. Suppose the location they meet devide the train carriage into two sections of $1 - f : f$ ratio.

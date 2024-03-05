@@ -1,32 +1,4 @@
 
-- [Wave Motion](#wave-motion)
-    - [Wave Function](#wave-function)
-    - [Wave Equation](#wave-equation)
-    - [Linear Wave](#linear-wave)
-        - [Phenomenon](#phenomenon)
-        - [Speed of Wave in a Solid](#speed-of-wave-in-a-solid)
-    - [Sinusoidal Wave](#sinusoidal-wave)
-        - [Sinusoidal Wave Function](#sinusoidal-wave-function)
-        - [Speed of Wave on a String](#speed-of-wave-on-a-string)
-        - [Energy Transfer](#energy-transfer)
-        - [Different Cases of Superposition](#different-cases-of-superposition)
-            - [Interference Case](#interference-case)
-            - [Beating Case](#beating-case)
-            - [Standing Wave](#standing-wave)
-    - [Sound Wave](#sound-wave)
-        - [Pressure Fluctuation](#pressure-fluctuation)
-        - [Speed of Sound in a Fluid](#speed-of-sound-in-a-fluid)
-        - [Sound Intensity](#sound-intensity)
-        - [Spherical Waves](#spherical-waves)
-        - [Doppler Effect](#doppler-effect)
-        - [Shock Waves](#shock-waves)
-
-
-
-
-
-
-
 ## Wave Motion
 ### Wave Function
 - A wave that causes the particles to move parallel to the direction of wave motion is called a **longitudinal wave**.

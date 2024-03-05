@@ -1,24 +1,4 @@
 
-- [Create Figures](#create-figures)
-- [Create Subplot](#create-subplot)
-- [Show and Save](#show-and-save)
-- [Modify Axes](#modify-axes)
-    - [Add Title](#add-title)
-    - [Add Label](#add-label)
-    - [Set Limit](#set-limit)
-    - [Set Ticks](#set-ticks)
-    - [Set Legend](#set-legend)
-    - [Add Text](#add-text)
-- [Change Style](#change-style)
-    - [Show Config](#show-config)
-
-
-
-
-
-
-
-
 ### Create Figures
 ```py
 plt.figure(

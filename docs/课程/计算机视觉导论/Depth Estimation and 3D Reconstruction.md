@@ -1,26 +1,4 @@
 
-- [Depth Estimation](#depth-estimation)
-    - [Stereo Matching](#stereo-matching)
-        - [Stereo Image Rectification](#stereo-image-rectification)
-        - [Stereo Matching Algorithms](#stereo-matching-algorithms)
-            - [Window-based Stereo Matching](#window-based-stereo-matching)
-            - [MRF-based Stereo Matching](#mrf-based-stereo-matching)
-    - [Multi-View Stereo (MVS)](#multi-view-stereo-mvs)
-        - [Plane-Sweep](#plane-sweep)
-        - [Patch Match](#patch-match)
-- [3D Reconstruction](#3d-reconstruction)
-    - [3D Representations](#3d-representations)
-    - [3D Surface Reconstruction](#3d-surface-reconstruction)
-        - [Poisson Reconstruction](#poisson-reconstruction)
-        - [Marching Cubes](#marching-cubes)
-
-
-
-
-
-
-
-
 ## Depth Estimation
 ### Stereo Matching
 For a given stereo camera, suppose the relative pose of the two lenses is given, then the procedures to compute the depth are:

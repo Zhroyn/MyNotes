@@ -1,18 +1,4 @@
 
-- [数据结构基础笔记](#数据结构基础笔记)
-    - [Algorithm Analysis](#algorithm-analysis)
-    - [List](#list)
-    - [Tree](#tree)
-        - [Binary Search Tree](#binary-search-tree)
-        - [Heap](#heap)
-        - [Union-Find Set](#union-find-set)
-    - [Graph](#graph)
-    - [Sorting](#sorting)
-    - [Hashing](#hashing)
-
-
-
-
 # 数据结构基础笔记
 
 ## Algorithm Analysis

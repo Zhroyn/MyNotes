@@ -1,43 +1,4 @@
 
-- [Python 笔记](#python-笔记)
-    - [内建函数](#内建函数)
-        - [迭代](#迭代)
-        - [转换](#转换)
-        - [算术](#算术)
-        - [对象](#对象)
-        - [输入输出](#输入输出)
-    - [内建类型](#内建类型)
-        - [数字](#数字)
-        - [列表和元组](#列表和元组)
-        - [范围和切片](#范围和切片)
-        - [字符串](#字符串)
-            - [查找和删除](#查找和删除)
-            - [分割和合并](#分割和合并)
-            - [转换](#转换-1)
-            - [判断](#判断)
-            - [格式化](#格式化)
-        - [字节序列](#字节序列)
-        - [集合](#集合)
-        - [字典](#字典)
-        - [文件](#文件)
-    - [命令行选项](#命令行选项)
-    - [Expressions](#expressions)
-        - [Atoms](#atoms)
-            - [Comprehensions and Generator expressions](#comprehensions-and-generator-expressions)
-            - [Yields expressions and Generator functions](#yields-expressions-and-generator-functions)
-        - [Primaries](#primaries)
-        - [Operators](#operators)
-        - [Assignment, Conditional and Lambda Expressions](#assignment-conditional-and-lambda-expressions)
-    - [Statements](#statements)
-        - [Function definitions](#function-definitions)
-            - [Decorator](#decorator)
-
-
-
-
-
-
-
 # Python 笔记
 ## 内建函数
 ### 迭代

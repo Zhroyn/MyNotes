@@ -1,42 +1,4 @@
 
-- [Git 笔记](#git-笔记)
-    - [基本文件操作](#基本文件操作)
-        - [git add](#git-add)
-        - [git commit](#git-commit)
-        - [git mv](#git-mv)
-        - [git rm](#git-rm)
-    - [信息查看](#信息查看)
-        - [git status](#git-status)
-        - [git diff](#git-diff)
-        - [git log](#git-log)
-        - [git show](#git-show)
-        - [git cat-file](#git-cat-file)
-        - [git ls-files](#git-ls-files)
-    - [恢复保存](#恢复保存)
-        - [git restore](#git-restore)
-        - [git reset](#git-reset)
-        - [git reflog](#git-reflog)
-        - [git stash](#git-stash)
-    - [分支管理](#分支管理)
-        - [git branch](#git-branch)
-        - [git checkout](#git-checkout)
-        - [git switch](#git-switch)
-        - [git merge](#git-merge)
-        - [git rebase](#git-rebase)
-        - [git tag](#git-tag)
-    - [远程管理](#远程管理)
-        - [git remote](#git-remote)
-        - [git fetch](#git-fetch)
-        - [git pull](#git-pull)
-        - [git push](#git-push)
-    - [配置管理](#配置管理)
-        - [git config](#git-config)
-        - [gitignore](#gitignore)
-
-
-
-
-
 # Git 笔记
 
 ## 基本文件操作

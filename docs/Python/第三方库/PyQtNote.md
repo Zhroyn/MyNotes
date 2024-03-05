@@ -1,19 +1,3 @@
-- [控件](#控件)
-    - [应用程序](#应用程序)
-    - [窗口桌面](#窗口桌面)
-    - [文本](#文本)
-    - [输入框](#输入框)
-    - [按钮](#按钮)
-    - [布局](#布局)
-        - [QBoxLayout](#qboxlayout)
-        - [QGroupBox](#qgroupbox)
-        - [QGridLayout](#qgridlayout)
-        - [QFormLayout](#qformlayout)
-        - [QStackedLayout](#qstackedlayout)
-
-
-
-
 
 ## 控件
 ### 应用程序

@@ -1,22 +1,4 @@
 
-- [Logic and Proofs](#logic-and-proofs)
-    - [1.1 Propositional Logic](#11-propositional-logic)
-    - [1.2 Applications of Propositional Logic](#12-applications-of-propositional-logic)
-    - [1.3 Propositional Equivalences](#13-propositional-equivalences)
-    - [1.4 Predicates and Quantifiers](#14-predicates-and-quantifiers)
-    - [1.5 Nested Quantifiers and Normal Form](#15-nested-quantifiers-and-normal-form)
-    - [1.6 Rules of Inference](#16-rules-of-inference)
-    - [1.7 Introduction to Proofs](#17-introduction-to-proofs)
-    - [1.8 Proof Methods and Strategy](#18-proof-methods-and-strategy)
-- [Shorthand](#shorthand)
-
-
-
-
-
-
-
-
 ## Logic and Proofs
 
 ### 1.1 Propositional Logic

@@ -1,9 +1,4 @@
 
-[toc]
-
-
-
-
 ## Typesetting
 ### Comment
 Comment: `Ctrl + K and Ctrl + C`

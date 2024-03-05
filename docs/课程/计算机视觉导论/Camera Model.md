@@ -1,15 +1,4 @@
 
-- [Camera Model](#camera-model)
-    - [World-to-Camera Transformation](#world-to-camera-transformation)
-    - [Perspective Projection](#perspective-projection)
-    - [Pixel-to-World Transformation](#pixel-to-world-transformation)
-
-
-
-
-
-
-
 ### Camera Model
 #### World-to-Camera Transformation
 Suppose the position of camera in the world is $c_w$, and its orientation is 

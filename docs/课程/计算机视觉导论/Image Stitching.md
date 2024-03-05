@@ -1,15 +1,4 @@
 
-- [Image Stitching](#image-stitching)
-    - [Affine Transformation](#affine-transformation)
-    - [Projective Transformation](#projective-transformation)
-    - [RANSAC](#ransac)
-
-
-
-
-
-
-
 ## Image Stitching
 ### Affine Transformation
 $\begin{bmatrix}x'\\ y' \\ 1 \end{bmatrix}

@@ -1,23 +1,4 @@
 
-- [Rotational Motion](#rotational-motion)
-    - [Common Formulas](#common-formulas)
-        - [Constant Angular Acceleration](#constant-angular-acceleration)
-        - [Instant Angular Acceleration](#instant-angular-acceleration)
-        - [Torque](#torque)
-        - [Rotational Kinetic Energy](#rotational-kinetic-energy)
-        - [Work and Power](#work-and-power)
-    - [Moment of Inertia of differernt Objects](#moment-of-inertia-of-differernt-objects)
-    - [Cross product and Coriolis force](#cross-product-and-coriolis-force)
-    - [Angular Momentum](#angular-momentum)
-        - [Gravity torque](#gravity-torque)
-        - [Angular Momentum](#angular-momentum-1)
-
-
-
-
-
-
-
 ## Rotational Motion
 ### Common Formulas
 #### Constant Angular Acceleration

@@ -1,22 +1,4 @@
 
-- [Image Matching](#image-matching)
-    - [Detection](#detection)
-        - [Principal Component Analysis](#principal-component-analysis)
-        - [Corner Detection](#corner-detection)
-        - [Gradient Operators](#gradient-operators)
-        - [Harris Detector](#harris-detector)
-        - [Blob Detector](#blob-detector)
-    - [Description](#description)
-        - [SIFT Descriptor](#sift-descriptor)
-    - [Matching](#matching)
-
-
-
-
-
-
-
-
 ## Image Matching
 ### Detection
 #### Principal Component Analysis
