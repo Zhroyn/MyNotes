@@ -1,0 +1,29 @@
+[data-md-color-scheme="default"] {
+    --md-primary-fg-color: #fafafa;
+    --md-typeset-a-color: #546e7a;
+}
+
+[data-md-color-scheme="slate"] {
+    --md-default-bg-color: #212121;
+    --md-default-fg-color: hsl(var(--md-hue), 75%, 97%);
+    --md-primary-fg-color: #181818;
+    --md-footer-bg-color: #181818;
+    --md-typeset-a-color: #bcbcbc;
+    --md-code-bg-color: #292929;
+}
+
+[data-md-color-scheme="slate"] .md-search__input {
+    background-color: #32323280;
+}
+
+.md-header {
+    font-family: LXGW WenKai Screen;
+}
+
+.md-sidebar--secondary, h2, h3, h4 {
+    font-family: Noto Sans SC;
+}
+
+.md-tabs, .md-sidebar--primary, h1 {
+    font-family: Noto Serif SC;
+}

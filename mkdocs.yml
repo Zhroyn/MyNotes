@@ -108,8 +108,8 @@ nav:
     - AI 绘画提示词: 其他/PromptNote.md
 
 theme:
-  name: 'material'
-  language: 'zh'
+  name: material
+  language: zh
   icon:
     logo: material/notebook-outline
     repo: fontawesome/brands/github
@@ -118,14 +118,27 @@ theme:
     - content.code.annotate
     - content.action.edit
     - navigation.tracking
+    - navigation.footer
     - navigation.top
     - navigation.tabs
     - navigation.indexes
     - navigation.sections
   font:
+    text: Noto Sans SC
+    text: LXGW WenKai Screen
     code: Fira Code
   palette:
-    - scheme: default
+    - media: "(prefers-color-scheme: light)"
+      scheme: default 
+      primary: white
+      toggle:
+        icon: material/brightness-7
+        name: 切换到夜间模式
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: 切换到白天模式
 
 markdown_extensions:
   - toc:
@@ -158,6 +171,12 @@ markdown_extensions:
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
 
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Zhroyn
+      name: Zhroyn
+
 extra_javascript:
   - js/katex.js
   - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.js
@@ -165,3 +184,6 @@ extra_javascript:
 
 extra_css:
   - https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.7/katex.min.css
+  - https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@100..900&family=Noto+Serif+SC&display=swap
+  - https://gcore.jsdelivr.net/npm/lxgw-wenkai-screen-webfont@1.1.0/style.css
+  - css/extra.css
