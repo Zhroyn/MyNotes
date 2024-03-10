@@ -2,11 +2,12 @@ site_name: Zhroyn 的学习笔记
 site_url: https://zhroyn.github.io/MyNotes/
 repo_name: Zhroyn/MyNotes
 repo_url: https://github.com/Zhroyn/MyNotes/
+use_directory_urls: false
 
 nav:
   - 主页: index.md
   - 课程:
-    - 高级数据结构与算法分析: 课程/ADSNote.md
+    - 高级数据结构与算法分析: 课程/高级数据结构与算法分析/ADSNote.md
     - 数据库系统:
       - 数据库介绍: 课程/数据库系统/Chapter1 Introduction.md
       - 关系模型: 课程/数据库系统/Chapter2 Relation Model.md
