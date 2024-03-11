@@ -7,7 +7,8 @@ use_directory_urls: false
 nav:
   - 主页: index.md
   - 课程:
-    - 高级数据结构与算法分析: 课程/高级数据结构与算法分析/ADSNote.md
+    - 高级数据结构与算法分析:
+      - 平衡树: 课程/高级数据结构与算法分析/Balanced Tree.md
     - 数据库系统:
       - 数据库介绍: 课程/数据库系统/Chapter1 Introduction.md
       - 关系模型: 课程/数据库系统/Chapter2 Relation Model.md

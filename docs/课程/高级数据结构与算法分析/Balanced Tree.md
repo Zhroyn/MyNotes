@@ -1,5 +1,5 @@
 
-# 高级数据结构与算法分析笔记
+# 平衡树
 
 ## AVL Tree
 
@@ -82,7 +82,7 @@ MultiPop | $\min(\text{sizeof}(S), k)$ | 0
 
 在 Splay 树中，可以定义势能函数为 $\Phi(T) = \sum_{i\in T} \log S(i) = \sum_{i\in T} Rank(i)$，其中 $S(i)$ 为以 $i$ 为根节点的子树的节点数，然后由 $\forall a, b \gt 0, a + b \le c: \log a + \log b \lt 2\log c - 2$ 可得每种操作的均摊上界：
 
-<div align=center> <img src="assets/001.png" width=90% /> </div>
+<div align=center> <img src="assets/ads_bt_splay.png" width=90% /> </div>
 
 而后可以得到总的将 $X$ 旋转到根节点的均摊上界为 $1 + 3(R_2(X) - R_1(X))$。由于 Zig 操作最多进行一次，所以最后可得均摊上界为 $O(\log N)$。
 
@@ -118,7 +118,7 @@ MultiPop | $\min(\text{sizeof}(S), k)$ | 0
 - Case 2: 父节点为红色，叔节点为黑色，且插入节点、父节点、祖父节点不在同一侧，此时将插入节点旋转上去，使得三个节点在同一侧，转换为 Case 3，否则无法保证黑高不变
 - Case 3: 父节点为红色，叔节点为黑色，且插入节点、父节点、祖父节点在同一侧，此时同 Case 1 一样，先将父节点和叔节点设为黑色，祖父节点设为红色，再将父节点旋转上去，这样可以保证从新的祖父节点开始黑高不变
 
-<div align=center> <img src="assets/002.png" width=90% /> </div>
+<div align=center> <img src="assets/ads_bt_rb_insert.png" width=90% /> </div>
 
 单次插入最多需要进行两次旋转，即 Case 2 -> Case 3。
 
@@ -137,11 +137,11 @@ MultiPop | $\min(\text{sizeof}(S), k)$ | 0
 - Case 3: 近侄子为红色，远侄子为黑色，此时需要进行如图操作，使得远侄子变为红色，转换为 Case 4
 - Case 4: 远侄子为红色，此时进行如图操作，即可实现待删除节点所在路径黑高加一而兄弟节点所在路径黑高不变
 
-<div align=center> <img src="assets/003.png" width=90% /> </div>
+<div align=center> <img src="assets/ads_bt_rb_delete.png" width=90% /> </div>
 
 一个删除的示例为：
 
-<div align=center> <img src="assets/004.png" width=90% /> </div>
+<div align=center> <img src="assets/ads_bt_rb_delete_sample.png" width=90% /> </div>
 
 单次删除最多需要进行三次旋转，即 Case 1 -> Case 3 -> Case 4。
 
@@ -162,7 +162,7 @@ B+ 树是一种多叉排序树，每个节点会存储多个键值，其中非�
 
 一般来说，$M$ 只取 3 或 4，以下是一个四阶 B+ 树的例子：
 
-<div align=center> <img src="assets/005.png" width=90% /> </div>
+<div align=center> <img src="assets/ads_bt_b+.png" width=90% /> </div>
 
 ### 插入
 
