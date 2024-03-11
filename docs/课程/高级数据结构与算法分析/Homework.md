@@ -33,7 +33,7 @@
 
     ```mermaid
     graph TD
-    classDef null fill:#999,stroke:#333;
+    classDef null fill:#999,stroke:#333,stroke-width:4px
         4((4))-->2((2))
         4-->6((6))
         2-->1((1))
@@ -62,7 +62,7 @@
 
     ```mermaid
     graph TD
-    classDef null fill:#999,stroke:#333;
+    classDef null fill:#999,stroke:#333,stroke-width:4px
         5((5))-->1((1))
         5-->9((9))
         1-->a((n)):::null
@@ -121,4 +121,110 @@
 
     D: 若缓冲区未满，则 $\hat{c}_i = 1 + 1 = 2$；若缓冲区已满，则 $\hat{c}_i = \text{size}_i + 1 - \text{size}_i + 1 = 2$。由此可见均摊复杂度为 $O(1)$，正确。需要注意的是，这里的势能函数在最开始并不是最小值，但是由于题目强调了最后缓冲区是满的，所以 $\phi_N - \phi_0 \ge 0$，$\sum_{i=1}^N \hat{c}_i \ge \sum_{i=1}^N c_i$ 仍能成立。
 
+
+
+
+<br>
+
+## Homework 2
+
+**2-1** In the red-black tree that results after successively inserting the keys 41; 38; 31; 12; 19; 8 into an initially empty red-black tree, which one of the following statements is FALSE?
+
+- A. 38 is the root
+
+- B. 19 and 41 are siblings, and they are both red
+
+- C. 12 and 31 are siblings, and they are both black
+
+- D. 8 is red
+
+??? tip "Anwser"
+
+    B. 41 是黑色的
+
+    ```mermaid
+    graph TD
+    classDef null fill:#999,stroke:#333,stroke-width:4px
+    style 8 fill:#F44336,stroke:#333
+    style 19 fill:#F44336,stroke:#333
+        38((38))-->19((19))
+        38-->41((41))
+        19-->12((12))
+        19-->31((31))
+        12-->8((8))
+        12-->a((n)):::null
+    ```
+
+**2-2** After deleting 15 from the red-black tree given in the figure, which one of the following statements must be FALSE?
+
+<div align="center"><img src="https://images.ptausercontent.com/129" width=20% /></div>
+
+- A. 11 is the parent of 17, and 11 is black
+
+- B. 17 is the parent of 11, and 11 is red
+
+- C. 11 is the parent of 17, and 11 is red
+
+- D. 17 is the parent of 11, and 17 is black
+
+??? tip "Answer"
+
+    C. 若用 11 替换 15，则 11 为黑色，17 为红色；同理可得，若用 17 替换 15，则 17 为黑色，11 为红色。
+
+    ```mermaid
+    graph TD
+    classDef null fill:#999,stroke:#333,stroke-width:4px
+    style 5 fill:#F44336,stroke:#333
+    style 17 fill:#F44336,stroke:#333
+        10((10))-->7((7))
+        10-->11((11))
+        7-->5((5))
+        7-->a((n)):::null
+        11-->b((n)):::null
+        11-->17((17))
+    ```
+
+**2-3** Insert 3, 1, 4, 5, 9, 2, 6, 8, 7, 0 into an initially empty 2-3 tree (with splitting).  Which one of the following statements is FALSE?
+
+- A. 7 and 8 are in the same node
+
+- B. the parent of the node containing 5 has 3 children
+
+- C. the first key stored in the root is 6
+
+- D. there are 5 leaf nodes
+
+??? tip "Answer"
+
+    最终有五个叶子节点，分别为 01、23、45、67、89，故 A 错误。
+
+**2-4** After deleting 9 from the 2-3 tree given in the figure, which one of the following statements is FALSE?
+
+<div align="center"><img src="https://images.ptausercontent.com/130" width=40% /></div>
+
+- A. the root is full
+
+- B. the second key stored in the root is 6
+
+- C. 6 and 8 are in the same node
+
+- D. 6 and 5 are in the same node
+
+??? tip "Anwser"
+
+    最终有 3 个叶子节点，分别为 123、45、678，故 D 错误。
+
+**2-5** Which of the following statements concerning a B+ tree of order $M$ is TRUE?
+
+- A. the root always has between 2 and $M$ children
+
+- B. not all leaves are at the same depth
+
+- C. leaves and nonleaf nodes have some key values in common
+
+- D. all nonleaf nodes have between $\lceil M/2\rceil$ and $M$ children
+
+??? tip "Answer"
+
+    C. A 需要考虑根节点为叶子节点的情况，D 需要考虑根节点
 
