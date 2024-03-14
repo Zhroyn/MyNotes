@@ -1,25 +1,42 @@
 
+# C 语言笔记
+
 ## 基本数据类型
+
 ### 字符
-char 分为 signed char 和 unsigned char，二者在内存并无差别，但是在类型转换时，有符号字符会进行符号扩展，而无符号字符只会进行零扩展。
+
+char 分为 signed char 和 unsigned char，其中 gcc 默认是 signed char。二者当字符用时并无差别，但是当整数用时，会因符号扩展的不同产生差别。因此若有代码移植需求，最好使用 `stdint.h` 中的 `int8_t` 和 `uint8_t`。
+
+!!! Example
+
+    ```C
+    char c = 0xff;
+    printf("%s", c == 0xff ? "True" : "False");
+    ```
+
+    这样在 gcc 中打印的是 False，因为这里的 char 是有符号的，又会在参与运算前被提升为 int，变为 -1，而 0xff 是 255，所以不相等。
 
 常见的字符的 ASCII 码如下：
+
 - 数字为 48~57 (0x30~0x39)
 - 大写字母为 65~90 (0x41~0x5A)
 - 小写字母为 97~122 (0x61~0x7A)
 - 空格为 32 (0x20)
-- \\0, \\b, \\t, \\n, \\r 依次为 00, 08, 09, 0A, 0D
+- `\0`, `\b`, `\t`, `\n`, `\r` 依次为 0x00, 0x08, 0x09, 0x0A, 0x0D
 
 
 <br>
 
 ### 整数
+
+常见长度的整数类型有：
+
 - short 为短整型，至少 16 位，转换说明符为 hd/hu
 - int 为整型，至少 16 位，通常为 32 位，转换说明符为 d/u
 - long 为长整型，至少 32 位，后缀为 l/L，转换说明符为 ld/lu
 - long long 为长长整型，至少 64 位，后缀为 ll/LL，转换说明符为 lld/llu
-- 整型默认是有符号的，要表示无符号整数可在后缀加上 u/U
-<br>
+
+上述整型默认是有符号的，若要表示无符号整数，可在后缀加上 u/U。此外还有进制的区别：
 
 - 二进制整数前缀为 0b/0B
 - 八进制整数前缀为 0，转换说明符为 o
@@ -29,6 +46,7 @@ char 分为 signed char 和 unsigned char，二者在内存并无差别，但是
 <br>
 
 ### 浮点数
+
 - float 为单精度浮点数，长 32 位，有 6-7 个有效数字，后缀为 f/F
     - 1 个符号位，8 个指数位，23 个尾数位
 - double 为双精度浮点数，长 64 位，有 15-16 个有效数字，为默认类型
@@ -47,9 +65,11 @@ char 分为 signed char 和 unsigned char，二者在内存并无差别，但是
 <br>
 
 ### 隐式类型转换
+
 - char 和 short 在参与运算前，必须先转换为 int 或 unsigned int
 - float 在参与运算前，必须先转换为 double
 - 当有符号整数和无符号整数同时存在时，有符号整数会转换为无符号整数，具体做法是取模，如以下程序，其输出为 `-5 4294967291`：
+
 ```C
 int a = -10;
 unsigned int b = 5;
@@ -69,6 +89,7 @@ if (a + b > 0) {
 <br>
 
 ## 运算符与表达式
+
 - `/` 有符号数的除法的结果向零取整
 - `%` 结果的符号取决于左操作数，例如 `-11 % ±5 = -1`
 - `,` 返回最后一个表达式的值，若在函数调用中使用则必须在括号中
@@ -78,6 +99,7 @@ if (a + b > 0) {
 <br>
 
 ### 运算符优先级
+
 | 名称 | 运算符	| 结合律 |
 | ---- | ----- | ----- |
 |后缀运算符| []   ()   .   ->   |从左到右|
@@ -106,6 +128,7 @@ if (a + b > 0) {
 <br>
 
 ### 副作用与序列点
+
 访问 volatile 对象、修改对象、修改文件或调用执行上述操作的函数，都会产生**副作用** (Side Effects)，即改变了执行环境的状态。
 
 在执行序列中某些特定的点称为**序列点** (Sequence Points)，在此点之前的所有副作用都应已完成，后续求值的副作用还未发生。序列点会在 `&&`, `||`, `?`, `,` 的左侧产生。
@@ -120,10 +143,12 @@ if (a + b > 0) {
 <br>
 
 ##  字符串
+
 - 使用字符串字面量初始化字符数组时，会复制该字符串字面量到数组中
 - 使用字符串字面量初始化字符指针时，字符指针会指向该字符串字面量，该字符串字面量存在常量数据段中，不可修改
 
 ### string.h
+
 ```C
 size_t strlen( const char *str )
 
@@ -139,6 +164,7 @@ char *strncat( char *restrict dest, const char *restrict src, size_t count )
 char *strcpy( char *restrict dest, const char *restrict src )
 char *strncpy( char *restrict dest, const char *restrict src, size_t count )
 ```
+
 - `strlen(str)` 返回字符串长度，不包括空字符
 <br>
 
@@ -160,6 +186,7 @@ char *strncpy( char *restrict dest, const char *restrict src, size_t count )
 <br>
 
 ### stdio.h
+
 ```C
 int sprintf( char *restrict buffer, const char *restrict format, ... )
 int snprintf( char *restrict buffer, size_t bufsz,
@@ -167,6 +194,7 @@ int snprintf( char *restrict buffer, size_t bufsz,
 
 int sscanf( const char *restrict buffer, const char *restrict format, ... )
 ```
+
 - `sprintf(buffer, format, ...)` 将格式化结果写入字符串 buffer，并额外附加一个空字符
 - `snprintf(buffer, bufsz, format, ...)` 最多写入 bufsz - 1 个字符，并额外附加一个空字符
 - `sscanf(buffer, format, ...)` 从字符串 buffer 格式化读取数据，并返回成功赋值的参数数量
@@ -174,6 +202,7 @@ int sscanf( const char *restrict buffer, const char *restrict format, ... )
 <br>
 
 ### stdlib.h
+
 ```C
 char *itoa( int value, char* str, int base)
 char *ltoa( long value, char* str, int base)
@@ -191,6 +220,7 @@ float strtof( const char *restrict str, char **restrict str_end );
 double strtod( const char *restrict str, char **restrict str_end );
 long double strtod( const char *restrict str, char **restrict str_end );
 ```
+
 - `itoa/ltoa/lltoa(value, str, base)` 将整数转换为指定进制的字符串
 - `atoi/atol/atoll(str)` 将 str 转换为整数或浮点数，会抛弃所有前面的空白字符，然后取尽可能多的字符来表示一个有效结果，若转换失败则返回零
 <br>
@@ -203,6 +233,7 @@ long double strtod( const char *restrict str, char **restrict str_end );
 <br>
 
 ### ctype.h
+
 ```C
 int isalnum( int ch )
 int isalpha( int ch )
@@ -234,8 +265,11 @@ int toupper( int ch )
 <br>
 
 ## 数组与指针
+
 ### 定义
+
 [] 和 () 的优先级高于 *，故下列定义依次为：
+
 - `int * p[2]` 一个存储整数指针的数组
 - `int (* p)[2]` 一个指向整数数组的指针
 - `int * p[3][4]` 一个存储了 12 个整数指针的二维数组
@@ -255,6 +289,7 @@ int toupper( int ch )
 <br>
 
 ### 初始化
+
 - `int a[5]` 不做初始化
 - `int a[5] = {}` 全部初始化为 0
 - `int a[5] = {1}` 部分初始化为指定值，剩余部分初始化为 0，超出部分无效且会报错
@@ -279,9 +314,11 @@ int toupper( int ch )
 
 ## 结构、联合与枚举
 ### 结构
+
 - 结构体可作为参数传递，可作为返回值返回，还可赋值给另一个结构体，当结构体较大时最好使用结构体指针
 
 #### 定义与初始化
+
 ```C
 struct tag {
     member-list
@@ -292,10 +329,12 @@ typedef struct LNode {
   struct LNode *next;
 } *List;
 ```
+
 - 结构体的定义包括标签、成员列表和变量列表
 - 结构体的定义可以在 typedef 中进行，但在使用自身作为成员时不能使用新别名作为类型名
 
 结构也可以像数组一样，使用复合字面量进行初始化，复合字面量中也一样可以使用指定初始化器：
+
 ```C
 struct Graph G = {
     4, 2,
@@ -312,7 +351,9 @@ struct Graph G = {
     },
 }
 ```
+
 #### 伸缩型数组成员
+
 ```C
 struct List {
     int length;
@@ -321,11 +362,13 @@ struct List {
 
 struct List *L = malloc(sizeof(struct List) + n * sizeof(int));
 ```
+
 - 伸缩型数组成员必须是结构的最后一个成员，且不能为唯一的成员
 - 伸缩型数组成员不占内存，使用前需要调用 malloc() 为结构体指针分配内存
 - 有伸缩型数组成员的结构体最好不要用于传值、作为数组成员和作为结构体成员
 
 #### 匿名结构
+
 ```C
 struct Person  
 {  
@@ -337,13 +380,16 @@ struct Person
     }; 
 };  
 ```
+
 - 可以像访问结构中的其他成员一样，直接访问匿名结构中的成员
 
 
 <br>
 
 ### 联合
+
 #### 定义与初始化
+
 ```C
 union tag {
     member-list
@@ -358,6 +404,7 @@ union tag {
 - `union Data a = {.num = 5}` 使用指定初始化器进行初始化
 
 #### 匿名联合
+
 ```C
 struct Person {
     char name[30];
@@ -368,13 +415,16 @@ struct Person {
     }
 };
 ```
+
 - 可以像访问联合中的其他成员一样，直接访问匿名联合中的成员
 
 
 <br>
 
 ### 枚举
+
 枚举类型用于定义一组具有整数值的常量，如下：
+
 ```C
 enum {
     MON=1, TUE, WED, THU, FRI, SAT, SUN
@@ -384,6 +434,7 @@ enum {
 enum color {red, orange, yellow=-2, green, blue, violet};
 // 0 1 -2 -1 0 1
 ```
+
 - 可以直接使用枚举中定义的标识符，如 `MON` `red`，这些都是常量，不可赋值
 - 枚举值默认从 0 开始，后一枚举值为前面加一，可指定枚举值
 
@@ -398,19 +449,24 @@ enum color {red, orange, yellow=-2, green, blue, violet};
 <br>
 
 ## Storage, Linkage and Memory
+
 ### storage class
+
 **scope**
+
 - `block scope` : visible from the point it is defined until the end of the block containing the definition.
 - `file scope` :  visible from the point it is defined to the end of the file containing the definition. File scope variables are also called global variables .
 - `function scope` : applies just to labels used with goto statements. Even if a label first appears inside an inner block in a function, its scope extends to the whole function.
 - `function prototype scope` : applies to variable names used in function prototypes, e.g. `void f(int n, int a[n]);`
 
 **linkage**
+
 - Variables with block scope, function scope, or function prototype scope have no linkage.
 - `external linkage` : can be used anywhere in a multifile program.
 - `internal linkage` : can be used anywhere in a single translation unit.
 
 **storage duration**
+
 - Scope and linkage describe the visibility of identifiers. Storage duration describes the persistence of the objects accessed by these identifiers.
 - `automatic storage duration` : have memory allocated for them when the program enters the block in which they are defined, and the memory is freed when the block is exited.
     - Variable-length arrays provide a slight exception in that they exist from the point of declaration to the end of the block rather than from the beginning of the block to the end.
@@ -422,6 +478,7 @@ enum color {red, orange, yellow=-2, green, blue, violet};
 - `allocated storage duration` : exists from when the memory is allocated until it's freed, stored in **heap**.
 
 ### storage-class specifier
+
 - `auto` : declare a varible belonging to automatic storage class(i.e. automatic varible) which has automatic storage duration, block scope, and no linkage.
     - automatic variables are not initialized unless you do so explicitly.
     - automatic varibles are stored in **stack**.
@@ -449,6 +506,7 @@ enum color {red, orange, yellow=-2, green, blue, violet};
 - `typedef` : doesn’t say anything about memory storage, but it is thrown in for syntax reasons.
 
 ### Dynamic memory management
+
 ```C
 // Allocate size bytes of uninitialized storage.
 void *malloc( size_t size );
@@ -466,6 +524,7 @@ void *realloc( void *ptr, size_t new_size );
 // Deallocates the space previously allocated by malloc(), calloc() or realloc().
 void free( void *ptr );
 ```
+
 
 ### Type Qualifier
 - `const` : to share const data across files, can define global varibles with `static` in header
@@ -523,6 +582,7 @@ int setvbuf( FILE *restrict stream, char *restrict buffer,
 ```
 
 **File access flags**
+
 |Mode string| Meaning | Explanation | If file already exists | If file does not exist |
 |:--:| :---: | :---: | :---: | :---: |
 |r | read	  |Open a file for reading  |	read from start	|failure to open|
@@ -539,7 +599,9 @@ int setvbuf( FILE *restrict stream, char *restrict buffer,
 
 
 ### Input/Output
+
 **Direct input/output**
+
 ```C
 // In Windows, need to open file in binary mode
 
@@ -564,6 +626,7 @@ printf("%lf\n", new[0]);
 ```
 
 **Unformatted input/output**
+
 ```C
 // Reads the next character from the given input stream.
 // On success, returns the obtained character as an int. On failure, returns EOF.
@@ -614,6 +677,7 @@ int fprintf( FILE *restrict stream, const char *restrict format, ... );
 ```
 
 ### File positioning
+
 ```C
 // Returns the file position indicator for the file stream stream.
 // In binary mode, return the number of bytes from the beginning of the file.
@@ -659,6 +723,7 @@ int rename( const char *old_filename, const char *new_filename );
 ## Bit manipulation
 
 ### Bitwise operator
+
 - Bitwise Negation: `~`
 - Bitwise AND: `&`
     - Mask, `a & MASK`
@@ -679,6 +744,7 @@ int rename( const char *old_filename, const char *new_filename );
     - for signed type, fill sign on the left
 
 ### Bit field
+
 ```C
 struct {
     unsigned field1 : 1;
@@ -691,11 +757,13 @@ struct {
 bit.field1 = 1;
 pbit->filed3 = 0;
 ```
+
 - 字段不允许跨越两个unsigned int 之间的边界，编译器会自动移动跨界的字段
 - 可用未命名字段填充未命名的“洞”
 - 可用宽度为0的未命名字段迫使下一个字段与下一个整数对齐
 
 ### Align
+
 _Alignas
 _Alignof
 
@@ -710,12 +778,15 @@ _Alignof
 ## C预处理器
 
 ### 翻译处理
+
 在预处理之前，编译器会先对程序进行翻译处理：
+
 - 首先，将源代码出现的字符映射到源字符集，该过程处理多字节字符和三字符序列
 - 第二，定位每个反斜杠后面出现换行符的实例，并将其删除，将物理行转换为逻辑行，使表达式成为一行
 - 将文本划分成预处理记号序列、空白序列和注释序列。编译器用一个空格字符替换每一条注释，预处理指令中的注释将会被替换
 
 ### 预处理器指令
+
 - 定义从定义处至文件末尾有效
 - 从`#`开始，到第一个换行符为止
 - 分为对象宏、类函数宏和空宏
@@ -727,29 +798,36 @@ _Alignof
 
 ### #define
 #### 类函数宏
+
 ```C
 #define SQUARE(X) ((X)*(X))
 #define PSQR(X) printf("the square of " #X " is %d\n", ((X)*(X)))
 ```
+
 - 分为宏标识符（如`SQUARE`），宏参数（如`X`）和替换列表（如`((X)*(X))`）
 - 双引号中的宏不会被替换，但可用预处理运算符`#`将记号转换为字符串
 
 #### ##运算符
+
 ```C
 #define XNAME(n) x ## n
 #define PRINT_XN(n) printf("x" #n " = %d\n", x ## n)
 ```
+
 - 可用于类函数宏和对象宏，起记号粘合剂的作用
 
 #### 变参宏
+
 ```C
 #define PR(X, ...) printf("Message " #X ": " __VA_ARGS__)
 
 PR(1, "x = %.2f, y = %.4f\n", x, y);
 ```
+
 - 省略号只能代替最后的宏参数
 
 #### 预定义宏和预定义标识符
+
 ```C
 __FILE__    //当前文件名
 __DATE__    //预处理的日期
@@ -761,6 +839,7 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
 
 
 ### #include
+
 ```C
 #include <stdio.h>          //查找系统目录
 #include "hot.h"            //查找当前工作目录
@@ -768,12 +847,16 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
 ```
 
 ### 其他指令
+
 **取消定义**
+
 ```C
 //取消定义。即使原来没有定义过LIMIT，取消LIMIT的定义仍然有效
 #undef LIMIT
 ```
+
 **条件编译**
+
 ```C
 #ifdef MAVIS
     #include "horse.h"
@@ -783,12 +866,14 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
     #define STABLES 15
 #endif
 ```
+
 ```C
 //可用于防止包含头文件导致重复定义
 #ifndef SIZE
   #define SIZE 100
 #endif
 ```
+
 ```C
 #if SYS == 1
     #include "ibmpc.h"
@@ -800,7 +885,9 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
     #include "general.h"
 #endif
 ```
+
 **#line 和 #error**
+
 ```C
 //重置__LINE__和__FILE__
 #line 1000
@@ -810,7 +897,9 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
   #error Not C11
 #endif
 ```
+
 **#pragma**
+
 ```C
 //编译指示
 #pragma nonstandardtreatmenttypeB on
@@ -819,7 +908,9 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
 #define PRAGMA(X) _Pragma(#X)
 #define LIMRG(X) PRAGMA(STDC CX_LIMITED_RANGE X)
 ```
+
 **泛型**
+
 ```C
 //第一个项的类型匹配哪个标签，整个表达式的值就是该标签后面的值
 #define MTYPE(X) _Generic((X),\
@@ -842,6 +933,7 @@ __STDC_VERSION__  //支持C99标准，设置为199901L；支持C11标准，设�
 ## C functions
 
 ### printf()
+
 ```C
 int printf(const char *format, ...)
 // Return number of characters transmitted to the output stream.
@@ -904,6 +996,7 @@ n	Print nothing, but writes the number of characters written so far into
 ```
 
 ### scanf()
+
 ```C
 int scanf(const char *format, ...)
 // Return number of receiving arguments successfully assigned.
@@ -927,6 +1020,7 @@ n	returns the number of characters read so far.
 ```
 
 ### memcpy(), memmove()
+
 ```C
 // in string.h
 
@@ -944,6 +1038,7 @@ void* memmove(void* dest, const void* src, size_t count);
 ```
 
 ### qsort(), bsearch()
+
 ```C
 // in stdlib.h
 
@@ -971,6 +1066,7 @@ int *res = bsearch(&key, a, 5, sizeof(int), comp);
 ```
 
 ### rand(), srand()
+
 ```C
 // Returns a pseudo-random integer value between ​0​ and RAND_MAX
 // If rand() is used before any calls to srand(), rand() behaves as if it was seeded with srand(1).
@@ -991,6 +1087,7 @@ void srand( unsigned seed );
 ## C libaries
 
 ### time.h
+
 ```C
 time_t time(time_t *seconds)
 // Returns the seconds since the Epoch (00:00:00 UTC, January 1, 1970).
@@ -999,6 +1096,7 @@ time_t time(time_t *seconds)
 clock_t clock(void)
 // Returns the number of clock ticks elapsed since the program was launched
 ```
+
 ```C
 //accurate to seconds
 time_t start = time(NULL);
@@ -1014,6 +1112,7 @@ printf("time = %lf\n",(double)(end-start)/CLK_TCK);
 ```
 
 ### windows.h
+
 ```C
 void Sleep(DWORD dwMilliseconds)
 // Suspend the current thread for a specific time
@@ -1040,6 +1139,7 @@ printf("time = %lf\n",(double)(end - start)/freq);
 ```
 
 ### sys/time.h
+
 ```C
 int gettimeofday(struct timeval*tv, struct timezone *tz)
 // Return the number of seconds and microseconds since the Epoch.
@@ -1049,6 +1149,7 @@ struct timeval{
     long int tv_usec; //microseconds
 }
 ```
+
 ```C
 //accurate to microseconds
 struct timeval start, end;
