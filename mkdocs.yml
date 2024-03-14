@@ -60,6 +60,7 @@ nav:
       - 工具: 课程/计算机视觉导论/Tools.md
   - C:
     - C 语言: C/CNote.md
+    - C++: C/CppNote.md
     - Makefile: C/MakefileNote.md
     # - OpenMp: C/OpenMPnote.md
   - Python:
