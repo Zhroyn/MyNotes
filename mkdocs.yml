@@ -14,6 +14,8 @@ nav:
     - 数据库系统:
       - 数据库介绍: 课程/数据库系统/Chapter1 Introduction.md
       - 关系模型: 课程/数据库系统/Chapter2 Relation Model.md
+    - 计算机组成与设计:
+      - 计算机概要与技术: 课程/计算机组成与设计/Chapter1 Computer Abstractions and Technology.md
     - 数据结构基础: 课程/FDSNote.md
     - 普通物理学:
       - 力学:
