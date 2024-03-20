@@ -186,7 +186,12 @@ setspace 宏包还支持传入 `singlespacing` `onehalfspacing` `doublespacing` 
 
 若要改变列表的标签样式，可以使用 `\renewcommand` 命令：
 
-对于无序列表，若要修改默认标签，则各级别对应的命令依次为 `\labelitemi` `\labelitemii` `\labelitemiii` `\labelitemiv`，比较好看的有 $\diamond$, $\diamonds$, $\circ$, $\triangledown$, $\triangle$, $\blacktriangledown$, $\blacktriangle$, $\square$, $\blacksquare$, $\star$ 等。
+对于无序列表，若要修改默认标签，则各级别对应的命令依次为 `\labelitemi` `\labelitemii` `\labelitemiii` `\labelitemiv`，比较好看的有：
+
+- $\diamond$ $\diamonds$ $\star$
+- $\circ$ $\bigcirc$ $\circledcirc$ $\circleddash$ $\circledast$
+- $\triangle$ $\triangledown$ $\triangleleft$ $\triangleright$ $\blacktriangle$ $\blacktriangledown$ $\blacktriangleleft$ $\blacktriangleright$
+- $\square$ $\blacksquare$
 
 对于有序列表，若要修改默认标签，则各级别对应的命令依次为 `\labelenumi` `\labelenumii` `\labelenumiii` `\labelenumiv`，每个级别对应的计数器依次为 `enumi` `enumii` `enumiii` `enumiv`，使用范例为：`\renewcommand{\labelenumi}{(\textbf{\Alph{enumi}})}`。比较常用的计数命令有：
 
