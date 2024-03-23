@@ -228,3 +228,40 @@
 
     C. A 需要考虑根节点为叶子节点的情况，D 需要考虑根节点
 
+
+
+
+<br>
+
+## Homework 4
+
+1.1 The result of inserting keys 1 to $2^k -1$ for any $k>  4$ in order into an initially empty skew heap is always a full binary tree.
+
+??? tip "Anwser"
+
+    T. 设当 $n = k$ 时成立，那么此时最底下一层有 $2^{k-1}$ 个叶子节点，我们先逐个插入 $2^{k-1}$ 个节点，因为每次插入会让一个叶子节点与其兄弟节点交换并挪到左边，因此插入 $2^{k-1}$ 个节点后之前的叶子节点会倒序且全都有一个左儿子，此时再插入 $2^{k-1}$ 个节点会重复该流程，使得之前的叶子节点顺序又变回来且全都有左右儿子，从而使得 $n = k + 1$ 时也成立
+
+
+1.2 The right path of a skew heap can be arbitrarily long. 
+
+??? tip "Anwser"
+
+    T. 或许是考虑到左倾树的右路径长度是 $O(\log N)$，而斜堆是 $O(N)$
+
+2.2 We can perform BuildHeap for leftist heaps by considering each element as a one-node leftist heap, placing all these heaps on a queue, and performing the following step: Until only one heap is on the queue, dequeue two heaps, merge them, and enqueue the result.  Which one of the following statements is FALSE?
+
+- A. in the $k$-th run, $\lceil N/2^k \rceil$ leftist heaps are formed, each contains $2^k$ nodes
+
+- B. the worst case is when $N=2^K$ for some integer $K$
+
+- C. the time complexity $T(N) = O(\frac{N}{2}log 2^0 + \frac{N}{2^2}log 2^1 + \frac{N}{2^3}log 2^2 + \cdots + \frac{N}{2^K}log 2^{K-1})$ for some integer $K$ so that $N=2^K$
+
+- D. the worst case time complexity of this algorithm is $\Theta (NlogN)$
+
+??? tip "Anwser"
+
+    D. 虽然 D 显然是错误的，但是 A 看着似乎也是错的
+
+
+
+
