@@ -735,7 +735,7 @@ $$\subset, \subseteq, \subsetneq, \supset, \in, \notin$$
 
 $$\to, \rightarrow, \leftarrow, \Rightarrow, \Leftarrow, \iff$$
 
-$$\forall, \exists, \mapsto, \because, \therefore$$
+$$\forall, \exists, \mapsto, \because, \therefore, \top, \bot$$
 
 ---
 
