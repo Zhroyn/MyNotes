@@ -37,6 +37,7 @@ pip install [options] <requirement specifier> [package-index-options] ...
 
 - `-U/--upgrade` 将指定包更新到最新版本
 - `-i/--index-url <url>` 手动指定包索引地址
+- `-e/--editable <path>` 安装包的可编辑版本，即直接安装源码
 
 requirement specifier 还可以替换成 URL、文件路径等，类型判断顺序为：
 
