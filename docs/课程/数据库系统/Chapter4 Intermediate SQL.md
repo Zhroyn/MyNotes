@@ -166,6 +166,7 @@ to user_or_role1, user_or_role2, ...
 - `delete` 使用 `delete` 命令的权限
 - `update` 使用 `update` 命令的权限
 - `alter` 使用 `alter table` 命令的权限
+- `usage` 无权限
 
 权限的水平也主要分为四种：
 
@@ -186,3 +187,22 @@ revoke [if exists] privilege1, privilege2, ...
 on object_name
 from user_or_role1, user_or_role2, ...
 ```
+
+### 账户管理
+
+MySQL 的账户名由用户名和主机名组成，因此可以使用相同的用户名创建不同的账户。账户名的形式为 `username@hostname`，其中 `@hostname` 是可选的，在必要时需要给用户名和主机名加上单引号或双引号。
+
+与用户相关命令有：
+
+- `CREATE USER [IF NOT EXISTS] user IDENTIFIED BY password` 创建用户，常用的主机名为 `'localhost'`
+- `DROP USER [IF EXISTS] user [, user] ...` 删除用户
+- `RENAME USER old_user TO new_user [, old_user TO new_user] ...` 重命名用户
+
+可以给一个账户授予多个角色，从而给账户授予角色所有的权限。角色的命名规则与账户基本一致。与角色相关的命令有：
+
+- `CREATE ROLE [IF NOT EXISTS] role [, role ] ...` 创建角色
+- `DROP ROLE [IF EXISTS] role [, role ] ...` 删除角色
+- `GRANT role [, role] ... TO user_or_role [, user_or_role] ...` 授予角色
+- `REVOKE role [, role ] ... FROM user_or_role [, user_or_role ] ...` 撤销角色
+
+若要显示账户权限可以使用 `SHOW GRANTS FOR user_or_role` 命令。
