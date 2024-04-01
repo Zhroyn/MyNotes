@@ -11,6 +11,7 @@ nav:
       - 平衡树: 课程/高级数据结构与算法分析/Balanced Tree.md
       - 倒排索引: 课程/高级数据结构与算法分析/Inverted File Index.md
       - 堆: 课程/高级数据结构与算法分析/Heap.md
+      - 回溯算法: 课程/高级数据结构与算法分析/Backtracking.md
       - 作业: 课程/高级数据结构与算法分析/Homework.md
     - 数据库系统:
       - 数据库介绍: 课程/数据库系统/Chapter1 Introduction.md
