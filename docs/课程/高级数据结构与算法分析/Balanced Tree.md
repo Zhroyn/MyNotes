@@ -76,15 +76,19 @@ MultiPop | $\min(\text{sizeof}(S), k)$ | 0
 
 ### 势能法
 
-势能法 (Potential method) 会先定义一个势能函数 $\Phi$，使得 $\hat{c}_i - c_i = Credit = \Phi(D_i) - \Phi(D_{i-1})$，且一个好的势能函数应使 $\Phi(D_0)$ 为最小值，然后就可以得到每个操作的均摊代价 $\hat{c}_i = c_i + \Phi(D_i) - \Phi(D_{i-1})$。
+势能法 (Potential method) 会先定义一个势能函数 $\Phi$，使得 $\hat{c}_i - c_i = Credit = \Phi(D_i) - \Phi(D_{i-1})$，且一个好的势能函数应使 $\Phi(D_0)$ 为最小值，然后就可以得到每个操作的均摊代价 $\hat{c}_i = c_i + \Phi(D_i) - \Phi(D_{i-1})$，所有操作的均摊代价为：
 
-在 MultiPop 操作中，可以定义势能函数为栈中元素数，那么其实际代价为 $k$，势能函数下降 $k$，故其均摊代价为 $k - k = 0$。
+$$\sum_{i=1}^n \hat{c}_i = \left( \sum_{i=1}^n c_i \right) + \Phi(D_n) - \Phi(D_0) \ge \left( \sum_{i=1}^n c_i \right)$$
+
+这样就得到了 $n$ 次操作的均摊上界，除以 $n$ 即可得到均摊时间复杂度。
+
+对于栈操作，定义势能函数为栈中元素数，那么同样易得 Push 的均摊代价为 2，Pop 和 MultiPop 的均摊代价为 0，从而可得 $\sum_{i=1}^n c_i = O(N)$，所有操作的均摊时间复杂度为 $O(N)/N = O(1)$。
 
 在 Splay 树中，可以定义势能函数为 $\Phi(T) = \sum_{i\in T} \log S(i) = \sum_{i\in T} Rank(i)$，其中 $S(i)$ 为以 $i$ 为根节点的子树的节点数，然后由 $\forall a, b \gt 0, a + b \le c: \log a + \log b \lt 2\log c - 2$ 可得每种操作的均摊上界：
 
-<div align=center> <img src="../../assets/ads_splay_analysis.png" width=90% /> </div>
+![Splay 树势能法分析](../../assets/ads_splay_analysis.png)
 
-而后可以得到总的将 $X$ 旋转到根节点的均摊上界为 $1 + 3(R_2(X) - R_1(X))$。由于 Zig 操作最多进行一次，所以最后可得均摊上界为 $O(\log N)$。
+由于 Zig 操作最多进行一次，最后可得将 $X$ 旋转到根节点的均摊时间复杂度为 $1 + 3(R(T) - R(X)) = O(\log N)$。
 
 
 
@@ -118,7 +122,7 @@ MultiPop | $\min(\text{sizeof}(S), k)$ | 0
 - Case 2: 父节点为红色，叔节点为黑色，且插入节点、父节点、祖父节点不在同一侧，此时将插入节点旋转上去，使得三个节点在同一侧，转换为 Case 3，否则无法保证黑高不变
 - Case 3: 父节点为红色，叔节点为黑色，且插入节点、父节点、祖父节点在同一侧，此时同 Case 1 一样，先将父节点和叔节点设为黑色，祖父节点设为红色，再将父节点旋转上去，这样可以保证从新的祖父节点开始黑高不变
 
-<div align=center> <img src="../../assets/ads_rb_insert.png" width=90% /> </div>
+![红黑树插入操作](../../assets/ads_rb_insert.png)
 
 单次插入最多需要进行两次旋转，即 Case 2 -> Case 3。
 
@@ -137,11 +141,11 @@ MultiPop | $\min(\text{sizeof}(S), k)$ | 0
 - Case 3: 近侄子为红色，远侄子为黑色，此时需要进行如图操作，使得远侄子变为红色，转换为 Case 4
 - Case 4: 远侄子为红色，此时进行如图操作，即可实现待删除节点所在路径黑高加一而兄弟节点所在路径黑高不变
 
-<div align=center> <img src="../../assets/ads_rb_delete.png" width=90% /> </div>
+![红黑树删除操作](../../assets/ads_rb_delete.png)
 
 一个删除的示例为：
 
-<div align=center> <img src="../../assets/ads_rb_delete_example.png" width=90% /> </div>
+![红黑树删除示例](../../assets/ads_rb_delete_example.png)
 
 单次删除最多需要进行三次旋转，即 Case 1 -> Case 3 -> Case 4。
 
@@ -162,7 +166,7 @@ B+ 树是一种多叉排序树，每个节点会存储多个键值，其中非�
 
 一般来说，$M$ 只取 3 或 4，以下是一个四阶 B+ 树的例子：
 
-<div align=center> <img src="../../assets/ads_b+_example.png" width=90% /> </div>
+![4 阶 B+ 树示例](../../assets/ads_b+_example.png)
 
 ### 插入
 
