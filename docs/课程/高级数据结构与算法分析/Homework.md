@@ -265,3 +265,20 @@
 
 
 
+<br>
+
+## Homework 7
+
+Which one of the following is the lowest upper bound of $T(n)$ for the following recursion  $T(n) = 2T(\sqrt{n}) + \log n$?
+
+- A. $O(\log n\log \log n)$
+
+- B. $O(\log^2 n)$
+
+- C. $O(n\log n)$
+
+- D. $O(n^2)$
+
+??? tip "Anwser"
+
+    A. 显然答案应该是 $\log n$ 乘上深度 $k$，对深度 $k$ 我们有 $2^{2^k} = n$，所以 $k = O(\log \log n)$

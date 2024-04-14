@@ -111,9 +111,9 @@ $$ T(N) = c \sum_{i=0}^{\log_4 N - 1} (\frac{3}{16})^i N^2 + \Theta(N^{\log_4 3}
 
 $$
 T(N) = \begin{cases}
-    O(N^{\log_b a}) \quad & \text{if } a > b^k \\
-    O(N^k \log^{p+1} N) \quad & \text{if } a = b^k \\
-    O(N^k) \quad & \text{if } a < b^k
+    O(N^{\log_b a}) \quad & \text{if } \log_b a > k \\
+    O(N^k \log^{p+1} N) \quad & \text{if } \log_b a = k \\
+    O(N^k) \quad & \text{if } \log_b a < k
 \end{cases}
 $$
 
