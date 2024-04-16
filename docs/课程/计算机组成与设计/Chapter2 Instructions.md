@@ -55,6 +55,12 @@ RV32I 基础指令集中的指令有以下几种格式：
 
 ![RV32I 指令格式](../../assets/co_instruction_format.png)
 
+其中，B 型指令也被称为 SB 型指令，J 型指令也被称为 UJ 型指令。
+
+对应的机器码如下：
+
+![RV32I 指令集](../../assets/co_instruction_set.png)
+
 各符号的含义为：
 
 - `opcode` 操作码，指明指令的类型，占 7 位
@@ -94,11 +100,6 @@ RV32I 基础指令集中的指令有以下几种格式：
 - `lhu rd, offset(rs1)` 加载无符号半字
 - `lwu rd, offset(rs1)` 加载无符号字
 
-此外还有：
-
-- `lr.w/d rd, (rs1)` 读取保留 (Load Reserved)，将 rs1 地址中的内容加载到 rd 中，然后在 rs1 地址上设置保留标记
-- `lui rd, imm` 加载高位立即数 (Load Upper Immediate)，会将 `imm[31:12]` 放在寄存器 rd 的高 20 位，可与 `addi` 配合得到 32 位常数，为 U 型指令
-
 ### 存储指令
 
 将寄存器 `rs2` 中的数据存储到内存中的操作为 S 型指令：
@@ -107,43 +108,6 @@ RV32I 基础指令集中的指令有以下几种格式：
 - `sh rs2, offset(rs1)` 存储半字
 - `sw rs2, offset(rs1)` 存储字
 - `sd rs2, offset(rs1)` 存储双字
-
-此外还有：
-
-- `sc.w/d rd, (rs1), rs2` 条件存储 (Store Conditional)，若 rs1 地址上设置了保留标记，则将 rs2 中的内容存储到 rs1 地址上，并将 rd 置 0，表示成功，否则将 rd 置 1，表示失败
-
-`lr.w/d` 和 `sc.w/d` 都是原子操作，不能在同一个地方同时进行，可以用于防止数据竞争 (Data race)，实现同步机制。
-
-??? example "atomic swap"
-
-    将 `x23` 中的值与 `x20` 对应地址中的值交换：
-
-    ```asm
-    again:
-        lr.d x10, (x20)
-        sc.d x11, (x20), x23 // X11 = status
-        bne x11, x0, again   // branch if store failed
-        addi x23, x10, x0    // X23 = loaded value
-    ```
-
-??? example "Lock 和 Unlock"
-
-    地址 x20 存放着锁，当且仅当 x20 对应的地址未被锁且可以存入数据时，将 1 写入 x20 对应的地址，为其上锁：
-
-    ```asm
-        addi x12, x0, 1      // copy locked value
-    again:
-        lr.d x10, (x20)      // read lock
-        bne x10, x0, again   // check if it is 0 yet
-        sc.d x11, (x20), x12 // attempt to store
-        bne x11, x0, again   // branch if fails
-    ```
-
-    将 0 写入 x20 对应的地址，解开锁：
-
-    ```asm
-    sd x0, 0(x20)   // free lock
-    ```
 
 ### 分支指令
 
@@ -163,8 +127,7 @@ RV32I 基础指令集中的指令有以下几种格式：
 ### 跳转指令
 
 - `jal rd, offset` 跳转并链接 (Jump And Link)，`rd = PC + 4`，`PC = PC + offset`，为 J 型指令，立即数有 20 位，最大跳转范围为 1 MB
-- `jalr rd, offset(rs1)` 跳转并链接 (Jump And Link Reg)，`rd = PC + 4`，`PC = rs1 + offset`，为 I 型指令，可以通过寄存器实现更大范围的跳转
-- `auipc rd, offset` Add Upper Immediate to PC，`rd = PC + offset << 12`，为 U 型指令，常与 `jalr` 指令配合使用，
+- `jalr rd, rs1, offset` 跳转并链接 (Jump And Link Reg)，`rd = PC + 4`，`PC = rs1 + offset`，为 I 型指令，可以通过寄存器实现更大范围的跳转
 
 需要注意的是，在 J 型指令中，除了 20 位立即数之外，还有 `imm[0]` 默认为 0，可将寻址范围扩大一倍。
 
@@ -201,6 +164,53 @@ RV32I 基础指令集中的指令有以下几种格式：
         mul a0, a0, t1   // return n * fact(n - 1)
         jalr x0, 0(ra)   // return to the caller
     ```
+
+### 其他指令
+
+跟大立即数有关的指令有：
+
+- `lui rd, imm` Load Upper Immediate，会将 `imm[31:12]` 放在寄存器 rd 的高 20 位，可与 `addi` 配合得到 32 位常数，为 U 型指令
+- `auipc rd, offset` Add Upper Immediate to PC，`rd = PC + offset << 12`，为 U 型指令，常与 `jalr` 指令配合使用，
+
+跟同步有关的原子指令有：
+
+- `lr.w/d rd, (rs1)` 读取保留 (Load Reserved)，将 rs1 地址中的内容加载到 rd 中，然后在 rs1 地址上设置保留标记
+- `sc.w/d rd, (rs1), rs2` 条件存储 (Store Conditional)，若 rs1 地址上设置了保留标记，则将 rs2 中的内容存储到 rs1 地址上，并将 rd 置 0，表示成功，否则将 rd 置 1，表示失败
+
+`lr.w/d` 和 `sc.w/d` 都是原子操作，不能在同一个地方同时进行，可以用于防止数据竞争 (Data race)，实现同步机制。
+
+??? example "atomic swap"
+
+    将 `x23` 中的值与 `x20` 对应地址中的值交换：
+
+    ```asm
+    again:
+        lr.d x10, (x20)
+        sc.d x11, (x20), x23 // X11 = status
+        bne x11, x0, again   // branch if store failed
+        addi x23, x10, x0    // X23 = loaded value
+    ```
+
+??? example "Lock 和 Unlock"
+
+    地址 x20 存放着锁，当且仅当 x20 对应的地址未被锁且可以存入数据时，将 1 写入 x20 对应的地址，为其上锁：
+
+    ```asm
+        addi x12, x0, 1      // copy locked value
+    again:
+        lr.d x10, (x20)      // read lock
+        bne x10, x0, again   // check if it is 0 yet
+        sc.d x11, (x20), x12 // attempt to store
+        bne x11, x0, again   // branch if fails
+    ```
+
+    将 0 写入 x20 对应的地址，解开锁：
+
+    ```asm
+    sd x0, 0(x20)   // free lock
+    ```
+
+
 
 
 
