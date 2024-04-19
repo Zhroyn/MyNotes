@@ -1,5 +1,5 @@
 
-# Computer Abstractions and Technology
+# 计算机概要与技术
 
 ## 重要思想
 
@@ -49,7 +49,7 @@ $$\text{Clock Cycles} = \text{Instruction Count} \times \text{Cycles per Instruc
 
 $$
 \begin{align*}
-\text{CPU Time }& = \text{Instruction Count} \times \text{CPI} \times \text{CPI Cycle Time} \\
+\text{CPU Time }& = \text{Instruction Count} \times \text{CPI} \times \text{Clock Cycle Time} \\
 & = \dfrac{\text{Instruction Count} \times \text{CPI}}{\text{Clock Rate}}
 \end{align*}
 $$
@@ -69,7 +69,7 @@ $$
 
 ### 功耗墙
 
-功耗墙 (Power Wall) 指的是，由于功耗的增加，使得 CPU 的主频提高受到限制。功耗的公式为：
+功耗墙 (Power Wall) 指的是，CPU 的主频提高受到功耗增加的限制。功耗的公式为：
 
 $$\text{Power} = \text{Capactive load} \times \text{Voltage}^2 \times \text{Frequency}$$
 
@@ -79,11 +79,11 @@ $$\text{Power} = \text{Capactive load} \times \text{Voltage}^2 \times \text{Freq
 - 热量聚集，散热困难
 - 功耗泄露
 
-虽然现在主频提高了很多，但功耗并没有得到这么多的提升，这是因为我们降低了工作电压（5V->1V），但工作电压无法再降低，否则泄漏电流占比太大，也难以提高散热效率，因此难以再提高主频了。
+虽然现在主频提高了很多，但功耗并没有得到这么多的提升，这是因为我们降低了工作电压（5V->1V），但工作电压无法再降低，否则泄漏电流占比太大。若从散热的角度考虑，散热效率也很难提高，因此难以再提高主频了。
 
 ### 内存墙
 
-内存墙 (Memory Wall) 指的是，内存的性能增长不如 CPU 的性能增长，大部分时间花在读写内存了，影响整体性能。
+内存墙 (Memory Wall) 指的是，内存的性能增长比不过 CPU 的性能增长，程序大部分时间都花在读写内存了，影响整体性能。
 
 解决方法：增大二级缓存，从而减少内存访问次数。
 

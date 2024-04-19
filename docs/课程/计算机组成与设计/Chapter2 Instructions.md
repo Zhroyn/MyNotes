@@ -38,9 +38,9 @@ RISC-V 有 32 个 64 位的通用寄存器，分别用 `x0` 到 `x31` 表示，�
 - `x18-x27` 保留寄存器 (Saved, s2-s11)
 - `x28-x31` 临时寄存器 (Temporaries, t3-t6)
 
-其中 ra, sp, gp, tp 也是保留寄存器，保留寄存器需要在被调用时将原来的值保存到栈中，并在之后恢复，而临时寄存器可以不管原来的值，直接修改。
+其中 ra, sp, gp, tp 也是保留寄存器。保留寄存器需要在被调用时将原来的值保存到栈中，并在之后恢复，而临时寄存器可以不管原来的值，直接修改。
 
-此外，RISC-V 还有个 pc (Program Counter) 寄存器，用于存储当前程序将要执行的指令的地址，无法直接访问和修改。
+此外，RISC-V 还有 pc (Program Counter) 寄存器，用于存储当前程序将要执行的指令的地址，无法直接访问和修改。
 
 
 
@@ -142,7 +142,7 @@ RV32I 基础指令集中的指令有以下几种格式：
     }
     ```
 
-    下面是对应的 RISC-V 汇编代码：
+    下面是对应的 RISC-V 汇编代码，其中输入位于 `a0`，输出位于 `a1`：
 
     ```asm
     fact:
@@ -151,17 +151,16 @@ RV32I 基础指令集中的指令有以下几种格式：
         sd ra, 8(sp)     // save the return address
         addi t0, a0, -1  // t0 = n - 1
         bge t0, x0, L1   // if n >= 1, go to L1
-        addi a0, x0, 1   // return 1 if n < 1
+        addi a1, x0, 1   // return 1 if n < 1
         addi sp, sp, 16  // recover sp to pop 2 items
         jalr x0, 0(ra)   // return to caller
     L1:
         addi a0, a0, -1  // n >= 1: argument gets n - 1
         jal ra, fact     // call fact with n - 1
-        add t1, a0, x0   // move the returned value to t1
         ld a0, 0(sp)     // restore argument n
         ld ra, 8(sp)     // restore the return address
+        mul a1, a1, a0   // return n * fact(n - 1)
         addi sp, sp, 16  // adjust stack pointer to pop 2 items
-        mul a0, a0, t1   // return n * fact(n - 1)
         jalr x0, 0(ra)   // return to the caller
     ```
 
@@ -186,9 +185,9 @@ RV32I 基础指令集中的指令有以下几种格式：
     ```asm
     again:
         lr.d x10, (x20)
-        sc.d x11, (x20), x23 // X11 = status
+        sc.d x11, (x20), x23 // x11 = status
         bne x11, x0, again   // branch if store failed
-        addi x23, x10, x0    // X23 = loaded value
+        addi x23, x10, x0    // x23 = loaded value
     ```
 
 ??? example "Lock 和 Unlock"
