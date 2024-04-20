@@ -139,7 +139,6 @@ theme:
     - navigation.top
     - navigation.tabs
     - navigation.indexes
-    - navigation.sections
   font:
     text: Noto Sans SC
     text: LXGW WenKai Screen

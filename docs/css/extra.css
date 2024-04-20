@@ -16,14 +16,18 @@
     background-color: #32323280;
 }
 
+:root {
+    --md-text-font: Fira Code, LXGW WenKai Screen;
+}
+
 .md-header {
     font-family: LXGW WenKai Screen;
 }
 
-.md-sidebar--secondary, h2, h3, h4 {
-    font-family: Noto Sans SC;
+.md-tabs, .md-sidebar, h2, h3, h4 {
+    font-family: Fira Code, Noto Sans SC;
 }
 
-.md-tabs, .md-sidebar--primary, h1 {
+h1 {
     font-family: Noto Serif SC;
 }
