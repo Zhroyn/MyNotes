@@ -27,6 +27,7 @@ nav:
       - 计算机概要与技术: 课程/计算机组成与设计/Chapter1 Computer Abstractions and Technology.md
       - 指令：计算机的语言: 课程/计算机组成与设计/Chapter2 Instructions.md
       - 计算机算术运算: 课程/计算机组成与设计/Chapter3 Arithmetic for Computer.md
+      - 处理器: 课程/计算机组成与设计/Chapter4 The Processor.md
     - 数据结构基础: 课程/FDSNote.md
     - 普通物理学:
       - 力学:
