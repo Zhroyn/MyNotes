@@ -282,3 +282,24 @@ Which one of the following is the lowest upper bound of $T(n)$ for the following
 ??? tip "Anwser"
 
     A. 显然答案应该是 $\log n$ 乘上深度 $k$，对深度 $k$ 我们有 $2^{2^k} = n$，所以 $k = O(\log \log n)$
+
+
+
+
+<br>
+
+## Homework 8
+
+2-2 In dynamic programming, we derive a recurrence relation for the solution to one subproblem in terms of solutions to other subproblems. To turn this relation into a bottom up dynamic programming algorithm, we need an order to fill in the solution cells in a table, such that all needed subproblems are solved before solving a subproblem. Among the following relations, which one is impossible to be computed?
+
+- A. $A(i, j) = min (A(i-1,j), A(i,j-1), A(i-1,j-1))$
+
+- B. $A(i, j) = F(A(min\{i, j\} - 1, min\{i, j\} - 1), A(max\{i, j\} - 1, max\{i, j\} -1))$
+
+- C. $A(i, j) = F(A(i, j -1), A(i - 1, j - 1), A(i - 1, j + 1))$
+
+- D. $A(i,j) = F(A(i-2, j-2), A(i+2,j+2))$
+
+??? tip "Anwser"
+
+    D. 显然 D 无法按照顺序填表
