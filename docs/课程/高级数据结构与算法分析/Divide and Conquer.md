@@ -105,7 +105,7 @@ $$ T(N) = c \sum_{i=0}^{\log_4 N - 1} (\frac{3}{16})^i N^2 + \Theta(N^{\log_4 3}
 - $a = b = k, f(N) = N$ 对应于第二种情况，$T(N) = \Theta(N \log N)$
 - $k > \log_b a, a \le b^k, f(N) = N^k$ 对应于第三种情况，$T(N) = \Theta(N^k)$
 
-需要注意的是，$a = b = k, f(N) = N\log N$ 不对应于主定理的任何一种情况，不能使用主方法求解。
+需要注意的是，$a = b = k, f(N) = N\log N$ 不对应于主定理的任何一种情况，不能使用主方法求解。此时可以使用下面这个定理：
 
 对于形式为 $T(N) = a T(N / b) + \Theta(N^k \log^p N)$ 的递推式，有：
 
