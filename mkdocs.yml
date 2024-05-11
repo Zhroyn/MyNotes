@@ -14,6 +14,7 @@ nav:
       - 回溯算法: 课程/高级数据结构与算法分析/Backtracking.md
       - 分治法: 课程/高级数据结构与算法分析/Divide and Conquer.md
       - 动态规划: 课程/高级数据结构与算法分析/Dynamic Programming.md
+      - 贪婪算法: 课程/高级数据结构与算法分析/Greedy Algorithm.md
       - NP 问题: 课程/高级数据结构与算法分析/NP Problem.md
       - 近似算法: 课程/高级数据结构与算法分析/Approximation.md
       - 作业: 课程/高级数据结构与算法分析/Homework.md
@@ -142,10 +143,6 @@ theme:
     - navigation.top
     - navigation.tabs
     - navigation.indexes
-  font:
-    text: Noto Sans SC
-    text: LXGW WenKai Screen
-    code: Fira Code
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default 
