@@ -3,11 +3,11 @@
 
 ## 命名空间
 
-C++ 中以 `.h` 为后缀的头文件中的符号仍是全局范围的，而不包含 `.h` 的头文件的符号则包含在命名空间之中，需要通过作用域解析运算符 `::` 访问，例如 `:::Cpp std::cout`。若要自定义命名空间，可以使用 `namespace` 关键字，如 `:::Cpp namespace A{ ... }`。
+C++ 中以 `.h` 为后缀的头文件中的符号是全局范围的，而不包含 `.h` 的头文件的符号则包含在命名空间之中，需要通过作用域解析运算符 `::` 访问，例如 `:::Cpp std::cout`。
 
-需要注意的是，一个命名空间的定义可以分散在不同文件，或者同一文件的不同位置中。此外，命名空间还可以嵌套定义，此时可以通过叠加使用 `::` 操作符来访问内层命名空间的符号。
+若要自定义命名空间，可以使用 `namespace` 关键字，如 `:::Cpp namespace A{ ... }`。一个命名空间的定义可以分散在不同文件，或者同一文件的不同位置中。此外，命名空间还可以嵌套定义，此时可以通过叠加使用 `::` 操作符来访问内层命名空间的符号。
 
-为了避免繁琐地使用 `::` 操作符，可以通过 `using namespace ns` 指令将指定命名空间的所有符号引入到当前作用域中。若两个命名空间有相同的符号，还都引入到了当前作用域，则会在使用该符号时产生冲突并报错，此时可以通过进一步使用 `using ns::symbol` 来解决冲突。
+为了避免繁琐地使用 `::` 操作符，可以通过 `using namespace ns` 指令将指定命名空间的所有符号引入到当前作用域中。若两个命名空间有相同的符号，还都引入到了当前作用域，则会在使用该符号时产生冲突并报错，此时可以通过进一步使用 `using ns::symbol` 来指定符号的来源，消除歧义。
 
 如果命名空间名字太长，可以使用 `namespace ns = name` 来定义别名，这样就可以通过 `ns::symbol` 来更简洁地访问命名空间中的符号。
 
@@ -341,10 +341,10 @@ void func(ClassA & a, ClassB & b) {
 
 C++ 有以下四种类型转换：
 
-- `static_cast` 用于相关类型之间的转换，适用于基本数据类型转换、指针或引用类型之间的转换。该类型转换在编译时进行，如果遇到不相关的类型转换会导致编译报错
+- `static_cast` 用于相关类型之间的转换，例如基本数据类型转换、指针或引用类型之间的转换。该类型转换在编译时进行，如果遇到不相关的类型转换会导致编译报错
 - `dynamic_cast` 用于多态类型之间的安全向下转换，如果基类没有虚函数会报错，适用于从基类到派生类的转换。该类型转换执行运行时类型检查，如果转换失败会返回空指针
 - `const_cast` 用于添加或移除 const 或 volatile 限定符，只能用于指针或引用
-- `reinterpret_cast` 用于进行低级别的、位级别的转换，不执行类型检查，适用于将一个指针转换为另一个不相关类型的指针
+- `reinterpret_cast` 用于进行低级别的、位级别的转换，不执行类型检查，适用于将一个指针转换为另一个不相关类型的指针等
 
 这四种类型转换的语法为 `type_cast<type>(expr)`，其中 `type_cast` 是类型转换的名称，`type` 是转换的目标类型，`expr` 是要转换的表达式。
 
@@ -359,7 +359,11 @@ C++ 有以下四种类型转换：
 
 模板 (template) 是 C++ 的一个重要特性，它允许定义通用的类或函数，可以用于不同的数据类型。
 
-函数模板和类模板的定义形式都是在最前面加上 `template` 关键字，后面跟上模板参数列表，例如 `template <typename T, ...>`。模板参数列表中的 `typename` 可以用 `class` 替代，两者没有区别。每个模板参数可以有默认值，例如 `template <typename T = int>`。
+函数模板和类模板的定义形式都是在最前面加上 `template` 关键字，后面跟上模板参数列表，例如 `template <typename T, ...>`，需要注意的有：
+
+- 每个模板参数可以有默认值，例如 `template <typename T = int>`
+- 模板参数列表中的 `typename` 可以用 `class` 替代，两者几乎没有区别
+- 当函数模板的返回类型是模板类型参数的类型成员时，需要在返回类型前加上 `typename` 关键字，以声明该成员是一个类型，例如 `typename T::value_type func() { ... }`
 
 在调用函数模板和定义类模板对象时，编译器会尝试使用函数参数或者模板参数默认值来推断模板参数的类型，如果无法推断则需要显式指定模板参数，如 `func<int>(args)` 和 `ClassName<int> obj`。
 
@@ -412,3 +416,258 @@ public:
     }
 };
 ```
+
+### 显式实例化
+
+如果将模板的实现单独放在源文件中，编译器会因为不知道模板参数而无法实例化模板，生成的目标文件也不会包含模板的实现。此时如果在别的源文件中使用了该模板，链接器会因为找不到模板的实现而报错。
+
+因此，模板的定义和声明通常都放在头文件中，以使编译器在编译使用该模板的源文件时能够正确实例化模板。但是，这可能会导致相同的模板代码在每个包含它的翻译单元中都会实例化一次，增加了编译时间和目标文件的大小。
+
+为了避免这个问题，可以在模板的实现文件中进行显式实例化 (explicit instantiation)，例如：
+
+```cpp
+template class MyClass<int, int>;
+template void func<int>(int, int);
+```
+
+这样编译器就会在编译时实例化模板，生成目标文件。需要注意的是，显式实例化只能在模板的实现文件中进行，不能在头文件中进行。
+
+
+
+
+
+
+
+<br>
+
+## 迭代器
+
+C++ 的 STL (Standard Template Library) 中提供了许多容器，为了统一访问方式，这些容器都提供了迭代器 (iterator) 来访问容器中的元素。通过迭代器，可以将容器和算法分离，使得算法可以独立于容器而存在。
+
+迭代器的定义形式为 `container::iterator it`，其中 `container` 是容器的类型，`iterator` 是迭代器的类型。迭代器有以下几种类型：
+
+- 输入迭代器 (InputIterator) 只能支持自增、拷贝、相等判断、解引访问
+- 输出迭代器 (OutputIterator) 只能支持自增、拷贝、相等判断、解引赋值
+- 前向迭代器 (ForwardIterator) 同时具有输入迭代器和输出迭代器的功能
+- 双向迭代器 (BidirectionalIterator) 在前向迭代器的基础上增加了自减操作
+- 随机访问迭代器 (RandomAccessIterator) 在双向迭代器的基础上增加了随机存取和前后比较操作，即 `+` `-` `[]` `<` `>` `<=` `>=` 等
+
+### 常见容器的迭代器
+
+常见容器的迭代器类型如下：
+
+- 有随机访问迭代器的容器包括 `vector` `deque` `array`
+- 有双向迭代迭代器的容器包括 `list` `set` `map` `multiset` `multimap`
+- 有前向迭代迭代器的容器包括 `forward_list` `unordered_set` `unordered_map` `unordered_multiset` `unordered_multimap`
+- 不支持迭代器的容器包括 `stack` `queue` `priority_queue`
+
+除了常见的 `iterator` 类型以外，STL 容器还提供了 `const_iterator` 类型，它只能访问容器中的常量元素，不能修改元素的值。而对于支持双向迭代器的容器，STL 容器还提供了 `reverse_iterator` 和 `const_reverse_iterator` 类型，它们可以逆序访问容器中的元素。
+
+支持迭代器的容器一般都有以下方法：
+
+- `begin()` 返回指向容器第一个元素的迭代器
+- `end()` 返回指向容器最后一个元素的下一个位置的迭代器
+- `cbegin()` 返回指向容器第一个元素的常量迭代器
+- `cend()` 返回指向容器最后一个元素的下一个位置的常量迭代器
+- `rbegin()` 返回指向容器最后一个元素的反向迭代器
+- `rend()` 返回指向容器第一个元素的前一个位置的反向迭代器
+
+### 特性萃取
+
+在算法中使用迭代器时，我们可能需要用到迭代器的一些特性，例如迭代器的值类型、引用类型、指针类型等。为此，STL 提供了 `iterator_traits` 类模板，它可以通过迭代器的类型来获取迭代器的特性，这种技术被称为特性萃取 (traits)。
+
+具体来说，迭代器的特性包括：
+
+- `value_type` 迭代器所指向的值的类型
+- `reference` 迭代器所指向的值的引用类型
+- `pointer` 指向迭代器所指向的值的指针类型
+- `difference_type` 用于表示两个迭代器之间的距离的类型
+- `iterator_category` 迭代器的类型，包括输入迭代器、输出迭代器、前向迭代器、双向迭代器、随机访问迭代器
+
+`iterator_traits` 的一个使用示例如下：
+
+```cpp
+template <typename Iterator>
+void print_elements(Iterator first, Iterator last) {
+    // 获取迭代器的类别
+    typedef typename std::iterator_traits<Iterator>::iterator_category category;
+    // 根据迭代器的类别调用不同的实现
+    print_elements_impl(first, last, category());
+}
+
+// 输入迭代器版本的实现
+template <typename Iterator>
+void print_elements_impl(Iterator first, Iterator last, std::input_iterator_tag) {
+    std::cout << "Input Iterator: ";
+    while (first != last) {
+        std::cout << *first << " ";
+        ++first;
+    }
+    std::cout << std::endl;
+}
+```
+
+`iterator_traits` 是通过偏特化来实现的。例如，如果迭代器是原生指针类型，它就返回指针的特性，否则会返回迭代器本身的特性。一个简单的示例如下：
+
+```cpp
+// 默认版本
+template <typename T>
+struct iterator_traits {
+    typedef typename T::value_type value_type;
+    typedef typename T::reference reference;
+    typedef typename T::pointer pointer;
+    typedef typename T::difference_type difference_type;
+    typedef typename T::iterator_category iterator_category;
+};
+
+// 原生指针版本
+template <typename T>
+struct iterator_traits<T*> {
+    typedef T value_type;
+    typedef T& reference;
+    typedef T* pointer;
+    typedef ptrdiff_t difference_type;
+    typedef random_access_iterator_tag iterator_category;
+};
+```
+
+
+
+
+
+
+<br>
+
+## 常见算法
+
+STL 在 `algorithm` 头文件中提供了许多常见的算法，这些算法都是函数模板，可以通过迭代器来对容器进行操作。
+
+### 范围检测
+
+```cpp
+template <class InputIterator, class UnaryPredicate>
+bool all_of (
+    InputIterator first, InputIterator last,
+    UnaryPredicate pred
+);
+
+template <class InputIterator, class UnaryPredicate>
+bool any_of (
+    InputIterator first, InputIterator last,
+    UnaryPredicate pred
+);
+
+template <class ForwardIterator, class T[, class Compare]>
+bool binary_search (
+    ForwardIterator first, ForwardIterator last,
+    const T& val[, Compare comp]
+);
+
+template <class InputIterator1, class InputIterator2[, class BinaryPredicate]>
+bool equal (
+    InputIterator1 first1, InputIterator1 last1,
+    InputIterator2 first2[, BinaryPredicate pred]
+);
+```
+
+- `all_of` 检测区间 `[first, last)` 中的所有元素是否都满足谓词 `pred`
+- `any_of` 检测区间 `[first, last)` 中的所有元素是否有一个满足谓词 `pred`
+- `binary_search` 在有序区间 `[first, last)` 中查找是否存在等于 `val` 的元素，可以指定比较函数 `comp`
+- `equal` 检测区间 `[first1, last1)` 和 `[first2, ...)` 是否相等，可以指定比较函数 `pred`
+- `UnaryPredicate` 是输入为一个迭代器指向的元素，返回值为 `bool` 类型的函数
+- `BinaryPredicate` 是输入为两个迭代器指向的元素，返回值为 `bool` 类型的函数
+
+### 拷贝
+
+```cpp
+template <class InputIterator, class OutputIterator>
+OutputIterator copy (
+    InputIterator first, InputIterator last,
+    OutputIterator result
+);
+
+template <class InputIterator, class OutputIterator, class UnaryPredicate>
+OutputIterator copy_if (
+    InputIterator first, InputIterator last,
+    OutputIterator result, UnaryPredicate pred
+);
+
+template <class InputIterator, class Size, class OutputIterator>
+OutputIterator copy_n (
+    InputIterator first, Size n,
+    OutputIterator result
+);
+
+template <class BidirectionalIterator1, class BidirectionalIterator2>
+BidirectionalIterator2 copy_backward (
+    BidirectionalIterator1 first, BidirectionalIterator1 last,
+    BidirectionalIterator2 result
+);
+```
+
+- `copy` 将区间 `[first, last)` 中的元素拷贝到从 `result` 开始的区间
+- `copy_if` 只拷贝满足谓词 `pred` 的元素
+- `copy_n` 只拷贝前 `n` 个元素，不需要指定结束位置
+- `copy_backward` 逆序拷贝到以 `result` 结束的区间，即从 `*(result-1) = *(last-1)` 开始，不断向前拷贝
+- 返回指向复制结束的位置的迭代器，对于 `copy_backward` 来说，就是指向目标区间开头的迭代器
+
+### 计数
+
+```cpp
+template <class InputIterator, class T>
+typename iterator_traits<InputIterator>::difference_type count (
+    InputIterator first, InputIterator last,
+    const T& val
+);
+
+template <class InputIterator, class T>
+typename iterator_traits<InputIterator>::difference_type count_if (
+    InputIterator first, InputIterator last,
+    UnaryPredicate pred
+);
+```
+
+- `count` 计算区间 `[first, last)` 中等于 `val` 的元素的个数
+- `count_if` 只计算满足谓词 `pred` 的元素的个数
+
+### 查找
+
+```cpp
+template <class InputIterator, class T>
+InputIterator find (
+    InputIterator first, InputIterator last,
+    const T& val
+);
+
+template <class ForwardIterator1, class ForwardIterator2[, class BinaryPredicate]>
+ForwardIterator1 find_end (
+    ForwardIterator1 first1, ForwardIterator1 last1,
+    ForwardIterator2 first2, ForwardIterator2 last2
+    [, BinaryPredicate pred]
+);
+
+template <class InputIterator, class ForwardIterator[, class BinaryPredicate]>
+InputIterator find_first_of (
+    InputIterator first1, InputIterator last1,
+    ForwardIterator first2, ForwardIterator last2
+    [, BinaryPredicate pred]
+);
+
+template <class InputIterator, class UnaryPredicate>
+InputIterator find_if (
+    InputIterator first, InputIterator last,
+    UnaryPredicate pred
+);
+
+template <class InputIterator, class UnaryPredicate>
+InputIterator find_if_not (
+    InputIterator first, InputIterator last,
+    UnaryPredicate pred
+);
+```
+- `find` 在区间 `[first, last)` 中查找第一个等于 `val` 的元素
+- `find_end` 在区间 `[first1, last1)` 中查找最后一个与区间 `[first2, last2)` 匹配的子序列，返回子序列的起始位置
+- `find_first_of` 在区间 `[first1, last1)` 中查找第一个与区间 `[first2, last2)` 中任意一个元素匹配的元素
+- `find_if` 查找第一个满足谓词 `pred` 的元素，
+- `find_if_not` 查找第一个不满足谓词 `pred` 的元素
+- 如果没有找到，上述函数会返回 `last` 或 `last1`
