@@ -361,9 +361,9 @@ C++ 有以下四种类型转换：
 
 函数模板和类模板的定义形式都是在最前面加上 `template` 关键字，后面跟上模板参数列表，例如 `template <typename T, ...>`，需要注意的有：
 
-- 每个模板参数可以有默认值，例如 `template <typename T = int>`
+- 模板参数可以有默认值，例如 `template <typename T = int>`
 - 模板参数列表中的 `typename` 可以用 `class` 替代，两者几乎没有区别
-- 当函数模板的返回类型是模板类型参数的类型成员时，需要在返回类型前加上 `typename` 关键字，以声明该成员是一个类型，例如 `typename T::value_type func() { ... }`
+- 当模板中用到模板类型参数的类型成员时，需要在它前面加上 `typename` 关键字，以声明该成员是一个类型，例如 `typename T::value_type func() { ... }`
 
 在调用函数模板和定义类模板对象时，编译器会尝试使用函数参数或者模板参数默认值来推断模板参数的类型，如果无法推断则需要显式指定模板参数，如 `func<int>(args)` 和 `ClassName<int> obj`。
 
@@ -671,3 +671,67 @@ InputIterator find_if_not (
 - `find_if` 查找第一个满足谓词 `pred` 的元素，
 - `find_if_not` 查找第一个不满足谓词 `pred` 的元素
 - 如果没有找到，上述函数会返回 `last` 或 `last1`
+
+
+
+
+
+
+
+
+<br>
+
+## 异常处理
+
+异常处理 (exception handling) 用于处理程序运行时错误，它可以使程序在出现错误时不会立即崩溃，而是能够根据错误类型执行相应的处理逻辑。C++ 中的异常处理机制由 `try` `throw` `catch` 三个关键字组成。
+
+我们可以使用 `throw` 关键字来抛出异常，抛出的异常可以是任意类型，但通常是一个异常类的对象。异常类通常继承自 `std::exception` 类，它有一个虚函数 `what`，用于返回异常的描述。
+
+抛出异常后，我们可以使用 `try` 和 `catch` 关键字来捕获异常。程序会在当前函数中自上而下查找匹配的 `catch` 语句，如果找到则执行 `catch` 语句中的代码，否则会继续向上查找。具体来说，匹配的 `catch` 语句是指 `catch` 语句中的异常类型与抛出的异常类型相同，或者是抛出的异常类型的基类。我们可以使用 `catch (...)` 来捕获所有类型的异常。
+
+一个简单的检测不同类型异常的示例如下：
+
+```cpp
+try {
+    throw 1;
+} catch (int e) {
+    std::cout << "Catch int: " << e << std::endl;
+} catch (double e) {
+    std::cout << "Catch double: " << e << std::endl;
+} catch (const char * e) {
+    std::cout << "Catch const char *: " << e << std::endl;
+} catch (std::exception & e) {
+    std::cout << "Catch exception: " << e.what() << std::endl;
+} catch (...) {
+    std::cout << "Catch unknown exception" << std::endl;
+}
+```
+
+C++ 提供了一些标准异常类，它们都继承自 `std::exception` 类，例如：
+
+- `std::logic_error` 逻辑错误，包括：
+    - `std::invalid_argument` 无效参数，表示函数的参数不合法
+    - `std::domain_error` 域错误，表示函数的参数超出了定义域
+    - `std::length_error` 长度错误，表示容器的长度超出了最大限制
+    - `std::out_of_range` 越界错误，表示访问容器时下标超出范围
+- `std::runtime_error` 运行时错误，包括：
+    - `std::range_error` 范围错误
+    - `std::overflow_error` 溢出错误
+    - `std::underflow_error` 下溢错误
+- `std::bad_alloc` 内存分配错误，当 `new` 失败时会抛出
+- `std::bad_cast` 类型转换错误，当 `dynamic_cast` 失败时会抛出
+- `std::bad_exception` 未捕获的异常，通常与 `std::unexpected` 一起使用
+- `std::bad_typeid` `typeid` 运算符错误，当 `typeid` 作用于空指针时会抛出
+
+我们还可以自定义异常类，只需要继承自 `std::exception` 类，并实现 `what` 函数即可。一个简单的自定义异常类的示例如下：
+
+```cpp
+class MyException : public std::exception {
+public:
+    const char * what() const noexcept override {
+        return "My exception";
+    }
+};
+```
+
+
