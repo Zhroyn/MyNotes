@@ -29,6 +29,7 @@ nav:
       - 物理存储系统: 课程/数据库系统/Chapter12 Physical Storage Systems.md
       - 数据存储结构: 课程/数据库系统/Chapter13 Data Storage Structures.md
       - 索引: 课程/数据库系统/Chapter14 Indexing.md
+      - 查询处理: 课程/数据库系统/Chapter15 Query Processing.md
     - 计算机组成与设计:
       - 计算机概要与技术: 课程/计算机组成与设计/Chapter1 Computer Abstractions and Technology.md
       - 指令：计算机的语言: 课程/计算机组成与设计/Chapter2 Instructions.md
