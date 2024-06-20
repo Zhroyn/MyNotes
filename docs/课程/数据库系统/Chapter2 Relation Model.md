@@ -74,15 +74,19 @@ $R = (A_1, A_2, \cdots, A_n)$ 是一个**关系模式 (relation schema)**，它�
 
 交操作的定义为 $r \cap s = \{ t | t\in r \text{ and } t\in s \} = r - (r - s)$。
 
-自然连接操作会匹配在相同属性上有相同值的元组，其定义为 $r \Join s = \prod_{r.A, r.B, r.C, r.D, s.E} (\sigma_{r.B=s.B \wedge r.D=s.D(r \times s)} (r \times s))$，其中 $R = (A, B, C, D), S = (B, D, E)$。
+自然连接操作会匹配在相同属性上有相同值的元组，每个元组会去搜索另一个关系中匹配的元组，将其扩展后加入结果中，例如，令 $R = (A, B, C, D), S = (B, D, E)$，则 $r \Join s = \prod_{A, B, C, D, E} (\sigma_{r.B=s.B \wedge r.D=s.D} (r \times s))$。
 
-外连接操作会保留不匹配的元组，分为左外连接、右外连接和全外连接，其中左外连接可以被写为 $r ⟕ s = (r \Join s) \cup (r - \prod_R (r \Join s)) \times \{ (\text{null}, \cdots, \text{null}) \}$，全外连接可以被写为 $r ⟗ s = (r \Join s) \cup (r - \prod_R (r \Join s)) \times \{ (\text{null}, \cdots, \text{null}) \} \cup \{ (\text{null}, \cdots, \text{null}) \} \times (s - \prod_S (r \Join s))$。
+外连接操作会保留不匹配的元组，若一个元组无法与另一个关系匹配，就会将另一个关系的属性设为空，然后将被扩展的元组加入结果中。根据保留的元组在哪一侧，可以分为左外连接、右外连接和全外连接：
+
+- 左外连接：$r ⟕ s = (r \Join s) \cup (r - \prod_R (r \Join s)) \times \{ (\text{null}, \cdots, \text{null}) \}$
+- 右外连接：$r ⟖ s = (r \Join s) \cup \{ (\text{null}, \cdots, \text{null}) \} \times (s - \prod_S (r \Join s))$
+- 全外连接：$r ⟗ s = (r \Join s) \cup (r - \prod_R (r \Join s)) \times \{ (\text{null}, \cdots, \text{null}) \} \cup \{ (\text{null}, \cdots, \text{null}) \} \times (s - \prod_S (r \Join s))$
 
 theta 连接操作的定义为 $r \Join_{\theta} s = \sigma_{\theta}(r \times s)$，半连接操作的定义为 $r \ltimes_{\theta} s = \prod_R (r \Join_{\theta} s)$，可用于用外部表的信息进行筛选。
 
-除操作是找到最大 $t(R - S)$，使得 $t \times s \subseteq r$，即 $r \div s =  \prod_{R-S}(r) - \prod_{R-S} (\prod_{R-S}(r) \times s - r)$。
+除操作是找到最大 $t(R - S)$，使得 $t \times s \subseteq r$，即 $r \div s =  \prod_{R-S}(r) - \prod_{R-S} (\prod_{R-S}(r) \times s - r)$。换句话说，如果 $R - S$ 的一个元组 $t$ 满足 $t \times s \subseteq r$，那么 $t$ 就会被保留。
 
-!!! note 示例
+!!! note "除操作"
     设
 
     $r(\text{ID}, \text{course\_id}) = \prod_{\text{id}, \text{course\_id}} (\text{takes})$
@@ -96,10 +100,10 @@ theta 连接操作的定义为 $r \Join_{\theta} s = \sigma_{\theta}(r \times s)
 扩展操作可以增加表达能力，包括：
 
 - **广义投影 (Generalized Projection)**，可以在投影中使用算术表达式
-- **聚合函数 (Aggregate Functions)**，可以接受一系列值并返回单个值，包括 $\text{avg}$, $\min$, $\max$, $\text{sum}$, $\text{count}$
+- **聚合函数 (Aggregate Functions)**，可以接受一系列值并返回单个值，如 $\text{avg}$, $\min$, $\max$, $\text{sum}$, $\text{count}$
 - **聚合操作 (Aggregate Operations)**，可以将关系代数表达式按照属性分组，然后根据聚合函数返回值，形式为 $_{G_1, \cdots, G_n} \mathcal{G}_{F_1(A_1), \cdots, F_n(A_n)} (E)$
 
-!!! note 示例
+!!! note "聚合操作"
 
     $_\text{dept\_name} \mathcal{G}_{\text{avg(salary)}} (\text{instructor})$ 会返回每个部门的平均薪水
 
@@ -130,7 +134,7 @@ from r1, r2, ..., rm
 where P
 ```
 
-$_{A_1, A_2} \mathcal{G}_{\text{sum}(A_3)} \sigma_P (r_1 \times \cdots \times r_m) $ 等价于：
+$_{A_1, A_2} \mathcal{G}_{\text{sum}(A_3)} \sigma_P (r_1 \times \cdots \times r_m)$ 等价于：
 
 ```sql
 select A1, A2, sum(A3)
