@@ -169,7 +169,7 @@ RV32I 基础指令集中的指令有以下几种格式：
 跟大立即数有关的指令有：
 
 - `lui rd, imm` Load Upper Immediate，会将 `imm[31:12]` 放在寄存器 rd 的高 20 位，可与 `addi` 配合得到 32 位常数，为 U 型指令
-- `auipc rd, offset` Add Upper Immediate to PC，`rd = PC + offset << 12`，为 U 型指令，常与 `jalr` 指令配合使用，
+- `auipc rd, offset` Add Upper Immediate to PC，`rd = PC + offset << 12`，为 U 型指令，常与 `jalr` 指令配合使用
 
 跟同步有关的原子指令有：
 
@@ -219,14 +219,14 @@ RV32I 基础指令集中的指令有以下几种格式：
 
 RISC-V 的寻址方式可以概括为：
 
-- 立即数寻址：`addi x5, x6, 4`
-- 寄存器寻址：`add x5, x6, x7`
-- 基址寻址：`ld x5, 100(x6)`
-- PC 相对寻址：`beq x5, x6, L1`
+- 立即数寻址 (Immediate addressing)：`addi x5, x6, 4`
+- 寄存器寻址 (Register addressing)：`add x5, x6, x7`
+- 基址寻址 (Base addressing)：`ld x5, 100(x6)`
+- PC 相对寻址 (PC-relative addressing)：`beq x5, x6, L1`
 
-内存是字节寻址的，内存地址在指令中的格式为 `offset(base)`，其中 `offset` 为立即数，`base` 为基址寄存器。例如，对于一个双字数组 `A`，`A[30]` 可以表示为 `240(x22)`，其中 `x22` 存储了数组 `A` 的基址。
+内存是字节寻址的 (byte-addressed)，内存地址在指令中的格式为 `offset(base)`，其中 `offset` 为立即数，`base` 为基址寄存器。例如，对于一个双字数组 `A`，`A[30]` 可以表示为 `240(x22)`，其中 `x22` 存储了数组 `A` 的基址。
 
-而且，RISC-V 是小端 (Little endian) 存储的，即数据的低位放在低地址，高位放在高地址，存取数据都是从低往高处理。此外，RISC-V 也不要求字对齐，即一个字的起始地址不一定是 4 的倍数。
+而且，RISC-V 是小端 (little endian) 存储的，即数据的低位放在低地址，高位放在高地址，存取数据都是从低往高处理。此外，RISC-V 也不要求字对齐，即一个字的起始地址不一定是 4 的倍数。
 
 
 
@@ -278,7 +278,7 @@ RISC-V 的寻址方式可以概括为：
 3. 将代码段和初始化数据段复制到内存中，或者设置页表项，以便在需要时进行缺页处理
 4. 在栈上设置参数
 5. 初始化寄存器，包括 sp, fp, gp 等
-6. 跳转到启动程序，将参数复制到 x10, ...，然后调用 main 函数
+6. 跳转到启动程序，将参数复制到 x10 等，然后调用 main 函数
 7. 当 main 函数返回后，执行系统调用退出程序
 
 
