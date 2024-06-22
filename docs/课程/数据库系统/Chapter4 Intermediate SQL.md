@@ -30,7 +30,7 @@ type 与 domain 类似，但是 domain 包含了约束。需要注意的是，�
 - `primary key` 保证列的值唯一且不为空，一个表只能有一个
 - `foreign key` 保证列的值是另一张表的主键
 
-这些约束可以是列的定义的一部分，位于数据类型之后，可以叠加使用。在其中 `check` `primary key` `foreign key` 还可以定义在表中，与列的定义用逗号分隔，这时它们可以使用多个列，形式变为：
+这些约束可以是列的定义的一部分，位于数据类型之后，并且可以叠加使用。`check` `primary key` `foreign key` 还可以与列的定义并列，彼此之间用逗号分隔，此时它们可以涉及多个列，形式变为：
 
 - `check(condition)` 保证表的每一行满足某种条件
 - `primary key (column1, column2, ...)` 保证列的值的组合唯一，且任意一列都不能为 NULL

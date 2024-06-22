@@ -233,7 +233,7 @@ BEGIN
         SELECT branch_name, nrow.customer_name
         FROM account
         WHERE account.account_number = nrow.account_number;
-END; //
+END //
 
 CREATE TRIGGER on_delete_cascade AFTER DELETE ON s
 REFERENCING OLD ROW AS orow
@@ -241,7 +241,7 @@ FOR EACH ROW
 BEGIN
     DELETE FROM r
     WHERE r.B = orow.A;
-END; //
+END //
 
 DELIMITER ;
 ```
