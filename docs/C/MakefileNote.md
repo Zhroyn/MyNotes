@@ -149,3 +149,24 @@ Makefile 函数的使用语法 `$(function arguments)`，常用的函数有：
 vpath %.c src
 vpath %.h include
 ```
+
+
+
+<br>
+
+## 命令
+
+make 会将执行的命令输出到屏幕上，我们可以通过在命令最前面加上 `@` 来禁止输出这个命令。例如：
+
+```makefile
+all:
+    @echo "Building project..."
+    gcc -o main main.c
+```
+
+如果要忽略命令的出错，可以在命令前面加上 `-` 符号。例如：
+
+```makefile
+clean:
+    -rm -f *.o
+```
