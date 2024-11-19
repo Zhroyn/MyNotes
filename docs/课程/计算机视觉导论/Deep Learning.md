@@ -2,14 +2,17 @@
 ## Deep Learning
 ### Linear Classfier
 Define the **score** as
+
 $$f_w(x) = w^T x + b$$
 
 where $x$ is the image, $w$ is the weights.
 
 When $x$ is similar to $w$, the score is large. Then we can convert scores to probabilities by **softmax** function
+
 $$\sigma(\mathbf{z})_j = \frac{e^{z_j}}{\sum_{k=1}^{K} e^{z_k}}$$
 
 Then we can use **cross entropy function** as loss function
+
 $$H(P, Q) = -\sum_i P_i \log Q_i$$
 
 where $P$ is the true probabilities, $Q$ is the predicted probabilities.
@@ -26,28 +29,30 @@ where $P$ is the true probabilities, $Q$ is the predicted probabilities.
 ### Neural Network
 #### Activation Functions
 A activation function is to transform the summed weighted input and bias into an output value, which can be represented by
+
 $$f(x) = \sigma(w^Tx + b)$$
 
 For multiple outputs, we can use
+
 $$f(x) = \sigma(Wx + b) $$
 
-- Sigmoid: $$\sigma(x) = \frac{1}{1 + e^{-x}}$$
+- Sigmoid: $\sigma(x) = \frac{1}{1 + e^{-x}}$
     - Problems: Saturated neurons kill the gradients; outputs are not zero-centered; compute expensive
-- tanh: $$\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$$
+- tanh: $\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$
     - Advantages: zero centered
     - Problems: still kills gradients when saturated
-- Rectified Linear Unit (ReLU): $$\max(0, x)$$
+- Rectified Linear Unit (ReLU): $\max(0, x)$
     - Advantages: Does not saturate; Very computationally efficient; Converges much faster than sigmoid/tanh in practice
     - Problems: Not zero-centered; big learning rate may cause dead ReLU problem 
-- Leaky ReLU or Parametric Rectifier (PReLU, $\alpha$ is learned): $$\max(0.01x, x), \quad \max(\alpha x, x)$$
+- Leaky ReLU or Parametric Rectifier (PReLU, $\alpha$ is learned): $\max(0.01x, x), \quad \max(\alpha x, x)$
     - Advantages: Does not saturate; Computationally efficient; Converges much faster than sigmoid/tanh in practice; will not die
     - Problems: Not zero-centered; big learning rate may cause dead ReLU problem 
-- Exponential Linear Unit (ELU): $$\begin{cases} x & x \gt 0 \\ \alpha(e^x - 1) & x \le 0 \end{cases}$$
+- Exponential Linear Unit (ELU): $\begin{cases} x & x \gt 0 \\ \alpha(e^x - 1) & x \le 0 \end{cases}$
     - Advantages: All benefits of ReLU; Closer to zero mean outputs; Negative saturation regime compared with Leaky ReLU adds some robustness to noise
     - Problems: Computation requires exp()
-- Scaled Exponential Linear Unit (SELU): $$\begin{cases} \lambda x & x \gt 0 \\ \lambda\alpha(e^x - 1) & x \le 0 \end{cases}$$
+- Scaled Exponential Linear Unit (SELU): $\begin{cases} \lambda x & x \gt 0 \\ \lambda\alpha(e^x - 1) & x \le 0 \end{cases}$
     - Advantages: Works better for deep networks; "Self-normalizing" property; Can train deep SELU networks without BatchNorm
-- Maxout: $$\max(w_1^Tx + b_1, w_2^Tx + b_2)$$
+- Maxout: $\max(w_1^Tx + b_1, w_2^Tx + b_2)$
     - Advantages: Generalizes ReLU and Leaky ReLU; Linear Regime; Does not saturate; Does not die
     - Problems: Doubles the number of parameters/neuron
 
@@ -55,6 +60,7 @@ $$f(x) = \sigma(Wx + b) $$
 
 #### Perceptron
 A perceptron is an artificial neuron using the Heaviside step function as the activation function. The perceptron algorithm is also termed the single-layer perceptron. It can be represented by
+
 $$
 f(x) = \begin{cases}
   1 & \text{if } w^Tx + b > 0 \\
@@ -117,9 +123,11 @@ Pooling operators:
 ### Training Neural Network
 #### Backpropagation
 Define a CNN as a composition of functions
+
 $$f_{\bm{w}}(\bm{x}) = f_L(\dots(f_2(f_1(\bm{x};\bm{w}_1);\bm{w}_2)\dots;\bm{w}_L))$$
 
 Its parameter is $\bm{w} = (\bm{w}_1, \bm{w}_2, \dots, \bm{w}_L)$, and its loss function is
+
 $$L(\bm{w}) = \frac{1}{n} \sum_i l(y_i, f_{\bm{w}}(\bm{x}_i))$$
 
 where $y_i$ are its true training labels, $f_{\bm{x}}(\bm{x}_i)$ are its estimated labels. Then the gradient descent is
@@ -129,6 +137,7 @@ $$\bm{w}^{t+1} = \bm{w}^t - \eta_t \frac{\partial L}{\partial \bm{w}}(\bm{w}^t)$
 where $\eta_t$ are learing rates.
 
 In practice, we usually only use Stochastic Gradient Descent (SGD), which only calcualte loss and gradients on a batch of randomly sampled images, that is,
+
 $$
 \hat{L}(\bm{w}) = \frac{1}{n} \sum_{i\in \Omega} l(y_i, f_{\bm{w}}(\bm{x}_i)) \\~\\
 SG = \frac{\partial \hat{L}}{\partial \bm{w}}(\bm{w}^t)
@@ -138,6 +147,7 @@ Stochastic gradients approximate the real gradients.
 
 ---
 Here is a simple example of backpropagation. For $f(x, W) = \left\| W \cdot x \right\|^2 $, let $q = W \cdot x$, then the gradient is 
+
 $$
 q_k = \sum_j W_{k,j} x_j
 \\~\\
@@ -149,12 +159,14 @@ q_k = \sum_j W_{k,j} x_j
 $$
 
 Furthermore, for $f(x) = \left\| \tanh(W_2 \cdot \tanh(W_1 x + b_1) + b_2) \right\|^2 $, let's suppose
+
 $$
 y_1 = W_1 x + b_1, y_2 = \tanh y_1, \\
 y_3 = W_2 y_2 + b_2, y_4 = \tanh y_3
 $$
 
 Then we can get
+
 $$
 \frac{\partial f}{\partial y_3} = 2(1 + y_4)(1 - y_4),
 \quad \frac{\partial f}{\partial y_2} = W_2^T \cdot \nabla_{y_3} f,
@@ -169,6 +181,7 @@ $$
 
 #### Optimizer
 **SGD with Momentum**
+
 $$
 v_{t+1} = \rho v_t - \alpha \nabla f(x_t) \\
 x_{t+1} = x_t + v_{t+1}
@@ -178,6 +191,7 @@ The typical value of $\rho$ is about 0.9. When cross-validated, this parameter i
 Optimization can sometimes benefit a little from momentum schedules, where the momentum is increased in later stages of learning. A typical setting is to start with momentum of about 0.5 and anneal it to 0.99 or so over multiple epochs.
 
 **Nesterov Momentum**
+
 $$
 \begin{aligned}
   v_{t+1} &= \rho v_t - \alpha \nabla f(x_t + \rho v_t) \\
@@ -186,6 +200,7 @@ $$
 $$
 
 To update in terms of $x_t, \nabla f(x_t)$, we can set $\tilde{x}_t = x_t + \rho v_t$ and rearrange:
+
 $$
 \begin{aligned}
   v_{t+1} &= \rho v_t - \alpha \nabla f(\tilde{x}) \\
@@ -195,14 +210,17 @@ $$
 $$
 
 **AdaGrad**
+
 ```py
 cache += dx**2
 x += - learning_rate * dx / (np.sqrt(cache) + eps)
 ```
+
 Adagrad is an **adaptive learning rate method**. The weights that receive high gradients will have their effective learning rate reduced, while weights that receive small or infrequent updates will have their effective learning rate increased.
 A downside of Adagrad is that in case of deep learning, the monotonic learning rate usually proves too aggressive and stops learning too early.
 
 **RMSProp**
+
 ```py
 cache = decay_rate * cache + (1 - decay_rate) * dx**2
 x += - learning_rate * dx / (np.sqrt(cache) + eps)
@@ -210,6 +228,7 @@ x += - learning_rate * dx / (np.sqrt(cache) + eps)
 decay_rate is a hyperparameter and typical values are [0.9, 0.99, 0.999].
 
 **Adam**
+
 ```py
 m = beta1*m + (1-beta1)*dx
 v = beta2*v + (1-beta2)*(dx**2)
@@ -217,6 +236,7 @@ x += - learning_rate * m / (np.sqrt(v) + eps)
 ```
 Recommended values in the paper are eps = 1e-8, beta1 = 0.9, beta2 = 0.999.
 The full Adam update also includes a bias correction mechanism, which compensates for the fact that in the first few time steps the vectors m,v are both initialized and therefore biased at zero:
+
 ```py
 m = beta1*m + (1-beta1)*dx
 mt = m / (1-beta1**t)
@@ -230,6 +250,7 @@ x += - learning_rate * mt / (np.sqrt(vt) + eps)
 #### Weight Initialization
 ##### Xavier Initialization
 Let $s = \sum_i^n w_i x_i$, assume $E(w) = 0, E(x) = 0$, then the variance of $s$ is
+
 $$
 \begin{aligned}
   \text{Var}(s) &= \text{Var}(\sum_i^n w_i x_i) \\
@@ -250,6 +271,7 @@ For conv layers, Din is filter_size^2 * input_channels
 
 ##### Kaiming Initialization
 In the ReLU network, it is assumed that half of the neurons in each layer are activated and the other half is 0, to maintain the variance, simply divide by 2 based on Xavier
+
 ```py
 W = np.random.randn(Din, Dout) / np.sqrt(2/Din)
 ```
@@ -260,11 +282,13 @@ W = np.random.randn(Din, Dout) / np.sqrt(2/Din)
 We often do batch normalization to the outputs of a layer before the activation function so they have zero mean and unit variance.
 
 To do this, we firstly compute the empirical mean and variance independently for each dimension and then normalize:
+
 $$\hat{x}^{(k)} = \frac{x^{(k)} - E[x^{(k)}]}{\sqrt{\text{Var}[x^{(k)}] + \epsilon}}$$
 
 Here $x$ is the values of the same dimension from different training examples in a mini-batch. As for convolutional layers, we normalize not only across all the training examples, but also cross the whole activation map, that is, per activation map have one mean and one standard deviation in a mini-batch.
 
 Then, the network can still learn to change the distribution by
+
 $$y^{(k)} = \gamma^{(k)} \hat{x}^{(k)} + \beta^{(k)}$$
 
 Batch Normalization makes neural network much easier to train, more robust to initialization, allows higher learning rate and faster convergence, and acts as a form of regularization due to the randomness of the mean and variance of each mini-batch.
@@ -276,6 +300,7 @@ To avoid overfitting, we may hope less or smaller parameters, so here comes regu
 
 **L1 and L2 Regularization**
 One method is to add a regularization term to the loss function
+
 $$L(W) = \frac{1}{N}\sum_{i=1}^{N} L_i(f(x_i, W), y_i) + \lambda R(W)$$
 
 - **L1 regularization**: $R(W) = \sum_i \sum_j |W_{ij}|$
@@ -321,6 +346,7 @@ Then, we can overfit a tiny subset of data, and make sure we can achieve zero co
 
 #### Hyperparameter Optimization
 The most common hyperparameters in context of Neural Networks include:
+
 - Initial learning rate
 - Learning rate decay schedule (such as the decay constant)
 - Regularization strength (L2 penalty, dropout strength)

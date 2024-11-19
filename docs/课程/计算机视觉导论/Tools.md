@@ -32,6 +32,7 @@ colmap feature_extractor `
     --database_path $PROJECT_PATH/database.db `
     --image_path $PROJECT_PATH/images
 ```
+
 - `--image_list_path /path/to/image-list.txt` 给新增的图像提取特征，其中 `image-list.txt` 存放新增的图像的路径，格式为每行一个，且必须为相对于 `images` 的相对路径
 - `--ImageReader.camera_model arg (=SIMPLE_RADIAL)` 指定相机模型
     - `SIMPLE_PINHOLE`: f, cx, cy
@@ -46,6 +47,7 @@ colmap feature_extractor `
 colmap exhaustive_matcher `
     --database_path $PROJECT_PATH/database.db
 ```
+
 针对少量图像进行穷举匹配，可以获得最好效果。此外，还有以下匹配方式：
 
 - `vocab_tree_matcher` 针对大量图像，通过 vocabulary tree 快速检索视觉上最相近的图像进行匹配
@@ -58,6 +60,7 @@ colmap exhaustive_matcher `
 
 ### 稀疏重建
 若是正常稀疏重建，则直接使用如下命令：
+
 ```powershell
 colmap mapper `
     --database_path $PROJECT_PATH/database.db `
@@ -66,6 +69,7 @@ colmap mapper `
 ```
 
 若是加入新的图像，则要添加参数 `--input_path`。这会改变原有 3D 点的位置。
+
 ```powershell
 colmap mapper `
     --database_path $PROJECT_PATH/database.db `
@@ -75,6 +79,7 @@ colmap mapper `
 ```
 
 若要从已知相机内外参重建，可以转而使用 `point_triangulator`
+
 ```powershell
 colmap point_triangulator `
     --database_path $PROJECT_PATH/database.db `
@@ -87,6 +92,7 @@ colmap point_triangulator `
 <br>
 
 ### 稠密重建
+
 ```powershell
 # 重新校准图片
 mkdir $PROJECT_PATH/dense
@@ -155,6 +161,7 @@ colmap bundle_adjuster `
     --input_path $PROJECT_PATH/model-with-new-images
     --output_path $PROJECT_PATH/model-with-new-images
 ```
+
 - `image-list.txt` 存放新增图像的路径，每行一个，路径只能为相对于 `images` 的路径
 - `vocab-tree.bin` 为训练好的数据集，可从官网下载
 - `vocab_tree_matcher` 可以用 `exhaustive_matcher` 替换
@@ -164,6 +171,7 @@ colmap bundle_adjuster `
 <br>
 
 若想要产生更多的 3D 点，获得更准确的定位，可以使用 `mapper` 来代替 `image_registrator`，然后用 `model_aligner` 来使坐标系回归初始模型。
+
 ```powershell
 colmap mapper `
     --database_path $PROJECT_PATH/database.db `
@@ -180,6 +188,7 @@ colmap model_aligner `
     --robust_alignment 1 `
     --robust_alignment_max_error 3.0
 ```
+
 - `text-file` 存放已知的相机坐标，形式为每行一个 `image_name.jpg X Y Z`，可以仅有已注册图像的一部分
 
 

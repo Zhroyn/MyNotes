@@ -8,6 +8,7 @@ The goal of the Perspective-n-Point (PnP) problem is to estimate the position an
 
 ##### Direct Linear Transform (DLT)
 Suppose the relation between the 2D-coordinate and 3D-coordinate of a point is
+
 $$
 \begin{bmatrix} u^{(i)} \\ v^{(i)} \\ 1 \end{bmatrix}
 \equiv \begin{bmatrix}
@@ -19,6 +20,7 @@ $$
 $$
 
 That is
+
 $$
 u^{(i)} = \frac{p_{11}x_w^{(i)} + p_{12}y_w^{(i)} + p_{13}z_w^{(i)} + p_{14}}{p_{31}x_w^{(i)} + p_{32}y_w^{(i)} + p_{33}z_w^{(i)} + p_{34}}
 \\~\\
@@ -26,6 +28,7 @@ v^{(i)} = \frac{p_{21}x_w^{(i)} + p_{22}y_w^{(i)} + p_{23}z_w^{(i)} + p_{24}}{p_
 $$
 
 Rerange the equations, we can get
+
 $$
 \bm{x}_w^{(i)} = \begin{bmatrix} x_w^{(i)} & y_w^{(i)} & z_w^{(i)} & 1 \end{bmatrix}, \bm{p}_i = \begin{bmatrix} p_{i1} \\ p_{i2} \\ p_{i3} \\ p_{i4} \end{bmatrix}
 \\~\\
@@ -41,6 +44,7 @@ $$
 $$
 
 Because the projection matrix is defined up to scale, we can add a constraint condition $\left\| \bm{p} \right\|^2 = 1$, then the solution is
+
 $$
 \underset{p}{\min}\left\| A\bm{p} \right\|^2 \text{ such that } \left\| \bm{p} \right\|^2 = 1
 $$
@@ -48,6 +52,7 @@ $$
 The eigenvector with smallest eigenvalue $\lambda$ of matrix $A^TA$ is the solution.
 
 Then, to decompose projection matrices to intrinsic and extrinsic matrices, we can use QR factorization:
+
 $$
 \begin{bmatrix}
   p_{11} & p_{12} & p_{13} \\
@@ -75,6 +80,7 @@ $$
 P3P uses the geometric relationships of three points, the 3D-to-2D point correspondences, and the known internal parameters of the camera to get the external parameters of the camera.
 
 Firstly, convert 2D points to corresponding 3D points in camera coordinate system
+
 $$
 x_c = \frac{u - o_x}{f_x}, \quad
 y_c = \frac{v - o_y}{f_y}, \quad
@@ -82,6 +88,7 @@ z_c = 1 \\
 $$
 
 By these, we can get $\cos\left< a, b \right>, \cos\left< b, c \right>, \cos\left< a, c \right>$. Then, by the cosine theorem, we can get
+
 $$
 \left\{
 \begin{aligned}
@@ -105,6 +112,7 @@ $$
 $$
 
 Rerange the equations, then we can get
+
 $$
 \left\{
 \begin{aligned}
@@ -112,12 +120,15 @@ $$
   & (1 - w)x^2 - wy^2 - \cos\left< b, c \right> x + 2wxy\cos\left< a, b \right> + 1 = 0 \\
 \end{aligned}
 \right.
-$$ This binary quadratic equation has 4 possible answers, we use one extra point to determine the most possible one.
+$$
+
+This binary quadratic equation has 4 possible answers, we use one extra point to determine the most possible one.
 
 <br>
 
 ##### Bundle Adjustment (BA)
 Suppose $P_i$ is the coordinate of a point in the world coordinate system, $p_i$ is the homogeneous coordinate of corresponding point in camera coordinate system, $\omega_i$ is the depth of correspoinding point, then we can define the reprojection error
+
 $$
 e(R, t) = \sum_i \left\| p_i - \frac{1}{\omega_i}K(RP_i + t) \right\|^2
 $$
@@ -151,6 +162,7 @@ Epipolar geometry uses the 2D point correspondences and the known internal param
 ---
 
 The normal vecter of the epipolar plane is $\bm{n} = \bm{t} \times \bm{x}_l $, so $\bm{x}_l \cdot (\bm{t} \times \bm{x}_l) = 0$. That is 
+
 $$
 \begin{bmatrix} x_l & y_l & z_l \end{bmatrix}
 \begin{bmatrix} t_yz_l - t_zy_l \\ t_zx_l - t_xz_l \\ t_xy_l - t_yx_l \end{bmatrix} = 0
@@ -169,6 +181,7 @@ $$
 $$
 
 Substitute $\bm{x}_l = R\bm{x}_r + \bm{t} $ into $\bm{x}_l^T T_X \bm{x}_l = 0$, we can get
+
 $$
 \bm{x}_l^T (T_XR\bm{x}_r + T_X\bm{t}) = 0
 \\~\\
@@ -184,6 +197,7 @@ Given that $T_X$ is a skew-symmetric matrix ($a_{ij} = -a_{ji} $) and $R$ is an 
 ---
 
 To calculate $E$, fistly, we have
+
 $$
 z_l\begin{bmatrix} u_l \\ v_l \\ 1 \end{bmatrix}
 = \begin{bmatrix}
@@ -205,6 +219,7 @@ z_r\begin{bmatrix} u_r \\ v_r \\ 1 \end{bmatrix}
 $$
 
 Substitute these into $\bm{x}_l^T E \bm{x}_r = 0$, we can get:
+
 $$
 \begin{bmatrix} u_l & v_l & 1 \end{bmatrix} K_l^{{-1}^T} E K_r^{-1} \begin{bmatrix} u_r \\ v_r \\ 1 \end{bmatrix} = 0
 \\~\\
@@ -216,6 +231,7 @@ where $F = K_l^{{-1}^T} E K_r^{-1}$ is called **fundamental matrix**.
 ---
 
 Expand $\bm{u}_l^T F \bm{u}_r = 0$, we can get
+
 $$
 \begin{aligned}
   & (f_{11}u_r^{(i)} + f_{12}v_r^{(i)} + f_{13})u_l^{(l)} + (f_{21}u_r^{(i)} + f_{22}v_r^{(i)} + f_{23})v_l^{(l)} + \\
@@ -224,6 +240,7 @@ $$
 $$
 
 Rerange the terms, and set $\bm{p}_r^{(i)} = \begin{bmatrix} u_r^{(i)} & v_r^{(i)} & 1 \end{bmatrix}$, then we can get:
+
 $$
 \begin{bmatrix}
   u_l^{(1)}\bm{p}_r^{(1)} & v_l^{(1)}\bm{p}_r^{(1)} & \bm{p}_r^{(1)} \\
@@ -239,6 +256,7 @@ $$
 $$
 
 Because $\mathbf{f}$ is defined up to scale, we can add a constraint condition $\left\| \mathbf{f} \right\|^2 = 1$, then the solution is
+
 $$
 \underset{\mathbf{f}}{\min}\left\| A\mathbf{f} \right\|^2 \text{ such that } \left\| \mathbf{f} \right\|^2 = 1
 $$
@@ -252,6 +270,7 @@ The eigenvector with smallest eigenvalue $\lambda$ of matrix $A^TA$ is the solut
 Triangulation uses 2D point correspondence and all parameters of two cameras to get 3D coordinate of a point.
 
 Firstly, we have imaging equations
+
 $$
 \begin{bmatrix} u_{r} \\ v_{r} \\ 1 \end{bmatrix}
 \equiv M_{int}^{(r)} \bm{\tilde{x}}_r 
@@ -273,6 +292,7 @@ $$
 $$
 
 That is
+
 $$
 u_r = \frac{m_{11}x_r + m_{12}y_r + m_{13}z_r + m_{14}}{m_{31}x_r + m_{32}y_r + m_{33}z_r + m_{34}}
 \\~\\
@@ -284,6 +304,7 @@ v_l = \frac{p_{21}x_r + p_{22}y_r + p_{23}z_r + p_{24}}{p_{31}x_r + p_{32}y_r + 
 $$
 
 Rerange the equations, we can get
+
 $$
 \begin{bmatrix}
   u_rm_{31} - m_{11} & u_rm_{32} - m_{12} & u_rm_{33} - m_{13} \\
@@ -303,12 +324,14 @@ $$
 $$
 
 The least squares solution is
+
 $$\bm{x}_r = (A^TA)^{-1} A^T \mathbf{b} $$
 
 <br>
 
 ##### Non-Linear Solution
 Suppose $\mathbf{P}$ is the coordinate of a point, $\bm{\hat{u}}_l, \bm{\hat{u}}_r$ are projections of the point on the two image planes, then we can define the reprojection error
+
 $$\text{cost}(\mathbf{P}) = \left\| \bm{u}_l - \bm{\hat{u}}_l \right\|^2 + \left\| \bm{u}_r - \bm{\hat{u}}_r \right\|^2$$
 
 The solution is $\mathbf{P}$ such that minimize the reprojection error.

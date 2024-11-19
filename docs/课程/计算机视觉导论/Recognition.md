@@ -23,7 +23,11 @@
 
 我们还可以向语义分割模型中加入**条件随机场 (CRF)**，以改善图像中不同区域之间的一致性和上下文信息，通过考虑空间邻近关系来提高分割精度。
 
-语义分割的评价指标之一是 **均交并比 (mIoU, Mean Intersection over Union)**，即 $$\text{mIoU} = \frac{1}{k + 1} \sum_{i=0}^k \frac{p_{ii}}{\sum_{j=0}^k p_{ij} + \sum_{j=0}^k p_{ji} - p_{ii}}$$ 其中 $i$ 表示真实值，$j$ 表示预测值，$p_{ij}$ 表示将 $i$ 预测为 $j$ 的像素个数。
+语义分割的评价指标之一是 **均交并比 (mIoU, Mean Intersection over Union)**，即
+
+$$\text{mIoU} = \frac{1}{k + 1} \sum_{i=0}^k \frac{p_{ii}}{\sum_{j=0}^k p_{ij} + \sum_{j=0}^k p_{ji} - p_{ii}}$$
+
+其中 $i$ 表示真实值，$j$ 表示预测值，$p_{ij}$ 表示将 $i$ 预测为 $j$ 的像素个数。
 
 
 
