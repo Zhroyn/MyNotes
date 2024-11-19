@@ -36,3 +36,8 @@
 h1 {
     font-family: Noto Serif SC;
 }
+
+.katex-display {
+    margin-top: -1em;
+    margin-bottom: -1em;
+}
