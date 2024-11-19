@@ -14,7 +14,7 @@ $$
 Then the coordinate of a position in the camera coordinate system is
 $$
 \bm{x}_c = R(\bm{x}_w - \bm{c}_w) = R\bm{x}_w - R\bm{c}_w = R\bm{x}_w + \bm{t} \\~\\
-\bm{t} = -R\bm{c}_w = \begin{bmatrix} t_x \\ t_y \\ t_z \end{bmatrix}
+\bm{t} = -R\bm{c}_w t= \begin{bmatrix} t_x \\ t_y \\ t_z \end{bmatrix}
 $$
 
 The whole equation can be expressed by a **extrinsic matrix**
