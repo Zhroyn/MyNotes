@@ -1,6 +1,11 @@
 [data-md-color-scheme="default"] {
     --md-primary-fg-color: #fafafa;
     --md-typeset-a-color: #546e7a;
+    --md-footer-fg-color: #000000;
+    --md-footer-bg-color: #fafafa;
+    --md-footer-bg-color--dark: #fafafa;
+    --md-footer-fg-color--light: #000000;
+    --md-footer-fg-color--lighter: #000000;
 }
 
 [data-md-color-scheme="slate"] {
