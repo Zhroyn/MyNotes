@@ -1,16 +1,19 @@
 
 ## 控件
 ### 应用程序
+
 ```py
 QApplication(argv: List[str])
 
 app = QApplication(sys.argv)
 ```
+
 - `app.exec()` 使程序保持运行
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 ### 窗口桌面
+
 ```py
 QWidget(
     parent: typing.Optional[QWidget] = None,
@@ -21,19 +24,22 @@ QDesktopWidget()
 w = QWidget()
 screen = QDesktopWidget()
 ```
+
 - `w.setWindowTitle(title)` 设置窗口标题
 - `w.setWindowIcon(QIcon)` 设置窗口 icon
     - `QIcon = PyQt5.QtGui.QIcon(icon_path)` 图片会变形为正方形
 - `w.setLayout` 设置窗口布局
 - `w.setStyleSheet(styleSheet)` 设置窗口样式
     - `w.setStyleSheet("background-color:green;")` 背景颜色会变为绿色
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `w.resize(w, h)` 调整窗口大小
 - `w.setFixedSize(w, h)` 设置固定尺寸
 - `w.setFixedWidth(w, h)` 设置固定宽度
 - `w.setFixedHeight(w, h)` 设置固定高度
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `w/screen.frameGeometry()` 获得 QRect 类
 - `w/screen.frameGeometry().getRect()` 获得边界矩阵，形式为 (x, y, w, h)
@@ -41,9 +47,10 @@ screen = QDesktopWidget()
 - `center.x()` 获得中点的 x 坐标
 - `center.y()` 获得中点的 y 坐标
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 ### 文本
+
 ```py
 QLabel(
     parent: typing.Optional[QWidget] = None,
@@ -57,13 +64,15 @@ QLabel(
 
 label = QLabel(text, w)
 ```
+
 - `label.setGeometry(x, y, w, h)` 设置控件位置
 - `label.setText(text)` 设置文本内容
 - `label.setFixedSize(w, h)` 设置固定尺寸
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 ### 输入框
+
 ```py
 QLineEdit(
     parent: typing.Optional[QWidget] = None
@@ -75,14 +84,16 @@ QLineEdit(
 
 edit = QLineEdit(text, w)
 ```
+
 - `edit.setGeometry(x, y, w, h)` 设置控件位置
 - `edit.setText(text)` 设置文本内容
 - `edit.setFixedSize(w, h)` 设置固定尺寸
 - `edit.setPlaceholderText(text)` 设置占位文本，在无文本时显示
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 ### 按钮
+
 ```py
 QPushButton(parent: typing.Optional[QWidget] = None)
 QPushButton(
@@ -104,18 +115,22 @@ QRadioButton(
 btn = QPushButton(text, w)
 btn = QRadioButton(text, w)
 ```
+
 - `btn.setGeometry(x, y, w, h)` 设置控件位置
 - `btn.setText(text)` 设置文本内容
 - `btn.setFixedSize(w, h)` 设置固定尺寸
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `btn.clike.connect(slot)` 绑定鼠标左键按下
 - `btn.cliked.connect(slot)` 绑定鼠标左键释放
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 ### 布局
+
 #### QBoxLayout
+
 ```py
 QVBoxLayout()
 QVBoxLayout(parent: QWidget)
@@ -126,14 +141,16 @@ QHBoxLayout(parent: QWidget)
 v_layout = QVBoxLayout()
 h_layout = QHBoxLayout()
 ```
+
 - `box.addWidget(widget, alignment=Qt.Alignment())` 添加控件
     - 对齐标志在 `PyQt5.QtCore.Qt.AlignmentFlag`，包括 `AlignTop, AlignBottom, AlignLeft, AlignRight` `AlignCenter, AlignVCenter, AlignVCenter` 等
 - `box.addStretch(stretch=0)` 添加伸缩量，用以控制控件之间距离的比例
 - `box.addLayout(layout)` 添加布局
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 #### QGroupBox
+
 ```py
 QGroupBox(parent: typing.Optional[QWidget] = None)
 QGroupBox(
@@ -160,37 +177,44 @@ layout.addWidget(box2)
 w.setLayout(layout)
 ```
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 #### QGridLayout
+
 ```py
 QGridLayout(parent: QWidget)
 QGridLayout()
 
 grid = QGridLayout()
 ```
+
 - `grid.addWidget(widget)` 默认沿竖排排列
 - `grid.addWidget(widget, row, column[, alignment])`
 - `grid.addWidget(widget, row, column, rowSpan, columnSpan[, alignment])`
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `grid.addLayout(widget, row, column[, alignment])`
 - `grid.addLayout(widget, row, column, rowSpan, columnSpan[, alignment])`
 
-<br>
+
+<div style="margin-top: 35pt"></div>
 
 #### QFormLayout
+
 ```py
 QFormLayout(parent: typing.Optional[QWidget] = None)
 
 form_layout = QFormLayout()
 ```
+
 - `form_layout.addRow(label, field)`
 - `form_layout.addRow(labelText, field)`
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 #### QStackedLayout
+
 ```py
 QStackedLayout()
 QStackedLayout(parent: QWidget)

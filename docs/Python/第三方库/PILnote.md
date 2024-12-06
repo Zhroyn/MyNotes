@@ -1,34 +1,39 @@
 
 ### Image
 #### 图像属性
+
 - `im.filename` 图像名
 - `im.format` 图像格式，如 JPEG, PNG
 - `im.size` 图像尺寸，形式为(宽, 高)
 - `im.width` 图像宽度
 - `im.height` 图像高度
 - `im.mode` 颜色模式
-        - `1` 1-bit 黑白
-        - `L` 8-bit 灰度
-        - `P` 8-bit 256色
-        - `RGB` 24-bit Red, Green, Blue
-        - `RGBA` 32-bit Red, Green, Blue, Alpha
-        - `CMYK` 32-bit Cyan, Magenta, Yellow, Key plate
-        - `YCbCr` 24-bit Luminance, Blue, Red
+    - `1` 1-bit 黑白
+    - `L` 8-bit 灰度
+    - `P` 8-bit 256色
+    - `RGB` 24-bit Red, Green, Blue
+    - `RGBA` 32-bit Red, Green, Blue, Alpha
+    - `CMYK` 32-bit Cyan, Magenta, Yellow, Key plate
+    - `YCbCr` 24-bit Luminance, Blue, Red
 
-<br>
+<div style="margin-top: 35pt"></div>
 
-#### 基本 I/O
+#### 基本
+ I/O
+
 - `Image.open(fp, mode='r', formats=None)` 打开图像
 - `im.save(fp, format=None)` 保存图片，格式默认由后缀名决定
 - `im.close()` 关闭图片
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `im.show()` 展示图片
 - `im.load()` 加载图片，返回可索引的对象
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 #### 颜色转换
+
 - `im.convert(mode=None, ...)` 转换颜色模式，返回副本
 - `im.split()` 分离图像通道
     - `r, g, b = im.split()`
@@ -36,14 +41,16 @@
     - `channel` 索引或通道名
 - `im.putalpha(alpha)` 添加或替换透明度通道
     - `alpha` 图像或整数。若为图像，则必须尺寸相同，颜色模式为 1 或 L
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `Image.merge(mode, bands)` 混合通道
     - `Image.merge("RGB", (b, g, r))`
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 #### 剪切粘贴
+
 - `im.copy()` 返回图片副本
 - `im.crop(box=None)` 裁剪出矩形区域
     - `box` 四元元组，形式为 (左, 上, 右, 下)
@@ -55,14 +62,16 @@
         - 若掩膜值为 255，则采用被粘贴图像的像素值
         - 若掩膜值介于两者之间，则采用原图像与被粘贴图像混合的像素值
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 #### 几何变换
+
 - `im.resize(size, resample=None, box=None, reducing_gap=None)` 改变尺寸，返回副本
     - `size` 图像尺寸，形式为 (宽, 高)
     - `resample` 一般默认为 `Image.BICUBIC`
     - `box` 被改变尺寸的区域，形式为 (左, 上, 右, 下)，可以用浮点数
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `im.transpose(method)` 翻转或旋转图像，返回副本
     - `Image.Transpose.FLIP_LEFT_RIGHT` 左右翻转
@@ -72,7 +81,8 @@
     - `Image.Transpose.ROTATE_270` 逆时针旋转 270 度
     - `Image.Transpose.TRANSPOSE` 转置
     - `Image.Transpose.TRANSVERSE` 转置后旋转 180 度
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `im.rotate(angle, resample=<Resampling.NEAREST: 0>, expand=0, center=None, translate=None, fillcolor=None)` 逆时针旋转图像，返回副本
     - `angle` 旋转角度，可以为负数或浮点数
@@ -81,27 +91,31 @@
     - `translate` 在旋转之后进行平移，形式为 (横轴, 纵轴)
     - `fillcolor` 填充颜色。若为整数，则为第一个通道的值，其余通道置零；若为元组，则大小应与通道数相同
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 #### 像素操作
+
 - `im.getpixel(xy)` 获得像素值
     - `xy` 横轴为 x，纵轴为 y，形式为 (x, y)
 - `im.putpixel(xy, value)` 设置像素值
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `im.point(lut, mode=None)` 映射图像，返回副本
     - `lut` 查找表或函数。若为函数，则输入一个像素值，返回一个像素值
     - `im.point(lambda x: 0 if x < 128 else 255)`
 - `Image.eval(im, *args)` 对每个像素值应用一个函数
     - `Image.eval(im, lambda x: 0 if x < 128 else 255)`
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `im.filter(filter)` 对图像进行滤波，返回副本
     - `im.filter(ImageFilter.GaussianBlur)`
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 #### 创建图像
+
 - `Image.new(mode, size, color=0)`
 - `Image.fromarray(obj, mode=None)` 如果传入数组的 shape 为 (x, x, 3)，会当作 RGB 模式处理
 - `Image.blend(im1, im2, alpha)` 融合两张图像
@@ -115,19 +129,23 @@
 
 
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 ### ImageFilter
 #### MultibandFilter
+
 - `ImageFilter.GaussianBlur(radius=2)` 高斯滤波
 - `ImageFilter.BoxBlur(radius)` 方框滤波，取平均值
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - 当 radius = 0 时，滤波不起作用
 - 当 radius = 1 时，卷积核大小为 3x3
-<br>
+
+<div style="margin-top: 35pt"></div>
 
 ##### BuiltinFilter
+
 ```py
 class Kernel(BuiltinFilter):
     name = "Kernel"
@@ -139,14 +157,16 @@ class Kernel(BuiltinFilter):
             raise ValueError("not enough coefficients in kernel")
         self.filterargs = size, scale, offset, kernel
 ```
+
 - `size` 二元数组，形式为 (宽, 高)，宽高可以不同
 - `kelnel` 卷积核，展开为一维形式，支持整数或浮点数
 - `scale` 作为结果像素值的除数，默认为卷积核之和
 - `offset` 在除完以后作为偏移量，默认为 0
 
-<br>
+<div style="margin-top: 25pt"></div>
 
 **BLUR**
+
 ```py
 filterargs = (5, 5), 16, 0, (
     1, 1, 1, 1, 1,
@@ -156,7 +176,9 @@ filterargs = (5, 5), 16, 0, (
     1, 1, 1, 1, 1,
 )
 ```
+
 **CONTOUR**
+
 ```py
 filterargs = (3, 3), 1, 255, (
     -1, -1, -1,
@@ -164,7 +186,9 @@ filterargs = (3, 3), 1, 255, (
     -1, -1, -1,
 )
 ```
+
 **DETAIL**
+
 ```py
 filterargs = (3, 3), 6, 0, (
     0,  -1,  0,
@@ -172,7 +196,9 @@ filterargs = (3, 3), 6, 0, (
     0,  -1,  0,
 )
 ```
+
 **EDGE_ENHANCE**
+
 ```py
 filterargs = (3, 3), 2, 0, (
     -1, -1, -1,
@@ -180,7 +206,9 @@ filterargs = (3, 3), 2, 0, (
     -1, -1, -1,
 )
 ```
+
 **EDGE_ENHANCE_MORE**
+
 ```py
 filterargs = (3, 3), 1, 0, (
     -1, -1, -1,
@@ -188,7 +216,9 @@ filterargs = (3, 3), 1, 0, (
     -1, -1, -1,
 )
 ```
+
 **EMBOSS**
+
 ```py
 filterargs = (3, 3), 1, 128, (
     -1, 0, 0,
@@ -196,7 +226,9 @@ filterargs = (3, 3), 1, 128, (
     0,  0, 0,
 )
 ```
+
 **FIND_EDGES**
+
 ```py
 filterargs = (3, 3), 1, 0, (
     -1, -1, -1,
@@ -204,7 +236,9 @@ filterargs = (3, 3), 1, 0, (
     -1, -1, -1,
 )
 ```
+
 **SHARPEN**
+
 ```py
 filterargs = (3, 3), 16, 0, (
     -2, -2, -2,
@@ -212,7 +246,9 @@ filterargs = (3, 3), 16, 0, (
     -2, -2, -2,
 )
 ```
+
 **SMOOTH**
+
 ```py
 filterargs = (3, 3), 13, 0, (
     1, 1, 1,
@@ -220,7 +256,9 @@ filterargs = (3, 3), 13, 0, (
     1, 1, 1,
 )
 ```
+
 **SMOOTH_MORE**
+
 ```py
 filterargs = (5, 5), 100, 0, (
     1, 1,  1, 1, 1,
@@ -236,7 +274,7 @@ filterargs = (5, 5), 100, 0, (
 
 
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 ### ImageEnhance
 ```py
@@ -313,7 +351,7 @@ im = enh_sha.enhance(sharpness)
 
 
 
-<br>
+<div style="margin-top: 35pt"></div>
 
 ### ImageGrab
 - `ImageGrab.grab(bbox=None, include_layered_windows=False, all_screens=False, xdisplay=None)` 截取屏幕区域

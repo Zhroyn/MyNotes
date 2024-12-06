@@ -87,14 +87,14 @@ nav:
     - Makefile: C/MakefileNote.md
   - Python:
     - Python 语言: Python/PythonNote.md
-    - Anaconda: Python/AnacondaNote.md
     - pip: Python/pipNote.md
+    - venv: Python/venvNote.md
+    - Anaconda: Python/AnacondaNote.md
     - 标准库:
       - json: Python/标准库/jsonNote.md
       - os: Python/标准库/osNote.md
       - random: Python/标准库/randomNote.md
       - sqlite3: Python/标准库/sqlite3Note.md
-      - venv: Python/标准库/venvNote.md
     - 第三方库:
       - OpenCV: Python/第三方库/OpenCVnote.md
       - PIL: Python/第三方库/PILnote.md

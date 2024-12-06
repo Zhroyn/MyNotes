@@ -1,5 +1,6 @@
 
 ### Create Figures
+
 ```py
 plt.figure(
     num=None,
@@ -14,6 +15,7 @@ plt.figure(
     **kwargs,
 ) -> Figure
 ```
+
 - `num` : `int | str | .Figure | .SubFigure`
     - A unique identifier for the figure.
     - If a figure with that identifier already exists, this figure is made active and returned.
@@ -32,6 +34,7 @@ plt.figure(
 
 
 ### Create Subplot
+
 - `fig.add_subplot(*args, **kwargs) -> Axes`
     - Add an `~.axes.Axes` to the figure as part of a subplot arrangement.
     - `*args` : `int | (int, int, int) | .SubplotSpec`
@@ -58,6 +61,7 @@ plt.figure(
 
 
 ### Show and Save
+
 - `plt.show(*, block=None)` Display all open figures.
 - `plt.imshow(X, cmap=None, norm=None, *)`
     - Display data as an image, i.e., on a 2D regular raster.
@@ -67,7 +71,8 @@ plt.figure(
     - `norm` : str or `~matplotlib.colors.Normalize`
         - The normalization method used to scale scalar data to the [0, 1] range.
         - By default, a linear scaling is used, mapping the lowest value to 0 and the highest to 1.
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `plt.savefig(*args, **kwargs)`
     - Save the current figure.
@@ -79,7 +84,9 @@ plt.figure(
 
 
 ### Modify Axes
+
 #### Add Title
+
 - `plt.title(label, fontdict=None, loc=None, pad=None, *, y=None, **kwargs)`
 - `ax.set_title(label, fontdict=None, loc=None, pad=None, *, y=None, **kwargs)`
     - Set a title for the Axes.
@@ -94,6 +101,7 @@ plt.figure(
         - The offset of the title from the top of the Axes, in points.
 
 #### Add Label
+
 - `plt.xlabel(xlabel, fontdict=None, labelpad=None, *, loc=None, **kwargs)`
 - `ax.set_xlabel(xlabel, fontdict=None, labelpad=None, *, loc=None, **kwargs)`
     - Set the label for the x-axis.
@@ -106,15 +114,18 @@ plt.figure(
     - Set the label for the y-axis.
 
 #### Set Limit
+
 - `ax.set_xlim(left, right)`
 - `ax.set_xlim((left, right))`
 - `ax.set_ylim(bottom, top)`
 - `ax.set_ylim((bottom, top))`
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `ax.get_xlim() -> (left, right)`
 - `ax.get_ylim() -> (bottom, top)`
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `plt.xlim()` is equivalent to `ax.get_xlim()`
 - `plt.xlim(left, right)` is equivalent to `ax.set_xlim(left, right)`
@@ -122,6 +133,7 @@ plt.figure(
 - `plt.ylim(bottom, top)` is equivalent to `ax.set_ylim(bottom, top)`
 
 #### Set Ticks
+
 - `ax.set_xticks(ticks, labels=None, *, minor=False, **kwargs)`
     - Set the xaxis' tick locations and optionally labels.
     - `ticks` : list of floats
@@ -130,13 +142,15 @@ plt.figure(
 - `ax.set_xticklabels(labels, *, fontdict=None, minor=False, **kwargs)`
     - Set the xaxis' labels with list of string labels.
     - This method should only be used after fixing the tick positions. Otherwise, the labels may end up in unexpected positions.
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `ax.get_xticks(*, minor=False)`
     - Return the xaxis' tick locations in data coordinates.
 - `ax.get_xticklabels(minor=False, which=None)`
     - Get the xaxis' tick labels.
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `plt.xticks(ticks=None, labels=None, *, minor=False, **kwargs)`
     - Get or set the current tick locations and labels of the x-axis.
@@ -144,6 +158,7 @@ plt.figure(
     - `plt.xticks([])` Disable xticks.
 
 #### Set Legend
+
 - `ax.legend(*args, **kwargs)`
 - `fig.legend(*args, **kwargs)`
 - `plt.legend(*args, **kwargs)`
@@ -152,6 +167,7 @@ plt.figure(
     - `labels` : A list of labels to show next to the artists.
 
 #### Add Text
+
 - `ax.text(x, y, s, fontdict=None, **kwargs)`
     - Add the text `s` to the Axes at location `x`, `y` in data coordinates.
 - `ax.annotate(text, xy, xytext=None, xycoords='data', textcoords=None, arrowprops=None, annotation_clip=None, **kwargs)`
@@ -172,7 +188,9 @@ plt.figure(
 
 
 ### Change Style
+
 #### Show Config
+
 - `print(matplotlib.rcParams)`
 - `print(matplotlib.rcParamDafault)`
 - `print(matplotlib.rc_params())`

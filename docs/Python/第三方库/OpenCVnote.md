@@ -1,5 +1,6 @@
 
 ## 窗口显示
+
 - `namedWindow(winname[, flags]) -> None` 若该名窗口不存在，则创建一个新窗口
     - `flags`: 默认为 `cv2.WINDOW_AUTOSIZE` 或 `cv2.WINDOW_KEEPRATIO` 或 `cv2.WINDOW_GUI_EXPANDED`
         - `WINDOW_NORMAL` 允许任意调节窗口大小，`WINDOW_AUTOSIZE` 自动调整为图片大小且不可改变
@@ -7,7 +8,8 @@
         - `WINDOW_GUI_NORMAL` 窗口没有状态栏和工具栏，`WINDOW_GUI_EXPANDED` 使用新的增强 GUI
 - `destroyWindow(winname) -> None` 摧毁指定名字的窗口，若不存在则报错
 - `destroyAllWindows() -> None` 摧毁所有窗口
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `imshow(winname, mat) -> None` 会自动创建窗口，必须跟随 `waitKey()` 或 `pollKey()`
 - `waitKey([, delay]) -> retval` 等待按键并返回按键编码，或等待 `delay` 个毫秒并返回 -1
@@ -19,10 +21,11 @@
 
 
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ## 图像处理
 ### 图像属性
+
 - `im.dtype` 数据类型
 - `im.itemsize` 每个元素的字节数
 - `im.size` 总元素数
@@ -30,28 +33,32 @@
 - `im.shape` 格式为 (行数, 列数, 通道数)
 - `im.ndim` 数组维数，等于 len(im.shape)
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 基本 I/O
+
 - `imread(filename[, flags]) -> retval`
     - 通过文件内容决定图像格式，而不是扩展名
     - `flags`: 默认为 `cv2.IMREAD_COLOR`
         - `IMREAD_COLOR`: 用 BGR 模式加载图像，透明度会被忽略
         - `IMREAD_GRAYSCALE`: 用灰度模式加载图像
         - `IMREAD_UNCHANGED`: 若包含 alpha 通道则会保留
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `imwrite(filename, img) -> retval`
     - 通过文件扩展名决定图像保存格式
     - 若保存成功，则返回 True
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 算术操作
+
 - 若数据类型为 `CV_8U`，则使用 `+` `-` `*` 运算符会对结果进行求模
 - 当使用 `mask` 时，运算只会在掩膜的非零值处发生，其余会被置零
 
 **加减运算**
+
 - `add(src1, src2[, dst[, mask[, dtype]]]) -> dst`
     - dst = saturate(src1 + src2)
     - `src1` `src2`: 数组或标量，标量的形式只能为一个数或一个四元组。若为四元组，则参与运算的元素由图像通道数决定
@@ -59,12 +66,14 @@
     - `dtype`: 输出数组的数据类型
 - `subtract(src1, src2[, dst[, mask[, dtype]]]) -> dst`
     - dst = saturate(src1 - src2)
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `addWeighted(src1, alpha, src2, beta, gamma[, dst[, dtype]]) -> dst`
     - dst = saturate(src1 * alpha + src2 * beta + gamma)
 
 **位运算**
+
 - `bitwise_not(src[, dst[, mask]]) -> dst` 非运算
 - `bitwise_and(src1, src2[, dst[, mask]]) -> dst` 与运算
 - `bitwise_or(src1, src2[, dst[, mask]]) -> dst` 或运算
@@ -72,16 +81,18 @@
     - `src1` `src2`: 数组或标量，标量的形式只能为一个数或一个元组。若为元组，则元素数可为 1 或 4 或通道数。在参与运算前，标量会先转换为图像的数据类型
     - `mask`: 类型只能为单通道整数数组
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 颜色转换
+
 - `split(m[, mv]) -> mv`
 - `merge(mv[, dst]) -> dst`
     - `m`: 多通道图像
     - `mv`: 由单通道图像组成的元组，每个单通道图像的大小和深度相同
 - `b, g, r = cv2.split(im)`
 - `out = cv2.merge([r, g, b])`
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `cvtColor(src, code[, dst[, dstCn=0]]) -> dst`
     - 若图像新增一个 alpha 通道，则通道值会被设为该数据类型的最大值，即 CV_8U - 255，CV_16U - 65535，CV_32F - 1
@@ -89,25 +100,42 @@
     - `code`: 转换码，可为 `cv2.COLOR_BGR2RGB` `cv2.COLOR_GRAY2BGR` 等
     - `dstCn`: 输出图像的通道数，若为 0，则从输入图像和转换码推断出来
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 阈值处理
+
 - `threshold(src, thresh, maxval, type[, dst]) ->	retval, dst`
     - `thresh`: 阈值
     - `maxval`: 最大值，在某些阈值处理方法中会用到
     - `type`: 阈值处理方法
 
 阈值处理方法有以下几种：
-- `cv2.THRESH_BINARY`: $$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{maxval} & \texttt{if src(x,y) > thresh} \\ & \texttt{0} & \texttt{otherwise} \end{aligned} \right.$$
-- `cv2.THRESH_BINARY_INV`: $$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{0} & \texttt{if src(x,y) > thresh} \\ & \texttt{maxval} & \texttt{otherwise} \end{aligned} \right.$$
-- `cv2.THRESH_TRUNC`: $$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{threshold} & \texttt{if src(x,y) > thresh} \\ & \texttt{src(x, y)} & \texttt{otherwise} \end{aligned} \right.$$
-- `cv2.THRESH_TOZERO`: $$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{src(x, y)} & \texttt{if src(x,y) > thresh} \\ & \texttt{0} & \texttt{otherwise} \end{aligned} \right.$$
-- `cv2.THRESH_TOZERO_INV`: $$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{0} & \texttt{if src(x,y) > thresh} \\ & \texttt{src(x, y)} & \texttt{otherwise} \end{aligned} \right.$$
 
-<br>
+- `cv2.THRESH_BINARY`:
+
+$$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{maxval} & \texttt{if src(x,y) > thresh} \\ & \texttt{0} & \texttt{otherwise} \end{aligned} \right.$$
+
+- `cv2.THRESH_BINARY_INV`: 
+
+$$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{0} & \texttt{if src(x,y) > thresh} \\ & \texttt{maxval} & \texttt{otherwise} \end{aligned} \right.$$
+
+- `cv2.THRESH_TRUNC`: 
+
+$$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{threshold} & \texttt{if src(x,y) > thresh} \\ & \texttt{src(x, y)} & \texttt{otherwise} \end{aligned} \right.$$
+
+- `cv2.THRESH_TOZERO`: 
+
+$$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{src(x, y)} & \texttt{if src(x,y) > thresh} \\ & \texttt{0} & \texttt{otherwise} \end{aligned} \right.$$
+
+- `cv2.THRESH_TOZERO_INV`:
+
+$$\texttt{dst}(x,y) = \left\{ \begin{aligned} & \texttt{0} & \texttt{if src(x,y) > thresh} \\ & \texttt{src(x, y)} & \texttt{otherwise} \end{aligned} \right.$$
+
+<div style="margin-top: 30pt"></div>
 
 ### 几何变换
 #### 调整尺寸
+
 - `resize(src, dsize[, dst[, fx[, fy[, interpolation]]]]) -> dst`
     - `dsize`: 输出图像尺寸，格式为 (宽度, 高度)。若为 None，则从 fx 和 fy 计算出来
     - `fx`: x 轴缩放因数
@@ -120,18 +148,20 @@
     - `cv2.resize(src, (1920, 1080), interpolation=cv2.INTER_CUBIC)`
     - `cv2.resize(src, None, fx=0.5, fy=0.5, interpolation=cv2.INTER_AREA)`
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 #### 翻转
+
 - `flip(src, flipCode[, dst]) -> dst` 翻转图像
     - `flipCode`: 翻转码
         - 若为 0，则上下翻转
         - 若为正整数，则左右翻转
         - 若为负整数，则上下翻转和左右翻转同时进行
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 #### 仿射变换
+
 - `warpAffine(src, M, dsize[, dst[, flags[, borderMode[, borderValue]]]]) -> dst` 对图像应用变换矩阵：$$\begin{aligned} \texttt{dst}(x,y) = \texttt{src} \left(M_{11}x + M_{12}y + M_{13}, M_{21}x + M_{22}y + M_{23} \right.) \end{aligned}$$
     - `M`: $2\times 3$ 变换矩阵
     - `dsize`: 输出图像的尺寸，格式为 (宽度, 高度)
@@ -144,13 +174,18 @@
         - `cv2.BORDER_TRANSPARENT`: `uvwxyz|abcdefgh|ijklmno`
         - `cv2.BORDER_REFLECT_101` `cv2.BORDER_REFLECT101` `cv2.BORDER_DEFAULT`: `gfedcb|abcdefgh|gfedcba`
     - `borderValue`: 在 `cv2.BORDER_CONSTANT` 中作为边界外像素值，默认为 0
-<br>
 
-- `getRotationMatrix2D(center, angle, scale) -> retval` 计算得到一个 2D 旋转仿射矩阵：$$\alpha = \texttt{scale} \cdot \cos{\texttt{angle}} \\ \beta =  \texttt{scale} \cdot \sin{\texttt{angle}} \\ \begin{bmatrix} \alpha & \beta & (1-\alpha) \cdot \texttt{center.x} - \beta \cdot \texttt{center.y} \\ \beta  & \alpha & \beta \cdot \texttt{center.x} + (1-\alpha) \cdot \texttt{center.y} \end{bmatrix}$$
+<div style="margin-top: 25pt"></div>
+
+- `getRotationMatrix2D(center, angle, scale) -> retval` 计算得到一个 2D 旋转仿射矩阵：
+
+    $$\alpha = \texttt{scale} \cdot \cos{\texttt{angle}} \\ \beta =  \texttt{scale} \cdot \sin{\texttt{angle}} \\ \begin{bmatrix} \alpha & \beta & (1-\alpha) \cdot \texttt{center.x} - \beta \cdot \texttt{center.y} \\ \beta  & \alpha & \beta \cdot \texttt{center.x} + (1-\alpha) \cdot \texttt{center.y} \end{bmatrix}$$
+
     - `center`: 旋转中心，格式为 (x, y)
     - `angle`: 旋转角度，正数为逆时针方向
     - `scale`: 缩放因数
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `getAffineTransform(src, dst) -> retval` 用三对点计算得到仿射矩阵
     - `src`: $3\times 2$ 矩阵，存放源图像的三对点
@@ -181,22 +216,31 @@ def translate(src, x, y, color=0):
     return dst
 ```
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 #### 透视变换
-- `warpPerspective(src, M, dsize[,dst[, flags[, borderMode[, borderValue]]]]) -> dst` 对图像应用变换矩阵：$$\begin{aligned} \texttt{dst}(x,y) =  \texttt{src}\left( \frac{M_{11} x + M_{12} y + M_{13}}{M_{31} x + M_{32} y + M_{33}}, \frac{M_{21} x + M_{22} y + M_{23}}{M_{31} x + M_{32} y + M_{33}} \right) \end{aligned}$$
+
+- `warpPerspective(src, M, dsize[,dst[, flags[, borderMode[, borderValue]]]]) -> dst` 对图像应用变换矩阵：
+
+    $$\begin{aligned} \texttt{dst}(x,y) =  \texttt{src}\left( \frac{M_{11} x + M_{12} y + M_{13}}{M_{31} x + M_{32} y + M_{33}}, \frac{M_{21} x + M_{22} y + M_{23}}{M_{31} x + M_{32} y + M_{33}} \right) \end{aligned}$$
+    
     - `M`: $3\times 3$ 变换矩阵
     - `dsize`: 输出图像的尺寸
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `getPerspectiveTransform(src, dst) -> retval` 用四对点计算得到投影矩阵
     - `src`: $4\times 2$ 矩阵，存放源图像的四对点
     - `dst`: $4\times 2$ 矩阵，存放目标图像的四对点
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 #### 重映射
-- `remap(src, map1, map2, interpolation[, dst[, borderMode[, borderValue]]]) -> dst` 对图像应用通用几何变换：$$\texttt{dst}(x,y) = \texttt{src}(map_x(x,y), map_y(x,y))$$
+
+- `remap(src, map1, map2, interpolation[, dst[, borderMode[, borderValue]]]) -> dst` 对图像应用通用几何变换： 
+
+    $$\texttt{dst}(x,y) = \texttt{src}(map_x(x,y), map_y(x,y))$$
+
     - `map1`: 第一个映射，返回值为 (x,y) 点或 x 值，类型为 `CV_16SC2` `CV_32FC1` 或 `CV_32FC2`
     - `map2`: 第二个映射，返回值为 y 值，类型为 `CV_16UC1` `CV_32FC1` 或 None
     - `interpolation`: 插值方法
@@ -211,10 +255,11 @@ def translate(src, x, y, color=0):
 
 
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ## 图像滤波
 ### 通用滤波
+
 - `filter2D(src, ddepth, kernel[, dst[, anchor[, delta[, borderType]]]]) -> dst` 用卷积核对图像进行卷积
     - `ddepth`: 输出图像的深度，若为 -1 则与输入相同
     - `kernel`: 卷积核
@@ -224,40 +269,48 @@ def translate(src, x, y, color=0):
     - `cv2.filter2D(src, -1, kernel, delta=5)`
 
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 平滑图像
+
 - `blur(src, ksize[, dst[, anchor[, borderType]]]) -> dst` 均值滤波
-  $$K = \frac{1}{width * height} 
-  \begin{bmatrix} 
-      1 & 1 & \cdots & 1 \\
-      1 & 1 & \cdots & 1 \\
-      \vdots & \vdots & \ddots & \vdots \\
-      1 & 1 & \cdots & 1 \\ 
-  \end{bmatrix}$$
+  
+    $$K = \frac{1}{width * height} 
+    \begin{bmatrix} 
+        1 & 1 & \cdots & 1 \\
+        1 & 1 & \cdots & 1 \\
+        \vdots & \vdots & \ddots & \vdots \\
+        1 & 1 & \cdots & 1 \\ 
+    \end{bmatrix}$$
+
     - `ksize`: 卷积核的尺寸，可以为任意二元组
     - `anchor`: 锚点，默认值为 (-1, -1)，指卷积核中点
     - `borderType`: 像素外推方法
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `boxFilter(src, ddepth, ksize[, dst[, anchor[, normalize[, borderType]]]]) -> dst` 方框滤波
+
     $$K = \alpha
     \begin{bmatrix} 
         1 & 1 & \cdots & 1 \\
         1 & 1 & \cdots & 1 \\
         \vdots & \vdots & \ddots & \vdots \\
         1 & 1 & \cdots & 1 \\ 
-    \end{bmatrix}, \\~\\
+    \end{bmatrix}
+    \\~\\
     \alpha = \left\{ 
         \begin{aligned}
           &\frac{1}{width * height} &\text{when normalize=true} \\
           &1 &\text{otherwise} \\
         \end{aligned}
     \right. $$
+
     - `ddepth`: 输出图像的深度，若为 -1 则与输入相同
     - `ksize`: 卷积核的尺寸，可以为任意二元组
     - `normalize`: 指定是否规范化，默认为 True
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `GaussianBlur(src, ksize, sigmaX[, dst[, sigmaY[, borderType]]]) -> dst` 高斯滤波
     - `ksize`: 高斯核的尺寸，宽和高必须全为奇数。若全为零，则会从 sigma 算出
@@ -268,12 +321,14 @@ def translate(src, x, y, color=0):
     - `ksize`: 孔径的宽高，必须为一个大于 0 的奇数
     - `sigma`: 高斯标准差，若非正数，则等于 0.3 * ((ksize - 1) * 0.5 - 1) + 0.8
     - 若想得到 $\texttt{ksize} \times \texttt{ksize}$ 的 2D 高斯核，可以使用 `kernel = cv2.getGaussianKernel(ksize, 0); kernel = kernel * kernel.T`
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `medianBlur(src, ksize[, dst]) -> dst` 中值滤波
     - `ksize`: 孔径的宽高，必须为一个大于 1 的奇数
     - 对边界像素，会使用 `cv2.BORDER_REPLICATE`
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `bilateralFilter(src, d, sigmaColor, sigmaSpace[, dst[, borderType]]) -> dst` 双边滤波
     - `d`: 像素邻域的直径，若非正则会从 sigmaSpace 算出
@@ -281,21 +336,26 @@ def translate(src, x, y, color=0):
     - `sigmaSpace`: 坐标空间中的标准差，值越大，更远的像素将相互影响。当 d > 0 时，d 指定了邻域的大小，sigmaSpace 不起作用，否则 d 与 sigmaSpace 成比例
 
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 边缘检测
 - `Sobel(src, ddepth, dx, dy[, dst[, ksize[, scale[, delta[, borderType]]]]]) -> dst` 用扩展 Sobel 运算符，计算图像的指定阶导数
-  $$\texttt{dst} = \frac{\partial^{dx+dy} \texttt{src}}{\partial x^{dx} \partial y^{dy}} $$
+
+    $$\texttt{dst} = \frac{\partial^{dx+dy} \texttt{src}}{\partial x^{dx} \partial y^{dy}} $$
+
     - `dx`: x 方向的导数的阶
     - `dy`: y 方向的导数的阶
     - `ksize`: 卷积核的尺寸，只能为 1, 3, 5 或 7，默认为 3。当 kernel = 1 时，实际尺寸为 $3\times 1$ 或 $1\times 3$
     - `scale`: 缩放因数，默认为 1
     - `delta`: 偏移值，默认为 0
     - `cv2.Soble(src, -1, 1, 0)` 使用的卷积核是 $\begin{bmatrix} -1 & 0 & 1 \\ -2 & 0 & 2 \\ -1 & 0 & 1 \end{bmatrix}$
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `Laplacian(src, ddepth[, dst[, ksize[, scale[, delta[, borderType]]]]]) -> dst` 计算图像的拉普拉斯算子
-  $$\texttt{dst} = \Delta \texttt{src} = \frac{\partial^{2} \texttt{src}}{\partial x^2} + \frac{\partial^{2} \texttt{src}}{\partial y^2} $$
+
+    $$\texttt{dst} = \Delta \texttt{src} = \frac{\partial^{2} \texttt{src}}{\partial x^2} + \frac{\partial^{2} \texttt{src}}{\partial y^2} $$
+
     - `ksize` 孔径的宽高，只能为大于 0 的奇数，默认为 1，此时使用的卷积核为 $\begin{bmatrix} 0 & 1 & 0 \\ 1 & -4 & 1 \\ 0 & 1 & 0 \\ \end{bmatrix}$
 
 
@@ -305,10 +365,11 @@ def translate(src, x, y, color=0):
 
 
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ## 图像匹配
 ### SIFT 算法
+
 ```py
 sift = cv2.SIFT_create()
 
@@ -317,14 +378,17 @@ keypoints, descriptors = sift.compute(im, keypoints)
 
 keypoints, descriptors = sift.detectAndCompute(im, None)
 ```
+
 SIFT 关键点的属性有：
+
 - `pt` 关键点坐标
 - `size` 关键点邻域直径
 - `angle` 关键点的方向
 - `response` 关键点的响应强度，可用于后续排序
 - `octave` 关键点所在的图像金字塔的层组
 - `class_id` 用于聚类的 id
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `sift.detect(image[, mask]) -> keypoints`
     - keypoints[i] 为第 i 个关键点
@@ -334,40 +398,46 @@ SIFT 关键点的属性有：
     - mask[i] 为 image[i] 的掩膜
 
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 描述符匹配
+
 ```py
 bf = cv2.BFMatcher_create()
 matches = bf.match(descriptors1, descriptors2)
 matches = bf.knnMatch(descriptors1, descriptors2, 2)
 ```
+
 匹配的属性有
+
 - `queryIdx` 关键点在 keypoints1 中的索引
 - `trainIdx` 关键点在 keypoints2 中的索引
 - `imgIdx` 当前匹配点对应训练图像的索引
 - `distance` 关键点之间的欧氏距离
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `match(queryDescriptors, trainDescriptors[, mask]) -> matches`
     - 对查询集中的每个描述符，找到 1 个最佳匹配项
     - `queryDescriptors`: 查询描述符集
     - `trainDescriptors`: 训练描述符集
     - `matches`: 每一项都是对应查询点与其最佳匹配项的匹配
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `knnMatch(queryDescriptors, trainDescriptors, k[, mask[, compactResult]]) -> matches`
     - 对查询集中的每个描述符，找到 k 个最佳匹配项
     - `matches`: 每一项都是一个列表，包含对应查询点与其 k 个最佳匹配项的匹配
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 绘制关键点与匹配
 - `drawKeypoints(image, keypoints, outImage[, color[, flags]]) -> outImage`
     - 绘制一张图上的关键点
     - `color`: 关键点的颜色，默认为随机选择
     - `out = cv2.drawKeypoints(im, kpts, None)`
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `drawMatches(img1, keypoints1, img2, keypoints2, matches1to2, outImg[, matchColor[, singlePointColor[, matchesMask[, flags]]]]) -> outImg`
 - `drawMatches(img1, keypoints1, img2, keypoints2, matches1to2, outImg, matchesThickness[, matchColor[, singlePointColor[, matchesMask[, flags]]]]) -> outImg`
@@ -383,26 +453,30 @@ matches = bf.knnMatch(descriptors1, descriptors2, 2)
 
 
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ## 视频
 ### 视频捕获
 #### 打开与关闭视频
+
 - `VideoCapture(filename[, apiPreference]) -> retval` 打开一个视频或一个捕获设备
 - `cap.isOpened() -> retval` 检测是否打开成功
 - `cap.release() -> None` 释放视频流
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 #### 读取帧
+
 - `cap.read([, image]) -> retval, image` 读取一帧
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 #### 获得与设置视频属性
+
 - `cap.get(propId) -> retval` 返回指定属性
 - `cap.set(propId, value) -> retval` 设置指定属性
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `cv2.CAP_PROP_POS_MSEC` 当前视频所在位置，以毫秒计
 - `cv2.CAP_PROP_POS_FRAMES` 下一帧的索引，从零开始计
@@ -413,10 +487,11 @@ matches = bf.knnMatch(descriptors1, descriptors2, 2)
 - `cv2.CAP_PROP_FPS` 帧率
 - `cv2.CAP_PROP_FOURCC` 编解码器的四字符代码
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 视频写入
 #### 创建与保存视频
+
 - `VideoWriter(filename, fourcc, fps, frameSize, isColor=ture) -> retval` 初始化视频写入器
     - `fourcc`: 用于压缩帧的编解码器的四字符代码，若为 -1，会列出所有可选项
         - `cv2.VideoWriter_fourcc(*"mp4v"/"avc1"/"avc3")` 可用于 mp4 视频
@@ -425,14 +500,16 @@ matches = bf.knnMatch(descriptors1, descriptors2, 2)
     - `fps`: 帧率
     - `frameSize`: 帧的尺寸，格式为 (宽, 高)，必须全为整数
     - `isColor`: 若非零，则会以彩色模式编码视频
-<br>
+
+<div style="margin-top: 25pt"></div>
 
 - `video.isOpened() -> retval` 检测是否初始化成功
 - `video.release() -> None` 关闭视频写入器
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 #### 写入帧
+
 - `write(image) ->	None` 写入一帧，image 需为 BGR 模式且尺寸必须一致
 
 
@@ -444,19 +521,21 @@ matches = bf.knnMatch(descriptors1, descriptors2, 2)
 
 
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ## 绘制
 ### 矩形
+
 - `rectangle(img, pt1, pt2, color[, thickness[, lineType[, shift]]]) -> img`
     - `pt1`: 一个顶点
     - `pt2`: 另一个顶点
     - `color`: 颜色（RGB 模式）或亮度（灰度模式）
     - `thickness`: 线的厚度，负数意味着填满
 
-<br>
+<div style="margin-top: 30pt"></div>
 
 ### 文本
+
 - `putText(img, text, org, fontFace, fontScale, color[, thickness[, lineType[, bottomLeftOrigin]]]) -> img`
     - `org`: 文本的左下角位置
     - `fontFace`: 字体类型
@@ -467,11 +546,13 @@ matches = bf.knnMatch(descriptors1, descriptors2, 2)
     - `bottomLeftOrigin`: 若为 True，则图像的数据原点设为左下角
 
 **lineType**
+
 - `cv2.LINE_4` 4 连通线条（默认值），线条的像素相互连接
 - `cv2.LINE_8` 8 连通线条，可以更精确地绘制斜线
 - `cv2.LINE_AA` 抗锯齿线条，会进行平滑处理，使线条的边缘更柔和
 
 **fontFace**
+
 - `cv2.FONT_HERSHEY_SIMPLEX` 普通大小的无衬线字体
 - `cv2.FONT_HERSHEY_PLAIN` 小号无衬线字体
 - `cv2.FONT_HERSHEY_DUPLEX` 普通大小的无衬线字体，更加复杂
