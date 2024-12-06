@@ -164,6 +164,9 @@ theme:
 markdown_extensions:
   - toc:
       permalink: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
   - meta
   - def_list
   - attr_list
