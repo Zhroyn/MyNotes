@@ -709,45 +709,51 @@ CTex 预定义了 `\songti` `\heiti` `\kaishu` `\fangsong` `\yahei` 等字体族
 
 ### 符号函数
 
-**二元运算符**
+#### 二元运算符
 
-$$\pm, \mp, \oplus, \times, \div$$
+| 描述 | 命令 | 符号 |
+| --- | --- | :---: |
+| 加减乘除 | `\pm` `\mp` `\oplus` `\times` `\div` | $\pm$ $\mp$ $\oplus$ $\times$ $\div$ |
+| 点乘 | `\cdot` `\odot` `\circ` `\bullet` | $\cdot$ $\odot$ $\circ$ $\bullet$ |
+| 集合 | `\cap` `\cup` `\bigcap` `\bigcup` `\setminus` | $\cap$ $\cup$ $\bigcap$ $\bigcup$ $\setminus$ |
+| 逻辑 | `\wedge` `\vee` `\bigwedge` `\bigvee` `\neg` | $\wedge$ $\vee$ $\bigwedge$ $\bigvee$ $\neg$ |
 
-$$\cdot, \odot, \circ, \bullet$$
+#### 关系符号
 
-$$\cap, \cup, \bigcap, \bigcup, \setminus$$
+| 描述 | 命令 | 符号 |
+| --- | --- | :---: |
+| 等于 | `=` `\neq` `\equiv` | $=$ $\neq$ $\equiv$ |
+| 相似 | `\approx` `\approxeq` `\sim` `\simeq` `\cong` `\propto` | $\approx$ $\approxeq$ $\sim$ $\simeq$ $\cong$ $\propto$ |
+| 小于 | `<` `\le` `\leq` `\ll` `\leqq` `\leqslant` `\not\lt` | $<$ $\le$ $\leq$ $\ll$ $\leqq$ $\leqslant$ $\not\lt$ |
+| 大于 | `>` `\ge` `\geq` `\gg` `\geqq` `\geqslant` `\not\gt` | $>$ $\ge$ $\geq$ $\gg$ $\geqq$ $\geqslant$ $\not\gt$ |
+| 偏序小于 | `\prec` `\preceq` `\preccurlyeq` `\precapprox` `\precnapprox` `\precsim` `\precnsim` | $\prec$ $\preceq$ $\preccurlyeq$ $\precapprox$ $\precnapprox$ $\precsim$ $\precnsim$ |
+| 偏序大于 | `\succ` `\succeq` `\succcurlyeq` `\succapprox` `\succnapprox` `\succsim` `\succnsim` | $\succ$ $\succeq$ $\succcurlyeq$ $\succapprox$ $\succnapprox$ $\succsim$ $\succnsim$ |
+| 包含 | `\subset` `\subseteq` `\subsetneq` `\supset` `\in` `\notin` | $\subset$ $\subseteq$ $\subsetneq$ $\supset$ $\in$ $\notin$ |
+| 推导 | `\to` `\mapsto` `\rightarrow` `\leftarrow` `\Rightarrow` `\Leftarrow` `\iff` | $\to$ $\mapsto$ $\rightarrow$ $\leftarrow$ $\Rightarrow$ $\Leftarrow$ $\iff$ |
 
-$$\wedge, \vee, \bigwedge, \bigvee$$
+#### 杂项
 
----
+| 描述 | 命令 | 符号 |
+| --- | --- | :---: |
+| 量词 | `\forall` `\exists` `\mapsto` | $\forall$ $\exists$ |
+| 空集 | `\emptyset` `\varnothing` | $\emptyset$ $\varnothing$ |
+| 无穷 | `\infty` `\aleph` | $\infty$ $\aleph$ |
+| 真值 | `\top` `\bot` | $\top$ $\bot$ |
+| 因果 | `\because` `\therefore` | $\because$ $\therefore$ |
+| 省略号 | `\dots` `\ldots` `\cdots` `\vdots` `\ddots` | $\dots$ $\ldots$ $\cdots$ $\vdots$ $\ddots$ |
 
-**关系符号**
+#### 括号
 
-$$\lt, \le, \leq, \leqq, \leqslant, \not\lt$$
+`\left` 和 `\right` 命令可以实现自动调整括号大小，下面命令的效果为：
 
-$$\gt, \ge, \geq, \geqq, \geqslant, \not\gt$$
-
-$$\prec, \preceq, \preccurlyeq, \precapprox, \precnapprox, \precsim, \precnsim$$
-
-$$\neq, \approx, \approxeq, \sim, \simeq, \cong, \equiv$$
-
-$$\subset, \subseteq, \subsetneq, \supset, \in, \notin$$
-
-$$\to, \rightarrow, \leftarrow, \Rightarrow, \Leftarrow, \iff$$
-
-$$\forall, \exists, \mapsto, \because, \therefore, \top, \bot$$
-
----
-
-**省略号**
-
-$$\dots, \ldots, \cdots, \vdots, \ddots$$
-
----
-
-**括号**
-
-`\left` 和 `\right` 命令可以实现自动调整括号大小，效果为：
+```latex
+\left(  \frac{1}{2} \right),
+\left[  \frac{1}{2} \right],
+\left\{ \frac{1}{2} \right\},
+\left<  \frac{1}{2} \right>,
+\left|  \frac{1}{2} \right|,
+\left\| \frac{1}{2} \right\|
+```
 
 $$
 \left(\frac{1}{2} \right),
@@ -758,83 +764,110 @@ $$
 \left\| \frac{1}{2} \right\|
 $$
 
-`\left` 和 `\right` 需要配对，但不需要后接相同的符号。如果有一边不想放上符号，可以在那一边使用 `.` 代替，如：
+`\left` 和 `\right` 需要配对，但不需要后接相同的符号。如果有一边不想放上符号，可以在那一边使用 `.` 代替，如 `\left. \frac{\partial y}{\partial x} \right|_{x=x_0}`：
 
 $$\left. \frac{\partial y}{\partial x} \right|_{x=x_0}$$
 
-如果想要自定义括号的大小，或者不想要配对，则可以使用 `\big` `\Big` `\bigg` `\Bigg` 命令，效果如下：
+如果想要自定义括号的大小，或者不想要配对，则可以使用 `\big` `\Big` `\bigg` `\Bigg` 命令，如 `\Bigg< \bigg\{ \Big[ \big( xyz \big) \Big] \bigg\} \Bigg>`：
 
 $$\Bigg< \bigg\{ \Big[ \big( xyz \big) \Big] \bigg\} \Bigg>$$
 
----
+#### 常见函数
 
-**常见函数**
+| 描述 | 命令 | 符号 |
+| --- | --- | :---: |
+| 累加 | `\sum` `\sum_{i=1}^n` `\sum\limits_{i=1}^n` | $\sum$ $\sum_{i=1}^n$ $\sum\limits_{i=1}^n$ |
+| 累乘 | `\prod` `\prod_{i=1}^n` `\prod\limits_{i=1}^n` | $\prod$ $\prod_{i=1}^n$ $\prod\limits_{i=1}^n$ |
+| 开方 | `\sqrt{k}` `\sqrt[n]{k}` | $\sqrt{k}$ $\sqrt[n]{k}$ |
+| 极限 | `\lim` `\lim_{n\to\infty}` `\lim\limits_{n\to\infty}` | $\lim$ $\lim_{n\to\infty}$ $\lim\limits_{n\to\infty}$ |
+| 积分 | `\int` `\iint` `\iiint` `\oint` `\oiint` `\oiiint` | $\int$ $\iint$ $\iiint$ $\oint$ $\oiint$ $\oiiint$ |
+| 微分 | `\frac{\mathrm{d} y}{\mathrm{d} x}` | $\frac{\mathrm{d} y}{\mathrm{d} x}$ |
+| 偏导 | `\frac{\partial f}{\partial x}` | $\frac{\partial f}{\partial x}$ |
+| 梯度 | `\nabla f` | $\nabla f$ |
 
-$$\sum, \prod, \sqrt[k]{n}, \lim$$
+行内公式中的函数会被压缩，如果想要正常显示，可以使用 `\displaystyle` 命令改变环境，如 `\displaystyle \frac{1}{2}`；如果不想改变大小，只想改变位置关系，则可以使用 `\limits` 命令，效果如上所示。
 
-$$\int, \iint, \iiint, \oint, \oiint, \oiiint$$
+#### 上下标与修饰符
 
-$$
-\frac{\mathrm{d} y}{\mathrm{d} x}, 
-\frac{\partial f}{\partial x}, 
-f^{'}, \nabla f
-$$
+使用 ^ 和 _ 可以实现上标和下标，如 `a_{j-1,j}^{n+1}` 的效果是 $a_{j-1,j}^{n+1}$。
 
-行内公式中的函数会被压缩，如果想要正常显示，可以使用 `\displaystyle` 命令改变环境，如 `\displaystyle \frac{1}{2}`；如果不想改变大小，只想改变位置关系，则可以使用 `\limits` 命令，如 `\sum\limits_{i=1}^n`，效果为 $\sum\limits_{i=1}^n, \lim\limits_{n\to\infty}$，实现将式子放在运算符的上下方。
+若想将上标或下标放在整个式子的上下方，可以先使用 `\mathop` 将其转换为数学运算符，再使用 `\limits` 命令，还可以直接使用 `\overset` 和 `\underset` 命令，如：
+
+| 描述 | 命令 | 符号 |
+| --- | --- | :---: |
+| 转为运算符 | `\mathop{a}\limits_i^n` | $\mathop{a}\limits_i^n$ |
+| 上置 | `\overset{a}{b}` | $\overset{a}{b}$ |
+| 下置 | `\underset{a}{b}` | $\underset{a}{b}$ |
+
+此外，常见的为符号添加修饰符的命令有：
+
+| 描述 | 命令 | 符号 |
+| --- | --- | :---: |
+| 帽子 | `\hat{a}` | $\hat{a}$ |
+| 检查 | `\check{a}` | $\check{a}$ |
+| 波浪 | `\tilde{a}` | $\tilde{a}$ |
+| 横线 | `\bar{a}` | $\bar{a}$ |
+| 箭头 | `\vec{a}` | $\vec{a}$ |
+| 重音 | `\acute{a}` `\grave{a}` | $\acute{a}$ $\grave{a}$ |
+| 点 | `\dot{a}` `\ddot{a}` | $\dot{a}$ $\ddot{a}$ |
+
+这些命令生成的修饰符的大小是固定的，常用于单个字符，使用时可以不加花括号，如 `\hat a`。此外一些可变大小的上下标命令有：
+
+| 描述 | 命令 | 符号 |
+| --- | --- | :---: |
+| 帽子 | `\widehat{abc}` | $\widehat{abc}$ |
+| 检查 | `\widecheck{abc}` | $\widecheck{abc}$ |
+| 波浪 | `\widetilde{abc}` | $\widetilde{abc}$ |
+| 左箭头 | `\overleftarrow{abc}` `\underleftarrow{abc}` | $\overleftarrow{abc}$ $\underleftarrow{abc}$ |
+| 右箭头 | `\overrightarrow{abc}` `\underrightarrow{abc}` | $\overrightarrow{abc}$ $\underrightarrow{abc}$ |
+| 双箭头 | `\overleftrightarrow{abc}` `\underleftrightarrow{abc}` | $\overleftrightarrow{abc}$ $\underleftrightarrow{abc}$ |
+| 上下划线 | `\overline{abc}` `\underline{abc}` `\underbar{abc}` | $\overline{abc}$ $\underline{abc}$ $\underbar{abc}$ |
+| 上下括号 | `\overbrace{abc}` `\underbrace{abc}` | $\overbrace{abc}$ $\underbrace{abc}$ |
+
+此外，还可以使用 `\not` `\cancel` 等命令为数学公式添加删除线，其中 `not` 命令主要用于运算符，`\cancel` 等命令来自 cancel 宏包，效果如下：
+
+| 命令 | 符号 |
+| --- | :---: |
+| `\not{abc}` | $\not{abc}$ |
+| `\cancel{abc}` | $\cancel{abc}$ |
+| `\bcancel{abc}` | $\bcancel{abc}$ |
+| `\xcancel{abc}` | $\xcancel{abc}$ |
 
 
 
 <br>
 
-### 位置组合
+### 排列环境
 
-使用 ^ 和 _ 可以实现上标和下标，如 $a_{j-1,j}^{n+1}$。若想将上标或下标放在整个式子的上下方，可以先使用 `\mathop` 将其转换为数学运算符，再使用 `\limits` 命令，如 $\mathop{a}\limits_i^n$；还可以直接使用 `\overset` 和 `\underset` 命令，如 $\overset{a}{b}, \underset{a}{b}$。
+#### 方程组与分段函数
 
-其他常见的为符号添加上下标的命令有：
-
-$$\hat{a}, \check{a}, \tilde{a}$$
-
-$$\bar{a}, \vec{a}, \acute{a}, \grave{a}, \dot{a}, \ddot{a}$$
-
-这些命令生成的上标的大小是固定的，常用于单个字符，使用时可以不加花括号，如 `\hat a`。此外一些可变大小的上下标命令有：
-
-$$\widehat{abc}, \widecheck{abc}, \widetilde{abc}$$
-
-$$
-\overleftarrow{abc}, \underleftarrow{abc},
-\overrightarrow{abc}, \underrightarrow{abc},
-\overleftrightarrow{abc}, \underleftrightarrow{abc}
-$$
-
-$$
-\overline{\text{overline}}, \underline{\text{underline}},
-\overbrace{\text{overbrace}}, \underbrace{\text{underbrace}},
-\underbar{\text{underbar}}
-$$
-
-此外还可以使用 `\not` `\cancel` 等命令为数学公式添加删除线，其中 `not` 命令主要用于运算符，`\cancel` 等命令来自 cancel 宏包，效果如下：
-
-$$\not{abc}, \cancel{abc}, \bcancel{abc}, \xcancel{abc}$$
-
-
-<br>
-
-### 公式对齐
-
-**方程组或分段函数**
+```latex
+y =
+\begin{cases}
+    \sin(x)       & x<0 \\
+    x^2 + 2x +4   & 0 \leq x < 1 \\
+    x^3           & x \geq 1 \\
+\end{cases}
+```
 
 $$
 y =
 \begin{cases}
-  \sin(x)       & x<0 \\
-  x^2 + 2x +4   & 0 \leq x < 1 \\
-  x^3           & x \geq 1 \\
+    \sin(x)       & x<0 \\
+    x^2 + 2x +4   & 0 \leq x < 1 \\
+    x^3           & x \geq 1 \\
 \end{cases}
 $$
 
----
+#### 对齐表达式
 
-**对齐公式**
+```latex
+\begin{aligned}
+    f(x) &= 2x+1 \\
+        &= 2+1 \\
+        &= 3
+\end{aligned}
+```
 
 $$
 \begin{aligned}
@@ -844,9 +877,20 @@ f(x) &= 2x+1 \\
 \end{aligned}
 $$
 
----
+#### 矩阵与行列式
 
-**矩阵**
+```latex
+\left(
+    \left[
+        \begin{array}{ccc}
+            a_{11} & a_{12} & \cdots & a_{1n} \\
+            a_{21} & a_{22} & \cdots & a_{2n} \\
+            \vdots & \vdots & \ddots & \vdots \\
+            a_{n1} & a_{n2} & \cdots & a_{nn} \\
+        \end{array}
+    \right]
+\right)
+```
 
 $$
 \left(
@@ -861,28 +905,81 @@ $$
 \right)
 $$
 
+```latex
+\begin{matrix}
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
+\end{matrix}
+```
+
+下面几个依次为 matrix, pmatrix, bmatrix, vmatrix 环境：
+
 $$
 \begin{matrix}
-  1 & 0 & 0 \\
-  0 & 1 & 0 \\
-  0 & 0 & 1 \\
-\end{matrix}, 
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
+\end{matrix} \quad
 \begin{pmatrix}
-  1 & 0 & 0 \\
-  0 & 1 & 0 \\
-  0 & 0 & 1 \\
-\end{pmatrix}, 
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
+\end{pmatrix} \quad
 \begin{bmatrix}
-  1 & 0 & 0 \\
-  0 & 1 & 0 \\
-  0 & 0 & 1 \\
-\end{bmatrix}, 
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
+\end{bmatrix} \quad
 \begin{vmatrix}
-  1 & 0 & 0 \\
-  0 & 1 & 0 \\
-  0 & 0 & 1 \\
+    1 & 0 & 0 \\
+    0 & 1 & 0 \\
+    0 & 0 & 1 \\
 \end{vmatrix}
 $$
+
+
+
+<br>
+
+### 公式编号
+
+将公式放在 equation 或 align 环境中，LaTeX 将会自动为公式添加编号。但若不希望在 equation 或 align 环境中添加编号，则可以在其后加上 * 号来取消自动编号。
+
+如果想要手动添加或修改公式编号，则可以使用 `\tag` 命令。该命令添加的编号会覆盖自动生成的编号，且不会影响后续公式的编号。在公式环境内部，如果想要一个不编号的公式，但又希望它不影响其他公式的编号，则可以使用 `\notag` 命令。如果仅是希望某些公式不计入编号，则可以使用 `\nonumber` 命令。
+
+效果如下：
+
+```latex
+\begin{equation}
+    P = \frac{dW}{dt} = \tau \frac{\text{d}\theta}{dt} = \tau \omega
+\end{equation}
+
+\begin{align} 
+    \notag W &= \int_{\theta_i}^{\theta_f} \tau \text{d}\theta = \int_{\theta_i}^{\theta_f} I\alpha \text{d}\theta \\
+    \nonumber &= \int_{\theta_i}^{\theta_f} I\frac{\text{d}\theta}{dt} \frac{d\omega}{\text{d}\theta} \text{d}\theta \\
+    &= \int_{\omega_i}^{\omega_f} I\omega d\omega \tag{2.1} \\
+    &= \frac{1}{2}I\omega_f^2 - \frac{1}{2}I\omega_i^2 
+\end{align}
+```
+
+$$
+\begin{equation}
+    P = \frac{dW}{dt} = \tau \frac{\text{d}\theta}{dt} = \tau \omega
+\end{equation}
+$$
+
+$$
+\begin{align} 
+    \notag W &= \int_{\theta_i}^{\theta_f} \tau \text{d}\theta = \int_{\theta_i}^{\theta_f} I\alpha \text{d}\theta \\
+    \nonumber &= \int_{\theta_i}^{\theta_f} I\frac{\text{d}\theta}{dt} \frac{d\omega}{\text{d}\theta} \text{d}\theta \\
+    &= \int_{\omega_i}^{\omega_f} I\omega d\omega \tag{2.1} \\
+    &= \frac{1}{2}I\omega_f^2 - \frac{1}{2}I\omega_i^2 
+\end{align}
+$$
+
+此外还可以通过修改 `\theequation` 命令来自定义公式的编号格式，如 `\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}` 会将公式编号设置为“章节号.公式号”的格式。
+
 
 
 <br>
@@ -915,15 +1012,5 @@ $$
 |\chi     |$\chi$     |\Chi     |$\Chi$     |
 |\psi     |$\psi$     |\Psi     |$\Psi$     |
 |\omega   |$\omega$   |\Omega   |$\Omega$   |
-
-
-
-<br>
-
-## TODO
-
-- [ ] 删除线
-- [ ] 公式编号
-
 
 
