@@ -1,4 +1,4 @@
-
+# torch 和 torchvision
 ## 模型
 ### 保存和加载模型
 
@@ -23,11 +23,13 @@ model.eval()
 ```
 
 
-<div style="margin-top: 35pt"></div>
+<div style="margin-top: 40pt"></div>
 
 ### 使用模型
 
 ```py
+from torchvision import models, transforms
+
 # 加载模型
 model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
 model.eval()
@@ -59,9 +61,131 @@ predicted_label = labels[predicted_index.item()]
 
 
 
+<div style="margin-top: 60pt"></div>
+
+## 预训练模型
+
+### torchvision 中的模型
+
+`torchvision.models` 中有许多模型的构建方法与预训练权重，每个模型构建方法（如 `resnet50`）都有与之对应的 Enum 类（如 `ResNet50_Weights`），每个 Enum 类都有一个 `DEFAULT` 的属性别名，指向对应模型的最佳预训练权重。
+
+模型构建方法可用于构建模型，预训练权重可作为参数传递，例如：
+
+```py
+from torchvision.models import resnet50, ResNet50_Weights
+model = resnet50(weights=ResNet50_Weights.DEFAULT)
+```
+
+`weights` 参数的取值可以是：
+
+- `None` 默认值，随机初始化权重
+- `str` 预训练权重的名称，如 `"ResNet50_Weights.IMAGENET1K_V1"` `"IMAGENET1K_V1"`
+- 权重的 Enum 类，例如 `ResNet50_Weights.IMAGENET1K_V1`
+
+此外，`torchvision.models` 中还有别的一些函数：
+
+- `list_models()` 可以列出所有可用的模型
+- `get_model_builder(name: str)` 可以返回指定模型的构建方法，其中 `name` 是模型的注册名称
+- `get_model(name: str, **config: Any)` 可以返回指定模型的实例，其中 `config` 是传递给构建方法的参数
+- `get_weight(name: str)` 可以返回指定模型的预训练权重，其中 `name` 是权重的名称
+- `get_model_weights(name: Union[Callable, str])` 可以返回指定模型的所有预训练权重，其中 `name` 是该模型的模型构建方法或注册名称
+
+预训练权重的属性有：
+
+- `name` 预训练权重的名称
+- `url` 预训练权重的 URL
+- `meta` 预训练权重的元数据，包括数据集的类别、参数数量等
+- `transforms` 应用于输入图像的转换方法
+
+<div style="margin-top: 40pt"></div>
+
+### Pytorch Hub 中的模型
+
+#### 查看预训练模型
+
+```py
+torch.hub.list(
+    github,
+    force_reload=False,
+    skip_validation=False,
+    trust_repo=None,
+)
+
+torch.hub.help(
+    github,
+    model,
+    force_reload=False,
+    skip_validation=False,
+    trust_repo=None,
+)
+```
+
+- `github` 为 `repo_owner/repo_name[:ref]` 的形式的字符串
+- `model` 为 entrypoint 的名称，每个 entrypoint 是 `repo/hubconf.py` 中的一个函数
+- `force_reload` 若为 True，则会强制重新下载模型
+
+<div style="margin-top: 25pt"></div>
+
+#### 加载预训练模型
+
+```py
+torch.hub.load(
+    repo_or_dir,
+    model,
+    *args,
+    source='github',
+    trust_repo=None,
+    force_reload=False,
+    verbose=True,
+    skip_validation=False,
+    **kwargs,
+)
+
+# 加载模型
+model = torch.hub.load("pytorch/vision", "resnet50", weights="IMAGENET1K_V2")
+
+# 先加载预训练权重
+weights = torch.hub.load("pytorch/vision", "get_weight", weights="ResNet50_Weights.IMAGENET1K_V2")
+model = torch.hub.load("pytorch/vision", "resnet50", weights=weights)
+```
+
+- 若 `source` 为 `github`，则 `repo_or_dir` 为 `repo_owner/repo_name[:ref]`
+- 若 `source` 为 `local`，则 `repo_or_dir` 为本地路径
+- `model` 为 entrypoint 的名称，每个 entrypoint 是 `repo/hubconf.py` 中的一个函数
+
+```py
+torch.hub.load_state_dict_from_url(
+    url: str,
+    model_dir: Optional[str] = None,
+    map_location: Union[Callable[[torch.Tensor, str], torch.Tensor], torch.device, str, Dict[str, str], NoneType] = None,
+    progress: bool = True,
+    check_hash: bool = False,
+    file_name: Optional[str] = None,
+) -> Dict[str, Any]
+```
+
+若下载的文件是一个压缩文件，它会被自动解压。若对象已经存在于 `model_dir` 中，则会直接加载对象。
+
+- `url` 模型的 URL
+- `model_dir` 模型的保存路径，默认为 `<hub_dir>/checkpoints`
+    - `hub_dir` 为 `torch.hub.get_dir()` 返回的目录
+    - 如果没有使用 `torch.hub.set_dir()` 设置过目录，`hub_dir` 就是 `$TORCH_HOME/hub`
+    - `$TORCH_HOME` 的默认值是 `$XDG_CACHE_HOME/torch`
+    - `$XDG_CACHE_HOME` 的默认值是 `~/.cache`
+- `map_location` 用于重映射存储位置的函数或字典
+- `progress` 是否在 stderr 中显示进度条，默认为 True
+- `check_hash` 若为 True，则 URL 文件名部分的格式需符合 `filename-<sha256>.ext`，其中的哈希值会被用于验证文件
+- `file_name` 保存的文件名，默认为 `url` 中的文件名
 
 
-<div style="margin-top: 35pt"></div>
+
+
+
+
+
+
+
+<div style="margin-top: 60pt"></div>
 
 ## 数据
 ### Dataset
@@ -77,9 +201,9 @@ PyTorch 支持两种不同类型的数据集。
 
 #### 下载数据集
 
-**CIFAR10**
+**MNIST/CIFAR10**
 ```py
-torchvision.datasets.CIFAR10(
+torchvision.datasets.MNIST/CIFAR10(
     root: str,
     train: bool = True,
     transform: Optional[Callable] = None,
@@ -93,8 +217,6 @@ torchvision.datasets.CIFAR10(
 - `transform` 将 PIL 图像转换的函数
 - `target_transform` 将目标转换的函数
 - `download` 若为 True 且数据集不存在，则从 Internet 下载
-
-<div style="margin-top: 25pt"></div>
 
 **ImageNet**
 ```py
@@ -112,7 +234,7 @@ torchvision.datasets.ImageNet(
 
 
 
-<div style="margin-top: 35pt"></div>
+<div style="margin-top: 40pt"></div>
 
 ### Sampler
 
@@ -130,7 +252,7 @@ PyTorch 所有的采样器都是 torch.utils.data.Sampler 的子类，都要重�
 - `torch.utils.data.BatchSampler(sampler, batch_size, drop_last)` 批次采样，每次返回一批索引
     - `drop_last` 若为 True，则会在最后一个批次的长度不足 `batch_size` 时抛弃该批次
 
-<div style="margin-top: 35pt"></div>
+<div style="margin-top: 40pt"></div>
 
 ### DataLoader
 
@@ -155,7 +277,9 @@ torch.utils.data.DataLoader(
     pin_memory_device: str = '',
 )
 ```
+
 DataLoader 支持通过参数 batch_size, shuffle, batch_sampler, drop_last 和 collate_fn 实现自动批处理，将单个获取的数据样本整理成批次：
+
 - `shuffle` 若为 True，则会使用随机采样器
 - `sampler` 用于 `batch_sampler` 的构建，可由自己指定，不可与 `shuffle` 冲突
 - `batch_sampler` 可由自己指定，不可与 `batch_size`, `shuffle`, `sampler` 和 `drop_last` 冲突
@@ -176,7 +300,7 @@ DataLoader 默认使用单进程数据加载。当 num_workers 为正整数时�
 
 
 
-<div style="margin-top: 35pt"></div>
+<div style="margin-top: 60pt"></div>
 
 ## 神经网络
 ### 自定义神经网络
@@ -237,7 +361,7 @@ class MyModule(nn.Module):
 ```
 
 
-<div style="margin-top: 35pt"></div>
+<div style="margin-top: 40pt"></div>
 
 ### 卷积层
 
@@ -260,7 +384,7 @@ nn.Conv2d(
 - `kernel_size` 若卷积核的宽和高相同，则可以用 int，否则必须用 tuple
 
 
-<div style="margin-top: 35pt"></div>
+<div style="margin-top: 40pt"></div>
 
 ### 池化层
 
@@ -278,7 +402,7 @@ nn.MaxPool2d(
 - `stride` 默认值为 `kernel_size`
 
 
-<div style="margin-top: 35pt"></div>
+<div style="margin-top: 40pt"></div>
 
 ### BN 层
 
@@ -298,7 +422,7 @@ nn.BatchNorm2d(
 - `eps` 用来防止归一化时除零
 
 
-<div style="margin-top: 35pt"></div>
+<div style="margin-top: 40pt"></div>
 
 ### 激活函数
 
@@ -316,7 +440,7 @@ nn.BatchNorm2d(
 - `torch.nn.Softmax(dim=None)`
 
 
-<div style="margin-top: 35pt"></div>
+<div style="margin-top: 40pt"></div>
 
 ### 损失函数
 
