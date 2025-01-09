@@ -110,6 +110,8 @@ nav:
     - 系统操作与文件处理:
       - os: Python/系统操作与文件处理/osNote.md
       - json: Python/系统操作与文件处理/jsonNote.md
+    - 爬虫:
+      - lxml: Python/爬虫/lxmlNote.md
     - 其他:
       - sqlite3: Python/其他/sqlite3Note.md
       - PyQt: Python/其他/PyQtNote.md
