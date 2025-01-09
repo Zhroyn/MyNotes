@@ -113,6 +113,7 @@ nav:
     - 爬虫:
       - requests: Python/爬虫/requestsNote.md
       - lxml: Python/爬虫/lxmlNote.md
+      - BeautifulSoup: Python/爬虫/BeautifulSoupNote.md
     - 其他:
       - sqlite3: Python/其他/sqlite3Note.md
       - PyQt: Python/其他/PyQtNote.md
