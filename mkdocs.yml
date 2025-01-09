@@ -92,24 +92,27 @@ nav:
     - C++: C/CppNote.md
     - Makefile: C/MakefileNote.md
   - Python:
-    - Python 语言: Python/PythonNote.md
-    - pip: Python/pipNote.md
-    - venv: Python/venvNote.md
-    - Anaconda: Python/AnacondaNote.md
-    - 标准库:
-      - json: Python/标准库/jsonNote.md
-      - os: Python/标准库/osNote.md
-      - random: Python/标准库/randomNote.md
-      - sqlite3: Python/标准库/sqlite3Note.md
-    - 第三方库:
-      - OpenCV: Python/第三方库/OpenCVnote.md
-      - PIL: Python/第三方库/PILnote.md
-      - PyQt: Python/第三方库/PyQtNote.md
-      - imageio: Python/第三方库/imageioNote.md
-      - matplotlib: Python/第三方库/matplotlibNote.md
-      - numpy: Python/第三方库/numpyNote.md
-      - scipy: Python/第三方库/scipyNote.md
-      - torch: Python/第三方库/torchNote.md
+    - Python/PythonNote.md
+    - 包管理:
+      - pip: Python/包管理/pipNote.md
+      - venv: Python/包管理/venvNote.md
+      - Anaconda: Python/包管理/AnacondaNote.md
+    - 高级运算:
+      - numpy: Python/高级运算/numpyNote.md
+      - scipy: Python/高级运算/scipyNote.md
+      - random: Python/高级运算/randomNote.md
+      - PyTorch: Python/高级运算/torchNote.md
+    - 图像视频:
+      - OpenCV: Python/图像视频/OpenCVnote.md
+      - PIL: Python/图像视频/PILnote.md
+      - imageio: Python/图像视频/imageioNote.md
+      - matplotlib: Python/图像视频/matplotlibNote.md
+    - 系统操作与文件处理:
+      - os: Python/系统操作与文件处理/osNote.md
+      - json: Python/系统操作与文件处理/jsonNote.md
+    - 其他:
+      - sqlite3: Python/其他/sqlite3Note.md
+      - PyQt: Python/其他/PyQtNote.md
   - Linux:
     - Linux: Linux/LinuxNote.md
     - Bash: Linux/BashNote.md
