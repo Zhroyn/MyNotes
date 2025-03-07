@@ -7,6 +7,9 @@ use_directory_urls: false
 nav:
   - 主页: index.md
   - 课程:
+    - 计算机图形学:
+      - 2D变换: 课程/计算机图形学/2d_transformation.md
+      - 3D变换: 课程/计算机图形学/3d_transformation.md
     - 机器学习:
       - 线性模型: 课程/机器学习/线性模型.md
       - 神经网络: 课程/机器学习/神经网络.md
@@ -87,8 +90,6 @@ nav:
       - 深度学习: 课程/计算机视觉导论/Deep Learning.md
       - 图像识别: 课程/计算机视觉导论/Recognition.md
       - 工具: 课程/计算机视觉导论/Tools.md
-    - 计算机图形学:
-      - 变换: 课程/计算机图形学/transformation.md
   - C:
     - C 语言: C/CNote.md
     - C++: C/CppNote.md
