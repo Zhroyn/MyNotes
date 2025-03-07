@@ -45,16 +45,16 @@ $$
 
 经典欧拉角最常见的是 $ZXZ$ 顺规，即先绕 $z$ 轴旋转 $\alpha$，再绕新生成的 $x$ 轴旋转 $\beta$，最后绕新生成的 $z$ 轴旋转 $\gamma$，如下图所示：
 
-<div align="center"> <img src="../../assets/graphics_3d_rotation.gif" width="300"> </div>
+<div align="center"> <img src="../../assets/graphics_3d_rotation.gif" width="320"> </div>
 
-<div align="center"> <img src="../../assets/graphics_3d_rotation.png" width="250"> </div>
+<div align="center"> <img src="../../assets/graphics_3d_rotation.png" width="300"> </div>
 
 
 泰特布莱恩角最常见的是 $ZXY$ 顺规，$\psi$、$\theta$、$\varphi$ 分别对应着 yaw 偏航角、pitch 俯仰角和 roll 滚转角，用于飞行器的姿态控制：
 
-<div align="center"> <img src="../../assets/graphics_yaw_axis_corrected.png" width="300"> </div>
+<div align="center"> <img src="../../assets/graphics_yaw_axis_corrected.png" width="320"> </div>
 
-<div align="center"> <img src="../../assets/graphics_taitbrian_zyx.svg" width="250"> </div>
+<div align="center"> <img src="../../assets/graphics_taitbrian_zyx.png" width="300"> </div>
 
 #### 内旋和外旋
 
