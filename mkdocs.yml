@@ -87,6 +87,8 @@ nav:
       - 深度学习: 课程/计算机视觉导论/Deep Learning.md
       - 图像识别: 课程/计算机视觉导论/Recognition.md
       - 工具: 课程/计算机视觉导论/Tools.md
+    - 计算机图形学:
+      - 变换: 课程/计算机图形学/transformation.md
   - C:
     - C 语言: C/CNote.md
     - C++: C/CppNote.md
