@@ -10,6 +10,7 @@ nav:
     - 计算机图形学:
       - 2D变换: 课程/计算机图形学/2d_transformation.md
       - 3D变换: 课程/计算机图形学/3d_transformation.md
+      - 光栅化: 课程/计算机图形学/rasterization.md
     - 机器学习:
       - 线性模型: 课程/机器学习/线性模型.md
       - 神经网络: 课程/机器学习/神经网络.md
