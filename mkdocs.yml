@@ -146,6 +146,7 @@ nav:
       - 窗口视图: 软件/Blender/窗口视图.md
       - 建模操作: 软件/Blender/建模操作.md
   - 其他:
+    - CUDA: 其他/cudaNote.md
     - 8086 汇编语言: 其他/8086Note.md
     - Arduino: 其他/ArduinoNote.md
     - AutoHotkey: 其他/AutoHotkeyNote.md
