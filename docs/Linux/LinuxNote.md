@@ -5,16 +5,19 @@
 ```shell
 ls    # 列出当前路径下的所有文件和目录
 ```
+
 - `-1` 每行一个文件
 - `-a` 列出所有文件，包括隐藏文件
 - `-R` 递归列出每个子目录下的所有文件和目录
 - `-F` 给列出的目录末尾加上 `/`
+
 <br>
 
 - `-t` 以时间排序，新的在最前面
 - `-S` 以大小排序，大的在最前面
 - `-X` 以扩展名排序
 - `-r` 逆序列出
+
 <br>
 
 - `-l` 使用长列表模式
@@ -22,6 +25,7 @@ ls    # 列出当前路径下的所有文件和目录
 长列表格式从左到右依次为：文件类型和权限、硬链接计数、文件所有者、文件所属组、文件大小、修改时间、名称。
 
 文件类型和权限共十个字符，第一个为文件类型字符，常见的文件类型包括：
+
 - `-` 普通文件
 - `d` 目录
 - `l` 符号链接 (软链接)
@@ -37,6 +41,7 @@ ls    # 列出当前路径下的所有文件和目录
 ```shell
 pwd   # 显示当前目录
 ```
+
 - 相当于执行 `echo $PWD`
 
 <br>
@@ -56,6 +61,7 @@ mv path/to/source path/to/target
 mv path/to/source path/to/existing_directory
 mv path/to/source1 path/to/source2 ... path/to/existing_directory
 ```
+
 - 若目标文件是只读的，会提示用户是否覆盖，否则会自动覆盖
 - `-n` 不会覆盖原有文件
 
@@ -74,6 +80,7 @@ cp -r/-R path/to/source_directory path/to/target_directory
 # 复制多个文件到目标目录
 cp -t path/to/destination_directory path/to/file1 path/to/file2 ...
 ```
+
 - 若目标文件是只读的，会提示用户是否覆盖，否则会自动覆盖
 - `-n` 不会覆盖原有文件
 - `-r/R` 递归地复制目录
@@ -90,6 +97,7 @@ rm path/to/file1 path/to/file2 ...
 # 递归删除指定文件或目录
 rm -r path/to/file_or_directory1 path/to/file_or_directory2 ...
 ```
+
 - 默认无法删除目录
 - `-r/R` 递归地删除目录
 
@@ -104,6 +112,7 @@ ln /path/to/file path/to/hardlink
 # 创建一个符号链接
 ln -s /path/to/file_or_directory path/to/symlink
 ```
+
 - `-f` 若创建的链接的路径已存在，则覆盖目标文件
 
 ---
@@ -118,10 +127,12 @@ touch -d "-1 hour" path/to/file
 # Use the times from a file to set the times on a second file:
 touch -r path/to/file1 path/to/file2
 ```
+
 - `-c` 不创建文件
 - `-a` 只改变访问时间
 - `-m` 只改变修改时间
 - `-r FILE` 使用指定文件的时间戳，而不是当前时间
+
 <br>
 
 - `-d STRING` 使用指定的日期时间
@@ -132,6 +143,7 @@ touch -r path/to/file1 path/to/file2
     - `-d "1 hour ago"/"-1 hour"` 一个小时前的当前时间
     - `-d "3 day"/"+3 day"` 三天后的当前时间
     - `-d "next month"/"+1 month"` 下个月的第一天的当前时间
+
 <br>
 
 - `-t STAMP` 使用自定义的时间戳，格式必须为 `[[CC]YY]MMDDhhmm[.ss]`
@@ -144,6 +156,7 @@ touch -r path/to/file1 path/to/file2
 # 创建目录
 mkdir path/to/directory1 path/to/directory2 ...
 ```
+
 - `-p` 递归地创建目录
 - `-m` 指定权限，若不使用该选项则默认为 `rwxr-xr-x`
 
@@ -151,6 +164,7 @@ mkdir path/to/directory1 path/to/directory2 ...
 
 ### chmod, chown, chgrp
 **chmod**
+
 ```shell
 # 改变文件或目录的权限
 chmod mode path/to/file_or_directory
@@ -158,8 +172,10 @@ chmod mode path/to/file_or_directory
 # 为所有者添加所有权限，移除其他人的读权限
 chmod u+rwx,o-r path/to/file_or_directory
 ```
+
 - 符号模式使用 `u` 表示用户，`g` 表示组，`o` 表示其他用户，`a` 表示所有用户，在不指定时默认为所有用户
 - 符号模式使用 `+` 表示添加权限，`-` 表示移除权限
+
 <br>
 
 - `-R` 递归地修改权限
@@ -167,6 +183,7 @@ chmod u+rwx,o-r path/to/file_or_directory
 
 ---
 **chown, chgrp**
+
 ```shell
 # 改变文件或目录的所有者
 chown user path/to/file_or_directory
@@ -177,6 +194,7 @@ chown user:group path/to/file_or_directory
 # 改变文件或目录的所属组
 chgrp group path/to/file_or_directory
 ```
+
 - `-R` 递归地改变所有者或所属组
 - `-h` 改变符号链接的所有者和所属组，而不是其指向的文件或目录
 - `--reference=RFILE` 使用指定文件的所有者和所属组
@@ -185,6 +203,7 @@ chgrp group path/to/file_or_directory
 
 ### which, find, locate
 **which**
+
 ```shell
 # 搜索环境变量，显示可执行文件的位置
 which executable
@@ -192,8 +211,10 @@ which executable
 # 显示所有的可执行文件的位置
 which -a executable
 ```
+
 ---
 **find**
+
 ```shell
 # 查找当前目录及其子目录下的所有文件和目录
 find
@@ -204,10 +225,12 @@ find root_path -name '*.py' -not -path '*/site-packages/*'
 # 删除所有扩展名为 .tmp 的文件
 find root_path -name '*.tmp' -exec rm -f {} \;
 ```
+
 - `-name PATTERN` 根据文件名进行匹配搜索
 - `-iname PATTERN` 根据文件名进行匹配搜索，不区分大小写
 - `-path PATTERN` 根据路径进行匹配搜索
 - `-ipath PATTERN` 根据路径进行匹配搜索，不区分大小写
+
 <br>
 
 - `-type [bcdpflsD]` 根据文件类型进行匹配搜索，`f` 表示普通文件，`d` 表示目录，`i` 表示普符号链接
@@ -217,6 +240,7 @@ find root_path -name '*.tmp' -exec rm -f {} \;
 - `-size [sign]n[bcwkMG]` 根据文件大小搜索
     - `+` 表示大于，`-` 表示小于，不带符号表示等于
     - `c` 表示字节，`k` 表示千字节，`M` 表示兆字节，`G` 表示千兆字节
+
 <br>
 
 - `-atime n` 根据文件的最后访问时间搜索，单位为日
@@ -226,6 +250,7 @@ find root_path -name '*.tmp' -exec rm -f {} \;
 - `-cmin n` 根据文件的最后更改时间搜索，单位为分钟
 - `-mmin n` 根据文件的最后修改时间搜索，单位为分钟
     - `+` 表示在那之前，`-` 表示在那之后，不带符号表示刚好在那时
+
 <br>
 
 - `!` 和 `-not` 表示非操作，`-a` 和 `-and` 表示与操作，`-o` 和 `-or` 表示或操作
@@ -233,6 +258,7 @@ find root_path -name '*.tmp' -exec rm -f {} \;
 
 ---
 **locate**
+
 ```shell
 # 在数据库中进行模糊匹配
 locate PATTERN
@@ -240,6 +266,7 @@ locate PATTERN
 # 更新数据库
 sudo updatedb
 ```
+
 - `--localpaths='dir1 dir2...'` 指定 updatedb 的更新路径
 
 
@@ -254,6 +281,7 @@ sudo updatedb
 ## 输出
 ### echo, cat, tee
 **echo**
+
 ```shell
 -e     enable interpretation of backslash escapes
 -E     disable interpretation of backslash escapes (default)
@@ -267,7 +295,9 @@ echo "Hello World" >> file.txt
 i=$(echo "123d56d89")
 # 
 ```
+
 **cat**
+
 ```shell
 # Print and concatenate files
 # With no FILE, or when FILE is -, read standard input
@@ -281,7 +311,9 @@ cat path/to/file1 path/to/file2 >> path/to/output_file
 # Number all output lines:
 cat -n path/to/file
 ```
+
 **tee**
+
 ```shell
 # Copy standard input to each FILE, and also to standard output
 
@@ -292,8 +324,10 @@ echo "example" | tee -a path/to/file
 # Print standard input to the terminal, and also pipe it into another program:
 echo "example" | tee /dev/tty | xargs printf "[%s]"
 ```
+
 ### cut, head, tail
 **cut**
+
 ```shell
 # Print selected parts of lines from each FILE to standard output
 # With no FILE, or when FILE is -, read standard input
@@ -312,7 +346,9 @@ command | cut -c 1,3-5,7-
 # Select the first two fields from each line
 command | cut -d : -f -2
 ```
+
 **head**
+
 ```shell
 # Print the first 10 lines of each FILE to standard output
 
@@ -325,7 +361,9 @@ head -c/--bytes count path/to/file
 # Output everything but the last few bytes of a file:
 head -c/--bytes -count path/to/file
 ```
+
 **tail**
+
 ```shell
 # Print the last 10 lines of each FILE to standard output
 
@@ -336,8 +374,11 @@ tail -n/--lines +count path/to/file
 # Print a specific count of bytes from the end of a given file:
 tail -c/--bytes count path/to/file
 ```
+
 ### wc
+
 **wc**
+
 ```shell
 # Print newline, word, and byte counts for each FILE
 wc -l/--lines path/to/file
@@ -357,20 +398,24 @@ wc -m/--chars path/to/file
 ## 网络远程
 ### wget, curl
 **wget**
+
 ```shell
 # 下载链接内容并保存到当前目录，文件名为 foo
 wget https://example.com/foo
 ```
+
 - `-O/--output-document FILE` 指定保存的文件的名称
 - `-P/--directory-prefix PREFIX` 指定保存到的目录，不可与 `-O` 一起使用
 - `-i/--input-file FILE` 从指定文件中的链接下载内容
 - `-c/--continue` 若保存位置已有部分下载的文件，则断点续传，否则重新下载
 - `-r` 递归地下载链接中的所有文件
+
 <br>
 
 - `-b` 后台下载，若未指定则默认将进度输出到当前目录下的 wget-log 文件
 - `-o/--output-file FILE` 将 log 输出到指定文件，若已存在则覆盖
 - `-a/append-file FILE` 将 log 信息附加到指定文件
+
 <br>
 
 - `--limit-rate=RATE` 限制下载速度，`k` 为千字节每秒，`M` 为兆字节每秒
@@ -379,6 +424,7 @@ wget https://example.com/foo
 
 ---
 **curl**
+
 ```shell
 # 下载链接内容并发送到标准输出
 curl https://example.com
@@ -392,6 +438,7 @@ curl -I https://example.com
 # 向 URL 发送一个 PUT 请求，请求添加了自定义的头部信息
 curl --header 'X-My-Header: 123' --request PUT https://example.com
 ```
+
 - curl 可以并行处理多个 url
 - `-o/--output <file>` 保存文件到指定路径，而不是发送到标准输出
 - `-O/--remote-name` 保存文件到当前目录，文件名为 URL 中的名称
@@ -400,6 +447,7 @@ curl --header 'X-My-Header: 123' --request PUT https://example.com
 - `-#/--progress-bar` 不再显示传输详细信息，转而显示传输进度条
 - `-C/--continue-at -` 恢复传输进度
 - `--limit-rate <speed>` 限制传输速度
+
 <br>
 
 - `-x/--proxy [protocol://]host[:port]` 使用指定代理
@@ -407,6 +455,7 @@ curl --header 'X-My-Header: 123' --request PUT https://example.com
 - `-U/--proxy-user <user:password>` 代理的用户名和密码
 - `-k/--key <key>` 指定本地私钥路径
 - `-E/--cert <certificate[:password]>` 指定客户端证书文件和密码
+
 <br>
 
 - `-d/--data <data>` 指定数据，用于向 URL 发送一个 POST 请求
@@ -419,6 +468,7 @@ curl --header 'X-My-Header: 123' --request PUT https://example.com
 
 ### hostname, ip, ifconfig
 **hostname**
+
 ```shell
 # 显示主机名
 hostname
@@ -427,8 +477,10 @@ hostname -i/--ip-address
 # 显示主机的所有网络接口的 ip 地址
 hostname -I/--all-ip-address
 ```
+
 ---
 **ip**
+
 ```shell
 # 显示所有网络接口的信息
 ip addr
@@ -443,8 +495,10 @@ ip neigh
 # 启用/禁用网络接口
 ip link set {{interface}} up/down
 ```
+
 ---
 **ifconfig**
+
 ```shell
 # 显示所有启用的网络接口的信息
 ifconfig
@@ -459,19 +513,23 @@ ifconfig {{interface}} up/down
 
 ### ssh, ssh-keygen
 **ssh**
+
 ```shell
 # 连接到远程服务器
 ssh username@remote_host
 ```
+
 - `-i identity_file` 指定认证文件
 - `-p port` 指定端口
 
 ---
 **ssh-keygen**
+
 ```shell
 # 交互式地生成密钥
 ssh-keygen
 ```
+
 - `-t dsa | ecdsa | ecdsa-sk | ed25519 | ed25519-sk | rsa` 指定密钥类型，默认为 RSA
 - `-C comment` 添加注释，通常使用邮箱
 
@@ -480,22 +538,26 @@ ssh-keygen
 
 ### scp, rsync
 **scp**
+
 ```shell
 # 将本地文件传输到远程服务器中
 scp path/to/local_file remote_host:path/to/remote_file
 # 将远程服务器中的文件传输到本地
 scp remote_host:path/to/remote_file path/to/local_file
 ```
+
 - `-r` 递归地拷贝文件
 - `-i identity_file` 指定认证文件
 - `-P port` 指定端口
 
 ---
 **rsync**
+
 ```shell
 # 传输文件
 rsync path/to/source path/to/destination
 ```
+
 - `--archive` 使用归档模式，会递归地复制目录、符号文件、权限、所有权和修改时间等，等效于 `-rlptgoD`
 - `-r/--recursive` 递归地传输文件
 
@@ -518,18 +580,21 @@ df
 # 显示指定文件或目录所在的文件系统的磁盘空间使用情况
 df path/to/file_or_directory
 ```
+
 - `-h` 以更可读的形式显示
 - `-T` 显示文件系统类型
 - `-t TYPE` 显示指定类型的文件系统
 
 ---
 **du**
+
 ```shell
 # 递归地列出所有文件和目录的大小
 du path/to/directory
 # 列出所有的 jpg 文件及其总大小
 du -ch */*.jpg
 ```
+
 - `-h` 以更可读的形式显示
 - `-b/--bytes` 以 B 为单位
 - `-k` 以 KB 为单位
@@ -565,6 +630,7 @@ sort -u/--unique path/to/file
 # Sort a file, printing the output to the specified output file (can be in-place)
 sort -o/--output=path/to/file path/to/file
 ```
+
 ### uniq
 ```shell
 # Display each line once:
@@ -581,15 +647,18 @@ sort file | uniq -c | sort -nr
 
 ### grep
 **Anchoring**
+
 - The caret `^` matchs the empty string at the beginning of a line
 - The dollar sign `$` matchs the empty string at end of a line
 
 **Character Classes and Bracket Expressions**
+
 - Most meta-characters lose their special meaning inside bracket expressions
 - A list starting wirh caret `^` matches any character not in the list
 - To include a literal `]` place it first in the list
 - To include a literal `^` place it anywhere but first
 - To include a literal `-` place it last
+
 ```shell
 [:alnum:], [:alpha:], [:digit:],
 [:blank:], [:space:], [:punct:],
@@ -600,7 +669,9 @@ sort file | uniq -c | sort -nr
 # \s is the same as [[:space:]]
 # \S is the same as [^[:space:]]
 ```
+
 **Repetition**
+
 ```shell
 ?      # The preceding item is optional and matched at most once.
 *      # The preceding item will be matched zero or more times.
@@ -611,20 +682,25 @@ sort file | uniq -c | sort -nr
 {n,m}  # The preceding item is matched at least n but not more than m times.
 ```
 **Alternation**
+
 - Two regular expressions may be joined by the infix operator `|`
 
 **Precedence**
+
 - Repetition takes precedence over concatenation, which in turn takes precedence over alternation.
 - A whole expression may be enclosed in parentheses to override these precedence rules and form a subexpression.
 
 **Back-references and Subexpressions**
+
 - The back-reference `\n`(0-9) matches the substring previously matched by the `n'th` parenthesized subexpression of the regular expression
 
 **Basic vs Extended Regular Expressions**
+
 - In basic regular expressions, `?, +, {, |, (, )` lose their special meaning
 - In extended expressions, `\?, \+, \{, \|, \(, \)` lose their special meaning
 
 **Commands**
+
 ```shell
 # When FILE is '-', read standard input.  With no FILE, read '.'
 
@@ -662,6 +738,7 @@ grep -r/--recursive "search_pattern" path/to/directory
 - `/REGEXP/` will select any line which matches the regular expression. If `REGEXP` itself includes any '/' characters, each must be escaped by a backslash
 - `\%REGEXP%` (The `%` may be replaced by any other single character) This allows one to use a different delimiter than `/`. If `REGEXP` itself includes any delimiter characters, each must be escaped by a backslash
 - `/REGEXP/I` `\%REGEXP%I`: The 'I' modifier causes the `REGEXP` to be matched in a case-insensitive manner
+
 <br>
 
 - An address range is specified with two addresses separated by a comma,which can be numeric, regular expressions, or a mix of both
@@ -693,6 +770,7 @@ grep -r/--recursive "search_pattern" path/to/directory
 'p'     # Print the pattern space
 'w filename'  # Write the pattern space to FILENAME
 ```
+
 ```shell
 's/REGEXP/replacement/flags'    #'/' can be replaced by other character
 
@@ -798,6 +876,7 @@ awk '{ for(i=1;i<=NF;i++) a[i]+=$i } END{ for(j=1;j<=NF;j++) printf a[j]/NR"\t";
 ## 进程控制
 ### jobs, ps, pgrep
 **jobs**
+
 ```shell
 # Display status of jobs.
 
@@ -807,7 +886,9 @@ awk '{ for(i=1;i<=NF;i++) a[i]+=$i } END{ for(j=1;j<=NF;j++) printf a[j]/NR"\t";
 -r  #restrict output to running jobs
 -s  #restrict output to stopped jobs
 ```
+
 **ps**
+
 ```shell
 # Display information about a selection of the active processes.
 This version(wsl2) of ps accepts several kinds of options:
@@ -844,7 +925,9 @@ ps -o ppid= -p pid
 # Sort processes by memory consumption:
 ps --sort size
 ```
+
 **pgrep**
+
 ```shell
 -f, --full              use full process name to match
 -u, --euid <ID,...>     match by effective user IDs
@@ -859,6 +942,7 @@ pgrep --euid root process_name
 
 ### kill, pkill
 **kill**
+
 - `SIGINT` (interrupt): `Ctrl + C`
 - `SIGQUIT` (quit): `Ctrl + \`
 - `SIGSTOP` (stop): `Ctrl + Z`
@@ -887,7 +971,9 @@ kill -STOP process_id
 # Signal the operating system to continue a program:
 kill -CONT process_id
 ```
+
 **pkill**
+
 ```shell
 -SIGNAL, --signal SIGNAL
       Defines the signal to send to each matched process. 
@@ -909,8 +995,10 @@ pkill -USR1 "process_name"
 # Kill the main firefox process to close the browser:
 pkill --oldest "firefox"
 ```
+
 ### nohup, bg, fg
 **nohup**
+
 ```shell
 # Run a process that can live beyond the terminal:
 nohup command argument1 argument2 ...
@@ -921,7 +1009,9 @@ nohup path/to/script.sh &
 # Run a process and write the output to a specific file:
 nohup command argument1 argument2 ... > path/to/output_file &
 ```
+
 **bg**
+
 ```shell
 ## Resumes jobs that have been suspended, and run them in the background.
 
@@ -930,7 +1020,9 @@ bg
 # Resume a specific job and run it in the background:
 bg %job_id
 ```
+
 **fg**
+
 ```shell
 ## Run jobs in foreground.
 
@@ -979,6 +1071,7 @@ who am i
 # Display all available information:
 who -a
 ```
+
 ### xargs
 ```shell
 # Delete all files with a .backup extension
@@ -1002,8 +1095,10 @@ tar tf path/to/source.tar[.gz|.bz2|.xz] --exclude "*/*/*"
 # 删除一个归档文件中的指定文件
 tar --delete -f source.tar path/to/file1 path/to/file2 ...
 ```
+
 - `-f/--file ARCHIVE` 指定归档文件
 - `-C/--directory DIR` 指定目标目录
+
 <br>
 
 - `-c/--create` 创建归档文件，会覆盖删除原有归档文件
@@ -1011,12 +1106,14 @@ tar --delete -f source.tar path/to/file1 path/to/file2 ...
 - `-t/--list` 列出归档文件内容
 - `-r/--append` 向归档文件末尾追加文件
 - `--delete` 从归档文件中删除文件
+
 <br>
 
 - `-z/--gzip` 使用 gzip 压缩
 - `-j/--bzip2` 使用 bzip2 压缩
 - `-J/--xz` 使用 xz 压缩
 - `-a/--auto-conpress` 根据后缀名自动决定压缩程序
+
 <br>
 
 - `--exclude PATTERN` 不对符合 PATTERN 的文件执行操作
@@ -1073,6 +1170,7 @@ apt list --installed    #list installed packages
 ## 配置
 ### 镜像源
 更新镜像源可进行以下命令：
+
 ```shell
 sudo cp /etc/apt/sources.list /etc/apt/sources.list.backup
 sudo vim /etc/apt/sources.list
@@ -1081,6 +1179,7 @@ sudo apt upgrade
 ```
 
 Ubuntu22.04 的源有：
+
 ```shell
 # 清华源
 # 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
