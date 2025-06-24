@@ -1,5 +1,5 @@
 # 3D 变换
-## 3D旋转
+## 3D 旋转
 ### 欧拉角
 #### 基本概念
 
@@ -54,7 +54,7 @@ $$
 
 <div align="center"> <img src="../../assets/graphics_yaw_axis_corrected.png" width="320"> </div>
 
-<div align="center"> <img src="../../assets/graphics_taitbrian_zyx.png" width="300"> </div>
+<div align="center"> <img src="../../assets/graphics_taitbrian_zxy.png" width="300"> </div>
 
 #### 内旋和外旋
 
@@ -93,7 +93,7 @@ $p'''$ 就是三次内旋后点 $P$ 在世界坐标系中的坐标，与 $ZYX$ �
 
 这就是**万向节死锁**（Gimbal Lock）问题，即当任意两个旋转轴重合时，就会失去一个自由度，使物体无法绕某一方向旋转。万向节死锁是由欧拉角的内在局限性导致的。
 
-即使在没有万向锁的情况下，欧拉角的表示也不是唯一的，**三维空间中每个旋转都可以用至少两个欧拉角来表示**。总的来说，欧拉角的歧义性主要源于其定义方式，即通过三个连续的旋转来描述最终的旋转。这些旋转是相对于不同的轴进行的，因此旋转的顺序和中间的旋转状态都会影响最终的结果。
+即使在没有万向锁的情况下，欧拉角的表示也不是唯一的，**三维空间中每个旋转都可以用至少两个欧拉角来表示**。欧拉角的歧义性主要源于其定义方式，即通过三个连续的旋转来描述最终的旋转。这些旋转是相对于不同的轴进行的，因此旋转的顺序和中间的旋转状态都会影响最终的结果。
 
 
 <div style="margin-top: 40pt"></div>
@@ -120,8 +120,8 @@ $$ \mathbf{v_{\perp}}' = \cos\theta \mathbf{v_{\perp}} + \sin\theta \mathbf{n} \
 
 $$
 \begin{aligned}
-    v' &= \mathbf{v_{\parallel}} + \mathbf{v_{\perp}}' \\
-    &= (\mathbf{n} \cdot \mathbf{v}) \mathbf{n} + \cos\theta \mathbf{v_{\perp}} + \sin\theta \mathbf{n} \times \mathbf{v} \\
+    \mathbf{v}' &= \mathbf{v_{\parallel}} + \mathbf{v_{\perp}}' \\
+    &= \mathbf{v_{\parallel}} + \cos\theta \mathbf{v_{\perp}} + \sin\theta \mathbf{n} \times \mathbf{v} \\
     &= \mathbf{v_{\parallel}} + \cos\theta (\mathbf{v} - \mathbf{v_{\parallel}}) + \sin\theta \mathbf{n} \times \mathbf{v} \\
     &= \cos\theta \mathbf{v} + (1 - \cos\theta)(\mathbf{n} \cdot \mathbf{v}) \mathbf{n} + \sin\theta \mathbf{n} \times \mathbf{v}
 \end{aligned}
@@ -274,7 +274,7 @@ $$ M_{view} = R_{view} T_{view} $$
 
 **正交投影**（Orthographic Projection）通过平移和缩放，将一个 $[l, r] \times [b, t] \times [f, n]$ 的长方体（Cuboid）映射到 $[-1, 1]^3$ 的标准立方体（Canonical Cube）。
 
-正交投影直接丢弃 $Z$ 坐标，投影后的物体大小不会随着距离的增加而变化，易得投影矩阵为：
+易得投影矩阵为：
 
 $$
 \begin{aligned}
@@ -300,9 +300,14 @@ $$
 \end{aligned}
 $$
 
+正交投影直接丢弃 $Z$ 坐标，投影后的物体大小不会随着距离的增加而变化。
+
 #### 透视投影
 
-**透视投影**（Perspective Projection）先通过透视除法将视锥体（Frustum）压缩为一个长方体，再通过正交投影将长方体映射到标准立方体。
+**透视投影**（Perspective Projection）通过将视锥体中的点投影到近裁剪面上，来为进一步的渲染工作做准备，具体做法是：
+
+1. 通过透视除法将视锥体（Frustum）压缩为一个长方体
+2. 通过正交投影将长方体映射到标准立方体。
 
 假设视锥体的近裁剪面的距离为 $n$，远裁剪面的距离为 $f$，为了使视线上的每个点都投影在近裁剪面的相同位置，需要使：
 
@@ -316,7 +321,7 @@ $$
 \begin{pmatrix} nx \\ ny \\ \text{unknown} \\ z \\ \end{pmatrix}
 $$
 
-为了使近裁剪面和远裁剪面之间的点在压缩后仍在近裁剪面和远裁剪面之间，需要保证近裁剪面和远裁剪面上的点的 $z$ 坐标不变，然后易得第一步的矩阵为：
+为了保持压缩后的标准立方体位置不变，需要使近裁剪面和远裁剪面的 $z$ 坐标不变，由此列出方程组，容易解得第一步的矩阵为：
 
 $$
 M_{persp \rightarrow ortho} = 
@@ -353,3 +358,65 @@ $$
     \end{pmatrix}
 \end{aligned}
 $$
+
+在 OpenGL 中，观察方向是朝着 $z$ 轴负方向的，而通常 $n$ 和 $f$ 又必须指定为大于 0，因此是将 $[l, r] \times [b, t] \times [-n, -f]$ 映射到 $[-1, 1]^3$，投影坐标变为 $x' = -\frac{n}{z}x$ 和 $y' = -\frac{n}{z}y$，对应的透视投影矩阵变为：
+
+$$
+\begin{aligned}
+    M_{persp} &= M_{ortho} M_{persp \rightarrow ortho} \\
+    &= \begin{pmatrix}
+        \frac{2}{r-l} & 0 & 0 & -\frac{r+l}{r-l} \\
+        0 & \frac{2}{t-b} & 0 & -\frac{t+b}{t-b} \\
+        0 & 0 & -\frac{2}{f-n} & -\frac{f+n}{f-n} \\
+        0 & 0 & 0 & 1
+    \end{pmatrix}
+    \begin{pmatrix}
+        n & 0 & 0 & 0 \\
+        0 & n & 0 & 0 \\
+        0 & 0 & n+f & nf \\
+        0 & 0 & -1 & 0
+    \end{pmatrix} \\
+    &= \begin{pmatrix}
+        \frac{2n}{r-l} & 0 & \frac{r+l}{r-l} & 0 \\
+        0 & \frac{2n}{t-b} & \frac{t+b}{t-b} & 0 \\
+        0 & 0 & -\frac{f+n}{f-n} & -\frac{2fn}{f-n} \\
+        0 & 0 & -1 & 0
+    \end{pmatrix}
+\end{aligned}
+$$
+
+此时设 $-z' = M_{persp} (-z)$，就有：
+
+$$ z' = \frac{f+n}{f - n} - \frac{2fn}{(f-n)z} = \frac{\frac{f}{n} + 1}{\frac{f}{n} - 1} - \frac{2}{(\frac{1}{n} - \frac{1}{f})z} $$
+
+可以看到，投影后的深度值并不是线性分布的，当 $f \gg n$ 时，大部分深度值会更靠近 1，远处物体的深度精度会非常差，容易出现 z-fighting 问题，因此最好保持 $\frac{f}{n} < 100$。
+
+
+
+
+<div style="margin-top: 80pt"></div>
+
+## 视口变换
+
+**视口变换**（Viewport transformation）是将归一化设备坐标 NDC 转换为屏幕坐标的过程，会将 $[-1, 1]^2$ 的 XY 平面映射到 $[0, width] \times [0, height]$ 的屏幕坐标系中。
+
+视口变换矩阵为：
+
+$$
+M_{viewport} =
+\begin{pmatrix}
+    \frac{width}{2} & 0 & 0 & \frac{width}{2} \\
+    0 & \frac{height}{2} & 0 & \frac{height}{2} \\
+    0 & 0 & 1 & 0 \\
+    0 & 0 & 0 & 1
+\end{pmatrix}
+$$
+
+由此，就完成了将物体 3D 坐标转变为屏幕空间 2D 坐标的过程，完整流程具体如下：
+
+1. **模型变换**（Model transformation）：将物体的局部坐标系转换为世界坐标系
+2. **视图变换**（View transformation）：将世界坐标系转换为相机坐标系
+3. **投影变换**（Projection transformation）：将相机空间（Camera Space）转换为裁剪空间（Clip Space），再将齐次坐标除以 $w$ 得到归一化设备坐标（NDC）
+4. **视口变换**（Viewport transformation）：将 NDC 转换为屏幕坐标系
+
+即 模型空间 → 世界空间 → 观察空间 → 裁剪空间 → NDC → 屏幕空间。
