@@ -120,6 +120,7 @@ nav:
       - lxml: Python/爬虫/lxml.md
       - BeautifulSoup: Python/爬虫/BeautifulSoup.md
     - 其他:
+      - logging: Python/其他/logging.md
       - sqlite3: Python/其他/sqlite3.md
       - PyQt: Python/其他/PyQt.md
   - Linux:
