@@ -46,7 +46,7 @@ nav:
       - 指令：计算机的语言: 课程/计算机组成与设计/Chapter2 Instructions.md
       - 计算机算术运算: 课程/计算机组成与设计/Chapter3 Arithmetic for Computer.md
       - 处理器: 课程/计算机组成与设计/Chapter4 The Processor.md
-    - 数据结构基础: 课程/FDSNote.md
+    - 数据结构基础: 课程/FDS.md
     - 普通物理学:
       - 力学:
         - Linear Motion: 课程/普通物理学/Mechanics/Linear Motion.md
@@ -92,68 +92,68 @@ nav:
       - 图像识别: 课程/计算机视觉导论/Recognition.md
       - 工具: 课程/计算机视觉导论/Tools.md
   - C:
-    - C 语言: C/CNote.md
-    - C++: C/CppNote.md
-    - Makefile: C/MakefileNote.md
+    - C 语言: C/C.md
+    - C++: C/Cpp.md
+    - Makefile: C/Makefile.md
   - Python:
-    - Python/PythonNote.md
+    - Python/Python.md
     - 包管理:
-      - pip: Python/包管理/pipNote.md
-      - venv: Python/包管理/venvNote.md
-      - Anaconda: Python/包管理/AnacondaNote.md
+      - pip: Python/包管理/pip.md
+      - venv: Python/包管理/venv.md
+      - Anaconda: Python/包管理/Anaconda.md
     - 高级运算:
-      - numpy: Python/高级运算/numpyNote.md
-      - scipy: Python/高级运算/scipyNote.md
-      - random: Python/高级运算/randomNote.md
-      - PyTorch: Python/高级运算/torchNote.md
+      - numpy: Python/高级运算/numpy.md
+      - scipy: Python/高级运算/scipy.md
+      - random: Python/高级运算/random.md
+      - PyTorch: Python/高级运算/torch.md
     - 图像视频:
-      - OpenCV: Python/图像视频/OpenCVnote.md
-      - PIL: Python/图像视频/PILnote.md
-      - imageio: Python/图像视频/imageioNote.md
-      - matplotlib: Python/图像视频/matplotlibNote.md
+      - OpenCV: Python/图像视频/OpenCV.md
+      - PIL: Python/图像视频/PIL.md
+      - imageio: Python/图像视频/imageio.md
+      - matplotlib: Python/图像视频/matplotlib.md
     - 系统操作与文件处理:
-      - os: Python/系统操作与文件处理/osNote.md
-      - json: Python/系统操作与文件处理/jsonNote.md
-      - yaml: Python/系统操作与文件处理/yamlNote.md
+      - os: Python/系统操作与文件处理/os.md
+      - json: Python/系统操作与文件处理/json.md
+      - yaml: Python/系统操作与文件处理/yaml.md
     - 爬虫:
-      - requests: Python/爬虫/requestsNote.md
-      - lxml: Python/爬虫/lxmlNote.md
-      - BeautifulSoup: Python/爬虫/BeautifulSoupNote.md
+      - requests: Python/爬虫/requests.md
+      - lxml: Python/爬虫/lxml.md
+      - BeautifulSoup: Python/爬虫/BeautifulSoup.md
     - 其他:
-      - sqlite3: Python/其他/sqlite3Note.md
-      - PyQt: Python/其他/PyQtNote.md
+      - sqlite3: Python/其他/sqlite3.md
+      - PyQt: Python/其他/PyQt.md
   - Linux:
-    - Linux: Linux/LinuxNote.md
-    - Bash: Linux/BashNote.md
+    - Linux: Linux/Linux.md
+    - Bash: Linux/Bash.md
   - CLI:
-    - Git: CLI/GitNote.md
-    - PowerShell: CLI/PowerShellNote.md
+    - Git: CLI/Git.md
+    - PowerShell: CLI/PowerShell.md
   - 排版:
-    - LaTeX: 排版/LatexNote.md
-    - Markdown: 排版/MarkdownNote.md
-    - Typst: 排版/TypstNote.md
+    - LaTeX: 排版/Latex.md
+    - Markdown: 排版/Markdown.md
+    - Typst: 排版/Typst.md
   - 前端:
-    - HTML: 前端/HTMLNote.md
-    - CSS: 前端/CSSNote.md
-    - Node.js: 前端/NodejsNote.md
-    - TailwindCSS: 前端/TailwindCSSNote.md
+    - HTML: 前端/HTML.md
+    - CSS: 前端/CSS.md
+    - Node.js: 前端/Nodejs.md
+    - TailwindCSS: 前端/TailwindCSS.md
   - 软件:
-    - Edge: 软件/EdgeNote.md
-    - Vim: 软件/VimNote.md
-    - Vscode: 软件/VscodeNote.md
-    - Win11: 软件/Win11Note.md
+    - Edge: 软件/Edge.md
+    - Vim: 软件/Vim.md
+    - VSCode: 软件/VSCode.md
+    - Win11: 软件/Win11.md
     - Blender:
       - 窗口视图: 软件/Blender/窗口视图.md
       - 建模操作: 软件/Blender/建模操作.md
-    - FL Studio: 软件/FLStudioNote.md
-    - Cubase: 软件/CubaseNote.md
+    - FL Studio: 软件/FLStudio.md
+    - Cubase: 软件/Cubase.md
   - 其他:
-    - CUDA: 其他/cudaNote.md
-    - 乐理: 其他/MusicTheoryNote.md
-    - 8086 汇编语言: 其他/8086Note.md
-    - Arduino: 其他/ArduinoNote.md
-    - AutoHotkey: 其他/AutoHotkeyNote.md
-    - AI 绘画提示词: 其他/PromptNote.md
+    - CUDA: 其他/CUDA.md
+    - 乐理: 其他/MusicTheory.md
+    - 8086 汇编语言: 其他/8086.md
+    - Arduino: 其他/Arduino.md
+    - AutoHotkey: 其他/AutoHotkey.md
+    - AI 绘画提示词: 其他/Prompt.md
 
 theme:
   name: material
