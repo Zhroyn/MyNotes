@@ -1,4 +1,151 @@
 # CSS 笔记
+
+## CSS 简介
+浏览器的渲染流程如下：
+
++ 浏览器载入 HTML 文件
++ 将 HTML 文件转化成一个 DOM（Document Object Model）
++ 接下来，浏览器会拉取该 HTML 相关的大部分资源，比如嵌入到页面的图片、视频和 CSS 样式
++ 浏览器拉取到 CSS 之后会进行解析，基于它找到的不同的选择器，将不同的规则应用在对应的 DOM 节点中，并添加节点依赖的样式（这个中间步骤称为渲染树）
++ 上述的规则应用于渲染树之后，渲染树会依照应该出现的结构进行布局
++ 网页展示在屏幕上（这一步被称为着色）
+
+CSS 规则的基本语法如下：
+
+```css
+selector {
+  property: value;
+}
+```
+
+当浏览器遇到无法解析的选择器时，它会直接忽略这个选择器，而不是报错。同样的，当浏览器在解析 CSS 规则时遇到无法理解的属性或值时，它会忽略这些并继续解析其他的 CSS 声明。
+
+
+
+
+
+
+<div style="margin-top: 80pt"></div>
+
+## 选择器
+
+CSS 选择器是 CSS 规则的第一部分。它是元素和其他部分组合起来告诉浏览器哪个 HTML 元素应当被应用规则中的 CSS 属性值的方式
+
+### 选择器列表
+
+选择器列表是由逗号分隔的选择器列表，例如 `h1, h2, h3` 表示选择所有的 h1、h2 和 h3 元素。
+
+当使用选择器列表时，如果任何一个选择器无效（存在语法错误），那么整条规则都会被忽略。
+
+### 选择器的种类
+
+- `*` 通用选择器，匹配所有元素
+- `type` 类型选择器，根据给定的类型名称选择元素
+- `.class` 类选择器，根据给定的类名选择元素
+- `#id` ID 选择器，根据给定的 ID 选择元素，在每个文档中 ID 必须是唯一的
+- `[attr]` 属性选择器
+    - `[attr]` 属性存在
+    - `[attr=value]` 属性值完全匹配
+    - `[attr^=value]` 属性值以指定值开头
+    - `[attr$=value]` 属性值以指定值结尾
+    - `[attr*=value]` 属性值包含指定值
+    - `[attr~=value]` 属性值包含指定值的一个或多个空格分隔的词
+- 伪类选择器，用来样式化一个元素的特定状态
+    - 交互状态伪类
+        - `:hover` 鼠标悬停在元素上时
+        - `:active` 元素被激活（如鼠标按下时）
+        - `:focus` 元素获得焦点（如输入框被选中）
+        - `:focus-visible` 元素通过键盘导航获得焦点时
+        - `:focus-within` 父元素内任意子元素获得焦点时
+        - `:visited` 被访问过的链接
+        - `:link` 未被访问过的链接
+    - 表单相关伪类
+        - `:checked` 被选中的单选/复选框
+        - `:disabled/:enabled` 被禁用/可用的表单元素
+        - `:required/:optional` 必填/非必填的表单元素
+        - `:valid/:invalid` 输入内容合法/非法时
+    - 结构伪类
+        - `:first-child` 父元素的第一个子元素
+        - `:last-child` 父元素的最后一个子元素
+        - `:nth-child(n)` 父元素的第 n 个子元素
+        - `:nth-last-child(n)` 父元素的倒数第 n 个子元素
+        - `:first-of-type` 父元素的第一个同类型子元素
+        - `:last-of-type` 父元素的最后一个同类型子元素
+        - `:nth-of-type(n)` 父元素的第 n 个同类型子元素
+        - `:nth-last-of-type(n)` 父元素的倒数第 n 个同类型子元素
+        - `:only-child` 父元素的唯一子元素
+        - `:only-of-type` 父元素的唯一同类型子元素
+        - `:empty` 没有子元素（包括文本节点）的元素
+    - 其他常用伪类
+        - `:root` 选择文档的根元素
+        - `:not(selector)` 选择不匹配指定选择器的元素
+        - `:lang(language)` 选择指定语言的元素
+        - `:is(selector)` 选择匹配指定选择器的元素，用于简化选择器列表
+        - `:where(selector)` 与 `:is()` 类似，但优先级始终为 0，便于被覆盖
+        - `:has(selector)` 选择包含指定选择器的元素
+- 伪元素选择器，用来样式化一个元素的特定部分
+    - `::before` 在元素之前插入内容，和 `content` 一同使用
+    - `::after` 在元素之后插入内容，和 `content` 一同使用
+    - `::first-line` 元素的第一行
+    - `::first-letter` 元素的第一个字母
+    - `::selection` 用户选中的文本
+    - `::placeholder` 输入框的占位文本
+    - `::marker` 列表项的标记符号
+
+选择器之间还可以使用运算符组合起来：
+
+- `A B` 后代选择器，选择 A 元素的后代 B 元素
+- `A > B` 子元素选择器，选择 A 元素的直接子元素 B
+- `A + B` 相邻兄弟选择器，选择 A 元素的下一个兄弟元素 B
+- `A ~ B` 通用兄弟选择器，选择 A 元素之后的所有兄弟元素 B
+
+
+
+
+
+<div style="margin-top: 80pt"></div>
+
+## 盒模型
+
+CSS 中的一个区块盒子由以下几个部分组成：
+
+- **内容**盒子：显示内容的区域，块级盒子可以使用 `inline-size` 和 `block-size` 或 `width` 和 `height` 等属性确定其大小
+    - `inline-size` 书写方向（默认为水平方向）的尺寸，默认为 `auto`
+    - `block-size` 垂直于书写方向的尺寸，默认为 `auto`
+    - `width` `height` 元素的宽高，默认为 `auto`
+        - `max-content` 元素内容固有的首选宽度
+        - `min-content` 元素内容固有的最小宽度
+        - `fit-content` 元素内容固有的最佳宽度，会收缩至内容所需的最小尺寸，同时不会超过父容器，等效于 `min(max-content, max(min-content, <length-percentage>))`
+- **内边距**盒子：填充位于内容周围的空白处，使用 `padding` 和相关属性确定其大小
+    - `padding` 是 `padding-top`、`padding-right`、`padding-bottom` 和 `padding-left` 的简写
+        - 当有一个值时，会应用于所有边
+        - 当有两个值时，会分别应用于上下和左右
+        - 当有三个值时，会分别应用于上、左右和下
+        - 当有四个值时，会分别应用于上、右、下和左
+    - `padding-inline` 是 `padding-inline-start`、`padding-inline-end` 的简写，可用一个或两个值，当有两个值时会分别应用于行首与行末
+    - `padding-block` 是 `padding-block-start`、`padding-block-end` 的简写，可用一个或两个值，当有两个值时会分别应用于块首与块末
+- **边框**盒子：边框盒子包住内容和任何填充，使用 `border` 和相关属性确定其大小
+    - `border` 是 `border-width`、`border-style` 和 `border-color` 的简写，值的顺序无关紧要
+    - `border-*` 是 `border-*-width`、`border-*-style` 和 `border-*-color` 的简写，值的顺序无关紧要
+    - `border-width`、`border-style` 和 `border-color` 是 `border-*-width`、`border-*-style` 和 `border-*-color` 的简写，值的顺序与 `padding` 相同
+- **外边距**盒子：外边距是最外层，其包裹内容、内边距和边框，作为该盒子与其他元素之间的空白，使用 `margin` 和相关属性确定其大小，`margin-*` 与 `padding-*` 类似
+    - 外边距属性值可以为正也可以为负，根据外边距相接触的两个元素是正边距还是负边距，会发生不同的外边距折叠行为
+    - 两个正外边距将合并为一个外边距，其大小等于最大的单个外边距
+    - 两个负外边距会折叠，并使用最小（离零最远）的值
+    - 如果其中一个外边距为负值，其值将从总值中减去
+
+在 CSS 盒模型的默认定义里，对一个元素所设置的 width 与 height 只会应用到这个元素的内容区。如果这个元素有任何的 border 或 padding ，绘制到屏幕上时的盒子宽度和高度会加上设置的边框和内边距值。`box-sizing` 属性可以用来改变这个行为：
+
+- `content-box` 是默认值，元素的 width 和 height 只包括内容的宽和高，不包括边框和内边距
+- `border-box` 元素的 width 和 height 包括内容、内边距和边框
+
+
+
+
+
+
+<div style="margin-top: 80pt"></div>
+
 ## 关联样式表
 使用 link 元素可以引入外部样式表，会阻塞渲染，直至样式表解析完成：
 
@@ -34,6 +181,8 @@ CSS 的布局方式主要分为以下几类：
 - 网格布局（grid）是指通过 `display: grid` 属性，将一个元素的子元素设置为网格，用于同时在两个维度上把元素按行和列排列整齐
 - 浮动布局（float）是指通过 `float` 属性，将元素从常规流中移除，然后浮动到左侧或者右侧，这时候其他的周围内容就会在这个被设置浮动的元素周围环绕
 - 定位布局（positioning）是指通过 `position` 属性，将一个元素从它原本在常规流中应该在的位置移动到另一个位置
+
+<div style="margin-top: 40pt"></div>
 
 ### 显示类型
 
