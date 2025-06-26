@@ -145,6 +145,8 @@ nav:
     - Blender:
       - 窗口视图: 软件/Blender/窗口视图.md
       - 建模操作: 软件/Blender/建模操作.md
+    - FL Studio: 软件/FLStudioNote.md
+    - Cubase: 软件/CubaseNote.md
   - 其他:
     - CUDA: 其他/cudaNote.md
     - 乐理: 其他/MusicTheoryNote.md
