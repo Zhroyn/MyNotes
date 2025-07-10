@@ -1,4 +1,3 @@
-
 # Git 笔记
 
 ## 基本文件操作
@@ -128,6 +127,8 @@ git show [<options>] [<object>…​]
     - 若对象是提交或标签，则会显示其所有信息，包括树、父提交、作者等
     - 若对象是树，则会显示其所有 blob 与子树的信息，包括权限、类型、哈希值与文件名
     - 若对象是 blob，则会显示其内容
+- `git cat-file --batch-check=<format>` 打印 stdin 提供的对象信息，可用于批量检查对象信息，format 可为：
+    - `%(objecttype) %(objectname) %(objectsize) %(rest)` 显示对象类型、名称、大小及路径
 
 ### git ls-files
 
@@ -137,6 +138,15 @@ git show [<options>] [<object>…​]
 - `git ls-files -o/--other` 列出尚未被追踪的文件
 - `git ls-files -i/--ignored` 列出所有被忽略的文件，必须使用 `-c` 或 `-o` 选项来指定搜索范围，同时还必须使用 `--exclude*` 选项来进行匹配，例如 `git ls-files -io --exclude='*.log'` 可以列出所有未追踪的被忽略的 .log 文件
 - `git ls-files -s/--stage` 列出暂存区文件的信息，包括权限、哈希值与文件名等
+
+### git rev-list
+
+git rev-list 是 git log 的底层命令，用于列出提交对象，其接受的参数与 git log 类似，但更适用于脚本。
+
+- `git rev-list --count HEAD` 统计从 HEAD 开始的提交数量
+- `git rev-list --objects --all` 列出所有可达对象，包括提交、树和 blob
+- `git rev-list --all --objects | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | grep '^blob' | sort -k3 -n -r | tail -n 5` 查找仓库中最大的 5 个文件
+
 
 
 
@@ -194,7 +204,10 @@ git 的引用存储在 .git/refs 文件夹中，主要分为以下几类：
 
 git 会记录下所有引用的变动，包括提交、合并、重置等，这些记录被称为 reflog，可以通过 `git reflog` 来查看，具体形式为 `HEAD@{n}`，可用于恢复历史。
 
-git reflog 的默认子命令为 show，可以接受 git log 的所有参数。
+git reflog 的默认子命令为 show，可以接受 git log 的所有参数。除 show 外，还有以下子命令：
+
+- `expire` 用于修剪过期的 reflog 条目
+- `delete` 用于删除指定的 reflog 条目
 
 ### git stash
 
@@ -312,6 +325,24 @@ git reflog 的默认子命令为 show，可以接受 git log 的所有参数。
 - `f, fixup [-C | -c] <commit>` 和 squash 一样能够合并多个提交，但会自动使用之前的提交信息，若使用 `-C` 选项则会使用当前提交信息，若使用 `-c` 选项还会在使用当前提交信息的基础上打开编辑器，适用于将修复合并进之前的提交
 - `d, drop <commit>` 移除提交
 
+### git filter-branch
+
+`git filter-branch` 可用于批量修改历史提交，但该命令较为复杂且缓慢，现在更推荐使用 `git-filter-repo` 等第三方工具。其基本用法如下：
+
+```shell
+git filter-branch --<filter> <command> [<rev-list-options>]
+```
+
+其中 `<filter>` 用于指定修改的范围，常用的有：
+
+- `--env-filter <command>` 修改环境变量，可用于修改作者或提交者信息
+- `--tree-filter <command>` 修改暂存区和工作区，可用于删除或修改文件
+- `--index-filter <command>` 修改暂存区，比 `--tree-filter` 更快
+- `--parent-filter <command>` 修改父提交列表
+- `--msg-filter <command>` 修改提交信息
+
+例如，若要删除所有提交中的 `password.txt` 文件，可以使用 `git filter-branch --tree-filter 'rm -f password.txt' HEAD`。
+
 ### git tag
 
 - `git tag` 列出所有标签
@@ -348,7 +379,7 @@ git fetch [<options>] [<repository> [<refspec>…​]]
 
 git fetch 能从远程仓库拉取分支，用以更新远程追踪分支，其常用选项有：
 
-- `--all` 拉去所有的远程仓库
+- `--all` 拉取所有的远程仓库
 - `-v/--verbose` 显示详细信息
 - `-p/--prune` 删除远程仓库中不存在的远程追踪分支
 
@@ -449,3 +480,149 @@ ssh -T git@github.com
 - `/codes/**/*.c` 忽略 codes 内的所有 .c 文件，`/**/` 可匹配零个或多个目录
 - `!` 所有因之前规则被忽略的匹配文件会被重新追踪
 
+
+
+
+
+
+
+
+
+<br>
+
+## 仓库清理
+
+### git gc
+
+```shell
+git gc [--aggressive | --auto | --prune=<date> | --no-prune]
+```
+
+git gc 会清理不必要的文件并优化本地仓库。
+
+git 会在版本库中保留所有对象，即使它们已无法访问。`git gc` (garbage collection) 命令可以清理这些对象，减小仓库体积。
+
+- `--aggressive` 选项会更积极地优化仓库，但耗时更长
+- `--auto` 选项会让 git 自行判断是否需要进行垃圾回收
+- `--prune=<date>` 选项可以指定一个日期，早于该日期的无法访问对象都将被清理，默认为两周前
+
+### git clean
+
+```shell
+git clean [-d] [-f] [-x] [-X]
+```
+
+git clean 会清理工作目录，删除未追踪的文件
+
+常用选项有：
+
+- `-d` 选项会删除未追踪的目录
+- `-f` 选项会强制删除未追踪的文件，默认情况下 git clean 是不删除任何文件的
+- `-x` 选项会删除所有未追踪的文件，包括 .gitignore 中的文件
+- `-X` 选项会删除 .gitignore 中的文件，但保留其他未追踪的文件
+
+
+
+
+
+
+
+
+<br>
+
+## 常见场景
+
+### 查看文件的历史版本与比较差异
+
+- **查看某个提交中的文件内容**
+  
+  可以使用 `git show <commit>:<path>` 来查看指定提交中某个文件的内容。
+  
+  ```shell
+  # 查看 5 个提交前 README.md 文件的内容
+  git show HEAD~5:README.md
+  ```
+
+- **比较历史版本与当前工作区文件的差异**
+
+  可以使用 `git diff <commit> -- <path>` 来比较指定提交中的文件版本与当前工作目录中的文件。
+
+  ```shell
+  # 比较 5 个提交前 README.md 文件与当前工作区版本的差异
+  git diff HEAD~5 -- README.md
+  ```
+
+- **比较两个历史版本之间的文件差异**
+
+  可以使用 `git diff <commit1> <commit2> -- <path>` 来比较两个不同提交中同一个文件的差异。
+
+  ```shell
+  # 比较 5 个提交前和 3 个提交前 README.md 文件的差异
+  git diff HEAD~5 HEAD~3 -- README.md
+  ```
+
+### 修改上一次提交的内容
+
+- **修改上一次提交的内容，同时使用相同的提交信息**
+
+  如果需要修改上一次提交的内容，可以使用 `git commit --amend` 命令。该命令会将当前暂存区的更改合并到上一次提交中。
+
+  ```shell
+  # 修改上一次提交的内容
+  git add <file>  # 添加需要修改的文件到暂存区
+  git commit --amend -C HEAD
+  ```
+
+- **修改上一次提交的内容，并修改提交信息**
+    如果需要修改上一次提交的内容，并且修改提交信息，可以使用 `-c HEAD` 命令，打开编辑器进行修改。
+
+    ```shell
+    # 修改上一次提交的内容，并修改提交信息
+    git add <file>  # 添加需要修改的文件到暂存区
+    git commit --amend -c HEAD
+    ```
+
+### 压缩 .git 大小
+
+如果使用 git 原生命令，可以使用以下步骤来压缩 .git 目录的大小：
+
+1. 使用 `git count-objects -vH` 命令来查看 .git 目录的大小
+2. 使用 `git rev-list --all --objects | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' | grep '^blob' | sort -k3 -n -r | tail -n 5` 查找仓库中最大的几个文件
+3. 使用 `git filter-branch --force --index-filter "git rm --cached --ignore-unmatch PATH" --prune-empty --tag-name-filter cat -- --all` 删除指定文件的所有历史记录
+4. 使用 `rm -rf .git/refs/original/` 命令删除自动保存的原始引用，以免 Git 继续保留那些历史对象
+5. 使用 `git reflog expire --expire=now --all` 命令清理引用日志，释放那些在 Git 中看不到但实际仍保存的历史引用
+6. 使用 `git gc --prune=now --aggressive` 命令进行垃圾回收，压缩和清理 `.git/objects/` 中的对象数据库，释放磁盘空间
+
+但是更好的选择是使用 `git-filter-repo` 工具来压缩 .git 目录的大小。该工具可以更快地处理大仓库，并且支持更多的过滤选项。
+
+### 修改作者信息
+
+可以使用 git filter-branch 来批量修改作者信息。
+
+以修改作者名为例：
+
+```shell
+git filter-branch --env-filter "GIT_COMMITTER_NAME='新的作者名'; GIT_AUTHOR_NAME='新的作者名'"
+```
+
+另一个通过条件判断修改 email 的例子是（bash）：
+
+```shell
+git filter-branch --env-filter '
+OLD_EMAIL="旧的邮箱@example.com"
+CORRECT_NAME="新的作者名"
+CORRECT_EMAIL="新的邮箱@example.com"
+
+if [ "$GIT_COMMITTER_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_COMMITTER_NAME="$CORRECT_NAME"
+    export GIT_COMMITTER_EMAIL="$CORRECT_EMAIL"
+fi
+
+if [ "$GIT_AUTHOR_EMAIL" = "$OLD_EMAIL" ]
+then
+    export GIT_AUTHOR_NAME="$CORRECT_NAME"
+    export GIT_AUTHOR_EMAIL="$CORRECT_EMAIL"
+fi
+' --tag-name-filter cat -- --branches --tags
+```
