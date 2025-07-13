@@ -92,8 +92,13 @@ nav:
       - 图像识别: 课程/计算机视觉导论/Recognition.md
       - 工具: 课程/计算机视觉导论/Tools.md
   - 论文:
+    - 3D骨骼:
+      - RigNet: 论文/3D骨骼/RigNet.md
+      - MagicArticulate: 论文/3D骨骼/MagicArticulate.md
+      - SKDream: 论文/3D骨骼/SKDream.md
     - 高斯溅射:
       - yang2023gs4d: 论文/高斯溅射/yang2023gs4d.md
+      - ZPressor: 论文/高斯溅射/ZPressor.md
     - 优化:
       - Sharpened BFGS: 论文/优化/Sharpened BFGS.md
   - C:
