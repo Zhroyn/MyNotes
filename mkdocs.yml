@@ -7,6 +7,7 @@ use_directory_urls: false
 nav:
   - 主页: index.md
   - 课程:
+    - 课程/index.md
     - 计算机图形学:
       - 2D变换: 课程/计算机图形学/2d_transformation.md
       - 3D变换: 课程/计算机图形学/3d_transformation.md
@@ -92,6 +93,7 @@ nav:
       - 图像识别: 课程/计算机视觉导论/Recognition.md
       - 工具: 课程/计算机视觉导论/Tools.md
   - 论文:
+    - 论文/index.md
     - 3D骨骼:
       - RigNet: 论文/3D骨骼/RigNet.md
       - MagicArticulate: 论文/3D骨骼/MagicArticulate.md
@@ -101,11 +103,13 @@ nav:
       - ZPressor: 论文/高斯溅射/ZPressor.md
     - 优化:
       - Sharpened BFGS: 论文/优化/Sharpened BFGS.md
-  - C:
+  - C/C++:
+    - C/index.md
     - C 语言: C/C.md
     - C++: C/Cpp.md
     - Makefile: C/Makefile.md
   - Python:
+    - Python/index.md
     - Python/Python.md
     - 包管理:
       - pip: Python/包管理/pip.md
@@ -134,21 +138,26 @@ nav:
       - sqlite3: Python/其他/sqlite3.md
       - PyQt: Python/其他/PyQt.md
   - Linux:
+    - Linux/index.md
     - Linux: Linux/Linux.md
     - Bash: Linux/Bash.md
   - CLI:
+    - CLI/index.md
     - Git: CLI/Git.md
     - PowerShell: CLI/PowerShell.md
   - 排版:
+    - 排版/index.md
     - LaTeX: 排版/Latex.md
     - Markdown: 排版/Markdown.md
     - Typst: 排版/Typst.md
   - 前端:
+    - 前端/index.md
     - HTML: 前端/HTML.md
     - CSS: 前端/CSS.md
     - Node.js: 前端/Nodejs.md
     - TailwindCSS: 前端/TailwindCSS.md
   - 软件:
+    - 软件/index.md
     - Edge: 软件/Edge.md
     - Vim: 软件/Vim.md
     - VSCode: 软件/VSCode.md
@@ -159,6 +168,7 @@ nav:
     - FL Studio: 软件/FLStudio.md
     - Cubase: 软件/Cubase.md
   - 其他:
+    - 其他/index.md
     - CUDA: 其他/CUDA.md
     - 乐理: 其他/MusicTheory.md
     - 8086 汇编语言: 其他/8086.md
