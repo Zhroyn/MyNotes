@@ -91,6 +91,11 @@ nav:
       - 深度学习: 课程/计算机视觉导论/Deep Learning.md
       - 图像识别: 课程/计算机视觉导论/Recognition.md
       - 工具: 课程/计算机视觉导论/Tools.md
+  - 论文:
+    - 高斯溅射:
+      - yang2023gs4d: 论文/高斯溅射/yang2023gs4d.md
+    - 优化:
+      - Sharpened BFGS: 论文/优化/Sharpened BFGS.md
   - C:
     - C 语言: C/C.md
     - C++: C/Cpp.md
