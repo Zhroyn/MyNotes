@@ -6,6 +6,7 @@
 | 包管理 | [pip](包管理/pip.md) | Python 包管理工具 |
 | 包管理 | [venv](包管理/venv.md) | 虚拟环境管理 |
 | 包管理 | [Anaconda](包管理/Anaconda.md) | Conda 环境管理 |
+| 包管理 | [uv](包管理/uv.md) | 新的 Python 包和项目管理器 |
 | 高级运算 | [numpy](高级运算/numpy.md) | 数值计算库 |
 | 高级运算 | [scipy](高级运算/scipy.md) | 科学计算库 |
 | 高级运算 | [random](高级运算/random.md) | 随机数生成 |

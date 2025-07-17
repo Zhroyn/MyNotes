@@ -115,6 +115,7 @@ nav:
       - pip: Python/包管理/pip.md
       - venv: Python/包管理/venv.md
       - Anaconda: Python/包管理/Anaconda.md
+      - uv: Python/包管理/uv.md
     - 高级运算:
       - numpy: Python/高级运算/numpy.md
       - scipy: Python/高级运算/scipy.md
