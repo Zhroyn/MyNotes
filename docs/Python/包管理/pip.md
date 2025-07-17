@@ -7,7 +7,7 @@
 
 若不清楚命令的用法，可以使用以下命令查看帮助文档：
 
-- `pip -h/--help` 显示帮助文档``
+- `pip -h/--help` 显示帮助文档
 - `pip help <command>` 显示指定命令的帮助文档
 
 
@@ -36,7 +36,9 @@ pip install [options] <requirement specifier> [package-index-options] ...
 常用选项有：
 
 - `-U/--upgrade` 将指定包更新到最新版本
-- `-i/--index-url <url>` 手动指定包索引地址
+- `-i/--index-url <url>` 手动指定包索引地址，只能有一个生效
+- `--extra-index-url <url>` 添加额外的包索引地址，可以添加多个
+- `-f/--find-links <url>` 扫描某个本地或远程目录，查找 `.whl` 或 `.tar.gz`，可以是 URL 或本地目录
 - `-e/--editable <path>` 安装包的可编辑版本，即直接安装源码
 
 requirement specifier 还可以替换成 URL、文件路径等，类型判断顺序为：
@@ -47,6 +49,41 @@ requirement specifier 还可以替换成 URL、文件路径等，类型判断顺
 4. 版本说明符
 
 除此以外，还可以使用 `-r/--requirement <file>` 从文件中读取包名和版本号，不再指定具体的包名，例如 `pip install -r requirements.txt`。
+
+#### requirements.txt 文件格式
+
+`requirements.txt` 文件用于指定项目的依赖包，格式如下：
+
+```plaintext
+# 指定包索引
+--index-url https://mirrors.zju.edu.cn/pypi/web/simple/
+--extra-index-url https://download.pytorch.org/whl/cu118
+
+# 指定包及版本
+package1==1.0.0
+package2>=2.0.0,<3.0.0
+package3~=1.4
+
+# 指定额外特性
+package4[extra1,extra2]
+
+# 从本地包安装
+./packages/mylib-0.1.0.tar.gz
+
+# 从 URL 安装
+https://example.com/packages/mypkg-0.1.0.tar.gz
+
+# 从远程 Git 仓库安装
+git+https://github.com/user/repo.git
+git+https://github.com/user/repo.git@abcdef1    # 指定分支或提交
+git+https://github.com/user/repo.git@v1.0.0     # 指定标签
+git+https://github.com/user/repo.git@main#subdirectory=libname  # 带子目录
+git+https://github.com/user/repo.git@main --recursive           # 递归克隆子模块
+git+https://github.com/user/repo.git#egg=packagename            # 命名包名
+
+# 从本地 Git 仓库安装
+git+file:///absolute/path/to/repo#egg=mylib
+```
 
 ### 删除包
 
