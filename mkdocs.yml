@@ -100,6 +100,9 @@ nav:
       - SKDream: 论文/3D骨骼/SKDream.md
     - 高斯溅射:
       - yang2023gs4d: 论文/高斯溅射/yang2023gs4d.md
+      - pixelSplat: 论文/高斯溅射/pixelSplat.md
+      - MVSplat: 论文/高斯溅射/MVSplat.md
+      - DepthSplat: 论文/高斯溅射/DepthSplat.md
       - ZPressor: 论文/高斯溅射/ZPressor.md
     - 优化:
       - Sharpened BFGS: 论文/优化/Sharpened BFGS.md
