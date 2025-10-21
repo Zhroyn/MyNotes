@@ -104,6 +104,8 @@ nav:
       - MVSplat: 论文/高斯溅射/MVSplat.md
       - DepthSplat: 论文/高斯溅射/DepthSplat.md
       - ZPressor: 论文/高斯溅射/ZPressor.md
+    - 扩散模型:
+      - DDPM: 论文/扩散模型/DDPM.md
     - 优化:
       - Sharpened BFGS: 论文/优化/Sharpened BFGS.md
   - C/C++:
