@@ -106,6 +106,7 @@ nav:
       - ZPressor: 论文/高斯溅射/ZPressor.md
     - 扩散模型:
       - DDPM: 论文/扩散模型/DDPM.md
+      - EDM: 论文/扩散模型/EDM.md
     - 优化:
       - Sharpened BFGS: 论文/优化/Sharpened BFGS.md
   - C/C++:
