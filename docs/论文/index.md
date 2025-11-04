@@ -10,4 +10,7 @@
 | 高斯溅射 | [MVSplat](高斯溅射/MVSplat.md) | 代价体积 + 多视图深度估计 + 前馈 3DGS |
 | 高斯溅射 | [DepthSplat](高斯溅射/DepthSplat.md) | 代价体积 + 多视图深度估计 + 单目深度特征 + 前馈 3DGS |
 | 高斯溅射 | [ZPressor](高斯溅射/ZPressor.md) | 压缩输入实现超多视图前馈 3DGS |
+| 扩散模型 | [DDPM](扩散模型/DDPM.md) | 基础的扩散模型论文 |
+| 扩散模型 | [EDM](扩散模型/EDM.md) | 扩散模型统一框架 |
+| 扩散模型 | [模型架构](扩散模型/architecture.md) | 解析扩散模型中常见的模型架构 |
 | 优化 | [Sharpened BFGS](优化/Sharpened%20BFGS.md) | 改进的 BFGS 优化算法 |

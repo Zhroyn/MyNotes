@@ -107,6 +107,7 @@ nav:
     - 扩散模型:
       - DDPM: 论文/扩散模型/DDPM.md
       - EDM: 论文/扩散模型/EDM.md
+      - 模型架构: 论文/扩散模型/architecture.md
     - 优化:
       - Sharpened BFGS: 论文/优化/Sharpened BFGS.md
   - C/C++:
