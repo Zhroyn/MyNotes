@@ -1,16 +1,20 @@
 # 论文列表
 
-| 研究领域 | 论文标题 | 内容简介 |
-|---------|----------|------|
-| 3D骨骼 | [RigNet](3D骨骼/RigNet.md) | 神经网络驱动的 3D 角色骨骼生成与蒙皮 |
-| 3D骨骼 | [MagicArticulate](3D骨骼/MagicArticulate.md) | 基于自回归的 3D 骨骼生成与绑定 |
-| 3D骨骼 | [SKDream](3D骨骼/SKDream.md) | 任意骨架结构生成 + 多视图骨架条件 3D 内容生成 |
-| 高斯溅射 | [yang2023gs4d](高斯溅射/yang2023gs4d.md) | 4D 高斯溅射技术 |
-| 高斯溅射 | [pixelSplat](高斯溅射/pixelSplat.md) | 首个前馈 3DGS 方法 |
-| 高斯溅射 | [MVSplat](高斯溅射/MVSplat.md) | 代价体积 + 多视图深度估计 + 前馈 3DGS |
-| 高斯溅射 | [DepthSplat](高斯溅射/DepthSplat.md) | 代价体积 + 多视图深度估计 + 单目深度特征 + 前馈 3DGS |
-| 高斯溅射 | [ZPressor](高斯溅射/ZPressor.md) | 压缩输入实现超多视图前馈 3DGS |
-| 扩散模型 | [DDPM](扩散模型/DDPM.md) | 基础的扩散模型论文 |
-| 扩散模型 | [EDM](扩散模型/EDM.md) | 扩散模型统一框架 |
-| 扩散模型 | [模型架构](扩散模型/architecture.md) | 解析扩散模型中常见的模型架构 |
-| 优化 | [Sharpened BFGS](优化/Sharpened%20BFGS.md) | 改进的 BFGS 优化算法 |
+- 3D骨骼:
+    - [RigNet](3D骨骼/RigNet.md)
+    - [MagicArticulate](3D骨骼/MagicArticulate.md)
+    - [SKDream](3D骨骼/SKDream.md)
+- 高斯溅射:
+    - 4D重建:
+        - [yang2023gs4d](高斯溅射/yang2023gs4d.md)
+    - 3D前馈重建:
+        - [pixelSplat](高斯溅射/pixelSplat.md)
+        - [MVSplat](高斯溅射/MVSplat.md)
+        - [DepthSplat](高斯溅射/DepthSplat.md)
+        - [ZPressor](高斯溅射/ZPressor.md)
+- 扩散模型:
+    - [DDPM](扩散模型/DDPM.md)
+    - [EDM](扩散模型/EDM.md)
+    - [模型架构](扩散模型/architecture.md)
+- 优化:
+    - [Sharpened BFGS](优化/Sharpened%20BFGS.md)

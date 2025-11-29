@@ -99,11 +99,13 @@ nav:
       - MagicArticulate: 论文/3D骨骼/MagicArticulate.md
       - SKDream: 论文/3D骨骼/SKDream.md
     - 高斯溅射:
-      - yang2023gs4d: 论文/高斯溅射/yang2023gs4d.md
-      - pixelSplat: 论文/高斯溅射/pixelSplat.md
-      - MVSplat: 论文/高斯溅射/MVSplat.md
-      - DepthSplat: 论文/高斯溅射/DepthSplat.md
-      - ZPressor: 论文/高斯溅射/ZPressor.md
+      - 4D重建:
+        - yang2023gs4d: 论文/高斯溅射/yang2023gs4d.md
+      - 3D前馈重建:
+        - pixelSplat: 论文/高斯溅射/pixelSplat.md
+        - MVSplat: 论文/高斯溅射/MVSplat.md
+        - DepthSplat: 论文/高斯溅射/DepthSplat.md
+        - ZPressor: 论文/高斯溅射/ZPressor.md
     - 扩散模型:
       - DDPM: 论文/扩散模型/DDPM.md
       - EDM: 论文/扩散模型/EDM.md
