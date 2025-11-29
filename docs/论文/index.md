@@ -12,6 +12,8 @@
         - [MVSplat](高斯溅射/MVSplat.md)
         - [DepthSplat](高斯溅射/DepthSplat.md)
         - [ZPressor](高斯溅射/ZPressor.md)
+    - 3D前馈生成:
+        - [DiffSplat](高斯溅射/DiffSplat.md)
 - 扩散模型:
     - [DDPM](扩散模型/DDPM.md)
     - [EDM](扩散模型/EDM.md)
